@@ -3,20 +3,27 @@ const path = require("path");
 
 const app = express();
 
-// Serve public folder
-app.use(express.static(path.join(__dirname, "public")));
+// Absolute path to public folder
+const publicPath = path.join(__dirname, "public");
 
-// ✅ Explicit route (IMPORTANT FIX)
-app.get("/emi-calculator.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "emi-calculator.html"));
-});
+// Serve static files
+app.use(express.static(publicPath));
 
-// Home route
+// Default route → EMI Calculator
 app.get("/", (req, res) => {
-  res.send("Server is running 🚀");
+  res.sendFile(path.join(publicPath, "emi-calculator.html"));
 });
 
-// Render port
+// Explicit EMI route
+app.get("/emi-calculator.html", (req, res) => {
+  res.sendFile(path.join(publicPath, "emi-calculator.html"));
+});
+
+// Catch-all (VERY IMPORTANT)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "emi-calculator.html"));
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
