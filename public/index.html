@@ -5,12 +5,6 @@
   <title>Strango</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Font Awesome for Rupee Icon -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-
   <style>
     body {
       margin: 0;
@@ -21,7 +15,7 @@
       overflow: hidden;
     }
 
-    /* Center Chat Card */
+    /* Chat Card */
     .card {
       position: absolute;
       top: 50%;
@@ -72,7 +66,7 @@
       color: #fff;
     }
 
-    /* EMI Button (₹ icon) */
+    /* EMI Button – GUARANTEED ₹ */
     #emi-btn {
       position: fixed;
       right: 12px;
@@ -81,18 +75,19 @@
       width: 50px;
       height: 50px;
       background: #8b5a2b;
-      color: #fff;
+      color: #ffffff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 28px;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);
       z-index: 1000;
+      user-select: none;
     }
 
-    /* EMI iframe panel */
+    /* EMI Panel */
     #emi-frame {
       position: fixed;
       top: 0;
@@ -126,14 +121,13 @@
     </div>
   </div>
 
-  <!-- EMI Button -->
+  <!-- EMI Button (₹ using HTML entity – safest) -->
   <div id="emi-btn" onclick="openEMI()">&#8377;</div>
 
-  <!-- EMI Slide Panel -->
+  <!-- EMI Panel -->
   <iframe id="emi-frame" src="/emi"></iframe>
 
   <script>
-    function_toggle = false;
     function openEMI() {
       const frame = document.getElementById("emi-frame");
       frame.style.right = frame.style.right === "0px" ? "-100%" : "0px";
