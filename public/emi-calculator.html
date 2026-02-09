@@ -1,223 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>EMI Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #000;
       margin: 0;
       padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #3e2723;
+      color: #fff;
     }
 
-    .box {
-      background: #5a3a2e;
-      padding: 24px;
-      max-width: 520px;
-      margin: 20px auto;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(160, 100, 70, 0.45);
-    }
-
-    h1 {
+    h2 {
       text-align: center;
-      margin-bottom: 22px;
-      color: #f6ece6;
-      font-size: 22px;
+      margin-bottom: 20px;
     }
 
     label {
-      font-weight: 600;
-      margin-top: 12px;
       display: block;
-      color: #f6ece6;
+      margin-top: 12px;
       font-size: 14px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border-radius: 10px;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
       border: none;
-      background: #ffffff;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 22px;
-      background: #8b5a2b;
-      color: #ffffff;
+      margin-top: 20px;
+      padding: 12px;
       border: none;
-      border-radius: 12px;
+      border-radius: 6px;
+      background: #a86a2a;
+      color: #fff;
       font-size: 16px;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    .emi-main {
-      margin-top: 24px;
-      background: #3e241c;
-      padding: 16px;
-      border-radius: 14px;
-      text-align: center;
-      color: #fbeee8;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .summary {
-      margin-top: 16px;
-    }
-
-    .summary div {
-      background: #6d4c41;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      color: #fbeee8;
-      font-size: 14px;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 24px;
-      border-collapse: collapse;
-      font-size: 13px;
-      background: #3e241c;
-      color: #fbeee8;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 8px;
-      text-align: right;
-      border-bottom: 1px solid #5a3a2e;
-    }
-
-    th {
-      background: #2a1610;
+    .result {
+      margin-top: 20px;
+      font-size: 16px;
       text-align: center;
       font-weight: bold;
-    }
-
-    td:first-child {
-      text-align: center;
-    }
-
-    @media (min-width: 768px) {
-      body {
-        padding: 40px;
-      }
-      h1 {
-        font-size: 26px;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
-    <h1>EMI Calculator</h1>
+  <h2>EMI Calculator</h2>
 
-    <label>Loan Amount (₹)</label>
-    <input type="number" id="loan" placeholder="e.g. 500000">
+  <label>Loan Amount (₹)</label>
+  <input id="amount" type="number" placeholder="e.g. 500000" />
 
-    <label>Interest Rate (% per year)</label>
-    <input type="number" id="rate" placeholder="e.g. 8.5">
+  <label>Interest Rate (% per year)</label>
+  <input id="rate" type="number" placeholder="e.g. 8.5" />
 
-    <label>Loan Tenure (Years)</label>
-    <input type="number" id="time" placeholder="e.g. 10">
+  <label>Loan Tenure (Years)</label>
+  <input id="years" type="number" placeholder="e.g. 10" />
 
-    <button onclick="calculateEMI()">Calculate EMI</button>
+  <button onclick="calculateEMI()">Calculate EMI</button>
 
-    <div id="emiMain"></div>
-    <div class="summary" id="result"></div>
-
-    <div id="tableContainer"></div>
-  </div>
+  <div class="result" id="result"></div>
 
   <script>
-    function formatINR(num) {
-      return "₹ " + num.toLocaleString("en-IN", {
-        maximumFractionDigits: 2
-      });
-    }
-
     function calculateEMI() {
-      const P = Number(document.getElementById("loan").value);
-      const annualRate = Number(document.getElementById("rate").value);
-      const years = Number(document.getElementById("time").value);
+      const P = parseFloat(document.getElementById("amount").value);
+      const R = parseFloat(document.getElementById("rate").value) / 12 / 100;
+      const N = parseFloat(document.getElementById("years").value) * 12;
 
-      if (!P || !annualRate || !years) return;
+      if (!P || !R || !N) {
+        document.getElementById("result").innerText = "Please fill all fields";
+        return;
+      }
 
-      const R = annualRate / 12 / 100;
-      const N = years * 12;
-
-      const emi =
+      const EMI =
         (P * R * Math.pow(1 + R, N)) /
         (Math.pow(1 + R, N) - 1);
 
-      const totalPayment = emi * N;
-      const totalInterest = totalPayment - P;
-
-      document.getElementById("emiMain").innerHTML =
-        `<div class="emi-main">Monthly EMI: ${formatINR(emi)}</div>`;
-
-      document.getElementById("result").innerHTML = `
-        <div><span>Total Payment</span><span>${formatINR(totalPayment)}</span></div>
-        <div><span>Total Interest</span><span>${formatINR(totalInterest)}</span></div>
-      `;
-
-      generateTable(P, R, N, emi);
-    }
-
-    function generateTable(principal, rate, months, emi) {
-      let balance = principal;
-      let rows = "";
-
-      for (let i = 1; i <= months; i++) {
-        const interest = balance * rate;
-        const principalPaid = emi - interest;
-        balance -= principalPaid;
-
-        rows += `
-          <tr>
-            <td>${i}</td>
-            <td>${formatINR(emi)}</td>
-            <td>${formatINR(principalPaid)}</td>
-            <td>${formatINR(interest)}</td>
-            <td>${formatINR(Math.max(balance, 0))}</td>
-          </tr>
-        `;
-      }
-
-      document.getElementById("tableContainer").innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>Month</th>
-              <th>EMI</th>
-              <th>Principal</th>
-              <th>Interest</th>
-              <th>Balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows}
-          </tbody>
-        </table>
-      `;
+      document.getElementById("result").innerText =
+        "Monthly EMI: ₹" + EMI.toFixed(2);
     }
   </script>
 
