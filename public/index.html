@@ -3,38 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <title>Strango</title>
-  <script src="/socket.io/socket.io.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font Awesome for Rupee Icon -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
 
   <style>
     body {
       margin: 0;
+      font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
-      font-family: Arial, sans-serif;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
     }
 
+    /* Center Chat Card */
     .card {
-      width: 320px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background: #111;
+      padding: 25px;
       border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,.6);
+      width: 300px;
       text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
 
     .card h1 {
       margin: 0;
-      margin-bottom: 5px;
+      font-size: 26px;
     }
 
     .card p {
-      margin: 0 0 15px;
-      color: #aaa;
       font-size: 14px;
+      color: #aaa;
+      margin-bottom: 15px;
     }
 
     .card input {
@@ -42,48 +51,48 @@
       padding: 10px;
       border-radius: 6px;
       border: none;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .card button {
-      padding: 10px 16px;
+      padding: 8px 14px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin: 5px;
+      margin: 0 5px;
     }
 
-    .send {
-      background: #1e88e5;
+    .send-btn {
+      background: #1e90ff;
       color: #fff;
     }
 
-    .next {
+    .next-btn {
       background: #333;
       color: #fff;
     }
 
-    /* ===== EMI BUTTON ===== */
+    /* EMI Button (₹ icon) */
     #emi-btn {
       position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 42px;
-      height: 42px;
-      background: #1e88e5;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: #8b5a2b;
+      color: #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 22px;
       cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 4px 12px rgba(0,0,0,.4);
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      z-index: 1000;
     }
 
-    /* ===== EMI PANEL ===== */
+    /* EMI iframe panel */
     #emi-frame {
       position: fixed;
       top: 0;
@@ -91,33 +100,40 @@
       width: 360px;
       height: 100%;
       border: none;
-      background: #000;
-      z-index: 9998;
-      transition: right .3s ease;
+      background: #fff;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+
+    @media (max-width: 600px) {
+      #emi-frame {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- STRANGO UI -->
+  <!-- Chat Card -->
   <div class="card">
     <h1>Strango</h1>
     <p>Looking for a stranger...</p>
     <input type="text" placeholder="Type a message" />
     <div>
-      <button class="send">Send</button>
-      <button class="next">Next</button>
+      <button class="send-btn">Send</button>
+      <button class="next-btn">Next</button>
     </div>
   </div>
 
-  <!-- EMI BUTTON -->
-  <div id="emi-btn" onclick="openEMI()">₹</div>
+  <!-- EMI Button -->
+  <div id="emi-btn" onclick="openEMI()">&#8377;</div>
 
-  <!-- EMI SLIDE PANEL -->
-  <iframe id="emi-frame" src="/emi-calculator.html"></iframe>
+  <!-- EMI Slide Panel -->
+  <iframe id="emi-frame" src="/emi"></iframe>
 
   <script>
+    function_toggle = false;
     function openEMI() {
       const frame = document.getElementById("emi-frame");
       frame.style.right = frame.style.right === "0px" ? "-100%" : "0px";
