@@ -3,22 +3,29 @@ const path = require("path");
 
 const app = express();
 
-// serve static files from public folder
+/**
+ * 1. Serve public folder
+ */
 app.use(express.static(path.join(__dirname, "public")));
 
-// EMI calculator route
+/**
+ * 2. EMI route
+ */
 app.get("/emi", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "emi-calculator.html"));
 });
 
-// home route (optional)
+/**
+ * 3. Home route → redirect to EMI
+ */
 app.get("/", (req, res) => {
-  res.send("Server is running 🚀 Go to /emi");
+  res.redirect("/emi");
 });
 
-// PORT for Render
+/**
+ * 4. Start server (Render-safe)
+ */
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
