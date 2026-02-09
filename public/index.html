@@ -101,7 +101,7 @@
     </div>
   </div>
 
-  <!-- 🔥 EMI BUTTON (FORCED: HIGH + RUPEE) -->
+  <!-- 🔥 EMI BUTTON WITH SVG RUPEE (IMPOSSIBLE TO FAIL) -->
   <div
     onclick="toggleEMI()"
     style="
@@ -111,20 +111,25 @@
       width: 58px;
       height: 58px;
       background: #8b5a2b;
-      color: #ffffff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      font-weight: 800;
       cursor: pointer;
       z-index: 99999;
-      user-select: none;
       box-shadow: 0 6px 16px rgba(0,0,0,0.7);
     "
   >
-    ₹
+    <!-- SVG RUPEE ICON -->
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="white"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M6 3h12v2H9.6c1.9.4 3.3 1.6 3.8 3H18v2h-4.4c-.5 2.2-2.5 3.8-5.2 4l5.6 7H11l-5.4-7v-2h2.4c2.2 0 3.7-1 4.2-2H6V8h6.2c-.5-1.2-2-2-4.2-2H6V3z"/>
+    </svg>
   </div>
 
   <!-- EMI Calculator -->
