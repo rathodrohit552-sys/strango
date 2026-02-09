@@ -15,7 +15,7 @@
       overflow: hidden;
     }
 
-    /* Main Card */
+    /* Main Strango Card */
     .card {
       position: absolute;
       top: 50%;
@@ -67,16 +67,16 @@
       color: #fff;
     }
 
-    /* ₹ EMI Button */
+    /* ✅ EMI Button – moved HIGHER + proper ₹ */
     #emi-btn {
       position: fixed;
-      right: 12px;
-      top: 50%;
+      right: 14px;
+      top: 35%;              /* 🔥 higher position */
       transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       background: #8b5a2b;
-      color: #fff;
+      color: #ffffff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -86,9 +86,10 @@
       cursor: pointer;
       z-index: 1000;
       user-select: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    /* EMI Panel (HIDDEN BY DEFAULT) */
+    /* EMI Panel */
     #emi-frame {
       display: none;
       position: fixed;
@@ -111,7 +112,7 @@
 
 <body>
 
-  <!-- Main UI -->
+  <!-- Strango UI -->
   <div class="card">
     <h1>Strango</h1>
     <p>Looking for a stranger...</p>
@@ -122,10 +123,10 @@
     </div>
   </div>
 
-  <!-- EMI Button -->
+  <!-- ✅ EMI Button (₹) -->
   <div id="emi-btn" onclick="toggleEMI()">&#8377;</div>
 
-  <!-- EMI Panel -->
+  <!-- EMI Calculator Panel -->
   <iframe id="emi-frame" src="/emi-calculator.html"></iframe>
 
   <script>
