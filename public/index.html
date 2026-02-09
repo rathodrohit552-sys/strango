@@ -15,7 +15,6 @@
       overflow: hidden;
     }
 
-    /* Main Strango Card */
     .card {
       position: absolute;
       top: 50%;
@@ -67,7 +66,6 @@
       color: #fff;
     }
 
-    /* EMI Panel */
     #emi-frame {
       display: none;
       position: fixed;
@@ -90,7 +88,7 @@
 
 <body>
 
-  <!-- Strango UI -->
+  <!-- Main UI -->
   <div class="card">
     <h1>Strango</h1>
     <p>Looking for a stranger...</p>
@@ -101,7 +99,7 @@
     </div>
   </div>
 
-  <!-- 🔥 EMI BUTTON WITH SVG RUPEE (IMPOSSIBLE TO FAIL) -->
+  <!-- 🔥 EMI BUTTON WITH EMBEDDED RUPEE IMAGE -->
   <div
     onclick="toggleEMI()"
     style="
@@ -120,16 +118,12 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.7);
     "
   >
-    <!-- SVG RUPEE ICON -->
-    <svg
+    <img
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtUlEQVR4nO2WT0gCURTGf+fY2IY2QbAQJESQ0KIgkWQvEQkF9C7Ew0S9R6EQQpCIl6E0V6E0N0tY4m9iY7u7u7c+fO3u7O7s7s7sPzjz3nO+f8z7v5xzPZk7xZB1+gZ0Qh3AFngJPAI7AL3AJrAHXgJ/AGPA0uAR8B5cFz0G8X5Uu5xA3c0l4J5a5F7F8s3Yx0qVb+4l2jF8mKJt0gM3aYw6Y4VQhZp9tY2m4MZ0h9j+6tq6aYk8E4p0t1p8p4bZxjQ+8ZV7hZkH+QK2YxJ+Q7g8n3oY0gR9KX7lYb0o8A9hYk3w5R+8s8pG1h9kKzK2z4J2b8Bz4FZ4C9wJXgJPAI3AN3APngKPAKfALvAefArPZ+q3l1Pz2F2n5r8Zz0h9X7QAAAABJRU5ErkJggg=="
+      alt="₹"
       width="28"
       height="28"
-      viewBox="0 0 24 24"
-      fill="white"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M6 3h12v2H9.6c1.9.4 3.3 1.6 3.8 3H18v2h-4.4c-.5 2.2-2.5 3.8-5.2 4l5.6 7H11l-5.4-7v-2h2.4c2.2 0 3.7-1 4.2-2H6V8h6.2c-.5-1.2-2-2-4.2-2H6V3z"/>
-    </svg>
+    />
   </div>
 
   <!-- EMI Calculator -->
