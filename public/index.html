@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Strango</title>
   <script src="/socket.io/socket.io.js"></script>
 
@@ -17,162 +17,112 @@
       align-items: center;
     }
 
-    .chat-container {
-      width: 420px;
+    .card {
+      width: 320px;
       background: #111;
-      padding: 20px;
       border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,.6);
+      text-align: center;
     }
 
-    h1 {
-      text-align: center;
+    .card h1 {
       margin: 0;
+      margin-bottom: 5px;
     }
 
-    #status {
-      text-align: center;
+    .card p {
+      margin: 0 0 15px;
       color: #aaa;
       font-size: 14px;
-      margin: 6px 0;
     }
 
-    #typing {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      height: 16px;
-    }
-
-    #messages {
-      height: 260px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-    }
-
-    .msg {
-      max-width: 75%;
-      padding: 8px 12px;
-      margin: 6px 0;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    .you {
-      background: #0d6efd;
-      margin-left: auto;
-      text-align: right;
-    }
-
-    .stranger {
-      background: #333;
-    }
-
-    input {
+    .card input {
       width: 100%;
       padding: 10px;
       border-radius: 6px;
       border: none;
-      outline: none;
       margin-bottom: 10px;
     }
 
-    .controls {
-      text-align: center;
-    }
-
-    button {
-      padding: 8px 14px;
+    .card button {
+      padding: 10px 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      margin: 5px;
+    }
+
+    .send {
+      background: #1e88e5;
       color: #fff;
     }
 
-    #sendBtn { background: #0d6efd; }
-    #nextBtn { background: #333; margin-left: 10px; }
+    .next {
+      background: #333;
+      color: #fff;
+    }
+
+    /* ===== EMI BUTTON ===== */
+    #emi-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      background: #1e88e5;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    }
+
+    /* ===== EMI PANEL ===== */
+    #emi-frame {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 360px;
+      height: 100%;
+      border: none;
+      background: #000;
+      z-index: 9998;
+      transition: right .3s ease;
+    }
   </style>
 </head>
 
 <body>
-  <div class="chat-container">
+
+  <!-- STRANGO UI -->
+  <div class="card">
     <h1>Strango</h1>
-    <div id="status">Looking for a stranger...</div>
-    <div id="typing"></div>
-
-    <div id="messages"></div>
-
-    <input id="msg" placeholder="Type a message">
-
-    <div class="controls">
-      <button id="sendBtn">Send</button>
-      <button id="nextBtn">Next</button>
+    <p>Looking for a stranger...</p>
+    <input type="text" placeholder="Type a message" />
+    <div>
+      <button class="send">Send</button>
+      <button class="next">Next</button>
     </div>
   </div>
 
+  <!-- EMI BUTTON -->
+  <div id="emi-btn" onclick="openEMI()">₹</div>
+
+  <!-- EMI SLIDE PANEL -->
+  <iframe id="emi-frame" src="/emi-calculator.html"></iframe>
+
   <script>
-    const socket = io();
-    const messages = document.getElementById("messages");
-    const status = document.getElementById("status");
-    const typing = document.getElementById("typing");
-    const input = document.getElementById("msg");
-
-    let typingTimer;
-
-    socket.on("matched", () => {
-      status.innerText = "Connected to a stranger";
-    });
-
-    socket.on("message", (msg) => {
-      messages.innerHTML += `<div class="msg stranger">${msg}</div>`;
-      messages.scrollTop = messages.scrollHeight;
-      typing.innerText = "";
-    });
-
-    socket.on("typing", () => {
-      typing.innerText = "Stranger is typing...";
-    });
-
-    socket.on("stopTyping", () => {
-      typing.innerText = "";
-    });
-
-    socket.on("partnerLeft", () => {
-      status.innerText = "Stranger disconnected. Waiting...";
-      typing.innerText = "";
-      messages.innerHTML = "";
-    });
-
-    function send() {
-      if (!input.value.trim()) return;
-
-      socket.emit("message", input.value);
-      socket.emit("stopTyping");
-
-      messages.innerHTML += `<div class="msg you">${input.value}</div>`;
-      messages.scrollTop = messages.scrollHeight;
-      input.value = "";
+    function openEMI() {
+      const frame = document.getElementById("emi-frame");
+      frame.style.right = frame.style.right === "0px" ? "-100%" : "0px";
     }
-
-    document.getElementById("sendBtn").onclick = send;
-    document.getElementById("nextBtn").onclick = () => {
-      messages.innerHTML = "";
-      typing.innerText = "";
-      status.innerText = "Looking for a new stranger...";
-      socket.disconnect();
-      setTimeout(() => socket.connect(), 300);
-    };
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        send();
-      } else {
-        socket.emit("typing");
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
-          socket.emit("stopTyping");
-        }, 800);
-      }
-    });
   </script>
+
 </body>
 </html>
