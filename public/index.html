@@ -15,7 +15,7 @@
       overflow: hidden;
     }
 
-    /* Chat Card */
+    /* Main Card */
     .card {
       position: absolute;
       top: 50%;
@@ -27,6 +27,7 @@
       width: 300px;
       text-align: center;
       box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      z-index: 1;
     }
 
     .card h1 {
@@ -66,7 +67,7 @@
       color: #fff;
     }
 
-    /* EMI Button – GUARANTEED ₹ */
+    /* ₹ EMI Button */
     #emi-btn {
       position: fixed;
       right: 12px;
@@ -75,7 +76,7 @@
       width: 50px;
       height: 50px;
       background: #8b5a2b;
-      color: #ffffff;
+      color: #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -87,16 +88,16 @@
       user-select: none;
     }
 
-    /* EMI Panel */
+    /* EMI Panel (HIDDEN BY DEFAULT) */
     #emi-frame {
+      display: none;
       position: fixed;
       top: 0;
-      right: -100%;
+      right: 0;
       width: 360px;
       height: 100%;
       border: none;
       background: #fff;
-      transition: right 0.3s ease;
       z-index: 999;
     }
 
@@ -110,7 +111,7 @@
 
 <body>
 
-  <!-- Chat Card -->
+  <!-- Main UI -->
   <div class="card">
     <h1>Strango</h1>
     <p>Looking for a stranger...</p>
@@ -121,16 +122,17 @@
     </div>
   </div>
 
-  <!-- EMI Button (₹ using HTML entity – safest) -->
-  <div id="emi-btn" onclick="openEMI()">&#8377;</div>
+  <!-- EMI Button -->
+  <div id="emi-btn" onclick="toggleEMI()">&#8377;</div>
 
   <!-- EMI Panel -->
-  <iframe id="emi-frame" src="/emi"></iframe>
+  <iframe id="emi-frame" src="/emi-calculator.html"></iframe>
 
   <script>
-    function openEMI() {
+    function toggleEMI() {
       const frame = document.getElementById("emi-frame");
-      frame.style.right = frame.style.right === "0px" ? "-100%" : "0px";
+      frame.style.display =
+        frame.style.display === "block" ? "none" : "block";
     }
   </script>
 
