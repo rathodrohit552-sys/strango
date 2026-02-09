@@ -3,27 +3,20 @@ const path = require("path");
 
 const app = express();
 
-// absolute path to public folder
-const publicDir = path.join(__dirname, "public");
+// serve static files from public folder
+app.use(express.static(path.join(__dirname, "public")));
 
-// serve static files
-app.use(express.static(publicDir));
-
-// root route
-app.get("/", (req, res) => {
-  res.sendFile(path.join(publicDir, "emi-calculator.html"));
-});
-
-// explicit emi route
+// EMI calculator route
 app.get("/emi", (req, res) => {
-  res.sendFile(path.join(publicDir, "emi-calculator.html"));
+  res.sendFile(path.join(__dirname, "public", "emi-calculator.html"));
 });
 
-// fallback — NO wildcards, Express 5 safe
-app.use((req, res) => {
-  res.redirect("/");
+// home route (optional)
+app.get("/", (req, res) => {
+  res.send("Server is running 🚀 Go to /emi");
 });
 
+// PORT for Render
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
