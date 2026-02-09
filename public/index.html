@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Strango</title>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chat-container {
+      width: 420px;
+      background: #111;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+    }
+
+    #status {
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+      margin: 6px 0;
+    }
+
+    #typing {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      height: 16px;
+    }
+
+    #messages {
+      height: 260px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .msg {
+      max-width: 75%;
+      padding: 8px 12px;
+      margin: 6px 0;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .you {
+      background: #0d6efd;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .stranger {
+      background: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    .controls {
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    #sendBtn { background: #0d6efd; }
+    #nextBtn { background: #333; margin-left: 10px; }
+  </style>
+</head>
+
+<body>
+  <div class="chat-container">
+    <h1>Strango</h1>
+    <div id="status">Looking for a stranger...</div>
+    <div id="typing"></div>
+
+    <div id="messages"></div>
+
+    <input id="msg" placeholder="Type a message">
+
+    <div class="controls">
+      <button id="sendBtn">Send</button>
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const socket = io();
+    const messages = document.getElementById("messages");
+    const status = document.getElementById("status");
+    const typing = document.getElementById("typing");
+    const input = document.getElementById("msg");
+
+    let typingTimer;
+
+    socket.on("matched", () => {
+      status.innerText = "Connected to a stranger";
+    });
+
+    socket.on("message", (msg) => {
+      messages.innerHTML += `<div class="msg stranger">${msg}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+      typing.innerText = "";
+    });
+
+    socket.on("typing", () => {
+      typing.innerText = "Stranger is typing...";
+    });
+
+    socket.on("stopTyping", () => {
+      typing.innerText = "";
+    });
+
+    socket.on("partnerLeft", () => {
+      status.innerText = "Stranger disconnected. Waiting...";
+      typing.innerText = "";
+      messages.innerHTML = "";
+    });
+
+    function send() {
+      if (!input.value.trim()) return;
+
+      socket.emit("message", input.value);
+      socket.emit("stopTyping");
+
+      messages.innerHTML += `<div class="msg you">${input.value}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+      input.value = "";
+    }
+
+    document.getElementById("sendBtn").onclick = send;
+    document.getElementById("nextBtn").onclick = () => {
+      messages.innerHTML = "";
+      typing.innerText = "";
+      status.innerText = "Looking for a new stranger...";
+      socket.disconnect();
+      setTimeout(() => socket.connect(), 300);
+    };
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        send();
+      } else {
+        socket.emit("typing");
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          socket.emit("stopTyping");
+        }, 800);
+      }
+    });
+  </script>
+</body>
+</html>
