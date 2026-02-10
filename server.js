@@ -6,7 +6,6 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-// ================= SOCKET.IO =================
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -14,18 +13,20 @@ const io = new Server(server, {
   },
 });
 
-// ================= SERVE FRONTEND =================
+// ================= FRONTEND =================
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ================= STRANGER CHAT LOGIC =================
+// ================= STRANGER LOGIC =================
 let waitingUser = null;
+let onlineCount = 0;
 
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+  onlineCount++;
+  io.emit("onlineCount", onlineCount);
 
   if (waitingUser) {
     socket.partner = waitingUser;
@@ -46,15 +47,30 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("typing", () => {
+    if (socket.partner) {
+      socket.partner.emit("typing");
+    }
+  });
+
+  socket.on("stopTyping", () => {
+    if (socket.partner) {
+      socket.partner.emit("stopTyping");
+    }
+  });
+
   socket.on("disconnect", () => {
+    onlineCount--;
+    io.emit("onlineCount", onlineCount);
+
     if (socket.partner) {
       socket.partner.emit("partnerDisconnected");
       socket.partner.partner = null;
     }
+
     if (waitingUser === socket) {
       waitingUser = null;
     }
-    console.log("User disconnected:", socket.id);
   });
 });
 

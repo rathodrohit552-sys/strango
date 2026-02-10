@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Strango - Chat with Stranger</title>
   <script src="/socket.io/socket.io.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -15,18 +16,22 @@
       padding: 15px;
       font-size: 26px;
       font-weight: bold;
+      display: flex;
+      justify-content: space-between;
     }
     #status {
       margin: 10px 15px;
       color: #00ff9c;
     }
+    #typing {
+      margin-left: 15px;
+      font-size: 14px;
+      color: #ffdf6c;
+    }
     #chat {
       padding: 15px;
-      height: calc(100vh - 170px);
+      height: calc(100vh - 190px);
       overflow-y: auto;
-    }
-    #chat p {
-      margin: 5px 0;
     }
     footer {
       display: flex;
@@ -56,10 +61,16 @@
     }
   </style>
 </head>
+
 <body>
 
-<header>Strango</header>
+<header>
+  <div>Strango</div>
+  <div>👥 <span id="online">0</span> online</div>
+</header>
+
 <div id="status">Connecting...</div>
+<div id="typing"></div>
 
 <div id="chat"></div>
 
@@ -70,15 +81,19 @@
 </footer>
 
 <script>
-  const socket = io({
-    transports: ["websocket"],
-  });
+  const socket = io({ transports: ["websocket"] });
 
   const status = document.getElementById("status");
   const chat = document.getElementById("chat");
   const input = document.getElementById("input");
   const sendBtn = document.getElementById("send");
   const nextBtn = document.getElementById("next");
+  const online = document.getElementById("online");
+  const typing = document.getElementById("typing");
+
+  socket.on("onlineCount", (count) => {
+    online.innerText = count;
+  });
 
   socket.on("waiting", () => {
     status.innerText = "Waiting for a stranger...";
@@ -96,25 +111,43 @@
     chat.scrollTop = chat.scrollHeight;
   });
 
+  socket.on("typing", () => {
+    typing.innerText = "Stranger is typing...";
+  });
+
+  socket.on("stopTyping", () => {
+    typing.innerText = "";
+  });
+
   socket.on("partnerDisconnected", () => {
     status.innerText = "Stranger disconnected. Finding new one...";
     setTimeout(() => location.reload(), 1000);
   });
 
-  sendBtn.onclick = () => {
+  function sendMessage() {
     if (input.value.trim() !== "") {
       const p = document.createElement("p");
       p.innerText = "You: " + input.value;
       chat.appendChild(p);
       socket.emit("message", input.value);
       input.value = "";
+      socket.emit("stopTyping");
       chat.scrollTop = chat.scrollHeight;
     }
-  };
+  }
 
-  nextBtn.onclick = () => {
-    location.reload();
-  };
+  sendBtn.onclick = sendMessage;
+
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+    else socket.emit("typing");
+  });
+
+  input.addEventListener("blur", () => {
+    socket.emit("stopTyping");
+  });
+
+  nextBtn.onclick = () => location.reload();
 </script>
 
 </body>
