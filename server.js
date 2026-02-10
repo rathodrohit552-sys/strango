@@ -1,73 +1,93 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
 
-app.use(express.static("public"));
+// Socket.IO setup
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
-let waitingSocket = null;
-let onlineUsers = 0;
+app.use(cors());
+app.use(express.json());
+
+// Health check
+app.get("/", (req, res) => {
+  res.send("Strango server is running 🚀");
+});
+
+// ===============================
+// STRANGER CHAT LOGIC (FINAL)
+// ===============================
+
+let waitingUser = null;
 
 io.on("connection", (socket) => {
-  onlineUsers++;
-  io.emit("online", onlineUsers);
+  console.log("User connected:", socket.id);
 
-  socket.partner = null;
-
-  if (waitingSocket) {
-    socket.partner = waitingSocket;
-    waitingSocket.partner = socket;
-
-    socket.emit("connected");
-    waitingSocket.emit("connected");
-
-    waitingSocket = null;
+  // Pairing logic
+  if (waitingUser === null) {
+    waitingUser = socket;
+    socket.emit("status", "Waiting for stranger...");
   } else {
-    waitingSocket = socket;
-    socket.emit("waiting");
+    const partner = waitingUser;
+    waitingUser = null;
+
+    socket.partner = partner;
+    partner.partner = socket;
+
+    socket.emit("status", "Connected to a stranger");
+    partner.emit("status", "Connected to a stranger");
   }
 
+  // Message handling
   socket.on("message", (msg) => {
     if (socket.partner) {
       socket.partner.emit("message", msg);
     }
   });
 
-  socket.on("typing", () => {
-    if (socket.partner) {
-      socket.partner.emit("typing");
-    }
-  });
-
+  // NEXT button logic
   socket.on("next", () => {
     if (socket.partner) {
-      socket.partner.emit("stranger_left");
+      socket.partner.emit("status", "Stranger disconnected");
       socket.partner.partner = null;
       socket.partner = null;
     }
 
-    if (!waitingSocket) {
-      waitingSocket = socket;
-      socket.emit("waiting");
+    if (waitingUser === null) {
+      waitingUser = socket;
+      socket.emit("status", "Waiting for stranger...");
     }
   });
 
+  // Disconnect handling
   socket.on("disconnect", () => {
-    onlineUsers--;
-    io.emit("online", onlineUsers);
-
-    if (waitingSocket === socket) waitingSocket = null;
+    console.log("User disconnected:", socket.id);
 
     if (socket.partner) {
-      socket.partner.emit("stranger_left");
+      socket.partner.emit("status", "Stranger disconnected");
       socket.partner.partner = null;
+    }
+
+    if (waitingUser === socket) {
+      waitingUser = null;
     }
   });
 });
 
-server.listen(3000, () => {
-  console.log("✅ Strango running at http://localhost:3000");
+// ===============================
+// START SERVER (RENDER SAFE)
+// ===============================
+
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log(`Strango running on port ${PORT}`);
 });
