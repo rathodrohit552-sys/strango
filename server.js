@@ -10,17 +10,11 @@ const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
 });
 
-// ================= FRONTEND =================
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ================= SAFETY CONFIG =================
-const BAD_WORDS = ["sex", "porn", "fuck", "bitch", "nude"];
-const MAX_WARNINGS = 2;
-
-// ================= MATCHING =================
 let waitingUser = null;
 let onlineCount = 0;
 
@@ -39,12 +33,7 @@ function clearPartner(socket) {
   }
 }
 
-function hasBadWord(msg) {
-  return BAD_WORDS.some(w => msg.toLowerCase().includes(w));
-}
-
 io.on("connection", (socket) => {
-  socket.warnings = 0;
   onlineCount++;
   io.emit("onlineCount", onlineCount);
 
@@ -57,19 +46,15 @@ io.on("connection", (socket) => {
   }
 
   socket.on("message", (msg) => {
-    if (hasBadWord(msg)) {
-      socket.warnings++;
-      socket.emit("warning", socket.warnings);
-
-      if (socket.warnings > MAX_WARNINGS) {
-        socket.emit("blocked");
-        clearPartner(socket);
-        socket.disconnect();
-      }
-      return;
-    }
-
     if (socket.partner) socket.partner.emit("message", msg);
+  });
+
+  socket.on("typing", () => {
+    if (socket.partner) socket.partner.emit("typing");
+  });
+
+  socket.on("stopTyping", () => {
+    if (socket.partner) socket.partner.emit("stopTyping");
   });
 
   socket.on("skip", () => {
@@ -93,7 +78,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// ================= START =================
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Strango running on port ${PORT}`);
