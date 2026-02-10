@@ -1,141 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Strango</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Strango • Chat with Stranger</title>
+<script src="/socket.io/socket.io.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      height: 100vh;
-      overflow: hidden;
-    }
+<style>
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
 
-    .card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #111;
-      padding: 25px;
-      border-radius: 12px;
-      width: 300px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-      z-index: 1;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+}
 
-    .card h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+.app { display: flex; height: 100vh; }
 
-    .card p {
-      font-size: 14px;
-      color: #aaa;
-      margin-bottom: 15px;
-    }
+/* CHAT 60% */
+.chat {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
 
-    .card input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      margin-bottom: 12px;
-    }
+.header {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
+}
 
-    .card button {
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin: 0 5px;
-    }
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .send-btn {
-      background: #1e90ff;
-      color: #fff;
-    }
+.status {
+  color: #22c55e;
+  font-size: 14px;
+}
 
-    .next-btn {
-      background: #333;
-      color: #fff;
-    }
+.online {
+  font-size: 13px;
+  opacity: 0.7;
+}
 
-    #emi-frame {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 360px;
-      height: 100%;
-      border: none;
-      background: #fff;
-      z-index: 999;
-    }
+/* MESSAGES */
+.messages {
+  flex: 1;
+  margin-top: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-    @media (max-width: 600px) {
-      #emi-frame {
-        width: 100%;
-      }
-    }
-  </style>
+.message-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.msg {
+  max-width: 75%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.me { background: #2563eb; }
+.stranger { background: #1e293b; }
+
+.time {
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+/* TYPING */
+.typing {
+  font-size: 13px;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dots { display: flex; gap: 3px; }
+.dots span {
+  width: 5px;
+  height: 5px;
+  background: #9ca3af;
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+
+@keyframes blink {
+  0%{opacity:.2} 20%{opacity:1} 100%{opacity:.2}
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.send-btn {
+  padding: 10px 14px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  border-radius: 6px;
+}
+
+.next-btn {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}
+  70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+}
+
+/* ANIMATION */
+.anim {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .35;
+}
+
+/* MOBILE */
+@media (max-width:768px){
+  .app{flex-direction:column}
+  .chat{width:100%}
+  .anim{display:none}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Main UI -->
-  <div class="card">
-    <h1>Strango</h1>
-    <p>Looking for a stranger...</p>
-    <input type="text" placeholder="Type a message" />
-    <div>
-      <button class="send-btn">Send</button>
-      <button class="next-btn">Next</button>
+<div class="app">
+  <div class="chat">
+    <div class="header">
+      <div class="header-top">
+        <h2>Strango</h2>
+        <div id="online" class="online">👥 0 online</div>
+      </div>
+      <div id="status" class="status">Connecting...</div>
+    </div>
+
+    <div id="messages" class="messages"></div>
+
+    <div class="controls">
+      <button class="next-btn" onclick="next()">Next</button>
+      <input id="input" placeholder="Type a message..." />
+      <button class="send-btn" onclick="send()">Send</button>
     </div>
   </div>
 
-  <!-- 🔥 EMI BUTTON WITH EMBEDDED RUPEE IMAGE -->
-  <div
-    onclick="toggleEMI()"
-    style="
-      position: fixed;
-      right: 14px;
-      top: 10%;
-      width: 58px;
-      height: 58px;
-      background: #8b5a2b;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 99999;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.7);
-    "
-  >
-    <img
-      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtUlEQVR4nO2WT0gCURTGf+fY2IY2QbAQJESQ0KIgkWQvEQkF9C7Ew0S9R6EQQpCIl6E0V6E0N0tY4m9iY7u7u7c+fO3u7O7s7s7sPzjz3nO+f8z7v5xzPZk7xZB1+gZ0Qh3AFngJPAI7AL3AJrAHXgJ/AGPA0uAR8B5cFz0G8X5Uu5xA3c0l4J5a5F7F8s3Yx0qVb+4l2jF8mKJt0gM3aYw6Y4VQhZp9tY2m4MZ0h9j+6tq6aYk8E4p0t1p8p4bZxjQ+8ZV7hZkH+QK2YxJ+Q7g8n3oY0gR9KX7lYb0o8A9hYk3w5R+8s8pG1h9kKzK2z4J2b8Bz4FZ4C9wJXgJPAI3AN3APngKPAKfALvAefArPZ+q3l1Pz2F2n5r8Zz0h9X7QAAAABJRU5ErkJggg=="
-      alt="₹"
-      width="28"
-      height="28"
-    />
-  </div>
+  <div class="anim">Smooth Animations</div>
+</div>
 
-  <!-- EMI Calculator -->
-  <iframe id="emi-frame" src="/emi-calculator.html"></iframe>
+<script>
+const socket = io();
+const messages = document.getElementById("messages");
+const status = document.getElementById("status");
+const online = document.getElementById("online");
+const input = document.getElementById("input");
 
-  <script>
-    function toggleEMI() {
-      const frame = document.getElementById("emi-frame");
-      frame.style.display =
-        frame.style.display === "block" ? "none" : "block";
-    }
-  </script>
+let typingEl=null, typingTimer=null;
+
+/* ONLINE COUNT */
+socket.on("online", (count)=>{
+  online.textContent = `👥 ${count} online`;
+});
+
+/* CONNECTION */
+socket.on("waiting", ()=>{
+  resetUI();
+  status.textContent="⏳ Waiting for stranger...";
+});
+
+socket.on("connected", ()=>{
+  resetUI();
+  status.textContent="🟢 Connected to a stranger";
+});
+
+socket.on("message",(msg)=>{
+  stopTyping();
+  addMessage(msg,"stranger");
+});
+
+socket.on("typing",()=>showTyping());
+
+socket.on("stranger_left",()=>{
+  status.textContent="❌ Stranger disconnected";
+  stopTyping();
+});
+
+/* SEND */
+function send(){
+  const t=input.value.trim();
+  if(!t) return;
+  addMessage(t,"me");
+  socket.emit("message",t);
+  input.value="";
+}
+input.addEventListener("keydown",e=>{if(e.key==="Enter")send()});
+input.addEventListener("input",()=>socket.emit("typing"));
+
+function next(){
+  resetUI();
+  socket.emit("next");
+}
+
+/* HELPERS */
+function addMessage(text,who){
+  const row=document.createElement("div");
+  row.className="message-row";
+  const b=document.createElement("div");
+  b.className=`msg ${who}`;
+  b.textContent=text;
+  const time=document.createElement("div");
+  time.className="time";
+  time.textContent=new Date().toLocaleTimeString([],{
+    hour:"2-digit",minute:"2-digit"
+  });
+  row.appendChild(b);row.appendChild(time);
+  messages.appendChild(row);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+function showTyping(){
+  if(!typingEl){
+    typingEl=document.createElement("div");
+    typingEl.className="typing";
+    typingEl.innerHTML=`Stranger is typing<div class="dots"><span></span><span></span><span></span></div>`;
+    messages.appendChild(typingEl);
+  }
+  clearTimeout(typingTimer);
+  typingTimer=setTimeout(stopTyping,1200);
+}
+
+function stopTyping(){
+  if(typingEl){typingEl.remove();typingEl=null}
+}
+
+function resetUI(){
+  messages.innerHTML="";
+  stopTyping();
+}
+</script>
 
 </body>
 </html>

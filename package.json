@@ -14,5 +14,13 @@
   "dependencies": {
     "express": "^5.2.1",
     "socket.io": "^4.8.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rathodrohit552-sys/strango.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rathodrohit552-sys/strango/issues"
+  },
+  "homepage": "https://github.com/rathodrohit552-sys/strango#readme"
 }

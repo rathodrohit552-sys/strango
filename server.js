@@ -1,17 +1,73 @@
 const express = require("express");
-const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const io = new Server(server);
 
-// Serve static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
-// Serve main page
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+let waitingSocket = null;
+let onlineUsers = 0;
+
+io.on("connection", (socket) => {
+  onlineUsers++;
+  io.emit("online", onlineUsers);
+
+  socket.partner = null;
+
+  if (waitingSocket) {
+    socket.partner = waitingSocket;
+    waitingSocket.partner = socket;
+
+    socket.emit("connected");
+    waitingSocket.emit("connected");
+
+    waitingSocket = null;
+  } else {
+    waitingSocket = socket;
+    socket.emit("waiting");
+  }
+
+  socket.on("message", (msg) => {
+    if (socket.partner) {
+      socket.partner.emit("message", msg);
+    }
+  });
+
+  socket.on("typing", () => {
+    if (socket.partner) {
+      socket.partner.emit("typing");
+    }
+  });
+
+  socket.on("next", () => {
+    if (socket.partner) {
+      socket.partner.emit("stranger_left");
+      socket.partner.partner = null;
+      socket.partner = null;
+    }
+
+    if (!waitingSocket) {
+      waitingSocket = socket;
+      socket.emit("waiting");
+    }
+  });
+
+  socket.on("disconnect", () => {
+    onlineUsers--;
+    io.emit("online", onlineUsers);
+
+    if (waitingSocket === socket) waitingSocket = null;
+
+    if (socket.partner) {
+      socket.partner.emit("stranger_left");
+      socket.partner.partner = null;
+    }
+  });
 });
 
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+server.listen(3000, () => {
+  console.log("✅ Strango running at http://localhost:3000");
 });
