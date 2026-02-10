@@ -16,16 +16,19 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ================= STRANGER MATCHING =================
+// ================= SAFETY CONFIG =================
+const BAD_WORDS = ["sex", "porn", "fuck", "bitch", "nude"];
+const MAX_WARNINGS = 2;
+
+// ================= MATCHING =================
 let waitingUser = null;
 let onlineCount = 0;
 
-function pairUsers(user1, user2) {
-  user1.partner = user2;
-  user2.partner = user1;
-
-  user1.emit("matched");
-  user2.emit("matched");
+function pair(a, b) {
+  a.partner = b;
+  b.partner = a;
+  a.emit("matched");
+  b.emit("matched");
 }
 
 function clearPartner(socket) {
@@ -36,13 +39,17 @@ function clearPartner(socket) {
   }
 }
 
+function hasBadWord(msg) {
+  return BAD_WORDS.some(w => msg.toLowerCase().includes(w));
+}
+
 io.on("connection", (socket) => {
+  socket.warnings = 0;
   onlineCount++;
   io.emit("onlineCount", onlineCount);
 
-  // Try pairing immediately
   if (waitingUser) {
-    pairUsers(socket, waitingUser);
+    pair(socket, waitingUser);
     waitingUser = null;
   } else {
     waitingUser = socket;
@@ -50,25 +57,27 @@ io.on("connection", (socket) => {
   }
 
   socket.on("message", (msg) => {
+    if (hasBadWord(msg)) {
+      socket.warnings++;
+      socket.emit("warning", socket.warnings);
+
+      if (socket.warnings > MAX_WARNINGS) {
+        socket.emit("blocked");
+        clearPartner(socket);
+        socket.disconnect();
+      }
+      return;
+    }
+
     if (socket.partner) socket.partner.emit("message", msg);
   });
 
-  socket.on("typing", () => {
-    if (socket.partner) socket.partner.emit("typing");
-  });
-
-  socket.on("stopTyping", () => {
-    if (socket.partner) socket.partner.emit("stopTyping");
-  });
-
-  // 🔥 SKIP / NEXT WITHOUT RELOAD
   socket.on("skip", () => {
     clearPartner(socket);
-
     if (waitingUser === socket) waitingUser = null;
 
     if (waitingUser) {
-      pairUsers(socket, waitingUser);
+      pair(socket, waitingUser);
       waitingUser = null;
     } else {
       waitingUser = socket;
@@ -79,13 +88,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     onlineCount--;
     io.emit("onlineCount", onlineCount);
-
     clearPartner(socket);
     if (waitingUser === socket) waitingUser = null;
   });
 });
 
-// ================= START SERVER =================
+// ================= START =================
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Strango running on port ${PORT}`);
