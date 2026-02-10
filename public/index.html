@@ -1,276 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Strango • Chat with Stranger</title>
-<script src="/socket.io/socket.io.js"></script>
-
-<style>
-* { box-sizing: border-box; font-family: Arial, sans-serif; }
-
-body {
-  margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: white;
-}
-
-.app { display: flex; height: 100vh; }
-
-/* CHAT 60% */
-.chat {
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-}
-
-.header {
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 10px;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.status {
-  color: #22c55e;
-  font-size: 14px;
-}
-
-.online {
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-/* MESSAGES */
-.messages {
-  flex: 1;
-  margin-top: 15px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.message-row {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.msg {
-  max-width: 75%;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.me { background: #2563eb; }
-.stranger { background: #1e293b; }
-
-.time {
-  font-size: 11px;
-  opacity: 0.5;
-  margin-top: 2px;
-}
-
-/* TYPING */
-.typing {
-  font-size: 13px;
-  opacity: 0.7;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.dots { display: flex; gap: 3px; }
-.dots span {
-  width: 5px;
-  height: 5px;
-  background: #9ca3af;
-  border-radius: 50%;
-  animation: blink 1.4s infinite both;
-}
-.dots span:nth-child(2){animation-delay:.2s}
-.dots span:nth-child(3){animation-delay:.4s}
-
-@keyframes blink {
-  0%{opacity:.2} 20%{opacity:1} 100%{opacity:.2}
-}
-
-/* CONTROLS */
-.controls {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-}
-
-.send-btn {
-  padding: 10px 14px;
-  background: #2563eb;
-  border: none;
-  color: white;
-  border-radius: 6px;
-}
-
-.next-btn {
-  padding: 10px 14px;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  border: none;
-  color: white;
-  border-radius: 6px;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}
-  70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}
-  100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
-}
-
-/* ANIMATION */
-.anim {
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: .35;
-}
-
-/* MOBILE */
-@media (max-width:768px){
-  .app{flex-direction:column}
-  .chat{width:100%}
-  .anim{display:none}
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Strango - Chat with Stranger</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #020024, #090979, #00d4ff);
+      color: white;
+    }
+    header {
+      padding: 15px;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    #status {
+      margin: 10px 15px;
+      color: #00ff9c;
+    }
+    #chat {
+      padding: 15px;
+      height: calc(100vh - 170px);
+      overflow-y: auto;
+    }
+    #chat p {
+      margin: 5px 0;
+    }
+    footer {
+      display: flex;
+      padding: 10px;
+      background: #000;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      margin-left: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #send {
+      background: #007bff;
+      color: white;
+    }
+    #next {
+      background: #28a745;
+      color: white;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="app">
-  <div class="chat">
-    <div class="header">
-      <div class="header-top">
-        <h2>Strango</h2>
-        <div id="online" class="online">👥 0 online</div>
-      </div>
-      <div id="status" class="status">Connecting...</div>
-    </div>
+<header>Strango</header>
+<div id="status">Connecting...</div>
 
-    <div id="messages" class="messages"></div>
+<div id="chat"></div>
 
-    <div class="controls">
-      <button class="next-btn" onclick="next()">Next</button>
-      <input id="input" placeholder="Type a message..." />
-      <button class="send-btn" onclick="send()">Send</button>
-    </div>
-  </div>
-
-  <div class="anim">Smooth Animations</div>
-</div>
+<footer>
+  <button id="next">Next</button>
+  <input id="input" placeholder="Type a message..." />
+  <button id="send">Send</button>
+</footer>
 
 <script>
-const socket = io();
-const messages = document.getElementById("messages");
-const status = document.getElementById("status");
-const online = document.getElementById("online");
-const input = document.getElementById("input");
-
-let typingEl=null, typingTimer=null;
-
-/* ONLINE COUNT */
-socket.on("online", (count)=>{
-  online.textContent = `👥 ${count} online`;
-});
-
-/* CONNECTION */
-socket.on("waiting", ()=>{
-  resetUI();
-  status.textContent="⏳ Waiting for stranger...";
-});
-
-socket.on("connected", ()=>{
-  resetUI();
-  status.textContent="🟢 Connected to a stranger";
-});
-
-socket.on("message",(msg)=>{
-  stopTyping();
-  addMessage(msg,"stranger");
-});
-
-socket.on("typing",()=>showTyping());
-
-socket.on("stranger_left",()=>{
-  status.textContent="❌ Stranger disconnected";
-  stopTyping();
-});
-
-/* SEND */
-function send(){
-  const t=input.value.trim();
-  if(!t) return;
-  addMessage(t,"me");
-  socket.emit("message",t);
-  input.value="";
-}
-input.addEventListener("keydown",e=>{if(e.key==="Enter")send()});
-input.addEventListener("input",()=>socket.emit("typing"));
-
-function next(){
-  resetUI();
-  socket.emit("next");
-}
-
-/* HELPERS */
-function addMessage(text,who){
-  const row=document.createElement("div");
-  row.className="message-row";
-  const b=document.createElement("div");
-  b.className=`msg ${who}`;
-  b.textContent=text;
-  const time=document.createElement("div");
-  time.className="time";
-  time.textContent=new Date().toLocaleTimeString([],{
-    hour:"2-digit",minute:"2-digit"
+  const socket = io({
+    transports: ["websocket"],
   });
-  row.appendChild(b);row.appendChild(time);
-  messages.appendChild(row);
-  messages.scrollTop=messages.scrollHeight;
-}
 
-function showTyping(){
-  if(!typingEl){
-    typingEl=document.createElement("div");
-    typingEl.className="typing";
-    typingEl.innerHTML=`Stranger is typing<div class="dots"><span></span><span></span><span></span></div>`;
-    messages.appendChild(typingEl);
-  }
-  clearTimeout(typingTimer);
-  typingTimer=setTimeout(stopTyping,1200);
-}
+  const status = document.getElementById("status");
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("input");
+  const sendBtn = document.getElementById("send");
+  const nextBtn = document.getElementById("next");
 
-function stopTyping(){
-  if(typingEl){typingEl.remove();typingEl=null}
-}
+  socket.on("waiting", () => {
+    status.innerText = "Waiting for a stranger...";
+  });
 
-function resetUI(){
-  messages.innerHTML="";
-  stopTyping();
-}
+  socket.on("matched", () => {
+    status.innerText = "Connected to a stranger";
+    chat.innerHTML = "";
+  });
+
+  socket.on("message", (msg) => {
+    const p = document.createElement("p");
+    p.innerText = "Stranger: " + msg;
+    chat.appendChild(p);
+    chat.scrollTop = chat.scrollHeight;
+  });
+
+  socket.on("partnerDisconnected", () => {
+    status.innerText = "Stranger disconnected. Finding new one...";
+    setTimeout(() => location.reload(), 1000);
+  });
+
+  sendBtn.onclick = () => {
+    if (input.value.trim() !== "") {
+      const p = document.createElement("p");
+      p.innerText = "You: " + input.value;
+      chat.appendChild(p);
+      socket.emit("message", input.value);
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+    }
+  };
+
+  nextBtn.onclick = () => {
+    location.reload();
+  };
 </script>
 
 </body>
