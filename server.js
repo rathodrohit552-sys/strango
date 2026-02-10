@@ -1,84 +1,74 @@
 const express = require("express");
 const http = require("http");
-const path = require("path");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] },
-});
+const io = new Server(server);
 
 app.use(express.static(path.join(__dirname, "public")));
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
 
 let waitingUser = null;
-let onlineCount = 0;
-
-function pair(a, b) {
-  a.partner = b;
-  b.partner = a;
-  a.emit("matched");
-  b.emit("matched");
-}
-
-function clearPartner(socket) {
-  if (socket.partner) {
-    socket.partner.partner = null;
-    socket.partner.emit("partnerDisconnected");
-    socket.partner = null;
-  }
-}
+let pairs = new Map(); // socket.id -> partner.id
 
 io.on("connection", (socket) => {
-  onlineCount++;
-  io.emit("onlineCount", onlineCount);
+  console.log("User connected:", socket.id);
 
-  if (waitingUser) {
-    pair(socket, waitingUser);
-    waitingUser = null;
-  } else {
-    waitingUser = socket;
-    socket.emit("waiting");
-  }
+  socket.emit("online-count", io.engine.clientsCount);
 
-  socket.on("message", (msg) => {
-    if (socket.partner) socket.partner.emit("message", msg);
-  });
+  socket.on("find", () => {
+    if (pairs.has(socket.id)) return;
 
-  socket.on("typing", () => {
-    if (socket.partner) socket.partner.emit("typing");
-  });
-
-  socket.on("stopTyping", () => {
-    if (socket.partner) socket.partner.emit("stopTyping");
-  });
-
-  socket.on("skip", () => {
-    clearPartner(socket);
-    if (waitingUser === socket) waitingUser = null;
-
-    if (waitingUser) {
-      pair(socket, waitingUser);
+    if (waitingUser && waitingUser !== socket.id) {
+      const partner = waitingUser;
       waitingUser = null;
+
+      pairs.set(socket.id, partner);
+      pairs.set(partner, socket.id);
+
+      io.to(socket.id).emit("connected");
+      io.to(partner).emit("connected");
     } else {
-      waitingUser = socket;
-      socket.emit("waiting");
+      waitingUser = socket.id;
     }
   });
 
-  socket.on("disconnect", () => {
-    onlineCount--;
-    io.emit("onlineCount", onlineCount);
-    clearPartner(socket);
-    if (waitingUser === socket) waitingUser = null;
+  socket.on("message", (msg) => {
+    const partner = pairs.get(socket.id);
+    if (partner) {
+      io.to(partner).emit("message", msg);
+    }
   });
+
+  socket.on("typing", () => {
+    const partner = pairs.get(socket.id);
+    if (partner) io.to(partner).emit("typing");
+  });
+
+  socket.on("next", () => {
+    disconnectPair(socket.id);
+    socket.emit("disconnected");
+    socket.emit("find");
+  });
+
+  socket.on("disconnect", () => {
+    disconnectPair(socket.id);
+    if (waitingUser === socket.id) waitingUser = null;
+    console.log("Disconnected:", socket.id);
+  });
+
+  function disconnectPair(id) {
+    const partner = pairs.get(id);
+    if (partner) {
+      pairs.delete(partner);
+      io.to(partner).emit("disconnected");
+    }
+    pairs.delete(id);
+  }
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Strango running on port ${PORT}`);
-});
+server.listen(PORT, () =>
+  console.log(`Strango running on port ${PORT}`)
+);

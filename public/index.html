@@ -1,92 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Strango</title>
-  <script src="/socket.io/socket.io.js"></script>
+<meta charset="UTF-8" />
+<title>Strango</title>
+<script src="/socket.io/socket.io.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: linear-gradient(135deg, #2b1b14, #3a241c);
-      color: white;
-    }
-    header {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 22px;
-    }
-    #status { margin: 10px; color: #a8ffcc; }
-    #typing { margin-left: 10px; font-style: italic; color: #ffd180; }
-    #chat { padding: 15px; height: calc(100vh - 200px); overflow-y: auto; }
-    footer { display: flex; padding: 10px; }
-    input { flex: 1; padding: 10px; }
-    button { margin-left: 6px; padding: 10px 14px; }
-  </style>
+<style>
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: linear-gradient(135deg, #2b1b17, #3e2723);
+  color: #fff;
+}
+
+#chat {
+  padding: 20px;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+input {
+  width: 70%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 14px 22px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#send {
+  background: linear-gradient(135deg, #ff9800, #ff5722);
+  color: white;
+}
+
+#next {
+  background: linear-gradient(135deg, #8e24aa, #5e35b1);
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+#status {
+  padding: 10px;
+  color: #9cffb0;
+}
+
+#typing {
+  font-size: 13px;
+  opacity: 0.7;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div>Strango</div>
-  <div>👥 <span id="online">0</span></div>
-</header>
-
+<h2 style="padding:10px;">Strango</h2>
 <div id="status">Connecting...</div>
-<div id="typing"></div>
 <div id="chat"></div>
+<div id="typing"></div>
 
-<footer>
-  <button onclick="skip()">Next</button>
+<div style="padding:10px;">
   <input id="msg" placeholder="Type a message..." />
-  <button onclick="send()">Send</button>
-</footer>
+  <button id="send">Send</button>
+  <button id="next">Next</button>
+</div>
 
 <script>
-  const socket = io({ transports: ["websocket"] });
+const socket = io();
+const chat = document.getElementById("chat");
+const msg = document.getElementById("msg");
+const status = document.getElementById("status");
+const typing = document.getElementById("typing");
 
-  const chat = document.getElementById("chat");
-  const msg = document.getElementById("msg");
-  const status = document.getElementById("status");
-  const typing = document.getElementById("typing");
-  const online = document.getElementById("online");
+socket.emit("find");
 
-  socket.on("onlineCount", c => online.innerText = c);
-  socket.on("waiting", () => status.innerText = "Waiting for stranger...");
-  socket.on("matched", () => {
-    status.innerText = "Connected to a stranger";
-    chat.innerHTML = "";
-  });
+socket.on("connected", () => {
+  status.innerText = "Connected to a stranger";
+});
 
-  socket.on("message", m => {
-    typing.innerText = "";
-    chat.innerHTML += `<p>Stranger: ${m}</p>`;
-  });
+socket.on("disconnected", () => {
+  status.innerText = "Disconnected. Finding new stranger...";
+  chat.innerHTML = "";
+});
 
-  socket.on("typing", () => typing.innerText = "Stranger is typing...");
-  socket.on("stopTyping", () => typing.innerText = "");
+socket.on("message", (m) => {
+  chat.innerHTML += `<div><b>Stranger:</b> ${m}</div>`;
+  typing.innerText = "";
+});
 
-  msg.addEventListener("input", () => {
-    socket.emit("typing");
-    clearTimeout(window.t);
-    window.t = setTimeout(() => socket.emit("stopTyping"), 700);
-  });
+socket.on("typing", () => {
+  typing.innerText = "Stranger is typing...";
+  setTimeout(() => typing.innerText = "", 1000);
+});
 
-  function send() {
-    if (!msg.value.trim()) return;
-    chat.innerHTML += `<p>You: ${msg.value}</p>`;
-    socket.emit("message", msg.value);
-    socket.emit("stopTyping");
-    msg.value = "";
-  }
+document.getElementById("send").onclick = sendMessage;
 
-  function skip() {
-    chat.innerHTML = "";
-    typing.innerText = "";
-    status.innerText = "Finding new stranger...";
-    socket.emit("skip");
-  }
+msg.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMessage();
+  else socket.emit("typing");
+});
+
+function sendMessage() {
+  if (!msg.value.trim()) return;
+  chat.innerHTML += `<div><b>You:</b> ${msg.value}</div>`;
+  socket.emit("message", msg.value);
+  msg.value = "";
+}
+
+document.getElementById("next").onclick = () => {
+  socket.emit("next");
+};
 </script>
 
 </body>
