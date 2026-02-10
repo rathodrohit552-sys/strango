@@ -19,20 +19,12 @@
       font-weight: 600;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       background: rgba(0, 0, 0, 0.35);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    #online {
-      color: #c7a17a;
-      font-weight: 500;
     }
 
     #status {
-      margin: 12px 20px;
+      margin: 10px 20px;
       color: #a8ffcc;
-      font-size: 15px;
     }
 
     #typing {
@@ -47,16 +39,10 @@
       overflow-y: auto;
     }
 
-    #chat p {
-      margin: 6px 0;
-      line-height: 1.4;
-    }
-
     footer {
       display: flex;
       padding: 12px;
       background: rgba(0, 0, 0, 0.5);
-      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     input {
@@ -64,43 +50,20 @@
       padding: 12px;
       border-radius: 6px;
       border: none;
-      outline: none;
-      font-size: 14px;
       background: #2c1c15;
-      color: #fff;
-    }
-
-    input::placeholder {
-      color: #aaa;
+      color: white;
     }
 
     button {
       margin-left: 6px;
       padding: 12px 18px;
-      border: none;
       border-radius: 6px;
+      border: none;
       cursor: pointer;
-      font-size: 14px;
-      transition: 0.2s;
     }
 
-    #send {
-      background: #6f4e37;
-      color: white;
-    }
-
-    #send:hover {
-      background: #8b5e3c;
-    }
-
-    #next {
-      background: #2e7d32;
-      color: white;
-    }
-
-    #next:hover {
-      background: #3fa34d;
-    }
+    #send { background: #6f4e37; color: white; }
+    #next { background: #2e7d32; color: white; }
   </style>
 </head>
 
@@ -113,7 +76,6 @@
 
 <div id="status">Connecting…</div>
 <div id="typing"></div>
-
 <div id="chat"></div>
 
 <footer>
@@ -126,70 +88,58 @@
   const socket = io({ transports: ["websocket"] });
 
   const status = document.getElementById("status");
+  const typing = document.getElementById("typing");
   const chat = document.getElementById("chat");
   const input = document.getElementById("input");
-  const sendBtn = document.getElementById("send");
-  const nextBtn = document.getElementById("next");
   const online = document.getElementById("online");
-  const typing = document.getElementById("typing");
 
-  socket.on("onlineCount", (count) => {
-    online.innerText = count;
-  });
-
-  socket.on("waiting", () => {
-    status.innerText = "Waiting for a stranger…";
-  });
+  socket.on("onlineCount", c => online.innerText = c);
+  socket.on("waiting", () => status.innerText = "Waiting for a stranger…");
 
   socket.on("matched", () => {
     status.innerText = "Connected to a stranger";
+    typing.innerText = "";
     chat.innerHTML = "";
   });
 
-  socket.on("message", (msg) => {
+  socket.on("message", msg => {
     const p = document.createElement("p");
     p.innerText = "Stranger: " + msg;
     chat.appendChild(p);
     chat.scrollTop = chat.scrollHeight;
   });
 
-  socket.on("typing", () => {
-    typing.innerText = "Stranger is typing…";
-  });
-
-  socket.on("stopTyping", () => {
-    typing.innerText = "";
-  });
+  socket.on("typing", () => typing.innerText = "Stranger is typing…");
+  socket.on("stopTyping", () => typing.innerText = "");
 
   socket.on("partnerDisconnected", () => {
-    status.innerText = "Stranger disconnected. Finding new one…";
-    setTimeout(() => location.reload(), 1000);
+    status.innerText = "Finding new stranger…";
+    chat.innerHTML = "";
   });
 
   function sendMessage() {
-    if (input.value.trim()) {
-      const p = document.createElement("p");
-      p.innerText = "You: " + input.value;
-      chat.appendChild(p);
-      socket.emit("message", input.value);
-      input.value = "";
-      socket.emit("stopTyping");
-      chat.scrollTop = chat.scrollHeight;
-    }
+    if (!input.value.trim()) return;
+    const p = document.createElement("p");
+    p.innerText = "You: " + input.value;
+    chat.appendChild(p);
+    socket.emit("message", input.value);
+    input.value = "";
+    socket.emit("stopTyping");
   }
 
-  sendBtn.onclick = sendMessage;
-
-  input.addEventListener("keypress", (e) => {
+  document.getElementById("send").onclick = sendMessage;
+  input.addEventListener("keypress", e => {
     if (e.key === "Enter") sendMessage();
     else socket.emit("typing");
   });
 
-  input.addEventListener("blur", () => {
-    socket.emit("stopTyping");
-  });
-
-  nextBtn.onclick = () => location.reload();
+  // 🔥 NEXT WITHOUT RELOAD
+  document.getElementById("next").onclick = () => {
+    chat.innerHTML = "";
+    typing.innerText = "";
+    status.innerText = "Finding new stranger…";
+    socket.emit("skip");
+  };
 </script>
 
 </body>

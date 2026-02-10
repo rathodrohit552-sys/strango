@@ -7,34 +7,42 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
+  cors: { origin: "*", methods: ["GET", "POST"] },
 });
 
 // ================= FRONTEND =================
 app.use(express.static(path.join(__dirname, "public")));
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// ================= STRANGER LOGIC =================
+// ================= STRANGER MATCHING =================
 let waitingUser = null;
 let onlineCount = 0;
+
+function pairUsers(user1, user2) {
+  user1.partner = user2;
+  user2.partner = user1;
+
+  user1.emit("matched");
+  user2.emit("matched");
+}
+
+function clearPartner(socket) {
+  if (socket.partner) {
+    socket.partner.partner = null;
+    socket.partner.emit("partnerDisconnected");
+    socket.partner = null;
+  }
+}
 
 io.on("connection", (socket) => {
   onlineCount++;
   io.emit("onlineCount", onlineCount);
 
+  // Try pairing immediately
   if (waitingUser) {
-    socket.partner = waitingUser;
-    waitingUser.partner = socket;
-
-    socket.emit("matched");
-    waitingUser.emit("matched");
-
+    pairUsers(socket, waitingUser);
     waitingUser = null;
   } else {
     waitingUser = socket;
@@ -42,20 +50,29 @@ io.on("connection", (socket) => {
   }
 
   socket.on("message", (msg) => {
-    if (socket.partner) {
-      socket.partner.emit("message", msg);
-    }
+    if (socket.partner) socket.partner.emit("message", msg);
   });
 
   socket.on("typing", () => {
-    if (socket.partner) {
-      socket.partner.emit("typing");
-    }
+    if (socket.partner) socket.partner.emit("typing");
   });
 
   socket.on("stopTyping", () => {
-    if (socket.partner) {
-      socket.partner.emit("stopTyping");
+    if (socket.partner) socket.partner.emit("stopTyping");
+  });
+
+  // 🔥 SKIP / NEXT WITHOUT RELOAD
+  socket.on("skip", () => {
+    clearPartner(socket);
+
+    if (waitingUser === socket) waitingUser = null;
+
+    if (waitingUser) {
+      pairUsers(socket, waitingUser);
+      waitingUser = null;
+    } else {
+      waitingUser = socket;
+      socket.emit("waiting");
     }
   });
 
@@ -63,14 +80,8 @@ io.on("connection", (socket) => {
     onlineCount--;
     io.emit("onlineCount", onlineCount);
 
-    if (socket.partner) {
-      socket.partner.emit("partnerDisconnected");
-      socket.partner.partner = null;
-    }
-
-    if (waitingUser === socket) {
-      waitingUser = null;
-    }
+    clearPartner(socket);
+    if (waitingUser === socket) waitingUser = null;
   });
 });
 
