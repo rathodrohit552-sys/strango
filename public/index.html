@@ -41,6 +41,37 @@
 body.chatting #seoPage{
   display:none;
 }
+/* ===== MOBILE SAFE CHAT LAYOUT ===== */
+
+html,body{
+  height:100%;
+  overflow:hidden;
+}
+
+#chatArea{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+#chat{
+  flex:1;
+  overflow-y:auto;
+  padding-bottom:80px;
+}
+
+#inputBar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#0b0b0b;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  box-sizing:border-box;
+}
 
 </style>
 
