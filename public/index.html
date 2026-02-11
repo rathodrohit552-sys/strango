@@ -14,7 +14,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
+html,body{
+  overflow-y:auto;
+  }
 /* ===== CHAT BUBBLE FIX ===== */
 
 
@@ -193,6 +195,7 @@ button{border:none;border-radius:30px;padding:12px 18px;font-weight:bold;cursor:
 
 <script>
 function scrollToChat(){
+  document.body.classList.add("chatting");
   const chat = document.getElementById("chatBox");
   if(chat){
     const yOffset = -120; // adjust scroll height
