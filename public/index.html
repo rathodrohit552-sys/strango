@@ -327,6 +327,11 @@ socket.on("onlineCount",(count)=>{onlineNumber=count;});
 socket.on("connect",()=>{
 statusText.innerHTML="👤 Online: ...<br>Connected to server";
 });
+const messageInput = document.getElementById("messageInput");
+messageInput.addEventListener("input",()=>{
+  socket.emit("typing");
+});
+
 
 socket.on("waiting",()=>{
 enableChat(false);
@@ -337,6 +342,16 @@ socket.on("matched",()=>{
 enableChat(true);
 chatBox.innerHTML="";
 statusText.innerHTML="👤 Online: "+onlineNumber+"<br>Stranger connected";
+});
+const typingText = document.getElementById("typingText");
+
+socket.on("typing",()=>{
+  typingText.innerText = "Stranger is typing...";
+  typingText.style.display = "block";
+
+  setTimeout(()=>{
+    typingText.style.display = "none";
+  },1500);
 });
 
 socket.on("message",(msg)=>{
