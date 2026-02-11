@@ -65,7 +65,51 @@ button{border:none;border-radius:30px;padding:12px 18px;font-weight:bold;cursor:
 </head>
 
 <body>
+<!-- ===== STRANGO STARTUP LANDING HEADER ===== -->
+<header id="strango-landing" style="
+  text-align:center;
+  padding:40px 20px;
+  background:linear-gradient(180deg,#0f0f0f,#161616);
+  border-bottom:1px solid #2a2a2a;
+  font-family:system-ui,Arial;
+">
+  <h1 style="
+    font-size:32px;
+    margin:0;
+    color:#ffffff;
+    letter-spacing:0.5px;">
+    Strango — Free Stranger Chat India
+  </h1>
 
+  <p style="
+    margin-top:10px;
+    color:#bbbbbb;
+    font-size:16px;">
+    Anonymous text chat without login. Meet strangers instantly.
+  </p>
+
+  <button onclick="scrollToChat()" style="
+    margin-top:20px;
+    padding:12px 22px;
+    background:#6c5ce7;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;">
+    Start Chatting
+  </button>
+</header>
+
+<script>
+function scrollToChat(){
+  const chat = document.getElementById("chatBox");
+  if(chat){
+    chat.scrollIntoView({behavior:"smooth"});
+  }
+}
+</script>
+<!-- ===== END STRANGO LANDING HEADER ===== -->
 <!-- ================= CHAT UI ================= -->
 <div class="header" id="statusText">
 👤 Online: 0<br>Looking for stranger...
