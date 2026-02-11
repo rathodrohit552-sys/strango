@@ -105,7 +105,9 @@ button{border:none;border-radius:30px;padding:12px 18px;font-weight:bold;cursor:
 function scrollToChat(){
   const chat = document.getElementById("chatBox");
   if(chat){
-    chat.scrollIntoView({behavior:"smooth"});
+    const yOffset = -120; // adjust scroll height
+    const y = chat.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({top:y, behavior:"smooth"});
   }
 }
 </script>
