@@ -1,74 +1,107 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
-let waitingUser = null;
-let pairs = new Map(); // socket.id -> partner.id
+let waitingQueue = [];
+let onlineCount = 0;
 
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
 
-  socket.emit("online-count", io.engine.clientsCount);
+onlineCount++;
+io.emit("onlineCount", onlineCount);
 
-  socket.on("find", () => {
-    if (pairs.has(socket.id)) return;
+socket.partner = null;
 
-    if (waitingUser && waitingUser !== socket.id) {
-      const partner = waitingUser;
-      waitingUser = null;
+/* ================= MATCH FUNCTION ================= */
 
-      pairs.set(socket.id, partner);
-      pairs.set(partner, socket.id);
+function tryMatch(user){
 
-      io.to(socket.id).emit("connected");
-      io.to(partner).emit("connected");
-    } else {
-      waitingUser = socket.id;
-    }
-  });
+if(waitingQueue.length > 0){
 
-  socket.on("message", (msg) => {
-    const partner = pairs.get(socket.id);
-    if (partner) {
-      io.to(partner).emit("message", msg);
-    }
-  });
+const partner = waitingQueue.shift();
 
-  socket.on("typing", () => {
-    const partner = pairs.get(socket.id);
-    if (partner) io.to(partner).emit("typing");
-  });
+if(partner.id === user.id){
+waitingQueue.push(user);
+return;
+}
 
-  socket.on("next", () => {
-    disconnectPair(socket.id);
-    socket.emit("disconnected");
-    socket.emit("find");
-  });
+user.partner = partner.id;
+partner.partner = user.id;
 
-  socket.on("disconnect", () => {
-    disconnectPair(socket.id);
-    if (waitingUser === socket.id) waitingUser = null;
-    console.log("Disconnected:", socket.id);
-  });
+user.emit("matched");
+partner.emit("matched");
 
-  function disconnectPair(id) {
-    const partner = pairs.get(id);
-    if (partner) {
-      pairs.delete(partner);
-      io.to(partner).emit("disconnected");
-    }
-    pairs.delete(id);
-  }
+}else{
+waitingQueue.push(user);
+user.emit("waiting");
+}
+}
+
+/* FIRST MATCH */
+tryMatch(socket);
+
+/* ================= MESSAGE ================= */
+
+socket.on("message",(msg)=>{
+if(socket.partner){
+io.to(socket.partner).emit("message",msg);
+}
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () =>
-  console.log(`Strango running on port ${PORT}`)
-);
+/* ================= TYPING ================= */
+
+socket.on("typing",()=>{
+if(socket.partner){
+io.to(socket.partner).emit("typing");
+}
+});
+
+/* ================= NEXT ================= */
+
+socket.on("next",()=>{
+
+if(socket.partner){
+const p = io.sockets.sockets.get(socket.partner);
+if(p){
+p.partner=null;
+p.emit("disconnectUser");
+}
+socket.partner=null;
+}
+
+waitingQueue = waitingQueue.filter(s=>s.id!==socket.id);
+
+tryMatch(socket);
+
+});
+
+/* ================= DISCONNECT ================= */
+
+socket.on("disconnect",()=>{
+
+onlineCount--;
+io.emit("onlineCount", onlineCount);
+
+if(socket.partner){
+const p = io.sockets.sockets.get(socket.partner);
+if(p){
+p.partner=null;
+p.emit("disconnectUser");
+}
+}
+
+waitingQueue = waitingQueue.filter(s=>s.id!==socket.id);
+
+});
+
+});
+
+server.listen(3000,()=>{
+console.log("🚀 Strango running on port 3000");
+});
