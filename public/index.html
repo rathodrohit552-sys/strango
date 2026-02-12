@@ -240,6 +240,67 @@ for users who prefer simplicity over complicated social media experiences.
 
 <!-- LEGAL MODALS + SCRIPT REMAIN EXACTLY SAME AS YOUR CURRENT VERSION -->
 <!-- (I intentionally did NOT modify your chat script or legal logic) -->
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io();
+
+const chatBox = document.getElementById("chatBox");
+const input = document.querySelector(".input-area input");
+const sendBtn = document.querySelector(".send-btn");
+const nextBtn = document.querySelector(".next-btn");
+
+function addSystemMessage(text){
+const div=document.createElement("div");
+div.className="system-msg";
+div.textContent=text;
+chatBox.appendChild(div);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+function addUserMessage(text){
+const div=document.createElement("div");
+div.className="user-msg";
+div.textContent=text;
+chatBox.appendChild(div);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+sendBtn.onclick=()=>{
+const msg=input.value.trim();
+if(!msg)return;
+addUserMessage("You: "+msg);
+socket.emit("message",msg);
+input.value="";
+};
+
+input.addEventListener("keypress",(e)=>{
+if(e.key==="Enter")sendBtn.click();
+});
+
+nextBtn.onclick=()=>{
+socket.emit("next");
+addSystemMessage("Looking for stranger...");
+};
+
+socket.on("connect",()=>{
+socket.emit("join");
+});
+
+socket.on("connected",()=>{
+addSystemMessage("Connected to stranger");
+});
+
+socket.on("message",(msg)=>{
+addUserMessage("Stranger: "+msg);
+});
+
+socket.on("stranger-disconnected",()=>{
+addSystemMessage("Stranger disconnected");
+});
+
+</script>
 
 </body>
 </html>
