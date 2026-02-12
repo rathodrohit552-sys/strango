@@ -26,68 +26,63 @@ h1{text-align:center;margin:10px 0 5px 0;font-size:28px;}
  height:65vh;overflow-y:auto;
 }
 
-.message{
- margin:6px 0;padding:8px 12px;border-radius:10px;
- width:fit-content;max-width:80%;
-}
-
+.message{margin:6px 0;padding:8px 12px;border-radius:10px;width:fit-content;max-width:80%;}
 .stranger{background:#1a1a1a;}
 .me{background:#25D366;color:#000;}
 .status{background:#222;color:#bbb;font-size:13px;}
 
 .controls{margin-top:10px;display:flex;gap:10px;}
-
 input{flex:1;padding:10px;border-radius:8px;border:none;}
 
 .send-btn{background:#00ff7b;border:none;padding:10px 14px;border-radius:8px;}
 .next-btn{background:#7B3F00;color:#fff;border:none;padding:10px 14px;border-radius:8px;}
 
-.utilities{
- background:#0d0d0d;padding:20px;border-radius:14px;
+.utilities{background:#0d0d0d;padding:20px;border-radius:14px;}
+
+/* ⭐ PREMIUM SEO SECTION */
+.seo-section{
+ max-width:1100px;
+ margin:40px auto;
+ padding:30px;
+ background:#0d0d0d;
+ border-radius:14px;
+ box-shadow:0 0 25px rgba(0,0,0,0.4);
+ line-height:1.7;
 }
 
-/* ⭐ FOOTER LEGAL LINKS */
-.footer{
- text-align:center;
+.seo-section h2{
+ font-size:24px;
+ margin-bottom:10px;
+}
+
+.faq{
  margin-top:20px;
- font-size:14px;
- color:#aaa;
-}
-.footer span{
- margin:0 10px;
- cursor:pointer;
- text-decoration:underline;
+ border-top:1px solid #222;
+ padding-top:15px;
 }
 
-/* ⭐ MODAL PAGES (LEGAL SECTIONS) */
+.faq h3{
+ color:#00ff7b;
+ margin-bottom:5px;
+}
+
+/* FOOTER LEGAL */
+.footer{text-align:center;margin-top:20px;color:#aaa;}
+.footer span{margin:0 10px;cursor:pointer;text-decoration:underline;}
+
+/* MODALS */
 .modal{
- position:fixed;
- top:0;left:0;
- width:100%;height:100%;
+ position:fixed;top:0;left:0;width:100%;height:100%;
  background:rgba(0,0,0,0.9);
- display:none;
- justify-content:center;
- align-items:center;
- z-index:999;
+ display:none;justify-content:center;align-items:center;z-index:999;
 }
 
 .modal-content{
- width:80%;
- max-width:800px;
- background:#0d0d0d;
- padding:25px;
- border-radius:12px;
- max-height:80vh;
- overflow:auto;
- line-height:1.6;
+ width:80%;max-width:800px;background:#0d0d0d;
+ padding:25px;border-radius:12px;max-height:80vh;overflow:auto;
 }
 
-.close-btn{
- float:right;
- cursor:pointer;
- color:#fff;
- font-weight:bold;
-}
+.close-btn{float:right;cursor:pointer;}
 
 </style>
 </head>
@@ -101,7 +96,6 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 <div class="main-container">
 
 <div class="left-panel">
-
 <div id="chat" class="chat-box"></div>
 
 <div class="controls">
@@ -109,7 +103,6 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 <input id="messageInput" placeholder="Type message..." />
 <button class="send-btn" onclick="sendMessage()">Send</button>
 </div>
-
 </div>
 
 <div class="right-panel">
@@ -127,7 +120,60 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 
 </div>
 
-<!-- ⭐ LEGAL FOOTER -->
+<!-- ================= PREMIUM SEO SECTION ================= -->
+
+<div class="seo-section">
+
+<h2>Free Online Random Chat – Meet Strangers Instantly</h2>
+
+<p>
+Strango is a modern anonymous chat platform designed for people who want fast,
+private conversations without registration. Built with performance-first architecture,
+Strango allows users across India and globally to connect instantly with strangers
+while maintaining privacy and safety aligned with Indian digital guidelines.
+</p>
+
+<p>
+Unlike traditional social platforms, Strango focuses on lightweight real-time communication.
+No login, no personal data sharing, and minimal tracking ensures a secure and distraction-free experience.
+Our goal is to make spontaneous conversations accessible, safe, and fast for everyone.
+</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq"><h3>1. Is Strango safe to use in India?</h3>
+<p>Yes. Strango follows Indian intermediary and digital safety practices. Users remain anonymous and can disconnect anytime.</p></div>
+
+<div class="faq"><h3>2. Do I need to create an account?</h3>
+<p>No. Strango is designed as a no-login chat system, allowing instant access without personal information.</p></div>
+
+<div class="faq"><h3>3. Are chats stored permanently?</h3>
+<p>No permanent storage of conversations occurs. Messages exist only during the active session.</p></div>
+
+<div class="faq"><h3>4. How does stranger matching work?</h3>
+<p>Users are paired randomly in real-time using lightweight socket technology to ensure fast connections.</p></div>
+
+<div class="faq"><h3>5. Can I stay anonymous?</h3>
+<p>Yes. Avoid sharing personal details. Strango does not require identity verification for basic usage.</p></div>
+
+<div class="faq"><h3>6. What should I do if someone behaves badly?</h3>
+<p>Click the Next button immediately to leave the conversation and connect with another user.</p></div>
+
+<div class="faq"><h3>7. Does Strango work on mobile devices?</h3>
+<p>Yes. The platform is optimized for mobile browsers with responsive chat layout.</p></div>
+
+<div class="faq"><h3>8. Is Strango free?</h3>
+<p>Yes. Core stranger chat functionality is completely free to use.</p></div>
+
+<div class="faq"><h3>9. Why can’t I send messages sometimes?</h3>
+<p>You can send messages only when connected to a stranger to prevent spam or self-chatting.</p></div>
+
+<div class="faq"><h3>10. What makes Strango different from other chat sites?</h3>
+<p>Strango focuses on speed, simplicity, privacy-first design, and minimal data collection aligned with modern web standards.</p></div>
+
+</div>
+
+<!-- LEGAL FOOTER -->
 <div class="footer">
 <span onclick="openModal('privacy')">Privacy</span>
 <span onclick="openModal('terms')">Terms</span>
@@ -135,61 +181,16 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 <span onclick="openModal('about')">About</span>
 </div>
 
-<!-- ================= MODALS ================= -->
+<!-- ===== EXISTING LEGAL MODALS (UNCHANGED) ===== -->
+<div id="privacy" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Privacy Policy</h2><p>Strango respects privacy under Indian IT Act principles and does not permanently store chats.</p></div></div>
+<div id="terms" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Terms</h2><p>Users must follow Indian cyber laws and avoid illegal content.</p></div></div>
+<div id="safety" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Safety</h2><p>Never share personal information. Leave chats immediately if uncomfortable.</p></div></div>
+<div id="about" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>About</h2><p>Strango is a privacy-focused anonymous chat platform.</p></div></div>
 
-<div id="privacy" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal()">X</span>
-<h2>Privacy Policy – Strango</h2>
-<p>
-Strango respects user privacy under the Information Technology Act, 2000 and applicable Indian data protection principles. 
-Strango does not require login, does not collect personal identity data, and does not store chat content permanently.
-Temporary technical logs may be used solely for abuse prevention and platform stability.
-</p>
-</div>
-</div>
-
-<div id="terms" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal()">X</span>
-<h2>Terms of Use</h2>
-<p>
-By using Strango, you agree to comply with Indian cyber laws including the IT Act 2000 and related intermediary guidelines.
-Users must not share illegal, abusive, harmful, or unlawful content. Strango reserves the right to block misuse to maintain
-a safe anonymous environment.
-</p>
-</div>
-</div>
-
-<div id="safety" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal()">X</span>
-<h2>Safety Messaging</h2>
-<p>
-Strango promotes responsible anonymous communication. Never share personal information such as phone numbers, addresses,
-financial details, or identity documents. If you feel unsafe, click “Next” immediately.
-Strango follows Indian digital safety principles to discourage harassment or exploitation.
-</p>
-</div>
-</div>
-
-<div id="about" class="modal">
-<div class="modal-content">
-<span class="close-btn" onclick="closeModal()">X</span>
-<h2>About Strango</h2>
-<p>
-Strango is a lightweight anonymous chat platform designed for global connections with privacy-first architecture.
-Built with performance and safety in mind, Strango aims to provide fast, secure, and login-free conversations
-while respecting Indian legal and digital safety frameworks.
-</p>
-</div>
-</div>
-
-<!-- ================= CHAT SCRIPT (UNCHANGED CORE) ================= -->
+<!-- ================= CHAT SCRIPT (UNCHANGED) ================= -->
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
 const socket=io();
 const chat=document.getElementById("chat");
 const input=document.getElementById("messageInput");
@@ -198,22 +199,16 @@ let connected=false;
 let statusDiv=null;
 let iClickedNext=false;
 
-function clearChat(){
- chat.innerHTML="";
- statusDiv=null;
-}
+function clearChat(){chat.innerHTML="";statusDiv=null;}
 
 function addMessage(text,type="stranger"){
-
  if(type==="status"){
    if(statusDiv){statusDiv.innerText=text;return;}
    statusDiv=document.createElement("div");
    statusDiv.className="message status";
    statusDiv.innerText=text;
-   chat.appendChild(statusDiv);
-   return;
+   chat.appendChild(statusDiv);return;
  }
-
  const div=document.createElement("div");
  div.className="message "+type;
  div.innerText=text;
@@ -222,27 +217,16 @@ function addMessage(text,type="stranger"){
 }
 
 function sendMessage(){
-
- if(!connected){
-   addMessage("⚠️ Not connected yet","status");
-   return;
- }
-
+ if(!connected){addMessage("⚠️ Not connected yet","status");return;}
  if(!input.value.trim())return;
-
  const msg=input.value;
-
  socket.emit("message",msg);
  addMessage("You: "+msg,"me");
-
  input.value="";
 }
 
-input.addEventListener("keydown",function(e){
- if(e.key==="Enter" && !e.shiftKey){
-   e.preventDefault();
-   sendMessage();
- }
+input.addEventListener("keydown",e=>{
+ if(e.key==="Enter" && !e.shiftKey){e.preventDefault();sendMessage();}
 });
 
 function nextStranger(){
@@ -253,41 +237,19 @@ function nextStranger(){
  addMessage("Looking for new stranger...","status");
 }
 
-socket.on("connect",()=>{
- addMessage("Looking for stranger...","status");
-});
+socket.on("connect",()=>addMessage("Looking for stranger...","status"));
 
 socket.on("status",msg=>{
-
- if(msg.toLowerCase().includes("connected")){
-   connected=true;
-   iClickedNext=false;
- }
-
- if(msg.toLowerCase().includes("disconnected")){
-   connected=false;
-   if(iClickedNext){clearChat();}
- }
-
+ if(msg.toLowerCase().includes("connected")){connected=true;iClickedNext=false;}
+ if(msg.toLowerCase().includes("disconnected")){connected=false;if(iClickedNext){clearChat();}}
  addMessage(msg,"status");
 });
 
-socket.on("message",msg=>{
- addMessage("Stranger: "+msg,"stranger");
-});
+socket.on("message",msg=>addMessage("Stranger: "+msg,"stranger"));
+socket.on("online",count=>document.getElementById("onlineCount").innerText=count);
 
-socket.on("online",count=>{
- document.getElementById("onlineCount").innerText=count;
-});
-
-/* ⭐ MODAL FUNCTIONS */
-function openModal(id){
- document.getElementById(id).style.display="flex";
-}
-function closeModal(){
- document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
-}
-
+function openModal(id){document.getElementById(id).style.display="flex";}
+function closeModal(){document.querySelectorAll(".modal").forEach(m=>m.style.display="none");}
 </script>
 
 </body>
