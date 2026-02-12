@@ -12,15 +12,34 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#000;color:#fff;
 h1{margin-top:30px}
 #online{color:#00ff66;margin-top:8px}
 #statusBar{margin-top:5px;color:#fff;font-weight:500;}
-#typing{color:#aaa;font-size:13px;height:16px;}
+#typing{color:#aaa;font-size:13px;height:16px}
 
 #mainLayout{display:flex;gap:20px;width:90%;max-width:1100px;margin:30px auto;}
 #chatWrapper{flex:68%}
 #utilities{flex:32%;text-align:left;background:#0d0d0d;padding:15px;border-radius:10px;}
 
-#chatBox{background:#111;border-radius:10px;height:350px;overflow-y:auto;padding:15px;text-align:left;display:flex;flex-direction:column;gap:6px;}
+#chatBox{
+background:#111;
+border-radius:10px;
+height:350px;
+overflow-y:auto;
+padding:15px;
+text-align:left;
+display:flex;
+flex-direction:column;
+gap:8px;
+}
 
-.msg{padding:8px 12px;border-radius:8px;max-width:80%;}
+/* ⭐ FIXED MESSAGE WIDTH */
+.msg{
+padding:8px 12px;
+border-radius:10px;
+display:inline-block;
+width:fit-content;
+max-width:65%;
+word-break:break-word;
+}
+
 .stranger{background:#2a2a2a;}
 .you{background:#00cc44;color:#fff;}
 
@@ -29,6 +48,18 @@ h1{margin-top:30px}
 button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
+
+#seo{
+max-width:900px;
+margin:60px auto;
+text-align:left;
+line-height:1.7;
+padding:0 20px;
+}
+
+@media(max-width:900px){
+#mainLayout{flex-direction:column;}
+}
 </style>
 </head>
 
@@ -68,6 +99,29 @@ button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
 
 </div>
 
+<!-- ⭐ STRONG SEO BLOCK BACK AGAIN -->
+<div id="seo">
+
+<h2>About Strango Stranger Chat</h2>
+<p>
+Strango is a fast and free anonymous stranger chat platform designed for people who want to meet random users worldwide instantly without login. Built with realtime technology, Strango focuses on privacy, speed and seamless communication.
+</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<h4>1. Is Strango free?</h4><p>Yes, completely free anonymous chat.</p>
+<h4>2. Do I need login?</h4><p>No signup required.</p>
+<h4>3. Is Strango anonymous?</h4><p>Yes, conversations stay private.</p>
+<h4>4. Can I use Strango on mobile?</h4><p>Fully mobile optimized.</p>
+<h4>5. How does matching work?</h4><p>Users are paired randomly in realtime.</p>
+<h4>6. Can I skip strangers?</h4><p>Press Next anytime.</p>
+<h4>7. Are chats saved?</h4><p>No permanent storage.</p>
+<h4>8. Is Strango global?</h4><p>Yes, worldwide users connect.</p>
+<h4>9. Why is Strango fast?</h4><p>Lightweight realtime architecture.</p>
+<h4>10. Is Strango secure?</h4><p>Privacy-focused system.</p>
+
+</div>
+
 <script>
 
 const socket = io();
@@ -83,7 +137,6 @@ const typingText=document.getElementById("typing");
 let connected=false;
 let typingTimeout;
 
-/* ===== ADD MESSAGE ===== */
 function addMsg(text,type){
 const div=document.createElement("div");
 div.classList.add("msg");
@@ -93,25 +146,22 @@ chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-/* ===== STATUS ===== */
 function setStatus(text){
 statusBar.innerText=text;
 }
 
-/* ===== SOCKET EVENTS ===== */
-
 socket.on("waiting",()=>{
 connected=false;
 setStatus("Looking for stranger...");
-typingText.innerText="";
 chatBox.innerHTML="";
+typingText.innerText="";
 });
 
 socket.on("matched",()=>{
 connected=true;
 setStatus("Connected to stranger");
-typingText.innerText="";
 chatBox.innerHTML="";
+typingText.innerText="";
 });
 
 socket.on("message",(msg)=>{
@@ -130,26 +180,22 @@ typingText.innerText="";
 socket.on("partnerDisconnected",()=>{
 connected=false;
 setStatus("Stranger disconnected");
-typingText.innerText="";
 chatBox.innerHTML="";
+typingText.innerText="";
 });
 
 socket.on("onlineCount",(count)=>{
 onlineText.innerText="Online: "+count;
 });
 
-/* ===== SEND ===== */
-
 sendBtn.onclick=()=>{
 if(!connected) return;
 if(input.value.trim()=="") return;
-
 socket.emit("message",input.value);
 addMsg(input.value,"you");
 input.value="";
 };
 
-/* ⭐ EMIT TYPING */
 input.addEventListener("input",()=>{
 if(connected){
 socket.emit("typing");
