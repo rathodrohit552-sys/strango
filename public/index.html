@@ -117,6 +117,13 @@ padding:25px;border-radius:12px;max-height:80vh;overflow:auto;line-height:1.7;}
 const socket=io();
 const chat=document.getElementById("chat");
 const input=document.getElementById("messageInput");
+input.addEventListener("keydown",e=>{
+   if(e.key==="Enter" && !e.shiftKey){
+      e.preventDefault();
+      sendMessage();
+   }
+});
+
 const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
@@ -167,7 +174,17 @@ socket.on("status",msg=>{
 socket.on("message",msg=>addMessage("Stranger: "+msg,"stranger"));
 socket.on("online",count=>document.getElementById("onlineCount").innerText=count);
 
-socket.on("typing",()=>typingIndicator.innerText="Stranger is typing...");
+let strangerTypingTimeout;
+
+socket.on("typing",()=>{
+   typingIndicator.innerText="Stranger is typing...";
+
+   clearTimeout(strangerTypingTimeout);
+   strangerTypingTimeout=setTimeout(()=>{
+      typingIndicator.innerText="";
+   },1200);
+});
+
 socket.on("stopTyping",()=>typingIndicator.innerText="");
 
 input.addEventListener("input",()=>connected&&socket.emit("typing"));
