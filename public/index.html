@@ -81,6 +81,7 @@ header{
   display:flex;
   background:#111;
   padding:10px;
+  opacity:0.95;
 }
 
 #messageInput{
@@ -112,6 +113,55 @@ button{
 
 h2{margin-top:40px;}
 a{color:#4b5cff;}
+.main-layout{
+  display:flex;
+  width:100%;
+}
+
+.chat-area{
+  width:65%;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-box{
+  flex:1;
+}
+
+.side-panel{
+  width:35%;
+  padding:20px;
+  border-left:1px solid #222;
+  min-height:100vh;
+  position:sticky;
+  top:0;
+}
+
+.side-panel h3{
+  color:#4b5cff;
+}
+
+.main-layout{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.chat-area{
+  width:65%;
+}
+
+.side-panel{
+  width:35%;
+  background:#111;
+  padding:20px;
+  border-radius:12px;
+  position:sticky;
+  top:20px;
+}
+
 </style>
 </head>
 
@@ -122,6 +172,8 @@ a{color:#4b5cff;}
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 <div class="online" id="onlineCount">Online: 0</div>
 </header>
+<div class="main-layout">
+<div class="chat-area">
 
 <div class="status" id="status">Waiting for stranger...</div>
 
@@ -132,6 +184,15 @@ a{color:#4b5cff;}
 <button id="nextBtn">Next</button>
 <input id="messageInput" placeholder="Type a message..." />
 <button id="sendBtn">Send</button>
+</div> <!-- end chat-area -->
+<div class="side-panel">
+<h3>Loans & Utilities</h3>
+<p>Personal Loans</p>
+<p>Credit Cards</p>
+<p>Insurance</p>
+<p>Electricity Bills</p>
+</div>
+
 </div>
 
 <!-- ⭐⭐⭐ STRONG SEO SECTION ⭐⭐⭐ -->
@@ -193,6 +254,17 @@ Users can instantly connect with new strangers globally and start conversations 
 </p>
 
 </div>
+</div> <!-- end chat-area -->
+
+<div class="side-panel">
+  <h3>Loans & Utilities</h3>
+  <p>Personal Loans</p>
+  <p>Credit Cards</p>
+  <p>Insurance</p>
+  <p>Electricity Bills</p>
+</div>
+
+</div> <!-- end main-layout -->
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -203,6 +275,7 @@ const status = document.getElementById("status");
 const input = document.getElementById("messageInput");
 const typingText = document.getElementById("typing");
 const onlineCount = document.getElementById("onlineCount");
+let isConnected = false;
 
 let typingTimer;
 
@@ -228,6 +301,7 @@ input.addEventListener("keydown",(e)=>{
 });
 
 function sendMessage(){
+   if(!isConnected) return;
   if(!input.value.trim()) return;
   socket.emit("message",input.value);
   addMessage("You: "+input.value,true);
@@ -250,8 +324,19 @@ socket.on("connect",()=>{
 });
 
 socket.on("status",msg=>{
-  status.innerText=msg;
+  status.innerText = msg;
+
+  if(msg==="Connected to stranger"){
+    isConnected = true;
+  }else{
+    isConnected = false;
+    
+
+  }
+  input.disabled = !isConnected;
+document.getElementById("sendBtn").disabled = !isConnected;
 });
+
 
 socket.on("message",msg=>{
   addMessage("Stranger: "+msg,false);
