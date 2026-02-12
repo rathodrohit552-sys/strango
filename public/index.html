@@ -244,7 +244,9 @@ for users who prefer simplicity over complicated social media experiences.
 
 <script>
 
+document.addEventListener("DOMContentLoaded", () => {
 const socket = io();
+
 
 const chatBox = document.getElementById("chatBox");
 const input = document.querySelector(".input-area input");
@@ -299,7 +301,7 @@ addUserMessage("Stranger: "+msg);
 socket.on("stranger-disconnected",()=>{
 addSystemMessage("Stranger disconnected");
 });
-
+});
 </script>
 
 </body>
