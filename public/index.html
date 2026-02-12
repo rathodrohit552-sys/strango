@@ -12,7 +12,6 @@ body{
   font-family:Arial, sans-serif;
   background:#000;
   color:#fff;
-  overflow-y:auto;
 }
 
 h1{
@@ -34,15 +33,12 @@ h1{
   margin-top:5px;
 }
 
-/* ===== LAYOUT ===== */
-
 .main-container{
   width:95%;
   max-width:1200px;
   margin:15px auto;
   display:flex;
   gap:20px;
-  align-items:flex-start;
 }
 
 .left-panel{ flex:65%; }
@@ -65,34 +61,40 @@ h1{
   border-radius:10px;
   width:fit-content;
   max-width:80%;
-  word-wrap:break-word;
   font-size:14px;
 }
 
-/* ⭐ STRANGER MESSAGE */
+/* Stranger bubble */
 .stranger{
   background:#1a1a1a;
-  color:#fff;
 }
 
-/* ⭐ YOUR MESSAGE (WhatsApp green) */
+/* Your bubble */
 .me{
   background:#25D366;
   color:#000;
 }
 
-/* ⭐ STATUS MESSAGE */
+/* Status bubble */
 .status{
   background:#222;
   color:#bbb;
   font-size:13px;
 }
 
-/* ===== INPUT ===== */
+/* Typing indicator */
+.typing{
+  font-size:13px;
+  color:#aaa;
+  margin-top:5px;
+}
+
+/* ===== CONTROLS ===== */
 
 .controls{
   margin-top:10px;
   display:flex;
+  align-items:center;
   gap:10px;
 }
 
@@ -104,17 +106,28 @@ input{
   outline:none;
 }
 
-button{
+/* Send button */
+.send-btn{
   padding:10px 14px;
   border:none;
   border-radius:8px;
   background:#00ff7b;
-  cursor:pointer;
   font-weight:bold;
+  cursor:pointer;
 }
 
-/* ===== UTILITIES ===== */
+/* ⭐ Chocolate Next button */
+.next-btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:#7B3F00;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
 
+/* Utilities */
 .utilities{
   background:#0d0d0d;
   padding:20px;
@@ -142,11 +155,18 @@ button{
 <div class="left-panel">
 
 <div id="chat" class="chat-box"></div>
+<div id="typingIndicator" class="typing"></div>
 
 <div class="controls">
+
+<!-- ⭐ NEXT BUTTON LEFT -->
+<button class="next-btn" onclick="nextStranger()">Next</button>
+
 <input id="messageInput" placeholder="Type message..." />
-<button onclick="sendMessage()">Send</button>
-<button onclick="nextStranger()">Next</button>
+
+<!-- ⭐ SEND BUTTON RIGHT -->
+<button class="send-btn" onclick="sendMessage()">Send</button>
+
 </div>
 
 </div>
@@ -172,9 +192,11 @@ button{
 const socket = io();
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
+const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
 let statusDiv=null;
+let typingTimeout;
 
 /* ===== ADD MESSAGE ===== */
 
@@ -212,7 +234,7 @@ function sendMessage(){
   if(!input.value.trim()) return;
 
   socket.emit("message",input.value);
-  addMessage(input.value,"me"); // ⭐ green bubble
+  addMessage(input.value,"me");
   input.value="";
 }
 
@@ -224,8 +246,18 @@ function nextStranger(){
   addMessage("Looking for new stranger...","status");
 }
 
-input.addEventListener("keypress",e=>{
- if(e.key==="Enter") sendMessage();
+/* ===== TYPING DETECT ===== */
+
+input.addEventListener("input",()=>{
+
+  if(!connected) return;
+
+  socket.emit("typing");
+
+  clearTimeout(typingTimeout);
+  typingTimeout=setTimeout(()=>{
+      socket.emit("stopTyping");
+  },1000);
 });
 
 /* ===== SOCKET EVENTS ===== */
@@ -243,15 +275,25 @@ socket.on("status",msg=>{
 
  if(msg.toLowerCase().includes("disconnected")){
    connected=false;
+   typingIndicator.innerText="";
  }
 });
 
 socket.on("message",msg=>{
- addMessage(msg,"stranger"); // ⭐ dark bubble
+ addMessage(msg,"stranger");
 });
 
 socket.on("online",count=>{
  document.getElementById("onlineCount").innerText=count;
+});
+
+/* ⭐ STRANGER TYPING */
+socket.on("typing",()=>{
+ typingIndicator.innerText="Stranger is typing...";
+});
+
+socket.on("stopTyping",()=>{
+ typingIndicator.innerText="";
 });
 
 </script>
