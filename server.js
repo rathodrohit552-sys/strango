@@ -1,52 +1,34 @@
+// ===== STRANGO REALTIME SERVER (CLEAN VERSION) =====
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.static("public"));
+// ===== SERVE FRONTEND =====
+app.use(express.static(path.join(__dirname, "public"))); 
+// if your index.html is in root, change to:
+// app.use(express.static(__dirname));
 
-let onlineUsers = 0;
 
-/* ⭐ WAITING QUEUE */
-let waitingQueue = [];
-
-/* ⭐ ACTIVE PAIRS */
-const pairs = {};
-
-function updateOnline(){
-  io.emit("onlineCount", onlineUsers);
-}
-
-/* ⭐ MATCH ONLY FROM QUEUE */
-function tryMatch(){
-  while(waitingQueue.length >= 2){
-    const user1 = waitingQueue.shift();
-    const user2 = waitingQueue.shift();
-
-    pairs[user1] = user2;
-    pairs[user2] = user1;
-
-    io.to(user1).emit("newMatch");
-    io.to(user2).emit("newMatch");
-
-    io.to(user1).emit("status","Connected to stranger");
-    io.to(user2).emit("status","Connected to stranger");
-  }
-}
-
+// ===== MATCHING ENGINE =====
 let waitingUser = null;
 let onlineCount = 0;
 
 io.on("connection", (socket) => {
+
+console.log("User connected:", socket.id);
 
 onlineCount++;
 io.emit("onlineCount", onlineCount);
 
 socket.emit("waiting");
 
+// ===== MATCH USERS =====
 if (waitingUser) {
 
 const partner = waitingUser;
@@ -58,10 +40,13 @@ partner.partner = socket.id;
 socket.emit("matched");
 partner.emit("matched");
 
+console.log("Matched:", socket.id, "with", partner.id);
+
 } else {
 waitingUser = socket;
 }
 
+// ===== MESSAGE =====
 socket.on("message", (msg) => {
 
 if (socket.partner) {
@@ -70,9 +55,11 @@ io.to(socket.partner).emit("message", msg);
 
 });
 
+// ===== NEXT BUTTON =====
 socket.on("next", () => {
 
 if (socket.partner) {
+
 io.to(socket.partner).emit("partnerDisconnected");
 
 const partnerSocket = io.sockets.sockets.get(socket.partner);
@@ -100,7 +87,10 @@ waitingUser = socket;
 
 });
 
+// ===== DISCONNECT =====
 socket.on("disconnect", () => {
+
+console.log("User disconnected:", socket.id);
 
 onlineCount--;
 io.emit("onlineCount", onlineCount);
@@ -117,3 +107,9 @@ io.to(socket.partner).emit("partnerDisconnected");
 
 });
 
+// ===== START SERVER =====
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+console.log("Strango running on port", PORT);
+});
