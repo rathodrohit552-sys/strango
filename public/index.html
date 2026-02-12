@@ -51,17 +51,18 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 .modal-content{
  width:80%;max-width:800px;background:#0d0d0d;
  padding:25px;border-radius:12px;max-height:80vh;overflow:auto;
+ line-height:1.7;
 }
 
 .close-btn{float:right;cursor:pointer;}
 
-/* ⭐ TYPING INDICATOR */
 .typing{
  color:#aaa;
  font-size:13px;
  margin-top:6px;
 }
 
+/* PREMIUM SEO SECTION */
 .seo-section{
  max-width:1100px;
  margin:40px auto;
@@ -90,7 +91,6 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 
 <div id="chat" class="chat-box"></div>
 
-<!-- ⭐ Stranger typing text -->
 <div id="typingIndicator" class="typing"></div>
 
 <div class="controls">
@@ -116,29 +116,31 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 
 </div>
 
-<!-- ================= SEO SECTION (UNCHANGED) ================= -->
+<!-- ================= PREMIUM SEO SECTION ================= -->
 
 <div class="seo-section">
 
 <h2>Free Online Random Chat – Meet Strangers Instantly</h2>
 
 <p>
-Strango is a modern anonymous chat platform designed for fast, private conversations without registration.
-Built with performance-first architecture and aligned with Indian digital safety practices.
+Strango is a privacy-focused anonymous chat platform designed for fast global conversations
+without registration. Built using real-time technology, Strango enables users to connect
+instantly while maintaining a lightweight and secure communication environment aligned
+with Indian digital safety principles.
 </p>
 
 <h2>Frequently Asked Questions</h2>
 
-<div class="faq"><h3>1. Is Strango safe to use in India?</h3><p>Yes. Strango follows Indian digital safety principles.</p></div>
-<div class="faq"><h3>2. Do I need an account?</h3><p>No login required.</p></div>
-<div class="faq"><h3>3. Are chats stored?</h3><p>No permanent storage of messages.</p></div>
-<div class="faq"><h3>4. How does matching work?</h3><p>Random real-time pairing.</p></div>
-<div class="faq"><h3>5. Can I stay anonymous?</h3><p>Yes, avoid sharing personal details.</p></div>
-<div class="faq"><h3>6. What if someone behaves badly?</h3><p>Click Next immediately.</p></div>
-<div class="faq"><h3>7. Does it work on mobile?</h3><p>Yes, responsive design.</p></div>
+<div class="faq"><h3>1. Is Strango safe to use in India?</h3><p>Yes. Strango follows Indian intermediary and digital safety practices.</p></div>
+<div class="faq"><h3>2. Do I need an account?</h3><p>No login required for chatting.</p></div>
+<div class="faq"><h3>3. Are chats stored?</h3><p>Messages are not permanently stored.</p></div>
+<div class="faq"><h3>4. How does matching work?</h3><p>Users are paired randomly in real-time.</p></div>
+<div class="faq"><h3>5. Can I stay anonymous?</h3><p>Yes, avoid sharing personal information.</p></div>
+<div class="faq"><h3>6. What if someone behaves badly?</h3><p>Click Next to leave immediately.</p></div>
+<div class="faq"><h3>7. Does it work on mobile?</h3><p>Yes, fully responsive.</p></div>
 <div class="faq"><h3>8. Is Strango free?</h3><p>Yes.</p></div>
 <div class="faq"><h3>9. Why can't I send messages sometimes?</h3><p>You must be connected to a stranger.</p></div>
-<div class="faq"><h3>10. What makes Strango different?</h3><p>Fast, lightweight, privacy-first chat.</p></div>
+<div class="faq"><h3>10. What makes Strango different?</h3><p>Fast, minimal, privacy-first experience.</p></div>
 
 </div>
 
@@ -150,12 +152,88 @@ Built with performance-first architecture and aligned with Indian digital safety
 <span onclick="openModal('about')">About</span>
 </div>
 
-<div id="privacy" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Privacy Policy</h2><p>Aligned with Indian IT Act principles.</p></div></div>
-<div id="terms" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Terms</h2><p>Follow Indian cyber laws.</p></div></div>
-<div id="safety" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>Safety</h2><p>Never share personal data.</p></div></div>
-<div id="about" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">X</span><h2>About</h2><p>Privacy-focused anonymous chat platform.</p></div></div>
+<!-- ================= STRONG LEGAL MODALS ================= -->
 
-<!-- ================= CHAT SCRIPT ================= -->
+<div id="privacy" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal()">X</span>
+<h2>Privacy Policy – Strango</h2>
+<p>
+Strango operates with a privacy-first philosophy consistent with principles of the
+Information Technology Act, 2000 and emerging Indian data protection standards.
+The platform does not require user registration and avoids collecting personally
+identifiable information for basic use.
+</p>
+<p>
+Chat sessions are temporary and not permanently stored. Limited technical session
+data may be processed solely to maintain connection stability, prevent misuse,
+and improve platform reliability.
+</p>
+<p>
+Users must avoid sharing sensitive personal information such as financial data,
+identity numbers, or contact details during conversations.
+</p>
+</div>
+</div>
+
+<div id="terms" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal()">X</span>
+<h2>Terms of Use</h2>
+<p>
+By using Strango, you agree to comply with Indian cyber laws including the
+Information Technology Act, 2000 and intermediary guidelines. Users must not
+share illegal, abusive, harmful, or misleading content.
+</p>
+<p>
+Strango functions as a real-time communication intermediary. Conversations are
+user-generated, and the platform may apply automated safeguards to maintain
+community safety.
+</p>
+<p>
+Violation of acceptable usage policies may result in disconnection or restricted access.
+</p>
+</div>
+</div>
+
+<div id="safety" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal()">X</span>
+<h2>Safety Guidelines</h2>
+<p>
+Strango encourages responsible anonymous communication aligned with Indian digital
+safety practices. While anonymity provides freedom, users remain accountable for
+their behaviour under applicable law.
+</p>
+<ul>
+<li>Never share personal or financial information.</li>
+<li>Leave conversations immediately if uncomfortable.</li>
+<li>Avoid engaging with illegal or harmful requests.</li>
+<li>Respect privacy and dignity of others.</li>
+</ul>
+<p>
+Use the Next button anytime to exit a chat safely.
+</p>
+</div>
+</div>
+
+<div id="about" class="modal">
+<div class="modal-content">
+<span class="close-btn" onclick="closeModal()">X</span>
+<h2>About Strango</h2>
+<p>
+Strango is a lightweight anonymous chat platform built to enable instant global
+communication without registration. Designed with performance, simplicity, and
+privacy in mind, Strango focuses on fast real-time connections with minimal data usage.
+</p>
+<p>
+The platform aims to provide a modern communication experience aligned with
+Indian digital ecosystem values while promoting responsible anonymous interaction.
+</p>
+</div>
+</div>
+
+<!-- ================= CHAT SCRIPT (UNCHANGED LOGIC) ================= -->
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -203,16 +281,11 @@ input.addEventListener("keydown",e=>{
  }
 });
 
-/* ⭐ SEND TYPING EVENT */
 input.addEventListener("input",()=>{
  if(!connected) return;
-
  socket.emit("typing");
-
  clearTimeout(typingTimeout);
- typingTimeout=setTimeout(()=>{
-   socket.emit("stopTyping");
- },1000);
+ typingTimeout=setTimeout(()=>socket.emit("stopTyping"),1000);
 });
 
 function nextStranger(){
@@ -238,14 +311,8 @@ socket.on("status",msg=>{
 socket.on("message",msg=>addMessage("Stranger: "+msg,"stranger"));
 socket.on("online",count=>document.getElementById("onlineCount").innerText=count);
 
-/* ⭐ RECEIVE TYPING */
-socket.on("typing",()=>{
- typingIndicator.innerText="Stranger is typing...";
-});
-
-socket.on("stopTyping",()=>{
- typingIndicator.innerText="";
-});
+socket.on("typing",()=>typingIndicator.innerText="Stranger is typing...");
+socket.on("stopTyping",()=>typingIndicator.innerText="");
 
 function openModal(id){document.getElementById(id).style.display="flex";}
 function closeModal(){document.querySelectorAll(".modal").forEach(m=>m.style.display="none");}
