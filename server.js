@@ -8,80 +8,110 @@ const io = new Server(server);
 
 app.use(express.static("public"));
 
-let waitingUser = null;
 let onlineUsers = 0;
+
+/* ⭐ REAL WAITING QUEUE */
+let waitingQueue = [];
+
+/* ⭐ ACTIVE PAIRS */
 const pairs = {};
 
-function updateOnline() {
+function updateOnline(){
   io.emit("onlineCount", onlineUsers);
 }
 
-io.on("connection", (socket) => {
+/* ⭐ TRY MATCH FUNCTION */
+function tryMatch(){
+  while(waitingQueue.length >= 2){
+    const user1 = waitingQueue.shift();
+    const user2 = waitingQueue.shift();
+
+    pairs[user1] = user2;
+    pairs[user2] = user1;
+
+    io.to(user1).emit("status","Connected to stranger");
+    io.to(user2).emit("status","Connected to stranger");
+  }
+}
+
+io.on("connection",(socket)=>{
+
   onlineUsers++;
   updateOnline();
 
-  socket.emit("status", "Waiting for stranger...");
+  socket.emit("status","Waiting for stranger...");
 
-  socket.on("join", () => {
-    if (waitingUser && waitingUser !== socket.id) {
-      const partner = waitingUser;
-      waitingUser = null;
-
-      pairs[socket.id] = partner;
-      pairs[partner] = socket.id;
-
-      io.to(socket.id).emit("status", "Connected to stranger");
-      io.to(partner).emit("status", "Connected to stranger");
-    } else {
-      waitingUser = socket.id;
-      socket.emit("status", "Waiting for stranger...");
+  /* JOIN QUEUE */
+  socket.on("join",()=>{
+    if(!waitingQueue.includes(socket.id)){
+      waitingQueue.push(socket.id);
     }
+    tryMatch();
   });
 
-  socket.on("message", (msg) => {
+  /* MESSAGE */
+  socket.on("message",(msg)=>{
     const partner = pairs[socket.id];
-    if (!partner) return; // ⭐ prevent self messages
+    if(!partner) return;
 
-    io.to(partner).emit("message", msg);
+    io.to(partner).emit("message",msg);
   });
 
-  socket.on("typing", () => {
+  /* TYPING */
+  socket.on("typing",()=>{
     const partner = pairs[socket.id];
-    if (!partner) return;
+    if(!partner) return;
 
     io.to(partner).emit("typing");
   });
 
-  socket.on("next", () => {
+  /* NEXT BUTTON */
+  socket.on("next",()=>{
     const partner = pairs[socket.id];
 
-    if (partner) {
-      io.to(partner).emit("status", "Stranger disconnected");
+    if(partner){
       delete pairs[partner];
+      delete pairs[socket.id];
+
+      io.to(partner).emit("status","Stranger disconnected");
+      
+      /* ⭐ partner goes back to queue automatically */
+      waitingQueue.push(partner);
     }
 
-    delete pairs[socket.id];
-    waitingUser = socket.id;
-    socket.emit("status", "Waiting for stranger...");
+    /* current user also re-enters queue */
+    if(!waitingQueue.includes(socket.id)){
+      waitingQueue.push(socket.id);
+    }
+
+    socket.emit("status","Waiting for stranger...");
+    tryMatch();
   });
 
-  socket.on("disconnect", () => {
+  /* DISCONNECT */
+  socket.on("disconnect",()=>{
+
     onlineUsers--;
     updateOnline();
 
+    /* remove from queue if waiting */
+    waitingQueue = waitingQueue.filter(id=>id!==socket.id);
+
     const partner = pairs[socket.id];
 
-    if (partner) {
-      io.to(partner).emit("status", "Stranger disconnected");
+    if(partner){
       delete pairs[partner];
+      delete pairs[socket.id];
+
+      io.to(partner).emit("status","Stranger disconnected");
+
+      /* ⭐ AUTO RECONNECT partner with next waiting user */
+      waitingQueue.push(partner);
+      tryMatch();
     }
-
-    if (waitingUser === socket.id) waitingUser = null;
-
-    delete pairs[socket.id];
   });
 });
 
-server.listen(3000, () => {
+server.listen(3000,()=>{
   console.log("Strango running on port 3000");
 });
