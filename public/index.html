@@ -5,57 +5,30 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Strango — Free Stranger Chat India</title>
 
-<meta name="description" content="Strango is a free anonymous stranger chat platform. Meet random people online instantly without login. Fast, secure and mobile friendly global chat.">
-
 <script src="/socket.io/socket.io.js"></script>
-
-<!-- ⭐ STRONG FAQ SEO SCHEMA -->
-<script type="application/ld+json">
-{
-"@context":"https://schema.org",
-"@type":"FAQPage",
-"mainEntity":[
-{"@type":"Question","name":"Is Strango free?","acceptedAnswer":{"@type":"Answer","text":"Yes, Strango is completely free anonymous stranger chat."}},
-{"@type":"Question","name":"Do I need login?","acceptedAnswer":{"@type":"Answer","text":"No registration or login is required to use Strango."}},
-{"@type":"Question","name":"Is Strango anonymous?","acceptedAnswer":{"@type":"Answer","text":"Yes, conversations happen without sharing personal identity."}},
-{"@type":"Question","name":"How does stranger matching work?","acceptedAnswer":{"@type":"Answer","text":"The system pairs two online users randomly in real time."}},
-{"@type":"Question","name":"Can I skip strangers?","acceptedAnswer":{"@type":"Answer","text":"Yes, press Next anytime to connect with a new stranger."}},
-{"@type":"Question","name":"Is Strango mobile friendly?","acceptedAnswer":{"@type":"Answer","text":"Yes, Strango works smoothly on phones, tablets and desktops."}},
-{"@type":"Question","name":"Are chats saved?","acceptedAnswer":{"@type":"Answer","text":"No permanent storage of conversations is maintained."}},
-{"@type":"Question","name":"Is Strango safe?","acceptedAnswer":{"@type":"Answer","text":"The platform focuses on privacy and minimal data usage."}},
-{"@type":"Question","name":"Is Strango global?","acceptedAnswer":{"@type":"Answer","text":"Users from many countries can connect instantly."}},
-{"@type":"Question","name":"Why is Strango fast?","acceptedAnswer":{"@type":"Answer","text":"Strango uses lightweight realtime technology for fast chatting."}}
-]
-}
-</script>
 
 <style>
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#000;color:#fff;text-align:center;}
 h1{margin-top:30px}
 #online{color:#00ff66;margin-top:8px}
 #statusBar{margin-top:5px;color:#fff;font-weight:500;}
+#typing{color:#aaa;font-size:13px;height:16px;}
 
-#mainLayout{display:flex;gap:20px;width:90%;max-width:1100px;margin:30px auto;align-items:flex-start;}
+#mainLayout{display:flex;gap:20px;width:90%;max-width:1100px;margin:30px auto;}
 #chatWrapper{flex:68%}
 #utilities{flex:32%;text-align:left;background:#0d0d0d;padding:15px;border-radius:10px;}
 
 #chatBox{background:#111;border-radius:10px;height:350px;overflow-y:auto;padding:15px;text-align:left;display:flex;flex-direction:column;gap:6px;}
 
-.msg{padding:8px 12px;border-radius:8px;max-width:80%;word-wrap:break-word;}
-.stranger{background:#2a2a2a;align-self:flex-start;}
-.you{background:#00cc44;color:#fff;align-self:flex-start;}
+.msg{padding:8px 12px;border-radius:8px;max-width:80%;}
+.stranger{background:#2a2a2a;}
+.you{background:#00cc44;color:#fff;}
 
 #inputBar{display:flex;gap:10px;margin-top:10px;}
 #messageInput{flex:1;padding:10px;border-radius:20px;border:none;background:#222;color:#fff;}
 button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
-
-#seo{max-width:900px;margin:60px auto;text-align:left;line-height:1.7;padding:0 20px;}
-
-@media(max-width:900px){
-#mainLayout{flex-direction:column;}
-}
 </style>
 </head>
 
@@ -66,6 +39,7 @@ button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
 
 <div id="online">Online: 0</div>
 <div id="statusBar">Looking for stranger...</div>
+<div id="typing"></div>
 
 <div id="mainLayout">
 
@@ -94,61 +68,22 @@ button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
 
 </div>
 
-<!-- ⭐ STRONG SEO TEXT BLOCK -->
-<div id="seo">
-
-<h2>About Strango Stranger Chat</h2>
-<p>
-Strango is a fast, free and anonymous stranger chat platform designed for people who want to talk with random users worldwide without signup. The platform focuses on privacy, minimal design and real-time communication.
-</p>
-
-<h2>Frequently Asked Questions</h2>
-
-<h4>1. Is Strango free?</h4>
-<p>Yes, completely free random chat.</p>
-
-<h4>2. Do I need to create an account?</h4>
-<p>No login or registration required.</p>
-
-<h4>3. Is chatting anonymous?</h4>
-<p>Yes, users stay anonymous while chatting.</p>
-
-<h4>4. Can I use Strango on mobile?</h4>
-<p>Yes, fully mobile optimized.</p>
-
-<h4>5. How fast is matching?</h4>
-<p>Matches happen instantly in real time.</p>
-
-<h4>6. Can I skip users?</h4>
-<p>Yes, press Next anytime.</p>
-
-<h4>7. Are conversations saved?</h4>
-<p>No permanent chat storage.</p>
-
-<h4>8. Is Strango global?</h4>
-<p>Yes, users connect worldwide.</p>
-
-<h4>9. Why choose Strango?</h4>
-<p>Lightweight design ensures faster experience.</p>
-
-<h4>10. Is Strango safe?</h4>
-<p>Privacy-focused system with minimal data usage.</p>
-
-</div>
-
 <script>
 
 const socket = io();
 
-const chatBox = document.getElementById("chatBox");
-const input = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
-const nextBtn = document.getElementById("nextBtn");
-const onlineText = document.getElementById("online");
-const statusBar = document.getElementById("statusBar");
+const chatBox=document.getElementById("chatBox");
+const input=document.getElementById("messageInput");
+const sendBtn=document.getElementById("sendBtn");
+const nextBtn=document.getElementById("nextBtn");
+const onlineText=document.getElementById("online");
+const statusBar=document.getElementById("statusBar");
+const typingText=document.getElementById("typing");
 
 let connected=false;
+let typingTimeout;
 
+/* ===== ADD MESSAGE ===== */
 function addMsg(text,type){
 const div=document.createElement("div");
 div.classList.add("msg");
@@ -158,29 +93,44 @@ chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
+/* ===== STATUS ===== */
 function setStatus(text){
 statusBar.innerText=text;
 }
 
+/* ===== SOCKET EVENTS ===== */
+
 socket.on("waiting",()=>{
 connected=false;
 setStatus("Looking for stranger...");
+typingText.innerText="";
 chatBox.innerHTML="";
 });
 
 socket.on("matched",()=>{
 connected=true;
 setStatus("Connected to stranger");
+typingText.innerText="";
 chatBox.innerHTML="";
 });
 
 socket.on("message",(msg)=>{
+typingText.innerText="";
 addMsg(msg,"stranger");
+});
+
+socket.on("typing",()=>{
+typingText.innerText="Stranger is typing...";
+clearTimeout(typingTimeout);
+typingTimeout=setTimeout(()=>{
+typingText.innerText="";
+},1500);
 });
 
 socket.on("partnerDisconnected",()=>{
 connected=false;
 setStatus("Stranger disconnected");
+typingText.innerText="";
 chatBox.innerHTML="";
 });
 
@@ -188,13 +138,23 @@ socket.on("onlineCount",(count)=>{
 onlineText.innerText="Online: "+count;
 });
 
+/* ===== SEND ===== */
+
 sendBtn.onclick=()=>{
 if(!connected) return;
 if(input.value.trim()=="") return;
+
 socket.emit("message",input.value);
 addMsg(input.value,"you");
 input.value="";
 };
+
+/* ⭐ EMIT TYPING */
+input.addEventListener("input",()=>{
+if(connected){
+socket.emit("typing");
+}
+});
 
 input.addEventListener("keypress",e=>{
 if(e.key==="Enter") sendBtn.click();
