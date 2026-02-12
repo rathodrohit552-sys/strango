@@ -15,44 +15,40 @@ background:#000;
 color:#fff;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 h1{text-align:center;margin-top:30px}
 p{text-align:center}
 #online{text-align:center;color:#00ff66;margin-top:8px}
-#statusBar{text-align:center;margin-top:5px;color:#fff;font-weight:500;}
-#typing{text-align:center;color:#aaa;font-size:13px;height:16px}
+#statusBar{text-align:center;margin-top:5px}
+#typing{text-align:center;color:#aaa;font-size:13px;height:18px}
 
-/* ⭐ LEFT LOCKED LAYOUT */
+/* LAYOUT */
 #mainLayout{
 display:flex;
 width:100%;
 margin-top:30px;
-gap:0;
 }
 
-/* ===== CHAT AREA (68%) ===== */
+/* ⭐ CHAT STICKY LEFT */
 #chatWrapper{
 width:68%;
 padding-left:20px;
 padding-right:10px;
-
-/* smooth edge */
-transition:all .3s ease;
+position:sticky;
+top:120px;
+height:fit-content;
 }
 
-/* ===== UTILITIES (32%) ===== */
+/* UTILITIES */
 #utilities{
 width:32%;
 background:#0d0d0d;
 padding:20px;
 border-left:1px solid #1a1a1a;
-
-/* ⭐ smooth transition feeling */
 box-shadow:-20px 0 40px rgba(0,0,0,0.6);
-transition:all .3s ease;
 }
 
-/* ===== CHAT BOX ===== */
+/* CHAT BOX */
 #chatBox{
 background:#111;
 border-radius:12px;
@@ -64,7 +60,7 @@ flex-direction:column;
 gap:8px;
 }
 
-/* ⭐ PRO MESSAGE BUBBLES */
+/* MESSAGE STYLE */
 .msg{
 padding:8px 12px;
 border-radius:10px;
@@ -72,12 +68,12 @@ display:inline-block;
 width:fit-content;
 max-width:65%;
 word-break:break-word;
-animation:fadeIn .2s ease;
+animation:fade .2s ease;
 }
 
-@keyframes fadeIn{
+@keyframes fade{
 from{opacity:0;transform:translateY(4px)}
-to{opacity:1;transform:translateY(0)}
+to{opacity:1}
 }
 
 .stranger{background:#2a2a2a;}
@@ -108,22 +104,32 @@ cursor:pointer;
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
 
-/* ===== SEO ===== */
+/* ⭐ PREMIUM SEO */
 #seo{
 max-width:900px;
-margin:60px auto;
+margin:80px auto;
 padding:0 20px;
-line-height:1.7;
+line-height:1.8;
+}
+
+.seoCard{
+background:#0d0d0d;
+padding:30px;
+border-radius:14px;
+margin-bottom:25px;
+box-shadow:0 0 25px rgba(0,0,0,0.5);
+transition:all .25s ease;
+}
+
+.seoCard:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 40px rgba(0,0,0,0.8);
 }
 
 /* MOBILE */
 @media(max-width:900px){
-#mainLayout{
-flex-direction:column;
-}
-#chatWrapper,#utilities{
-width:100%;
-}
+#mainLayout{flex-direction:column;}
+#chatWrapper,#utilities{width:100%;position:relative;top:0;}
 }
 </style>
 </head>
@@ -164,17 +170,20 @@ width:100%;
 
 </div>
 
-<!-- ⭐ STRONG SEO -->
+<!-- ⭐ PREMIUM SEO -->
 <div id="seo">
 
+<div class="seoCard">
 <h2>About Strango Stranger Chat</h2>
 <p>
-Strango is a fast and free anonymous stranger chat platform designed for instant global conversations without login. The platform focuses on privacy, speed and realtime communication worldwide.
+Strango is a fast and free anonymous stranger chat platform designed for instant global conversations without login. Built with realtime technology, Strango focuses on privacy, speed and seamless communication worldwide.
 </p>
+</div>
 
+<div class="seoCard">
 <h2>Frequently Asked Questions</h2>
 
-<h4>1. Is Strango free?</h4><p>Yes, completely free chat.</p>
+<h4>1. Is Strango free?</h4><p>Yes, completely free anonymous chat.</p>
 <h4>2. Do I need login?</h4><p>No registration required.</p>
 <h4>3. Is Strango anonymous?</h4><p>Yes, chats stay private.</p>
 <h4>4. Mobile friendly?</h4><p>Fully optimized.</p>
@@ -184,6 +193,8 @@ Strango is a fast and free anonymous stranger chat platform designed for instant
 <h4>8. Global users?</h4><p>Worldwide connection.</p>
 <h4>9. Why fast?</h4><p>Lightweight architecture.</p>
 <h4>10. Secure?</h4><p>Privacy-first system.</p>
+
+</div>
 
 </div>
 
@@ -237,9 +248,7 @@ addMsg(msg,"stranger");
 socket.on("typing",()=>{
 typingText.innerText="Stranger is typing...";
 clearTimeout(typingTimeout);
-typingTimeout=setTimeout(()=>{
-typingText.innerText="";
-},1500);
+typingTimeout=setTimeout(()=>typingText.innerText="",1500);
 });
 
 socket.on("partnerDisconnected",()=>{
@@ -262,9 +271,7 @@ input.value="";
 };
 
 input.addEventListener("input",()=>{
-if(connected){
-socket.emit("typing");
-}
+if(connected){socket.emit("typing");}
 });
 
 input.addEventListener("keypress",e=>{
