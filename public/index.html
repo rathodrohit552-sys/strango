@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strango — Free Stranger Chat India</title>
 
+<script src="/socket.io/socket.io.js"></script>
+
 <style>
 body{
 margin:0;
@@ -14,11 +16,9 @@ color:#fff;
 text-align:center;
 }
 
-/* ===== HEADER ===== */
 h1{margin-top:30px}
 #online{color:#00ff66;margin-top:8px}
 
-/* ===== MAIN LAYOUT 68% / 32% ===== */
 #mainLayout{
 display:flex;
 gap:20px;
@@ -29,6 +29,7 @@ align-items:flex-start;
 }
 
 #chatWrapper{flex:68%}
+
 #utilities{
 flex:32%;
 text-align:left;
@@ -37,7 +38,6 @@ padding:15px;
 border-radius:10px;
 }
 
-/* ===== CHAT BOX ===== */
 #chatBox{
 background:#111;
 border-radius:10px;
@@ -57,7 +57,6 @@ max-width:80%;
 word-wrap:break-word;
 }
 
-/* ===== INPUT BAR ===== */
 #inputBar{
 display:flex;
 gap:10px;
@@ -83,20 +82,8 @@ cursor:pointer;
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
 
-/* ===== SEO + FAQ ===== */
-#seo, #faq{
-max-width:800px;
-margin:60px auto;
-text-align:left;
-padding:0 20px;
-line-height:1.6;
-}
-
-/* ===== MOBILE ===== */
 @media(max-width:900px){
-#mainLayout{
-flex-direction:column;
-}
+#mainLayout{flex-direction:column;}
 }
 </style>
 </head>
@@ -105,12 +92,10 @@ flex-direction:column;
 
 <h1>Strango — Free Stranger Chat India</h1>
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
-<div id="online">Online: 2</div>
+<div id="online">Online: 0</div>
 
-<!-- ===== MAIN LAYOUT ===== -->
 <div id="mainLayout">
 
-<!-- ===== CHAT ===== -->
 <div id="chatWrapper">
 
 <div id="chatBox"></div>
@@ -123,7 +108,6 @@ flex-direction:column;
 
 </div>
 
-<!-- ===== UTILITIES 32% ===== -->
 <div id="utilities">
 <h3>Strango Utilities</h3>
 <ul>
@@ -137,47 +121,17 @@ flex-direction:column;
 
 </div>
 
-<!-- ===== SEO SECTION ===== -->
-<div id="seo">
-
-<h2>About Strango</h2>
-<p>
-Strango is a fast and free anonymous stranger chat platform built for users who want to talk with random people online without login or signup. Strango focuses on privacy, speed, and real-time communication worldwide.
-</p>
-
-<h2>Why Choose Strango?</h2>
-<ul>
-<li>Instant random chat without registration</li>
-<li>Minimal design for faster global loading</li>
-<li>Private anonymous conversations</li>
-<li>Works on mobile and desktop</li>
-</ul>
-
-</div>
-
-<!-- ===== FAQ SECTION ===== -->
-<div id="faq">
-<h2>FAQs</h2>
-
-<h4>Is Strango free?</h4>
-<p>Yes, Strango is completely free anonymous stranger chat.</p>
-
-<h4>Do I need to register?</h4>
-<p>No signup or login is required to start chatting.</p>
-
-<h4>Is my chat private?</h4>
-<p>Strango does not store conversations and focuses on privacy.</p>
-
-</div>
-
 <script>
+
+const socket = io();   // ⭐ REAL CONNECTION TO SERVER
 
 const chatBox = document.getElementById("chatBox");
 const input = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 const nextBtn = document.getElementById("nextBtn");
+const onlineText = document.getElementById("online");
 
-let connected=false;
+let connected = false;
 
 /* ===== ADD MESSAGE ===== */
 function addMsg(text){
@@ -188,7 +142,36 @@ chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-/* ===== SEND ===== */
+/* ===== SOCKET EVENTS ===== */
+
+socket.on("connect",()=>{
+addMsg("System: Connected to server");
+});
+
+socket.on("waiting",()=>{
+connected=false;
+addMsg("System: Looking for stranger...");
+});
+
+socket.on("matched",()=>{
+connected=true;
+addMsg("System: Connected to stranger");
+});
+
+socket.on("message",(msg)=>{
+addMsg("Stranger: "+msg);
+});
+
+socket.on("partnerDisconnected",()=>{
+connected=false;
+addMsg("System: Stranger disconnected");
+});
+
+socket.on("onlineCount",(count)=>{
+onlineText.innerText="Online: "+count;
+});
+
+/* ===== SEND MESSAGE ===== */
 sendBtn.onclick=()=>{
 
 if(!connected){
@@ -198,26 +181,18 @@ return;
 
 if(input.value.trim()=="") return;
 
+socket.emit("message",input.value);
 addMsg("You: "+input.value);
 input.value="";
 };
 
-/* ENTER KEY */
 input.addEventListener("keypress",e=>{
 if(e.key==="Enter") sendBtn.click();
 });
 
 /* ===== NEXT BUTTON ===== */
 nextBtn.onclick=()=>{
-
-connected=false;
-addMsg("System: Looking for stranger...");
-
-setTimeout(()=>{
-connected=true;
-addMsg("System: Connected to stranger");
-},1500);
-
+socket.emit("next");
 };
 
 </script>
