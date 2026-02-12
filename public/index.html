@@ -297,6 +297,13 @@ addUserMessage("Stranger: "+msg);
 socket.on("status",(msg)=>{
 addSystemMessage(msg);
 });
+socket.on("online",(count)=>{
+const onlineText = document.querySelector(".online");
+if(onlineText){
+onlineText.textContent = "Online: " + count;
+}
+});
+
 socket.on("typing",()=>{
 // optional typing UI
 });
