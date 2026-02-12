@@ -51,6 +51,19 @@ io.on("connection", (socket) => {
       socket.partner.emit("message", msg);
     }
   });
+/* ===== STRANGER TYPING ===== */
+
+socket.on("typing", ()=>{
+   if(socket.partner){
+      socket.partner.emit("typing");
+   }
+});
+
+socket.on("stopTyping", ()=>{
+   if(socket.partner){
+      socket.partner.emit("stopTyping");
+   }
+});
 
   /* ===== NEXT ===== */
 
