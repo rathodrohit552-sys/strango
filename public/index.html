@@ -216,6 +216,10 @@ const socket = io();
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
 
+let connected = false;   // IMPORTANT: prevent self messages
+
+/* ===== ADD MESSAGE UI ===== */
+
 function addMessage(text, me=false){
   const div=document.createElement("div");
   div.className="message"+(me?" me":"");
@@ -224,16 +228,32 @@ function addMessage(text, me=false){
   chat.scrollTop=chat.scrollHeight;
 }
 
+/* ===== SEND MESSAGE ===== */
+
 function sendMessage(){
+
+  // ❌ DO NOT SEND IF NOT CONNECTED
+  if(!connected){
+    addMessage("⚠️ Not connected to stranger yet.");
+    return;
+  }
+
   if(!input.value.trim()) return;
+
   socket.emit("message", input.value);
   addMessage(input.value,true);
   input.value="";
 }
 
+/* ===== NEXT STRANGER ===== */
+
 function nextStranger(){
+  connected = false;
   socket.emit("next");
+  addMessage("Looking for new stranger...");
 }
+
+/* ===== ENTER KEY ===== */
 
 input.addEventListener("keypress",e=>{
   if(e.key==="Enter") sendMessage();
@@ -241,22 +261,36 @@ input.addEventListener("keypress",e=>{
 
 /* ===== SOCKET EVENTS ===== */
 
+// when page opens
 socket.on("connect", ()=>{
   addMessage("Looking for stranger...");
 });
 
+/* ⭐ VERY IMPORTANT: CONNECTION STATUS */
+socket.on("status", msg=>{
+  addMessage(msg);
+
+  // detect connection
+  if(msg.toLowerCase().includes("connected")){
+      connected = true;
+  }
+
+  if(msg.toLowerCase().includes("disconnected")){
+      connected = false;
+  }
+});
+
+/* receive message from stranger */
 socket.on("message",msg=>{
   addMessage(msg,false);
 });
 
+/* ONLINE COUNT FIX */
 socket.on("online",count=>{
-  document.getElementById("onlineCount").innerText=count;
+  document.getElementById("onlineCount").innerText = count;
 });
 
-socket.on("status",msg=>{
-  addMessage(msg,false);
-});
-
+/* SYSTEM MESSAGE SUPPORT */
 socket.on("system",msg=>{
   addMessage(msg,false);
 });
