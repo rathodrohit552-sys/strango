@@ -19,39 +19,36 @@ body{
 
 h1{
   text-align:center;
-  margin-top:30px;
+  margin:10px 0 5px 0;
+  font-size:28px;
 }
 
 .subtitle{
   text-align:center;
+  font-size:14px;
+  margin:0;
   color:#ccc;
 }
 
 .online{
   text-align:center;
   color:#00ff7b;
-  margin-top:6px;
+  margin-top:5px;
 }
 
-/* ===== MAIN LAYOUT 65/35 ===== */
+/* ===== MAIN LAYOUT ===== */
 
 .main-container{
   width:95%;
   max-width:1200px;
-  margin:30px auto;
+  margin:15px auto;
   display:flex;
   gap:20px;
   align-items:flex-start;
-  min-height:100vh;
 }
 
-.left-panel{
-  flex:65%;
-}
-
-.right-panel{
-  flex:35%;
-}
+.left-panel{ flex:65%; }
+.right-panel{ flex:35%; }
 
 /* ===== CHAT PANEL ===== */
 
@@ -59,7 +56,7 @@ h1{
   background:#0f0f0f;
   border-radius:14px;
   padding:15px;
-  height:420px;
+  height:65vh;
   overflow-y:auto;
   box-shadow:0 0 15px rgba(0,0,0,0.4);
 }
@@ -83,10 +80,12 @@ h1{
 }
 
 .me{
-  background:#00bcd4;
+  background:#00ff7b;
   color:#000;
   margin-left:auto;
 }
+
+/* ===== INPUT CONTROLS ===== */
 
 .controls{
   margin-top:10px;
@@ -120,19 +119,15 @@ button{
   box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
-/* ===== PROFESSIONAL SEO CARD ===== */
+/* ===== SEO CARD ===== */
 
 .seo-card{
-  margin-top:25px;
+  margin-top:20px;
   padding:22px;
   background:#0d0d0d;
   border-radius:14px;
   box-shadow:0 0 20px rgba(0,0,0,0.4);
   line-height:1.6;
-}
-
-.seo-card h2{
-  margin-bottom:10px;
 }
 
 .seo-features{
@@ -150,6 +145,10 @@ button{
   .main-container{
     flex-direction:column;
   }
+
+  .chat-box{
+    height:60vh;
+  }
 }
 
 </style>
@@ -163,7 +162,7 @@ button{
 
 <div class="main-container">
 
-  <!-- LEFT SIDE CHAT -->
+  <!-- CHAT SIDE -->
   <div class="left-panel">
 
     <div id="chat" class="chat-box"></div>
@@ -174,11 +173,9 @@ button{
       <button onclick="nextStranger()">Next</button>
     </div>
 
-    <!-- SEO SECTION -->
+    <!-- SEO -->
     <div class="seo-card">
-
       <h2>Free Online Random Chat – Meet Strangers Instantly</h2>
-
       <p>
       Strango is a lightweight anonymous chat platform built for fast global
       connections. No login required. Start chatting with real strangers in seconds.
@@ -191,12 +188,11 @@ button{
         <div>🔒 Anonymous & Private</div>
         <div>📱 Mobile Friendly Experience</div>
       </div>
-
     </div>
 
   </div>
 
-  <!-- RIGHT SIDE UTILITIES -->
+  <!-- UTILITIES SIDE -->
   <div class="right-panel">
     <div class="utilities">
       <h3>Strango Utilities</h3>
@@ -243,12 +239,22 @@ input.addEventListener("keypress",e=>{
   if(e.key==="Enter") sendMessage();
 });
 
+/* ===== SOCKET EVENTS ===== */
+
+socket.on("connect", ()=>{
+  addMessage("Looking for stranger...");
+});
+
 socket.on("message",msg=>{
   addMessage(msg,false);
 });
 
 socket.on("online",count=>{
   document.getElementById("onlineCount").innerText=count;
+});
+
+socket.on("status",msg=>{
+  addMessage(msg,false);
 });
 
 socket.on("system",msg=>{
