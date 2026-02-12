@@ -140,17 +140,52 @@ a{color:#4b5cff;}
 }
 
 .side-panel h3{
+
   color:#4b5cff;
 }
+/* ⭐ FINAL SPLIT LAYOUT */
+.main-layout{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+}
+
+/* LEFT CHAT 68% */
+.chat-area{
+    width:68%;
+}
+
+/* RIGHT UTILITIES 32% */
+.utilities-panel{
+    width:32%;
+    background:#111;
+    padding:20px;
+    border-left:1px solid #222;
+    min-height:80vh;
+    position:sticky;
+    top:20px;
+}
+
+.tool-card{
+    background:#1a1a1a;
+    padding:12px;
+    margin:10px 0;
+    border-radius:10px;
+}
+
 
 .main-layout{
   display:flex;
   gap:20px;
   align-items:flex-start;
+  height:68vh;
 }
 
 .chat-area{
-  width:65%;
+ width:65%;
+ height:100%;
+ display:flex;
+ flex-direction:column;
 }
 
 .side-panel{
