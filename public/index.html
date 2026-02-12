@@ -7,138 +7,48 @@
 
 <style>
 
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#000;
-  color:#fff;
-}
+body{margin:0;font-family:Arial;background:#000;color:#fff;}
 
-h1{
-  text-align:center;
-  margin:10px 0 5px 0;
-  font-size:28px;
-}
-
-.subtitle{
-  text-align:center;
-  font-size:14px;
-  margin:0;
-  color:#ccc;
-}
-
-.online{
-  text-align:center;
-  color:#00ff7b;
-  margin-top:5px;
-}
+h1{text-align:center;margin:10px 0 5px 0;font-size:28px;}
+.subtitle{text-align:center;font-size:14px;margin:0;color:#ccc;}
+.online{text-align:center;color:#00ff7b;margin-top:5px;}
 
 .main-container{
-  width:95%;
-  max-width:1200px;
-  margin:15px auto;
-  display:flex;
-  gap:20px;
+ width:95%;max-width:1200px;margin:15px auto;
+ display:flex;gap:20px;
 }
 
-.left-panel{ flex:65%; }
-.right-panel{ flex:35%; }
-
-/* ===== CHAT ===== */
+.left-panel{flex:65%;}
+.right-panel{flex:35%;}
 
 .chat-box{
-  background:#0f0f0f;
-  border-radius:14px;
-  padding:15px;
-  height:65vh;
-  overflow-y:auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.4);
+ background:#0f0f0f;border-radius:14px;padding:15px;
+ height:65vh;overflow-y:auto;
 }
 
 .message{
-  margin:6px 0;
-  padding:8px 12px;
-  border-radius:10px;
-  width:fit-content;
-  max-width:80%;
-  font-size:14px;
+ margin:6px 0;padding:8px 12px;border-radius:10px;
+ width:fit-content;max-width:80%;
 }
 
-/* Stranger bubble */
-.stranger{
-  background:#1a1a1a;
-}
-
-/* Your bubble */
-.me{
-  background:#25D366;
-  color:#000;
-}
-
-/* Status bubble */
-.status{
-  background:#222;
-  color:#bbb;
-  font-size:13px;
-}
-
-/* Typing indicator */
-.typing{
-  font-size:13px;
-  color:#aaa;
-  margin-top:5px;
-}
-
-/* ===== CONTROLS ===== */
+.stranger{background:#1a1a1a;}
+.me{background:#25D366;color:#000;}
+.status{background:#222;color:#bbb;font-size:13px;}
 
 .controls{
-  margin-top:10px;
-  display:flex;
-  align-items:center;
-  gap:10px;
+ margin-top:10px;display:flex;gap:10px;
 }
 
-input{
-  flex:1;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  outline:none;
-}
-
-/* Send button */
+input{flex:1;padding:10px;border-radius:8px;border:none;}
 .send-btn{
-  padding:10px 14px;
-  border:none;
-  border-radius:8px;
-  background:#00ff7b;
-  font-weight:bold;
-  cursor:pointer;
+ background:#00ff7b;border:none;padding:10px 14px;border-radius:8px;
 }
-
-/* ⭐ Chocolate Next button */
 .next-btn{
-  padding:10px 14px;
-  border:none;
-  border-radius:8px;
-  background:#7B3F00;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
+ background:#7B3F00;color:#fff;border:none;padding:10px 14px;border-radius:8px;
 }
 
-/* Utilities */
 .utilities{
-  background:#0d0d0d;
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 0 20px rgba(0,0,0,0.4);
-}
-
-@media(max-width:900px){
-  .main-container{
-    flex-direction:column;
-  }
+ background:#0d0d0d;padding:20px;border-radius:14px;
 }
 
 </style>
@@ -155,18 +65,11 @@ input{
 <div class="left-panel">
 
 <div id="chat" class="chat-box"></div>
-<div id="typingIndicator" class="typing"></div>
 
 <div class="controls">
-
-<!-- ⭐ NEXT BUTTON LEFT -->
 <button class="next-btn" onclick="nextStranger()">Next</button>
-
 <input id="messageInput" placeholder="Type message..." />
-
-<!-- ⭐ SEND BUTTON RIGHT -->
 <button class="send-btn" onclick="sendMessage()">Send</button>
-
 </div>
 
 </div>
@@ -189,94 +92,84 @@ input{
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-const socket = io();
-const chat = document.getElementById("chat");
-const input = document.getElementById("messageInput");
-const typingIndicator=document.getElementById("typingIndicator");
+const socket=io();
+const chat=document.getElementById("chat");
+const input=document.getElementById("messageInput");
 
 let connected=false;
 let statusDiv=null;
-let typingTimeout;
 
-/* ===== ADD MESSAGE ===== */
+/* ⭐ CLEAR CHAT FUNCTION */
+function clearChat(){
+  chat.innerHTML="";
+  statusDiv=null;
+}
 
+/* ADD MESSAGE */
 function addMessage(text,type="stranger"){
 
-  if(type==="status"){
-      if(statusDiv){
-         statusDiv.innerText=text;
-         return;
-      }
-      statusDiv=document.createElement("div");
-      statusDiv.className="message status";
-      statusDiv.innerText=text;
-      chat.appendChild(statusDiv);
-      chat.scrollTop=chat.scrollHeight;
-      return;
-  }
+ if(type==="status"){
+   if(statusDiv){
+     statusDiv.innerText=text;
+     return;
+   }
+   statusDiv=document.createElement("div");
+   statusDiv.className="message status";
+   statusDiv.innerText=text;
+   chat.appendChild(statusDiv);
+   return;
+ }
 
-  const div=document.createElement("div");
-  div.className="message "+type;
-  div.innerText=text;
-  chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
+ const div=document.createElement("div");
+ div.className="message "+type;
+ div.innerText=text;
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
 }
 
-/* ===== SEND ===== */
-
+/* SEND */
 function sendMessage(){
 
-  if(!connected){
-    addMessage("⚠️ Not connected yet","status");
-    return;
-  }
+ if(!connected){
+   addMessage("⚠️ Not connected yet","status");
+   return;
+ }
 
-  if(!input.value.trim()) return;
+ if(!input.value.trim())return;
 
-  socket.emit("message",input.value);
-  addMessage(input.value,"me");
-  input.value="";
+ socket.emit("message",input.value);
+ addMessage(input.value,"me");
+ input.value="";
 }
 
-/* ===== NEXT ===== */
-
+/* NEXT */
 function nextStranger(){
-  connected=false;
-  socket.emit("next");
-  addMessage("Looking for new stranger...","status");
+ connected=false;
+ clearChat(); // ⭐ FIX HERE
+ socket.emit("next");
+ addMessage("Looking for new stranger...","status");
 }
 
-/* ===== TYPING DETECT ===== */
-
-input.addEventListener("input",()=>{
-
-  if(!connected) return;
-
-  socket.emit("typing");
-
-  clearTimeout(typingTimeout);
-  typingTimeout=setTimeout(()=>{
-      socket.emit("stopTyping");
-  },1000);
-});
-
-/* ===== SOCKET EVENTS ===== */
+/* SOCKET EVENTS */
 
 socket.on("connect",()=>{
  addMessage("Looking for stranger...","status");
 });
 
 socket.on("status",msg=>{
- addMessage(msg,"status");
 
+ /* ⭐ IMPORTANT LOGIC */
  if(msg.toLowerCase().includes("connected")){
+   clearChat();        // ⭐ NEW PARTNER → CLEAR OLD CHAT
    connected=true;
  }
 
  if(msg.toLowerCase().includes("disconnected")){
+   clearChat();        // ⭐ OLD PARTNER LEFT → CLEAR CHAT
    connected=false;
-   typingIndicator.innerText="";
  }
+
+ addMessage(msg,"status");
 });
 
 socket.on("message",msg=>{
@@ -285,15 +178,6 @@ socket.on("message",msg=>{
 
 socket.on("online",count=>{
  document.getElementById("onlineCount").innerText=count;
-});
-
-/* ⭐ STRANGER TYPING */
-socket.on("typing",()=>{
- typingIndicator.innerText="Stranger is typing...";
-});
-
-socket.on("stopTyping",()=>{
- typingIndicator.innerText="";
 });
 
 </script>
