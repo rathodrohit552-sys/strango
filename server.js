@@ -76,7 +76,7 @@ io.on("connection",(socket)=>{
 
       /* partner stays alone — NOT auto matched */
       io.to(partner).emit("status","Stranger disconnected");
-      io.to(partner).emit("newMatch"); // clear old chat
+      
     }
 
     if(!waitingQueue.includes(socket.id)){
