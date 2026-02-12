@@ -62,20 +62,26 @@ h1{
 .message{
   margin:6px 0;
   padding:8px 12px;
-  border-radius:8px;
-  background:#1a1a1a;
+  border-radius:10px;
   width:fit-content;
   max-width:80%;
   word-wrap:break-word;
+  font-size:14px;
 }
 
-/* ⭐ ALL MESSAGES LEFT SIDE */
-.me{
+/* ⭐ STRANGER MESSAGE */
+.stranger{
   background:#1a1a1a;
   color:#fff;
-  margin-left:0;
 }
 
+/* ⭐ YOUR MESSAGE (WhatsApp green) */
+.me{
+  background:#25D366;
+  color:#000;
+}
+
+/* ⭐ STATUS MESSAGE */
 .status{
   background:#222;
   color:#bbb;
@@ -115,8 +121,6 @@ button{
   border-radius:14px;
   box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
-
-/* ===== MOBILE ===== */
 
 @media(max-width:900px){
   .main-container{
@@ -170,15 +174,15 @@ const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
 
 let connected=false;
-let statusDiv=null; // ⭐ only one status message
+let statusDiv=null;
 
 /* ===== ADD MESSAGE ===== */
 
-function addMessage(text,type="msg"){
+function addMessage(text,type="stranger"){
 
   if(type==="status"){
       if(statusDiv){
-         statusDiv.innerText=text; // replace old status
+         statusDiv.innerText=text;
          return;
       }
       statusDiv=document.createElement("div");
@@ -190,7 +194,7 @@ function addMessage(text,type="msg"){
   }
 
   const div=document.createElement("div");
-  div.className="message";
+  div.className="message "+type;
   div.innerText=text;
   chat.appendChild(div);
   chat.scrollTop=chat.scrollHeight;
@@ -208,7 +212,7 @@ function sendMessage(){
   if(!input.value.trim()) return;
 
   socket.emit("message",input.value);
-  addMessage(input.value); // ⭐ left side
+  addMessage(input.value,"me"); // ⭐ green bubble
   input.value="";
 }
 
@@ -243,7 +247,7 @@ socket.on("status",msg=>{
 });
 
 socket.on("message",msg=>{
- addMessage(msg);
+ addMessage(msg,"stranger"); // ⭐ dark bubble
 });
 
 socket.on("online",count=>{
