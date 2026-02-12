@@ -18,7 +18,13 @@ text-align:center;
 
 h1{margin-top:30px}
 #online{color:#00ff66;margin-top:8px}
+#statusBar{
+margin-top:5px;
+color:#fff;
+font-weight:500;
+}
 
+/* LAYOUT */
 #mainLayout{
 display:flex;
 gap:20px;
@@ -38,6 +44,7 @@ padding:15px;
 border-radius:10px;
 }
 
+/* CHAT BOX */
 #chatBox{
 background:#111;
 border-radius:10px;
@@ -45,16 +52,31 @@ height:350px;
 overflow-y:auto;
 padding:15px;
 text-align:left;
+display:flex;
+flex-direction:column;
+gap:6px;
 }
 
+/* WHATSAPP STYLE */
 .msg{
-background:#1e1e1e;
 padding:8px 12px;
 border-radius:8px;
-margin:6px 0;
-display:inline-block;
 max-width:80%;
 word-wrap:break-word;
+display:block;
+}
+
+/* stranger message */
+.stranger{
+background:#2a2a2a;
+align-self:flex-start;
+}
+
+/* your message */
+.you{
+background:#00cc44;
+color:#fff;
+align-self:flex-start;
 }
 
 #inputBar{
@@ -82,14 +104,6 @@ cursor:pointer;
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
 
-#seo{
-max-width:900px;
-margin:60px auto;
-text-align:left;
-line-height:1.7;
-padding:0 20px;
-}
-
 @media(max-width:900px){
 #mainLayout{flex-direction:column;}
 }
@@ -100,7 +114,9 @@ padding:0 20px;
 
 <h1>Strango — Free Stranger Chat India</h1>
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
+
 <div id="online">Online: 0</div>
+<div id="statusBar">Looking for stranger...</div>
 
 <div id="mainLayout">
 
@@ -129,49 +145,6 @@ padding:0 20px;
 
 </div>
 
-<!-- ===== STRONG SEO SECTION ===== -->
-
-<div id="seo">
-
-<h2>About Strango</h2>
-<p>
-Strango is a fast, secure, and free anonymous stranger chat platform that allows users to talk with random people instantly worldwide. Built with real-time technology, Strango focuses on privacy, speed, and seamless conversations.
-</p>
-
-<h2>Frequently Asked Questions</h2>
-
-<h4>1. Is Strango free?</h4>
-<p>Yes, Strango is completely free to use.</p>
-
-<h4>2. Do I need an account?</h4>
-<p>No signup or login is required.</p>
-
-<h4>3. Is my identity safe?</h4>
-<p>Chats are anonymous and privacy-focused.</p>
-
-<h4>4. Can I use Strango on mobile?</h4>
-<p>Yes, Strango works perfectly on phones and desktops.</p>
-
-<h4>5. How does matching work?</h4>
-<p>The system pairs two random users instantly.</p>
-
-<h4>6. Are chats stored?</h4>
-<p>No conversations are permanently saved.</p>
-
-<h4>7. Can I skip strangers?</h4>
-<p>Yes, press Next anytime.</p>
-
-<h4>8. Is Strango global?</h4>
-<p>Users from many countries can connect.</p>
-
-<h4>9. Why is Strango fast?</h4>
-<p>Lightweight realtime architecture ensures speed.</p>
-
-<h4>10. Is Strango secure?</h4>
-<p>Security and privacy are core priorities.</p>
-
-</div>
-
 <script>
 
 const socket = io();
@@ -181,23 +154,33 @@ const input = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 const nextBtn = document.getElementById("nextBtn");
 const onlineText = document.getElementById("online");
+const statusBar = document.getElementById("statusBar");
 
 let connected=false;
 
-/* ===== MESSAGE FUNCTIONS ===== */
+/* ===== ADD MESSAGE ===== */
 
-function addMsg(text){
+function addMsg(text,type){
+
 const div=document.createElement("div");
-div.className="msg";
+div.classList.add("msg");
+
+if(type==="you"){
+div.classList.add("you");
+}else{
+div.classList.add("stranger");
+}
+
 div.textContent=text;
+
 chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-/* ⭐ SHOW ONLY CURRENT STATUS */
+/* ===== STATUS BAR ===== */
+
 function setStatus(text){
-chatBox.innerHTML="";
-addMsg(text);
+statusBar.innerText=text;
 }
 
 /* ===== SOCKET EVENTS ===== */
@@ -205,20 +188,23 @@ addMsg(text);
 socket.on("waiting",()=>{
 connected=false;
 setStatus("Looking for stranger...");
+chatBox.innerHTML="";
 });
 
 socket.on("matched",()=>{
 connected=true;
 setStatus("Connected to stranger");
+chatBox.innerHTML="";
 });
 
 socket.on("message",(msg)=>{
-addMsg("Stranger: "+msg);
+addMsg(msg,"stranger");
 });
 
 socket.on("partnerDisconnected",()=>{
 connected=false;
 setStatus("Stranger disconnected");
+chatBox.innerHTML="";
 });
 
 socket.on("onlineCount",(count)=>{
@@ -228,12 +214,13 @@ onlineText.innerText="Online: "+count;
 /* ===== SEND ===== */
 
 sendBtn.onclick=()=>{
+
 if(!connected) return;
 
 if(input.value.trim()=="") return;
 
 socket.emit("message",input.value);
-addMsg("You: "+input.value);
+addMsg(input.value,"you");
 input.value="";
 };
 
