@@ -7,8 +7,6 @@
 
 <style>
 
-/* ===== GLOBAL ===== */
-
 body{
   margin:0;
   font-family:Arial, sans-serif;
@@ -36,7 +34,7 @@ h1{
   margin-top:5px;
 }
 
-/* ===== MAIN LAYOUT ===== */
+/* ===== LAYOUT ===== */
 
 .main-container{
   width:95%;
@@ -50,7 +48,7 @@ h1{
 .left-panel{ flex:65%; }
 .right-panel{ flex:35%; }
 
-/* ===== CHAT PANEL ===== */
+/* ===== CHAT ===== */
 
 .chat-box{
   background:#0f0f0f;
@@ -59,14 +57,6 @@ h1{
   height:65vh;
   overflow-y:auto;
   box-shadow:0 0 15px rgba(0,0,0,0.4);
-}
-
-.chat-box::-webkit-scrollbar{
-  width:6px;
-}
-.chat-box::-webkit-scrollbar-thumb{
-  background:#333;
-  border-radius:6px;
 }
 
 .message{
@@ -79,13 +69,20 @@ h1{
   word-wrap:break-word;
 }
 
+/* ⭐ ALL MESSAGES LEFT SIDE */
 .me{
-  background:#00ff7b;
-  color:#000;
-  margin-left:auto;
+  background:#1a1a1a;
+  color:#fff;
+  margin-left:0;
 }
 
-/* ===== INPUT CONTROLS ===== */
+.status{
+  background:#222;
+  color:#bbb;
+  font-size:13px;
+}
+
+/* ===== INPUT ===== */
 
 .controls{
   margin-top:10px;
@@ -110,7 +107,7 @@ button{
   font-weight:bold;
 }
 
-/* ===== UTILITIES CARD ===== */
+/* ===== UTILITIES ===== */
 
 .utilities{
   background:#0d0d0d;
@@ -119,35 +116,11 @@ button{
   box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
-/* ===== SEO CARD ===== */
-
-.seo-card{
-  margin-top:20px;
-  padding:22px;
-  background:#0d0d0d;
-  border-radius:14px;
-  box-shadow:0 0 20px rgba(0,0,0,0.4);
-  line-height:1.6;
-}
-
-.seo-features{
-  margin-top:15px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  font-size:14px;
-  color:#bbb;
-}
-
 /* ===== MOBILE ===== */
 
 @media(max-width:900px){
   .main-container{
     flex-direction:column;
-  }
-
-  .chat-box{
-    height:60vh;
   }
 }
 
@@ -162,53 +135,33 @@ button{
 
 <div class="main-container">
 
-  <!-- CHAT SIDE -->
-  <div class="left-panel">
+<div class="left-panel">
 
-    <div id="chat" class="chat-box"></div>
+<div id="chat" class="chat-box"></div>
 
-    <div class="controls">
-      <input id="messageInput" placeholder="Type message..." />
-      <button onclick="sendMessage()">Send</button>
-      <button onclick="nextStranger()">Next</button>
-    </div>
-
-    <!-- SEO -->
-    <div class="seo-card">
-      <h2>Free Online Random Chat – Meet Strangers Instantly</h2>
-      <p>
-      Strango is a lightweight anonymous chat platform built for fast global
-      connections. No login required. Start chatting with real strangers in seconds.
-      Designed for privacy, speed, and mobile-friendly performance.
-      </p>
-
-      <div class="seo-features">
-        <div>🌍 Global Stranger Matching</div>
-        <div>⚡ Ultra Fast Lightweight Chat</div>
-        <div>🔒 Anonymous & Private</div>
-        <div>📱 Mobile Friendly Experience</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- UTILITIES SIDE -->
-  <div class="right-panel">
-    <div class="utilities">
-      <h3>Strango Utilities</h3>
-      <ul>
-        <li>Private anonymous chat</li>
-        <li>No login required</li>
-        <li>Global random matching</li>
-        <li>Fast lightweight design</li>
-        <li>Mobile friendly</li>
-      </ul>
-    </div>
-  </div>
+<div class="controls">
+<input id="messageInput" placeholder="Type message..." />
+<button onclick="sendMessage()">Send</button>
+<button onclick="nextStranger()">Next</button>
+</div>
 
 </div>
 
-<!-- SOCKET -->
+<div class="right-panel">
+<div class="utilities">
+<h3>Strango Utilities</h3>
+<ul>
+<li>Private anonymous chat</li>
+<li>No login required</li>
+<li>Global random matching</li>
+<li>Fast lightweight design</li>
+<li>Mobile friendly</li>
+</ul>
+</div>
+</div>
+
+</div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
@@ -216,83 +169,85 @@ const socket = io();
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
 
-let connected = false;   // IMPORTANT: prevent self messages
+let connected=false;
+let statusDiv=null; // ⭐ only one status message
 
-/* ===== ADD MESSAGE UI ===== */
+/* ===== ADD MESSAGE ===== */
 
-function addMessage(text, me=false){
+function addMessage(text,type="msg"){
+
+  if(type==="status"){
+      if(statusDiv){
+         statusDiv.innerText=text; // replace old status
+         return;
+      }
+      statusDiv=document.createElement("div");
+      statusDiv.className="message status";
+      statusDiv.innerText=text;
+      chat.appendChild(statusDiv);
+      chat.scrollTop=chat.scrollHeight;
+      return;
+  }
+
   const div=document.createElement("div");
-  div.className="message"+(me?" me":"");
+  div.className="message";
   div.innerText=text;
   chat.appendChild(div);
   chat.scrollTop=chat.scrollHeight;
 }
 
-/* ===== SEND MESSAGE ===== */
+/* ===== SEND ===== */
 
 function sendMessage(){
 
-  // ❌ DO NOT SEND IF NOT CONNECTED
   if(!connected){
-    addMessage("⚠️ Not connected to stranger yet.");
+    addMessage("⚠️ Not connected yet","status");
     return;
   }
 
   if(!input.value.trim()) return;
 
-  socket.emit("message", input.value);
-  addMessage(input.value,true);
+  socket.emit("message",input.value);
+  addMessage(input.value); // ⭐ left side
   input.value="";
 }
 
-/* ===== NEXT STRANGER ===== */
+/* ===== NEXT ===== */
 
 function nextStranger(){
-  connected = false;
+  connected=false;
   socket.emit("next");
-  addMessage("Looking for new stranger...");
+  addMessage("Looking for new stranger...","status");
 }
 
-/* ===== ENTER KEY ===== */
-
 input.addEventListener("keypress",e=>{
-  if(e.key==="Enter") sendMessage();
+ if(e.key==="Enter") sendMessage();
 });
 
 /* ===== SOCKET EVENTS ===== */
 
-// when page opens
-socket.on("connect", ()=>{
-  addMessage("Looking for stranger...");
+socket.on("connect",()=>{
+ addMessage("Looking for stranger...","status");
 });
 
-/* ⭐ VERY IMPORTANT: CONNECTION STATUS */
-socket.on("status", msg=>{
-  addMessage(msg);
+socket.on("status",msg=>{
+ addMessage(msg,"status");
 
-  // detect connection
-  if(msg.toLowerCase().includes("connected")){
-      connected = true;
-  }
+ if(msg.toLowerCase().includes("connected")){
+   connected=true;
+ }
 
-  if(msg.toLowerCase().includes("disconnected")){
-      connected = false;
-  }
+ if(msg.toLowerCase().includes("disconnected")){
+   connected=false;
+ }
 });
 
-/* receive message from stranger */
 socket.on("message",msg=>{
-  addMessage(msg,false);
+ addMessage(msg);
 });
 
-/* ONLINE COUNT FIX */
 socket.on("online",count=>{
-  document.getElementById("onlineCount").innerText = count;
-});
-
-/* SYSTEM MESSAGE SUPPORT */
-socket.on("system",msg=>{
-  addMessage(msg,false);
+ document.getElementById("onlineCount").innerText=count;
 });
 
 </script>
