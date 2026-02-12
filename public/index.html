@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Strango — Free Stranger Chat India</title>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -82,6 +82,14 @@ cursor:pointer;
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
 
+#seo{
+max-width:900px;
+margin:60px auto;
+text-align:left;
+line-height:1.7;
+padding:0 20px;
+}
+
 @media(max-width:900px){
 #mainLayout{flex-direction:column;}
 }
@@ -121,9 +129,61 @@ cursor:pointer;
 
 </div>
 
+<!-- ================= SEO SECTION ================= -->
+
+<div id="seo">
+
+<h2>About Strango</h2>
+<p>
+Strango is a fast, secure, and free anonymous stranger chat platform that allows users to talk with random people instantly. Unlike traditional social media, Strango focuses on privacy-first conversations, real-time matching, and lightweight performance worldwide.
+</p>
+
+<h2>Why Strango is Different</h2>
+<ul>
+<li>No registration or login required</li>
+<li>Instant global stranger matching</li>
+<li>Optimized for mobile and desktop</li>
+<li>Minimal design for faster loading</li>
+<li>Privacy-focused anonymous chat</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<h4>1. Is Strango free?</h4>
+<p>Yes, Strango is completely free to use without hidden costs.</p>
+
+<h4>2. Do I need an account?</h4>
+<p>No signup or login is required to start chatting instantly.</p>
+
+<h4>3. Is my identity safe?</h4>
+<p>Strango keeps conversations anonymous and does not require personal data.</p>
+
+<h4>4. Can I use Strango on mobile?</h4>
+<p>Yes, Strango is fully optimized for smartphones and tablets.</p>
+
+<h4>5. How does stranger matching work?</h4>
+<p>The system pairs two online users randomly in real time.</p>
+
+<h4>6. Are chats stored?</h4>
+<p>No, conversations are not permanently stored.</p>
+
+<h4>7. Can I skip a stranger?</h4>
+<p>Yes, press the Next button to connect with someone new.</p>
+
+<h4>8. Is Strango available globally?</h4>
+<p>Yes, users from different countries can connect instantly.</p>
+
+<h4>9. Why is Strango fast?</h4>
+<p>The platform uses lightweight real-time technology for speed.</p>
+
+<h4>10. Is Strango secure?</h4>
+<p>Security and privacy are core priorities in the platform design.</p>
+
+</div>
+
 <script>
 
-const socket = io();   // ⭐ REAL CONNECTION TO SERVER
+const socket = io();
 
 const chatBox = document.getElementById("chatBox");
 const input = document.getElementById("messageInput");
@@ -131,9 +191,8 @@ const sendBtn = document.getElementById("sendBtn");
 const nextBtn = document.getElementById("nextBtn");
 const onlineText = document.getElementById("online");
 
-let connected = false;
+let connected=false;
 
-/* ===== ADD MESSAGE ===== */
 function addMsg(text){
 const div=document.createElement("div");
 div.className="msg";
@@ -144,18 +203,14 @@ chatBox.scrollTop=chatBox.scrollHeight;
 
 /* ===== SOCKET EVENTS ===== */
 
-socket.on("connect",()=>{
-addMsg("System: Connected to server");
-});
-
 socket.on("waiting",()=>{
 connected=false;
-addMsg("System: Looking for stranger...");
+addMsg("Looking for stranger...");
 });
 
 socket.on("matched",()=>{
 connected=true;
-addMsg("System: Connected to stranger");
+addMsg("Connected to stranger");
 });
 
 socket.on("message",(msg)=>{
@@ -164,20 +219,16 @@ addMsg("Stranger: "+msg);
 
 socket.on("partnerDisconnected",()=>{
 connected=false;
-addMsg("System: Stranger disconnected");
+addMsg("Stranger disconnected");
 });
 
 socket.on("onlineCount",(count)=>{
 onlineText.innerText="Online: "+count;
 });
 
-/* ===== SEND MESSAGE ===== */
+/* ===== SEND ===== */
 sendBtn.onclick=()=>{
-
-if(!connected){
-addMsg("System: Not connected to stranger");
-return;
-}
+if(!connected) return;
 
 if(input.value.trim()=="") return;
 
@@ -190,7 +241,6 @@ input.addEventListener("keypress",e=>{
 if(e.key==="Enter") sendBtn.click();
 });
 
-/* ===== NEXT BUTTON ===== */
 nextBtn.onclick=()=>{
 socket.emit("next");
 };
