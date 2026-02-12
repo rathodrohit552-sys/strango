@@ -37,78 +37,83 @@ function tryMatch(){
   }
 }
 
-io.on("connection",(socket)=>{
+let waitingUser = null;
+let onlineCount = 0;
 
-  onlineUsers++;
-  updateOnline();
+io.on("connection", (socket) => {
 
-  socket.emit("status","Waiting for stranger...");
+onlineCount++;
+io.emit("onlineCount", onlineCount);
 
-  /* JOIN QUEUE */
-  socket.on("join",()=>{
-    if(!waitingQueue.includes(socket.id)){
-      waitingQueue.push(socket.id);
-    }
-    tryMatch();
-  });
+socket.emit("waiting");
 
-  /* MESSAGE */
-  socket.on("message",(msg)=>{
-    const partner = pairs[socket.id];
-    if(!partner) return;
-    io.to(partner).emit("message",msg);
-  });
+if (waitingUser) {
 
-  /* TYPING */
-  socket.on("typing",()=>{
-    const partner = pairs[socket.id];
-    if(!partner) return;
-    io.to(partner).emit("typing");
-  });
+const partner = waitingUser;
+waitingUser = null;
 
-  /* ⭐ NEXT BUTTON — ONLY CURRENT USER GOES BACK TO QUEUE */
-  socket.on("next",()=>{
-    const partner = pairs[socket.id];
+socket.partner = partner.id;
+partner.partner = socket.id;
 
-    if(partner){
-      delete pairs[partner];
-      delete pairs[socket.id];
+socket.emit("matched");
+partner.emit("matched");
 
-      /* partner stays alone — NOT auto matched */
-      io.to(partner).emit("status","Stranger disconnected");
-      
-    }
+} else {
+waitingUser = socket;
+}
 
-    if(!waitingQueue.includes(socket.id)){
-      waitingQueue.push(socket.id);
-    }
+socket.on("message", (msg) => {
 
-    socket.emit("status","Waiting for stranger...");
-    socket.emit("newMatch"); // clear chat for next clicker
+if (socket.partner) {
+io.to(socket.partner).emit("message", msg);
+}
 
-    tryMatch();
-  });
-
-  /* DISCONNECT */
-  socket.on("disconnect",()=>{
-
-    onlineUsers--;
-    updateOnline();
-
-    waitingQueue = waitingQueue.filter(id=>id!==socket.id);
-
-    const partner = pairs[socket.id];
-
-    if(partner){
-      delete pairs[partner];
-      delete pairs[socket.id];
-
-      io.to(partner).emit("status","Stranger disconnected");
-      io.to(partner).emit("newMatch"); // clear chat
-    }
-  });
 });
 
-server.listen(3000,()=>{
-  console.log("Strango running on port 3000");
+socket.on("next", () => {
+
+if (socket.partner) {
+io.to(socket.partner).emit("partnerDisconnected");
+
+const partnerSocket = io.sockets.sockets.get(socket.partner);
+if (partnerSocket) partnerSocket.partner = null;
+
+socket.partner = null;
+}
+
+socket.emit("waiting");
+
+if (waitingUser && waitingUser.id !== socket.id) {
+
+const partner = waitingUser;
+waitingUser = null;
+
+socket.partner = partner.id;
+partner.partner = socket.id;
+
+socket.emit("matched");
+partner.emit("matched");
+
+} else {
+waitingUser = socket;
+}
+
 });
+
+socket.on("disconnect", () => {
+
+onlineCount--;
+io.emit("onlineCount", onlineCount);
+
+if (waitingUser && waitingUser.id === socket.id) {
+waitingUser = null;
+}
+
+if (socket.partner) {
+io.to(socket.partner).emit("partnerDisconnected");
+}
+
+});
+
+});
+
