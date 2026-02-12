@@ -1,107 +1,70 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
+const express=require("express");
+const http=require("http");
+const {Server}=require("socket.io");
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const app=express();
+const server=http.createServer(app);
+const io=new Server(server);
 
 app.use(express.static("public"));
 
-let waitingQueue = [];
-let onlineCount = 0;
+let waitingQueue=[];
+let onlineCount=0;
 
-io.on("connection", (socket) => {
+io.on("connection",(socket)=>{
 
 onlineCount++;
-io.emit("onlineCount", onlineCount);
+io.emit("onlineCount",onlineCount);
 
-socket.partner = null;
+socket.partner=null;
 
-/* ================= MATCH FUNCTION ================= */
+socket.on("findStranger",()=>{
 
-function tryMatch(user){
+if(waitingQueue.length>0){
 
-if(waitingQueue.length > 0){
+const partner=waitingQueue.shift();
 
-const partner = waitingQueue.shift();
+socket.partner=partner;
+partner.partner=socket;
 
-if(partner.id === user.id){
-waitingQueue.push(user);
-return;
-}
-
-user.partner = partner.id;
-partner.partner = user.id;
-
-user.emit("matched");
+socket.emit("matched");
 partner.emit("matched");
 
 }else{
-waitingQueue.push(user);
-user.emit("waiting");
-}
+
+waitingQueue.push(socket);
+socket.emit("waiting");
+
 }
 
-/* FIRST MATCH */
-tryMatch(socket);
-
-/* ================= MESSAGE ================= */
+});
 
 socket.on("message",(msg)=>{
 if(socket.partner){
-io.to(socket.partner).emit("message",msg);
+socket.partner.emit("message",msg);
 }
 });
-
-/* ================= TYPING ================= */
 
 socket.on("typing",()=>{
 if(socket.partner){
-io.to(socket.partner).emit("typing");
+socket.partner.emit("typing");
 }
 });
-
-/* ================= NEXT ================= */
-
-socket.on("next",()=>{
-
-if(socket.partner){
-const p = io.sockets.sockets.get(socket.partner);
-if(p){
-p.partner=null;
-p.emit("disconnectUser");
-}
-socket.partner=null;
-}
-
-waitingQueue = waitingQueue.filter(s=>s.id!==socket.id);
-
-tryMatch(socket);
-
-});
-
-/* ================= DISCONNECT ================= */
 
 socket.on("disconnect",()=>{
-
 onlineCount--;
-io.emit("onlineCount", onlineCount);
+io.emit("onlineCount",onlineCount);
 
 if(socket.partner){
-const p = io.sockets.sockets.get(socket.partner);
-if(p){
-p.partner=null;
-p.emit("disconnectUser");
-}
+socket.partner.emit("disconnectPartner");
+socket.partner.partner=null;
 }
 
-waitingQueue = waitingQueue.filter(s=>s.id!==socket.id);
-
+waitingQueue=waitingQueue.filter(s=>s.id!==socket.id);
 });
 
 });
 
 server.listen(3000,()=>{
-console.log("🚀 Strango running on port 3000");
+console.log("Strango running on port 3000");
 });
