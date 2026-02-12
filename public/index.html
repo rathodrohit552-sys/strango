@@ -20,7 +20,7 @@ header{
 }
 
 .online{
-  color:#0f0;
+  color:#00ff00;
   font-size:14px;
 }
 
@@ -32,23 +32,13 @@ header{
   height:55vh;
   overflow-y:auto;
   padding:15px;
-  display:flex;
-  flex-direction:column;
 }
-
-/* ⭐ MESSAGE ROW CONTROLS LEFT/RIGHT POSITION */
-.row{
-  width:100%;
-  display:flex;
-}
-
-.row.you{ justify-content:flex-end; }
-.row.stranger{ justify-content:flex-start; }
 
 .msg{
+  background:#333;
   padding:10px 14px;
   border-radius:16px;
-  margin:6px 0;
+  margin:8px 0;
   max-width:65%;
   width:fit-content;
   word-wrap:break-word;
@@ -56,10 +46,6 @@ header{
 
 .youBubble{
   background:#4b5cff;
-}
-
-.strangerBubble{
-  background:#333;
 }
 
 .typing{
@@ -98,11 +84,14 @@ button{
 #sendBtn{background:#00aa00;color:#fff;}
 
 .seo{
-  padding:40px 20px;
-  text-align:center;
-  max-width:800px;
+  padding:60px 20px;
+  max-width:900px;
   margin:auto;
+  line-height:1.6;
 }
+
+h2{margin-top:40px;}
+a{color:#4b5cff;}
 </style>
 </head>
 
@@ -125,9 +114,64 @@ button{
 <button id="sendBtn">Send</button>
 </div>
 
+<!-- ⭐⭐⭐ STRONG SEO SECTION ⭐⭐⭐ -->
 <div class="seo">
-<h2>Free Online Random Chat – Meet Strangers</h2>
-<p>Strango is a fast anonymous stranger chat platform where you can talk with random people instantly without login.</p>
+
+<h2>About Strango</h2>
+<p>
+Strango is a fast and free anonymous stranger chat platform built for users who want to talk with random people online without login or signup. 
+Unlike traditional social networks, Strango focuses on privacy, speed, and real-time communication. 
+Users can instantly connect with new strangers globally and start conversations safely.
+</p>
+
+<h2>Why Choose Strango?</h2>
+<ul>
+<li>Instant random chat without registration</li>
+<li>Minimal design for faster global loading</li>
+<li>Private anonymous conversations</li>
+<li>Works on mobile and desktop</li>
+<li>Secure socket-based real-time messaging</li>
+</ul>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h3>1. Is Strango free?</h3>
+<p>Yes, Strango is completely free to use.</p>
+
+<h3>2. Do I need to create an account?</h3>
+<p>No signup or login is required.</p>
+
+<h3>3. Is my identity safe?</h3>
+<p>Strango does not ask for personal details.</p>
+
+<h3>4. Can I skip strangers?</h3>
+<p>Yes, use the Next button anytime.</p>
+
+<h3>5. Does Strango store messages?</h3>
+<p>No conversations are permanently saved.</p>
+
+<h3>6. Can I use Strango on mobile?</h3>
+<p>Yes, Strango works on phones and tablets.</p>
+
+<h3>7. Is Strango available worldwide?</h3>
+<p>Yes, you can chat with strangers globally.</p>
+
+<h3>8. Why can't I find a stranger?</h3>
+<p>You may need more users online at that moment.</p>
+
+<h3>9. Is Strango secure?</h3>
+<p>Messages are transmitted in real time using secure connections.</p>
+
+<h3>10. Who created Strango?</h3>
+<p>Strango is an independent anonymous chat project focused on simplicity.</p>
+
+<h2>Legal</h2>
+<p>
+<a href="/privacy-policy">Privacy Policy</a> |
+<a href="/terms">Terms of Service</a> |
+<a href="/contact">Contact</a>
+</p>
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -142,33 +186,41 @@ const onlineCount = document.getElementById("onlineCount");
 
 let typingTimer;
 
-/* ⭐ NEW MESSAGE RENDER SYSTEM (FORCE LEFT/RIGHT) */
-function addMessage(text,type){
-  const row=document.createElement("div");
-  row.className="row "+type;
-
-  const bubble=document.createElement("div");
-  bubble.className="msg "+(type==="you"?"youBubble":"strangerBubble");
-  bubble.innerText=text;
-
-  row.appendChild(bubble);
-  chat.appendChild(row);
+/* ⭐ ALL MESSAGES LEFT */
+function addMessage(text,isYou=false){
+  const div=document.createElement("div");
+  div.className="msg";
+  if(isYou) div.classList.add("youBubble");
+  div.innerText=text;
+  chat.appendChild(div);
   chat.scrollTop=chat.scrollHeight;
 }
 
-document.getElementById("sendBtn").onclick=()=>{
+/* SEND BUTTON */
+document.getElementById("sendBtn").onclick=sendMessage;
+
+/* ⭐ ENTER KEY SEND */
+input.addEventListener("keydown",(e)=>{
+  if(e.key==="Enter"){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+function sendMessage(){
   if(!input.value.trim()) return;
-
   socket.emit("message",input.value);
-  addMessage("You: "+input.value,"you");
+  addMessage("You: "+input.value,true);
   input.value="";
-};
+}
 
+/* NEXT */
 document.getElementById("nextBtn").onclick=()=>{
   socket.emit("next");
   chat.innerHTML="";
 };
 
+/* ⭐ TYPING EMIT */
 input.addEventListener("input",()=>{
   socket.emit("typing");
 });
@@ -182,16 +234,16 @@ socket.on("status",msg=>{
 });
 
 socket.on("message",msg=>{
-  addMessage("Stranger: "+msg,"stranger");
+  addMessage("Stranger: "+msg,false);
 });
 
-/* ⭐ IMPROVED TYPING INDICATOR */
+/* ⭐ FIXED TYPING INDICATOR */
 socket.on("typing",()=>{
   typingText.innerText="Stranger is typing...";
   clearTimeout(typingTimer);
   typingTimer=setTimeout(()=>{
     typingText.innerText="";
-  },1200);
+  },1500);
 });
 
 socket.on("onlineCount",count=>{
