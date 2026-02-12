@@ -290,17 +290,19 @@ socket.on("connect",()=>{
 socket.emit("join");
 });
 
-socket.on("connected",()=>{
-addSystemMessage("Connected to stranger");
-});
 
 socket.on("message",(msg)=>{
 addUserMessage("Stranger: "+msg);
 });
-
-socket.on("stranger-disconnected",()=>{
-addSystemMessage("Stranger disconnected");
+socket.on("status",(msg)=>{
+addSystemMessage(msg);
 });
+socket.on("typing",()=>{
+// optional typing UI
+});
+
+
+
 });
 </script>
 
