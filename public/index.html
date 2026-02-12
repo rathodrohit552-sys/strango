@@ -3,68 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ⭐ PROFESSIONAL FONT (industry standard) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <title>Strango — Free Stranger Chat India</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#000;color:#fff;}
-h1{text-align:center;margin:10px 0 5px 0;font-size:28px;}
-.subtitle{text-align:center;font-size:14px;margin:0;color:#ccc;}
-.online{text-align:center;color:#00ff7b;margin-top:5px;}
+
+body{
+ margin:0;
+ font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+ background:#000;
+ color:#fff;
+ letter-spacing:0.2px;
+}
+
+/* ===== PREMIUM TYPOGRAPHY ===== */
+
+h1{
+ text-align:center;
+ margin:12px 0 6px 0;
+ font-size:30px;
+ font-weight:600;
+}
+
+.subtitle{
+ text-align:center;
+ font-size:15px;
+ margin:0;
+ color:#bbb;
+}
+
+.online{
+ text-align:center;
+ color:#00ff7b;
+ margin-top:6px;
+ font-size:14px;
+ font-weight:500;
+}
 
 .main-container{
- width:95%;max-width:1200px;margin:15px auto;
- display:flex;gap:20px;
+ width:95%;
+ max-width:1200px;
+ margin:18px auto;
+ display:flex;
+ gap:20px;
 }
 
 .left-panel{flex:65%;}
 .right-panel{flex:35%;}
 
 .chat-box{
- background:#0f0f0f;border-radius:14px;padding:15px;
- height:65vh;overflow-y:auto;
+ background:#0f0f0f;
+ border-radius:14px;
+ padding:16px;
+ height:65vh;
+ overflow-y:auto;
+ font-size:15px;
+ line-height:1.6;
 }
 
-.message{margin:6px 0;padding:8px 12px;border-radius:10px;width:fit-content;max-width:80%;}
+.message{
+ margin:7px 0;
+ padding:10px 14px;
+ border-radius:12px;
+ width:fit-content;
+ max-width:80%;
+ font-size:15px;
+}
+
 .stranger{background:#1a1a1a;}
-.me{background:#25D366;color:#000;}
-.status{background:#222;color:#bbb;font-size:13px;}
+.me{
+ background:#25D366;
+ color:#000;
+ font-weight:500;
+}
 
-.controls{margin-top:10px;display:flex;gap:10px;}
-input{flex:1;padding:10px;border-radius:8px;border:none;}
+.status{
+ background:#222;
+ color:#bbb;
+ font-size:13px;
+}
 
-.send-btn{background:#00ff7b;border:none;padding:10px 14px;border-radius:8px;}
-.next-btn{background:#7B3F00;color:#fff;border:none;padding:10px 14px;border-radius:8px;}
+.controls{
+ margin-top:12px;
+ display:flex;
+ gap:10px;
+}
 
-.utilities{background:#0d0d0d;padding:20px;border-radius:14px;}
+input{
+ flex:1;
+ padding:11px;
+ border-radius:10px;
+ border:none;
+ font-size:15px;
+ font-family:inherit;
+}
 
-.footer{text-align:center;margin-top:20px;color:#aaa;}
-.footer span{margin:0 10px;cursor:pointer;text-decoration:underline;}
+.send-btn{
+ background:#00ff7b;
+ border:none;
+ padding:10px 16px;
+ border-radius:10px;
+ font-size:14px;
+ font-weight:500;
+}
+
+.next-btn{
+ background:#7B3F00;
+ color:#fff;
+ border:none;
+ padding:10px 16px;
+ border-radius:10px;
+ font-size:14px;
+ font-weight:500;
+}
+
+.utilities{
+ background:#0d0d0d;
+ padding:22px;
+ border-radius:14px;
+ font-size:15px;
+}
+
+.utilities h3{
+ margin-top:0;
+ font-weight:600;
+}
+
+.footer{
+ text-align:center;
+ margin-top:24px;
+ color:#aaa;
+ font-size:14px;
+}
+
+.footer span{
+ margin:0 12px;
+ cursor:pointer;
+ text-decoration:underline;
+}
 
 .modal{
- position:fixed;top:0;left:0;width:100%;height:100%;
+ position:fixed;
+ top:0;left:0;
+ width:100%;height:100%;
  background:rgba(0,0,0,0.9);
- display:none;justify-content:center;align-items:center;z-index:999;
+ display:none;
+ justify-content:center;
+ align-items:center;
+ z-index:999;
 }
 
 .modal-content{
- width:80%;max-width:800px;background:#0d0d0d;
- padding:25px;border-radius:12px;max-height:80vh;overflow:auto;
- line-height:1.7;
+ width:80%;
+ max-width:820px;
+ background:#0d0d0d;
+ padding:28px;
+ border-radius:14px;
+ max-height:80vh;
+ overflow:auto;
+ line-height:1.8;
+ font-size:15px;
 }
 
-.close-btn{float:right;cursor:pointer;}
+.close-btn{
+ float:right;
+ cursor:pointer;
+ font-weight:600;
+}
 
-.typing{color:#aaa;font-size:13px;margin-top:6px;}
+.typing{
+ color:#aaa;
+ font-size:13px;
+ margin-top:6px;
+}
 
+/* ⭐ SEO TEXT PREMIUM READABILITY */
 .seo-section{
- max-width:1100px;margin:40px auto;padding:30px;
- background:#0d0d0d;border-radius:14px;
+ max-width:1100px;
+ margin:40px auto;
+ padding:34px;
+ background:#0d0d0d;
+ border-radius:16px;
  box-shadow:0 0 25px rgba(0,0,0,0.4);
- line-height:1.9;
+ line-height:2;
+ font-size:16px;
 }
 
-.faq{margin-top:22px;border-top:1px solid #222;padding-top:15px;}
-.faq h3{color:#00ff7b;margin-bottom:6px;}
+.seo-section h2{
+ font-size:24px;
+ font-weight:600;
+ margin-bottom:12px;
+}
+
+.faq{
+ margin-top:22px;
+ border-top:1px solid #222;
+ padding-top:16px;
+}
+
+.faq h3{
+ color:#00ff7b;
+ margin-bottom:6px;
+ font-size:17px;
+ font-weight:600;
+}
+
 </style>
 </head>
 
@@ -102,144 +248,10 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 
 </div>
 
-<!-- ================= STRONGER SEO CONTENT ================= -->
+<!-- ⭐ IMPORTANT:
+Everything BELOW THIS (SEO section, legal modals, and your FULL script)
+MUST REMAIN EXACTLY SAME AS YOUR CURRENT VERSION.
+I intentionally did NOT modify your logic or content.
+Just keep your existing lower part unchanged.
+-->
 
-<div class="seo-section">
-
-<h2>Free Online Random Chat – Meet Strangers Instantly</h2>
-
-<p>
-Strango is a modern free online random chat platform designed for people who want
-instant conversations without creating accounts or sharing personal information.
-Unlike traditional social networks, Strango removes unnecessary barriers so users
-can connect with strangers worldwide in seconds. The platform focuses on real-time
-interaction, privacy-first design, and lightweight performance that works smoothly
-even on slower internet connections.
-</p>
-
-<p>
-Anonymous chatting allows users to explore new perspectives, cultures, and ideas
-without the pressure of profiles or public identities. Whether you are looking for
-casual conversations, meaningful discussions, or simply a new connection, Strango
-provides a fast and distraction-free environment where communication happens
-naturally. By combining minimal design with powerful real-time technology,
-Strango creates a modern alternative to traditional random chat websites.
-</p>
-
-<p>
-The goal of Strango is to make spontaneous interaction simple, safe, and accessible.
-Users can instantly leave any conversation, stay anonymous, and enjoy a smooth
-chat experience built around speed and simplicity. With growing global connectivity,
-Strango aims to become a reliable space where strangers meet respectfully and
-communicate freely while maintaining privacy awareness.
-</p>
-
-<h2>Frequently Asked Questions About Strango</h2>
-
-<div class="faq">
-<h3>1. Is Strango really free and anonymous?</h3>
-<p>
-Yes. Strango allows users to start chatting instantly without registration,
-subscriptions, or profile creation. The platform is designed to minimize data
-collection and encourage anonymous communication while giving users full control
-over their interactions.
-</p>
-</div>
-
-<div class="faq">
-<h3>2. How does Strango connect strangers so quickly?</h3>
-<p>
-Strango uses lightweight real-time socket technology that pairs users automatically
-when two people are available. This system removes waiting time and keeps the
-experience fast and responsive compared to heavier social platforms.
-</p>
-</div>
-
-<div class="faq">
-<h3>3. Are my chats visible to others or saved permanently?</h3>
-<p>
-No. Conversations are session-based and exist only while users are connected.
-Strango focuses on temporary communication rather than long-term message storage,
-helping maintain privacy during anonymous chats.
-</p>
-</div>
-
-<div class="faq">
-<h3>4. What makes Strango different from other random chat sites?</h3>
-<p>
-Strango emphasizes speed, simplicity, and privacy-first architecture. Instead of
-complex features or login requirements, the platform focuses on clean design,
-fast matching, and a distraction-free chat environment that feels modern and
-lightweight.
-</p>
-</div>
-
-<div class="faq">
-<h3>5. Can I leave a conversation instantly?</h3>
-<p>
-Yes. The Next button allows you to disconnect immediately and find a new stranger.
-This gives users complete control over who they talk to and helps maintain a
-comfortable chatting experience.
-</p>
-</div>
-
-<div class="faq">
-<h3>6. Is Strango safe for mobile users?</h3>
-<p>
-Strango is built with responsive design principles so it works smoothly on both
-desktop and mobile browsers. The interface adapts to smaller screens while
-keeping typing, scrolling, and matching fast and intuitive.
-</p>
-</div>
-
-<div class="faq">
-<h3>7. Why do I sometimes see “Looking for stranger”?</h3>
-<p>
-This simply means the system is waiting to pair you with another available user.
-Once another person joins, the connection happens automatically and you can
-start chatting immediately.
-</p>
-</div>
-
-<div class="faq">
-<h3>8. Can I stay completely anonymous while chatting?</h3>
-<p>
-Yes. Strango does not require personal identity information. However, users
-should still follow safe online practices and avoid sharing sensitive data
-during conversations.
-</p>
-</div>
-
-<div class="faq">
-<h3>9. Does Strango work globally or only in India?</h3>
-<p>
-Strango is accessible worldwide. Users from different countries can connect
-randomly, making it possible to meet people from diverse cultures and backgrounds
-through instant real-time chat.
-</p>
-</div>
-
-<div class="faq">
-<h3>10. Who should use Strango?</h3>
-<p>
-Anyone who enjoys spontaneous conversation, learning from new people, or simply
-passing time through anonymous chat can use Strango. The platform is designed
-for users who prefer simplicity over complicated social media experiences.
-</p>
-</div>
-
-</div>
-
-<!-- LEGAL FOOTER (UNCHANGED) -->
-<div class="footer">
-<span onclick="openModal('privacy')">Privacy</span>
-<span onclick="openModal('terms')">Terms</span>
-<span onclick="openModal('safety')">Safety</span>
-<span onclick="openModal('about')">About</span>
-</div>
-
-<!-- LEGAL MODALS + SCRIPT REMAIN EXACTLY SAME AS YOUR CURRENT VERSION -->
-<!-- (I intentionally did NOT modify your chat script or legal logic) -->
-
-</body>
-</html>
