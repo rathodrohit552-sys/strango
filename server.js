@@ -1,115 +1,91 @@
-// ===== STRANGO REALTIME SERVER (CLEAN VERSION) =====
-
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// ===== SERVE FRONTEND =====
-app.use(express.static(path.join(__dirname, "public"))); 
-// if your index.html is in root, change to:
-// app.use(express.static(__dirname));
+app.use(express.static("public"));
 
-
-// ===== MATCHING ENGINE =====
 let waitingUser = null;
-let onlineCount = 0;
+let onlineUsers = 0;
+
+/* ===== CONNECTION ===== */
 
 io.on("connection", (socket) => {
 
-console.log("User connected:", socket.id);
+  onlineUsers++;
+  io.emit("online", onlineUsers);
 
-onlineCount++;
-io.emit("onlineCount", onlineCount);
+  socket.partner = null;
 
-socket.emit("waiting");
+  /* ===== MATCHING ENGINE ===== */
 
-// ===== MATCH USERS =====
-if (waitingUser) {
+  function findPartner(){
 
-const partner = waitingUser;
-waitingUser = null;
+    // if someone waiting
+    if(waitingUser && waitingUser !== socket){
 
-socket.partner = partner.id;
-partner.partner = socket.id;
+      socket.partner = waitingUser;
+      waitingUser.partner = socket;
 
-socket.emit("matched");
-partner.emit("matched");
+      socket.emit("status","Connected to stranger");
+      waitingUser.emit("status","Connected to stranger");
 
-console.log("Matched:", socket.id, "with", partner.id);
+      waitingUser = null;
 
-} else {
-waitingUser = socket;
-}
+    }else{
+      waitingUser = socket;
+      socket.emit("status","Looking for stranger...");
+    }
+  }
 
-// ===== MESSAGE =====
-socket.on("message", (msg) => {
+  // auto search when user joins
+  findPartner();
 
-if (socket.partner) {
-io.to(socket.partner).emit("message", msg);
-}
+  /* ===== MESSAGE ===== */
 
-});
+  socket.on("message", msg=>{
+    if(socket.partner){
+      socket.partner.emit("message", msg);
+    }
+  });
 
-// ===== NEXT BUTTON =====
-socket.on("next", () => {
+  /* ===== NEXT ===== */
 
-if (socket.partner) {
+  socket.on("next", ()=>{
+    if(socket.partner){
+      socket.partner.partner = null;
+      socket.partner.emit("status","Stranger disconnected");
+    }
+    socket.partner = null;
+    findPartner();
+  });
 
-io.to(socket.partner).emit("partnerDisconnected");
+  /* ===== DISCONNECT ===== */
 
-const partnerSocket = io.sockets.sockets.get(socket.partner);
-if (partnerSocket) partnerSocket.partner = null;
+  socket.on("disconnect", ()=>{
 
-socket.partner = null;
-}
+    onlineUsers--;
+    io.emit("online", onlineUsers);
 
-socket.emit("waiting");
+    if(waitingUser === socket){
+      waitingUser = null;
+    }
 
-if (waitingUser && waitingUser.id !== socket.id) {
+    if(socket.partner){
+      socket.partner.partner = null;
+      socket.partner.emit("status","Stranger disconnected");
+    }
 
-const partner = waitingUser;
-waitingUser = null;
-
-socket.partner = partner.id;
-partner.partner = socket.id;
-
-socket.emit("matched");
-partner.emit("matched");
-
-} else {
-waitingUser = socket;
-}
-
-});
-
-// ===== DISCONNECT =====
-socket.on("disconnect", () => {
-
-console.log("User disconnected:", socket.id);
-
-onlineCount--;
-io.emit("onlineCount", onlineCount);
-
-if (waitingUser && waitingUser.id === socket.id) {
-waitingUser = null;
-}
-
-if (socket.partner) {
-io.to(socket.partner).emit("partnerDisconnected");
-}
+  });
 
 });
 
-});
+/* ===== START SERVER ===== */
 
-// ===== START SERVER =====
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-console.log("Strango running on port", PORT);
+const PORT = process.env.PORT || 10000;
+server.listen(PORT, ()=>{
+  console.log("Strango running on port", PORT);
 });
