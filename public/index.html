@@ -8,29 +8,63 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#000;color:#fff;text-align:center;}
-h1{margin-top:30px}
-#online{color:#00ff66;margin-top:8px}
-#statusBar{margin-top:5px;color:#fff;font-weight:500;}
-#typing{color:#aaa;font-size:13px;height:16px}
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#000;
+color:#fff;
+}
 
-#mainLayout{display:flex;gap:20px;width:90%;max-width:1100px;margin:30px auto;}
-#chatWrapper{flex:68%}
-#utilities{flex:32%;text-align:left;background:#0d0d0d;padding:15px;border-radius:10px;}
+/* ===== HEADER ===== */
+h1{text-align:center;margin-top:30px}
+p{text-align:center}
+#online{text-align:center;color:#00ff66;margin-top:8px}
+#statusBar{text-align:center;margin-top:5px;color:#fff;font-weight:500;}
+#typing{text-align:center;color:#aaa;font-size:13px;height:16px}
 
+/* ⭐ LEFT LOCKED LAYOUT */
+#mainLayout{
+display:flex;
+width:100%;
+margin-top:30px;
+gap:0;
+}
+
+/* ===== CHAT AREA (68%) ===== */
+#chatWrapper{
+width:68%;
+padding-left:20px;
+padding-right:10px;
+
+/* smooth edge */
+transition:all .3s ease;
+}
+
+/* ===== UTILITIES (32%) ===== */
+#utilities{
+width:32%;
+background:#0d0d0d;
+padding:20px;
+border-left:1px solid #1a1a1a;
+
+/* ⭐ smooth transition feeling */
+box-shadow:-20px 0 40px rgba(0,0,0,0.6);
+transition:all .3s ease;
+}
+
+/* ===== CHAT BOX ===== */
 #chatBox{
 background:#111;
-border-radius:10px;
+border-radius:12px;
 height:350px;
 overflow-y:auto;
 padding:15px;
-text-align:left;
 display:flex;
 flex-direction:column;
 gap:8px;
 }
 
-/* ⭐ FIXED MESSAGE WIDTH */
+/* ⭐ PRO MESSAGE BUBBLES */
 .msg{
 padding:8px 12px;
 border-radius:10px;
@@ -38,27 +72,58 @@ display:inline-block;
 width:fit-content;
 max-width:65%;
 word-break:break-word;
+animation:fadeIn .2s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(4px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 .stranger{background:#2a2a2a;}
 .you{background:#00cc44;color:#fff;}
 
-#inputBar{display:flex;gap:10px;margin-top:10px;}
-#messageInput{flex:1;padding:10px;border-radius:20px;border:none;background:#222;color:#fff;}
-button{border:none;padding:10px 16px;border-radius:20px;cursor:pointer;}
+#inputBar{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+#messageInput{
+flex:1;
+padding:10px;
+border-radius:20px;
+border:none;
+background:#222;
+color:#fff;
+}
+
+button{
+border:none;
+padding:10px 16px;
+border-radius:20px;
+cursor:pointer;
+}
+
 #nextBtn{background:#ffaa00}
 #sendBtn{background:#00cc44;color:#fff}
 
+/* ===== SEO ===== */
 #seo{
 max-width:900px;
 margin:60px auto;
-text-align:left;
-line-height:1.7;
 padding:0 20px;
+line-height:1.7;
 }
 
+/* MOBILE */
 @media(max-width:900px){
-#mainLayout{flex-direction:column;}
+#mainLayout{
+flex-direction:column;
+}
+#chatWrapper,#utilities{
+width:100%;
+}
 }
 </style>
 </head>
@@ -99,32 +164,32 @@ padding:0 20px;
 
 </div>
 
-<!-- ⭐ STRONG SEO BLOCK BACK AGAIN -->
+<!-- ⭐ STRONG SEO -->
 <div id="seo">
 
 <h2>About Strango Stranger Chat</h2>
 <p>
-Strango is a fast and free anonymous stranger chat platform designed for people who want to meet random users worldwide instantly without login. Built with realtime technology, Strango focuses on privacy, speed and seamless communication.
+Strango is a fast and free anonymous stranger chat platform designed for instant global conversations without login. The platform focuses on privacy, speed and realtime communication worldwide.
 </p>
 
 <h2>Frequently Asked Questions</h2>
 
-<h4>1. Is Strango free?</h4><p>Yes, completely free anonymous chat.</p>
-<h4>2. Do I need login?</h4><p>No signup required.</p>
-<h4>3. Is Strango anonymous?</h4><p>Yes, conversations stay private.</p>
-<h4>4. Can I use Strango on mobile?</h4><p>Fully mobile optimized.</p>
-<h4>5. How does matching work?</h4><p>Users are paired randomly in realtime.</p>
-<h4>6. Can I skip strangers?</h4><p>Press Next anytime.</p>
-<h4>7. Are chats saved?</h4><p>No permanent storage.</p>
-<h4>8. Is Strango global?</h4><p>Yes, worldwide users connect.</p>
-<h4>9. Why is Strango fast?</h4><p>Lightweight realtime architecture.</p>
-<h4>10. Is Strango secure?</h4><p>Privacy-focused system.</p>
+<h4>1. Is Strango free?</h4><p>Yes, completely free chat.</p>
+<h4>2. Do I need login?</h4><p>No registration required.</p>
+<h4>3. Is Strango anonymous?</h4><p>Yes, chats stay private.</p>
+<h4>4. Mobile friendly?</h4><p>Fully optimized.</p>
+<h4>5. Matching speed?</h4><p>Realtime pairing.</p>
+<h4>6. Skip strangers?</h4><p>Use Next button.</p>
+<h4>7. Chats saved?</h4><p>No permanent storage.</p>
+<h4>8. Global users?</h4><p>Worldwide connection.</p>
+<h4>9. Why fast?</h4><p>Lightweight architecture.</p>
+<h4>10. Secure?</h4><p>Privacy-first system.</p>
 
 </div>
 
 <script>
 
-const socket = io();
+const socket=io();
 
 const chatBox=document.getElementById("chatBox");
 const input=document.getElementById("messageInput");
