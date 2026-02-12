@@ -10,7 +10,7 @@ app.use(express.static("public"));
 
 let onlineUsers = 0;
 
-/* ⭐ REAL WAITING QUEUE */
+/* ⭐ WAITING QUEUE */
 let waitingQueue = [];
 
 /* ⭐ ACTIVE PAIRS */
@@ -20,7 +20,7 @@ function updateOnline(){
   io.emit("onlineCount", onlineUsers);
 }
 
-/* ⭐ TRY MATCH FUNCTION */
+/* ⭐ MATCH ONLY FROM QUEUE */
 function tryMatch(){
   while(waitingQueue.length >= 2){
     const user1 = waitingQueue.shift();
@@ -28,6 +28,9 @@ function tryMatch(){
 
     pairs[user1] = user2;
     pairs[user2] = user1;
+
+    io.to(user1).emit("newMatch");
+    io.to(user2).emit("newMatch");
 
     io.to(user1).emit("status","Connected to stranger");
     io.to(user2).emit("status","Connected to stranger");
@@ -53,7 +56,6 @@ io.on("connection",(socket)=>{
   socket.on("message",(msg)=>{
     const partner = pairs[socket.id];
     if(!partner) return;
-
     io.to(partner).emit("message",msg);
   });
 
@@ -61,11 +63,10 @@ io.on("connection",(socket)=>{
   socket.on("typing",()=>{
     const partner = pairs[socket.id];
     if(!partner) return;
-
     io.to(partner).emit("typing");
   });
 
-  /* NEXT BUTTON */
+  /* ⭐ NEXT BUTTON — ONLY CURRENT USER GOES BACK TO QUEUE */
   socket.on("next",()=>{
     const partner = pairs[socket.id];
 
@@ -73,18 +74,18 @@ io.on("connection",(socket)=>{
       delete pairs[partner];
       delete pairs[socket.id];
 
+      /* partner stays alone — NOT auto matched */
       io.to(partner).emit("status","Stranger disconnected");
-      
-      /* ⭐ partner goes back to queue automatically */
-      waitingQueue.push(partner);
+      io.to(partner).emit("newMatch"); // clear old chat
     }
 
-    /* current user also re-enters queue */
     if(!waitingQueue.includes(socket.id)){
       waitingQueue.push(socket.id);
     }
 
     socket.emit("status","Waiting for stranger...");
+    socket.emit("newMatch"); // clear chat for next clicker
+
     tryMatch();
   });
 
@@ -94,7 +95,6 @@ io.on("connection",(socket)=>{
     onlineUsers--;
     updateOnline();
 
-    /* remove from queue if waiting */
     waitingQueue = waitingQueue.filter(id=>id!==socket.id);
 
     const partner = pairs[socket.id];
@@ -104,10 +104,7 @@ io.on("connection",(socket)=>{
       delete pairs[socket.id];
 
       io.to(partner).emit("status","Stranger disconnected");
-
-      /* ⭐ AUTO RECONNECT partner with next waiting user */
-      waitingQueue.push(partner);
-      tryMatch();
+      io.to(partner).emit("newMatch"); // clear chat
     }
   });
 });
