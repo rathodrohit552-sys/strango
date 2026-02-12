@@ -35,11 +35,10 @@ h1{text-align:center;margin:10px 0 5px 0;font-size:28px;}
 .me{background:#25D366;color:#000;}
 .status{background:#222;color:#bbb;font-size:13px;}
 
-.controls{
- margin-top:10px;display:flex;gap:10px;
-}
+.controls{margin-top:10px;display:flex;gap:10px;}
 
 input{flex:1;padding:10px;border-radius:8px;border:none;}
+
 .send-btn{
  background:#00ff7b;border:none;padding:10px 14px;border-radius:8px;
 }
@@ -99,10 +98,13 @@ const input=document.getElementById("messageInput");
 let connected=false;
 let statusDiv=null;
 
-/* ⭐ CLEAR CHAT FUNCTION */
+/* ⭐ IMPORTANT FLAG */
+let iClickedNext=false;
+
+/* CLEAR CHAT */
 function clearChat(){
-  chat.innerHTML="";
-  statusDiv=null;
+ chat.innerHTML="";
+ statusDiv=null;
 }
 
 /* ADD MESSAGE */
@@ -137,15 +139,21 @@ function sendMessage(){
 
  if(!input.value.trim())return;
 
- socket.emit("message",input.value);
- addMessage(input.value,"me");
+ const msg=input.value;
+
+ socket.emit("message",msg);
+
+ /* ⭐ SHOW AS YOU */
+ addMessage("You: "+msg,"me");
+
  input.value="";
 }
 
 /* NEXT */
 function nextStranger(){
+ iClickedNext=true;     // ⭐ ONLY THIS USER CLEARS
  connected=false;
- clearChat(); // ⭐ FIX HERE
+ clearChat();
  socket.emit("next");
  addMessage("Looking for new stranger...","status");
 }
@@ -158,22 +166,27 @@ socket.on("connect",()=>{
 
 socket.on("status",msg=>{
 
- /* ⭐ IMPORTANT LOGIC */
  if(msg.toLowerCase().includes("connected")){
-   clearChat();        // ⭐ NEW PARTNER → CLEAR OLD CHAT
    connected=true;
+   iClickedNext=false;
  }
 
  if(msg.toLowerCase().includes("disconnected")){
-   clearChat();        // ⭐ OLD PARTNER LEFT → CLEAR CHAT
+
    connected=false;
+
+   /* ⭐ ONLY CLEAR IF YOU CLICKED NEXT */
+   if(iClickedNext){
+     clearChat();
+   }
  }
 
  addMessage(msg,"status");
 });
 
 socket.on("message",msg=>{
- addMessage(msg,"stranger");
+ /* ⭐ SHOW AS STRANGER */
+ addMessage("Stranger: "+msg,"stranger");
 });
 
 socket.on("online",count=>{
