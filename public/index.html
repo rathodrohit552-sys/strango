@@ -65,13 +65,14 @@ a{color:#00ff9c;text-decoration:none;margin:0 5px}
 <h2>What is Strango?</h2>
 <p>
 Strango is a lightweight anonymous random chat platform designed for fast real-time conversations.
-It focuses on privacy-first interaction and instant matching without requiring user accounts.
+It follows modern minimal chat architecture focused on privacy and simplicity.
 </p>
 
-<h2>Why Anonymous Chat?</h2>
+<h2>International Safety Principles</h2>
 <p>
-Anonymous chatting allows open conversations without social pressure.
-Strango follows minimal design principles used in modern stranger chat platforms.
+Strango encourages responsible usage aligned with globally recognized digital safety guidelines.
+Users should avoid sharing personal information and follow respectful communication standards
+commonly recommended by international internet governance organizations.
 </p>
 
 <h2>Frequently Asked Questions</h2>
@@ -89,28 +90,17 @@ Strango follows minimal design principles used in modern stranger chat platforms
 
 </div>
 
-<!-- ================= LEGAL MODAL POPUP ================= -->
-
-<div id="legalModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:9999;">
-<div style="width:90%;height:90%;margin:2% auto;background:#111;border-radius:10px;overflow:hidden;position:relative;">
-<button onclick="closeLegal()" style="position:absolute;right:10px;top:10px;background:red;color:#fff;border:none;padding:5px 10px;">X</button>
-
-<iframe id="legalFrame" style="width:100%;height:100%;border:none;background:#111;"></iframe>
-
-</div>
-</div>
-
-<!-- ================= FOOTER LINKS (LIKE YOUR PIC-2) ================= -->
+<!-- ================= FOOTER LINKS (OPEN NEW TAB) ================= -->
 
 <div style="text-align:center;margin-top:40px;">
-<a href="#" onclick="openLegal('privacy.html')">Privacy</a> |
-<a href="#" onclick="openLegal('terms.html')">Terms</a> |
-<a href="#" onclick="openLegal('safety.html')">Safety</a> |
-<a href="#" onclick="openLegal('about.html')">About</a> |
-<a href="#" onclick="openLegal('contact.html')">Contact</a>
+<a href="privacy.html" target="_blank">Privacy</a> |
+<a href="terms.html" target="_blank">Terms</a> |
+<a href="safety.html" target="_blank">Safety</a> |
+<a href="about.html" target="_blank">About</a> |
+<a href="contact.html" target="_blank">Contact</a>
 </div>
 
-<!-- ================= CHAT SCRIPT (UNCHANGED CORE) ================= -->
+<!-- ================= CHAT SCRIPT (UNCHANGED) ================= -->
 
 <script src="/socket.io/socket.io.js"></script>
 
@@ -175,18 +165,6 @@ document.getElementById("messageInput").addEventListener("input",()=>{
   socket.emit("stopTyping");
  },1000);
 });
-
-/* ===== LEGAL POPUP SYSTEM ===== */
-
-function openLegal(page){
- document.getElementById("legalModal").style.display="flex";
- document.getElementById("legalFrame").src=page;
-}
-
-function closeLegal(){
- document.getElementById("legalModal").style.display="none";
- document.getElementById("legalFrame").src="";
-}
 </script>
 
 </body>
