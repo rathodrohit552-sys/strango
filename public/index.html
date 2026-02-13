@@ -27,7 +27,7 @@ h1{text-align:center;margin:10px 0 5px 0;font-size:28px;}
 .message{margin:6px 0;padding:8px 12px;border-radius:10px;width:fit-content;max-width:80%;}
 .stranger{background:#1a1a1a;}
 .me{background:#25D366;color:#000;}
-.status{background:#222;color:#bbb;font-size:13px;}
+.status{background:#222;color:#ffffff;font-size:13px;}
 
 .controls{margin-top:10px;display:flex;gap:10px;}
 input{flex:1;padding:10px;border-radius:8px;border:none;}
@@ -283,10 +283,6 @@ socket.emit("next");
 addSystemMessage("Looking for stranger...");
 };
 }
-
-socket.on("connect",()=>{
-socket.emit("join");
-});
 
 socket.on("message",(msg)=>{
 addUserMessage("Stranger: "+msg);
