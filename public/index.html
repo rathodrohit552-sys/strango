@@ -249,9 +249,10 @@ const socket = io();
 
 
 const chatBox = document.getElementById("chatBox");
-const input = document.querySelector(".input-area input");
-const sendBtn = document.querySelector(".send-btn");
-const nextBtn = document.querySelector(".next-btn");
+const input = document.querySelector(".input-area input") || null;
+const sendBtn = document.querySelector(".send-btn") || null;
+const nextBtn = document.querySelector(".next-btn") || null;
+
 
 function addSystemMessage(text){
 const div=document.createElement("div");
@@ -269,7 +270,7 @@ chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-sendBtn.onclick=()=>{
+if(sendBtn) sendBtn.onclick = ()=>{
 const msg=input.value.trim();
 if(!msg)return;
 addUserMessage("You: "+msg);
@@ -281,7 +282,7 @@ input.addEventListener("keypress",(e)=>{
 if(e.key==="Enter")sendBtn.click();
 });
 
-nextBtn.onclick=()=>{
+if(nextBtn) nextBtn.onclick = ()=>{
 socket.emit("next");
 addSystemMessage("Looking for stranger...");
 };
