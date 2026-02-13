@@ -12,28 +12,37 @@ background:#000;
 color:#fff;
 font-family:Arial;
 margin:0;
+height:100vh;
 display:flex;
 flex-direction:column;
-height:100vh;
-overflow:hidden;
 }
 
-/* ===== HEADER ===== */
-.header{
-padding:20px;
+/* ===== TOP SEO + HEADER ===== */
+.top-section{
+padding:20px 30px 10px 30px;
 }
 
-.subtitle{color:#ccc;}
-.online{color:#00ff9c;margin-top:6px;}
-#statusText{color:#00ff9c;margin-top:4px;}
+h1{
+margin:0;
+}
 
-/* ===== CHAT FULLSCREEN ===== */
-.chat-wrapper{
+.subtitle{
+color:#ccc;
+margin-top:6px;
+}
+
+.online,#statusText{
+color:#00ff9c;
+margin-top:4px;
+}
+
+/* ===== CHAT AREA ===== */
+.chat-area{
 flex:1;
 display:flex;
 justify-content:center;
-align-items:center;
-padding:0 20px;
+align-items:flex-start;
+padding:10px 20px;
 }
 
 .chat-container{
@@ -49,11 +58,16 @@ height:100%;
 flex:1;
 background:#050505;
 border-radius:12px;
-padding:12px;
+padding:14px;
 overflow-y:auto;
 }
 
-/* MESSAGE COLORS */
+/* LEFT ALIGNED MESSAGES */
+.msg{
+margin:6px 0;
+text-align:left;
+}
+
 .you{color:#00ff9c;}
 .stranger{color:#00c3ff;}
 
@@ -63,7 +77,7 @@ color:#888;
 margin-top:6px;
 }
 
-/* INPUT AREA */
+/* INPUT BAR */
 .controls{
 display:flex;
 gap:10px;
@@ -95,12 +109,20 @@ padding:12px;
 
 a{color:#00ff9c;text-decoration:none;margin:0 6px;}
 
+/* ===== SEO RICH CONTENT ===== */
+.seo{
+padding:10px 30px 0 30px;
+font-size:14px;
+color:#bbb;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="header">
+<!-- ===== HEADER + SEO TEXT ABOVE CHAT ===== -->
+<div class="top-section">
 <h1>Strango — Free Stranger Chat India</h1>
 <p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
 
@@ -108,7 +130,14 @@ a{color:#00ff9c;text-decoration:none;margin:0 6px;}
 <div id="statusText">Looking for stranger...</div>
 </div>
 
-<div class="chat-wrapper">
+<div class="seo">
+Strango is a lightweight anonymous chat platform designed for real-time global conversations without accounts.
+Built using modern minimal design standards, Strango focuses on privacy-first communication, fast matching,
+and distraction-free chatting similar to premium stranger chat platforms.
+</div>
+
+<!-- ===== CHAT PANEL ===== -->
+<div class="chat-area">
 <div class="chat-container">
 
 <div id="chat" class="chat-box"></div>
@@ -144,12 +173,13 @@ isTabActive=!document.hidden;
 function addMessage(sender,text){
 const chat=document.getElementById("chat");
 const div=document.createElement("div");
+div.classList.add("msg");
 
 if(sender==="You"){
-div.className="you";
+div.classList.add("you");
 div.innerText="You: "+text;
 }else{
-div.className="stranger";
+div.classList.add("stranger");
 div.innerText="Stranger: "+text;
 }
 
