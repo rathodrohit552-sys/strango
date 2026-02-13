@@ -242,7 +242,6 @@ for users who prefer simplicity over complicated social media experiences.
 <!-- (I intentionally did NOT modify your chat script or legal logic) -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
 document.addEventListener("DOMContentLoaded",()=>{
 
 const socket = io();
@@ -262,7 +261,7 @@ chatBox.scrollTop=chatBox.scrollHeight;
 
 function addUserMessage(text){
 const div=document.createElement("div");
-div.className="user-msg";
+div.className="message";
 div.textContent=text;
 chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
@@ -284,12 +283,20 @@ addSystemMessage("Looking for stranger...");
 };
 }
 
+socket.on("connected",()=>{
+addSystemMessage("Connected to stranger");
+});
+
+socket.on("waiting",()=>{
+addSystemMessage("Looking for stranger...");
+});
+
 socket.on("message",(msg)=>{
 addUserMessage("Stranger: "+msg);
 });
 
-socket.on("status",(msg)=>{
-addSystemMessage(msg);
+socket.on("stranger-disconnected",()=>{
+addSystemMessage("Stranger disconnected");
 });
 
 socket.on("online",(count)=>{
@@ -299,17 +306,9 @@ onlineText.textContent="Online: "+count;
 }
 });
 
-socket.on("typing",()=>{});
-
-});
-
-</script>
-
-<
-
-
 });
 </script>
+
 
 </body>
 </html>

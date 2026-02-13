@@ -4,14 +4,7 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server,{
-  cors:{
-    origin:"*",
-    methods:["GET","POST"]
-  },
-  transports:["websocket","polling"]
-});
-
+const io = new Server(server);
 
 app.use(express.static("public"));
 
@@ -37,14 +30,16 @@ io.on("connection", (socket) => {
       socket.partner = waitingUser;
       waitingUser.partner = socket;
 
-      socket.emit("status","Connected to stranger");
-      waitingUser.emit("status","Connected to stranger");
+      socket.emit("connected");
+      waitingUser.emit("connected");
+
 
       waitingUser = null;
 
     }else{
       waitingUser = socket;
-      socket.emit("status","Looking for stranger...");
+      socket.emit("waiting");
+
     }
   }
 
@@ -77,7 +72,7 @@ socket.on("stopTyping", ()=>{
   socket.on("next", ()=>{
     if(socket.partner){
       socket.partner.partner = null;
-      socket.partner.emit("status","Stranger disconnected");
+      socket.partner.emit("stranger-disconnected");
     }
     socket.partner = null;
     findPartner();
