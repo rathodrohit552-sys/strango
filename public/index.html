@@ -2,80 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Strango — Free Random Chat With Strangers Worldwide</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Strango is a free online random chat platform to meet strangers worldwide instantly. Anonymous, fast, mobile-friendly global conversations.">
+<title>Strango — Free Stranger Chat India</title>
+<meta name="description" content="Free random chat with strangers worldwide. Anonymous real-time conversations without login. Fast global matching on Strango.">
 
 <script src="/socket.io/socket.io.js"></script>
 
-<!-- FAQ SCHEMA -->
-<script type="application/ld+json">
-{
-"@context":"https://schema.org",
-"@type":"FAQPage",
-"mainEntity":[
-{"@type":"Question","name":"Is Strango free random chat?","acceptedAnswer":{"@type":"Answer","text":"Yes. Strango is a free online random chat platform allowing instant conversations."}},
-{"@type":"Question","name":"Do I need to sign up?","acceptedAnswer":{"@type":"Answer","text":"No registration is required to start chatting."}},
-{"@type":"Question","name":"Is Strango safe?","acceptedAnswer":{"@type":"Answer","text":"Users should follow online safety practices and avoid sharing personal information."}},
-{"@type":"Question","name":"Can I use Strango on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Strango works on mobile, tablet, and desktop devices."}},
-{"@type":"Question","name":"How does matching work?","acceptedAnswer":{"@type":"Answer","text":"Strango connects you with another online stranger automatically."}}
-]
-}
-</script>
-
 <style>
 body{
-margin:0;
 background:#000;
 color:#fff;
-font-family:Arial;
-height:100vh;
-display:flex;
-flex-direction:column;
+font-family:Arial,Helvetica,sans-serif;
+margin:0;
 }
 
 .header{
-padding:25px 30px 10px 30px;
+padding:20px;
 }
 
-.subtitle{opacity:.8;margin-top:6px;}
-.online,#statusText{color:#00ff9c;}
+.online{color:#00ffa2;margin-top:6px;}
 
-.main{
-flex:1;
-display:flex;
-flex-direction:column;
-padding:0 30px 15px 30px;
+.chat-wrapper{
+width:100%;
+padding:0 20px;
+box-sizing:border-box;
 }
 
 .chat-box{
-flex:1;
-background:#050505;
+width:100%;
+height:420px;
+background:#060606;
 border-radius:14px;
-padding:14px;
+padding:20px;
 overflow-y:auto;
+box-sizing:border-box;
+margin-top:10px;
 }
 
 .controls{
 display:flex;
 gap:10px;
-margin-top:14px;
+padding:12px 20px;
+box-sizing:border-box;
 }
 
 #messageInput{
 flex:1;
-padding:14px;
-border-radius:10px;
+padding:12px;
+border-radius:12px;
 border:none;
-outline:none;
 font-size:16px;
 }
 
 .send-btn{
 background:#00e68a;
 border:none;
-padding:12px 18px;
+padding:10px 18px;
 border-radius:10px;
 cursor:pointer;
 }
@@ -84,29 +67,39 @@ cursor:pointer;
 background:#222;
 color:#fff;
 border:none;
-padding:12px 18px;
+padding:10px 18px;
 border-radius:10px;
 cursor:pointer;
 }
 
-.you{color:#00ff9c;}
-.stranger{color:#fff;}
+.you{color:#00ffa2;margin:4px 0;}
+.stranger{color:#ffffff;margin:4px 0;}
 
+.typing{
+color:#aaa;
+font-size:13px;
+margin-top:5px;
+}
+
+/* ---------- SEO SECTION BELOW CHAT ---------- */
 .seo{
-padding:40px 30px;
-line-height:1.6;
+padding:40px 20px;
+max-width:1000px;
+margin:auto;
+line-height:1.7;
 }
 
-footer{
+.seo h2{
+margin-top:25px;
+}
+
+.footer{
 text-align:center;
-padding:15px;
+padding:20px;
+color:#00ffa2;
 }
 
-footer a{
-color:#00ff9c;
-margin:0 6px;
-text-decoration:none;
-}
+a{color:#00ffa2;text-decoration:none;margin:0 6px;}
 </style>
 </head>
 
@@ -114,162 +107,130 @@ text-decoration:none;
 
 <div class="header">
 <h1>Strango — Free Stranger Chat India</h1>
-<p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
+<p>Anonymous text chat without login. Meet strangers instantly.</p>
 <div class="online">Online: <span id="onlineCount">0</span></div>
-<div id="statusText">Looking for stranger...</div>
+<div id="statusText" class="online">Looking for stranger...</div>
 </div>
 
-<div class="main">
+<div class="chat-wrapper">
 <div id="chat" class="chat-box"></div>
+<div id="typingIndicator" class="typing"></div>
+</div>
 
 <div class="controls">
 <button class="next-btn" onclick="nextStranger()">Next</button>
 <input id="messageInput" placeholder="Type message...">
 <button class="send-btn" onclick="sendMessage()">Send</button>
 </div>
-</div>
 
-<!-- ================= SEO ULTRA CONTENT ================= -->
+
+<!-- ================= SEO CONTENT BELOW CHAT ================= -->
 <div class="seo">
 
 <h2>🚀 Strango — Free Random Chat With Strangers Worldwide</h2>
 
 <p>
-Strango is a free online random chat platform that lets you instantly meet strangers from around the world through real-time text conversations.
-Designed with speed, privacy, and simplicity in mind, Strango allows users to start chatting without downloads or sign-ups.
+Strango is a free online random chat platform that lets you instantly meet strangers from around the world through real-time conversations.
+Built with speed, privacy, and minimal design, Strango allows users to start chatting without downloads or complicated sign-ups.
 </p>
 
-<h3>⭐ Why Strango is Different</h3>
+<h2>⭐ Why Strango is Different</h2>
 <ul>
-<li>Instant global random matching</li>
+<li>Instant global matching</li>
 <li>No registration required</li>
-<li>Privacy-focused anonymous communication</li>
-<li>Mobile-first lightweight design</li>
-<li>Fast real-time messaging</li>
+<li>Privacy-focused anonymous chatting</li>
+<li>Mobile friendly design</li>
+<li>Fast lightweight interface</li>
 </ul>
 
-<h3>🌍 Global Community</h3>
+<h2>🌍 Global Community</h2>
 <p>
-Users connect worldwide to practice languages, explore cultures, and make international friends through simple anonymous chat.
+Users connect worldwide to practice languages, meet new people, and explore global conversations.
+Strango focuses on distraction-free communication similar to premium stranger chat platforms.
 </p>
 
-<h3>⚡ Fast Lightweight Experience</h3>
-<p>
-Strango uses minimal architecture for faster loading speed, improved mobile usability, and better SEO ranking performance.
-</p>
-
-<h3>❓ STRANGO ULTRA FAQ</h3>
-<p>1. Is Strango free? Yes, completely free.</p>
-<p>2. Need signup? No registration required.</p>
-<p>3. Is Strango safe? Follow online safety practices.</p>
-<p>4. Works on mobile? Yes.</p>
-<p>5. Global? Yes worldwide.</p>
-<p>6. Messages saved? Session-based privacy.</p>
-<p>7. Slow matching? Depends on users online.</p>
-<p>8. Language practice? Yes many users do.</p>
-<p>9. Why Strango? Fast modern minimal chat.</p>
-<p>10. Anonymous? Yes privacy-first.</p>
+<h2>❓ Frequently Asked Questions</h2>
+<p><b>1. Is Strango free?</b> Yes, completely free random chat.</p>
+<p><b>2. Do I need signup?</b> No registration required.</p>
+<p><b>3. Is Strango safe?</b> Follow online safety practices.</p>
+<p><b>4. Can I use mobile?</b> Yes, fully mobile optimized.</p>
+<p><b>5. Is Strango global?</b> Yes, worldwide random chat.</p>
 
 </div>
 
-<footer>
+<div class="footer">
 <a href="/privacy-policy.html" target="_blank">Privacy</a> |
 <a href="/terms.html" target="_blank">Terms</a> |
 <a href="/safety.html" target="_blank">Safety</a> |
 <a href="/about-us.html" target="_blank">About</a> |
 <a href="/contact.html" target="_blank">Contact</a>
-</footer>
+</div>
 
 <script>
 const socket = io();
-const chat = document.getElementById("chat");
-const statusText = document.getElementById("statusText");
-const input = document.getElementById("messageInput");
-
 let connected=false;
 
-/* ONLINE */
-socket.on("online",(c)=>{
-document.getElementById("onlineCount").innerText=c;
+socket.on("online",(count)=>{
+document.getElementById("onlineCount").innerText=count;
 });
 
-/* STATUS */
 socket.on("waiting",()=>{
 connected=false;
-statusText.innerText="Looking for stranger...";
+document.getElementById("statusText").innerText="Looking for stranger...";
 });
 
 socket.on("matched",()=>{
 connected=true;
-statusText.innerText="Stranger connected";
+document.getElementById("statusText").innerText="Stranger connected";
 });
 
-socket.on("disconnect",()=>{
-connected=false;
-statusText.innerText="Looking for stranger...";
-});
-
-/* RECEIVE */
 socket.on("message",(msg)=>{
 addMessage("Stranger",msg);
-notifyIfHidden();
+document.title="💬 New message";
 });
 
-/* TYPING */
 socket.on("typing",()=>{
-if(connected) statusText.innerText="Stranger typing...";
-});
-socket.on("stopTyping",()=>{
-if(connected) statusText.innerText="Stranger connected";
+document.getElementById("typingIndicator").innerText="Stranger typing...";
 });
 
-/* ADD MESSAGE */
+socket.on("stopTyping",()=>{
+document.getElementById("typingIndicator").innerText="";
+});
+
 function addMessage(sender,text){
+const chat=document.getElementById("chat");
 const div=document.createElement("div");
-div.className = sender==="You" ? "you" : "stranger";
-div.innerText = sender + ": " + text;
+div.className = sender==="You" ? "you":"stranger";
+div.innerText = sender+": "+text;
 chat.appendChild(div);
 chat.scrollTop=chat.scrollHeight;
 }
 
-/* SEND */
 function sendMessage(){
+if(!connected) return;
+
+const input=document.getElementById("messageInput");
 const text=input.value.trim();
-if(!text || !connected) return;
+if(!text) return;
 
 addMessage("You",text);
 socket.emit("message",text);
+socket.emit("stopTyping");
 input.value="";
 }
 
-input.addEventListener("keydown",(e)=>{
-if(e.key==="Enter") sendMessage();
+document.getElementById("messageInput").addEventListener("keydown",(e)=>{
+if(e.key==="Enter"){sendMessage();}
+else{socket.emit("typing");}
 });
 
-/* NEXT */
+document.getElementById("messageInput").addEventListener("keyup",(e)=>{
+if(e.key==="Enter"){socket.emit("stopTyping");}
+});
+
 function nextStranger(){
+document.getElementById("chat").innerHTML="";
 socket.emit("next");
-chat.innerHTML="";
-connected=false;
-statusText.innerText="Looking for stranger...";
-}
-
-/* TYPING EMIT */
-input.addEventListener("input",()=>{
-if(!connected) return;
-socket.emit("typing");
-clearTimeout(window.typingTimer);
-window.typingTimer=setTimeout(()=>socket.emit("stopTyping"),1000);
-});
-
-/* NOTIFICATION */
-function notifyIfHidden(){
-if(document.hidden && Notification.permission==="granted"){
-new Notification("New message on Strango");
-}
-}
-if("Notification" in window){
-Notification.requestPermission();
 }
 </script>
 
