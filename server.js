@@ -71,6 +71,14 @@ io.on("connection", (socket) => {
         socket.partner.emit("message", msg);
     }
 });
+/* ===== MESSAGE RELAY (SAFE) ===== */
+
+socket.on("message", (msg) => {
+  if(socket.partner){
+    socket.partner.emit("message", msg);
+  }
+});
+
 /* ===== STRANGER TYPING ===== */
 
 socket.on("typing", ()=>{
