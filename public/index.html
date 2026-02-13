@@ -13,7 +13,6 @@ color:#fff;
 font-family:Arial,Helvetica,sans-serif;
 }
 
-/* ===== MAIN LAYOUT ===== */
 .main-wrapper{
 max-width:1100px;
 margin:20px auto;
@@ -23,29 +22,10 @@ padding:25px;
 background:#000;
 }
 
-/* ===== HEADER CENTER ===== */
-.header{
-text-align:center;
-margin-bottom:15px;
-}
+.header{text-align:center;margin-bottom:15px;}
+.subtitle{color:#ccc;margin-top:5px;}
+.online{color:#00ffa6;margin-top:8px;}
 
-.header h1{
-margin:0;
-font-size:32px;
-}
-
-.subtitle{
-color:#ccc;
-margin-top:5px;
-}
-
-/* ===== STATUS ===== */
-.online{
-color:#00ffa6;
-margin-top:8px;
-}
-
-/* ===== CHAT ===== */
 .chat-box{
 background:#070707;
 height:55vh;
@@ -56,73 +36,26 @@ margin-top:15px;
 border:1px solid #111;
 }
 
-.msg-you{
-color:#00ffa6;
-margin:6px 0;
-}
+.msg-you{color:#00ffa6;margin:6px 0;}
+.msg-stranger{color:#fff;margin:6px 0;}
+.typing{color:#aaa;font-size:14px;margin-top:6px;}
 
-.msg-stranger{
-color:#fff;
-margin:6px 0;
-}
+.controls{display:flex;gap:10px;margin-top:10px;}
+input{flex:1;padding:14px;border-radius:10px;border:none;background:#ddd;}
+button{padding:12px 18px;border:none;border-radius:10px;cursor:pointer;}
+.send-btn{background:#00e68a;}
+.next-btn{background:#222;color:#fff;}
 
-.typing{
-color:#aaa;
-font-size:14px;
-margin-top:6px;
-}
+.footer-links{text-align:center;margin:18px 0;color:#00ffa6;}
+.footer-links a{color:#00ffa6;text-decoration:none;margin:0 6px;}
 
-/* ===== CONTROLS ===== */
-.controls{
-display:flex;
-gap:10px;
-margin-top:10px;
-}
-
-input{
-flex:1;
-padding:14px;
-border-radius:10px;
-border:none;
-background:#ddd;
-}
-
-button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-}
-
-.send-btn{
-background:#00e68a;
-}
-
-.next-btn{
-background:#222;
-color:#fff;
-}
-
-/* ===== FOOTER LINKS ===== */
-.footer-links{
-text-align:center;
-margin:18px 0;
-color:#00ffa6;
-}
-
-.footer-links a{
-color:#00ffa6;
-text-decoration:none;
-margin:0 6px;
-}
-
-/* ===== SEO ===== */
 .seo{
 max-width:1000px;
 margin:40px auto;
 padding:0 20px;
-line-height:1.6;
+line-height:1.7;
 }
+.seo h2{margin-top:35px;}
 </style>
 </head>
 
@@ -157,26 +90,48 @@ line-height:1.6;
 
 </div>
 
-<!-- ===== SEO CONTENT BELOW CHAT (UNCHANGED) ===== -->
+<!-- ===== SEO + PREMIUM FAQ SECTION ===== -->
 <div class="seo">
 
 <h2>🚀 Strango — Free Random Chat With Strangers Worldwide</h2>
 
 <p>
-Strango is a modern lightweight anonymous chat platform designed for instant global communication.
-Unlike traditional random chat websites, Strango focuses on speed, privacy, and distraction-free design.
-Users can connect instantly without registration while enjoying a mobile-optimized interface built
-for today’s internet experience.
+Strango is a modern anonymous chat platform designed for fast real-time conversations without accounts.
+Built with privacy-first design principles, Strango offers lightweight performance, global matching,
+and distraction-free communication similar to premium stranger chat platforms.
 </p>
 
-<h3>⭐ Why Strango Is Different</h3>
-<ul>
-<li>Real-time global matching</li>
-<li>No login required</li>
-<li>Minimal fast interface</li>
-<li>Privacy-focused communication</li>
-<li>Designed for modern mobile users</li>
-</ul>
+<h2>⭐ Premium FAQ — Strango Random Chat</h2>
+
+<h3>1. What makes Strango different from traditional random chat websites?</h3>
+<p>Strango focuses on speed, clean design, and privacy-focused communication without unnecessary features that slow down chatting.</p>
+
+<h3>2. Is Strango completely free to use?</h3>
+<p>Yes. Users can start chatting instantly without subscriptions or hidden payments.</p>
+
+<h3>3. Does Strango require account registration?</h3>
+<p>No sign-up is needed. The platform is designed for instant anonymous communication.</p>
+
+<h3>4. How does Strango protect user privacy?</h3>
+<p>Chats are session-based and users are encouraged not to share personal information during conversations.</p>
+
+<h3>5. Can I use Strango globally?</h3>
+<p>Yes. The platform connects users worldwide, allowing cross-country conversations and language practice.</p>
+
+<h3>6. Why is Strango fast compared to older chat platforms?</h3>
+<p>Minimal design and lightweight scripts allow faster loading speed and smoother real-time messaging.</p>
+
+<h3>7. Is Strango optimized for mobile devices?</h3>
+<p>Yes. The interface is mobile-first and works smoothly on phones, tablets, and desktops.</p>
+
+<h3>8. Are conversations stored permanently?</h3>
+<p>Strango prioritizes privacy and does not aim to keep long-term chat history.</p>
+
+<h3>9. Can Strango be used for language learning?</h3>
+<p>Many users use random chat platforms to practice English and communicate with international users.</p>
+
+<h3>10. What is the future goal of Strango?</h3>
+<p>Strango aims to become a lightweight, safe, and globally accessible communication platform built on modern web standards.</p>
 
 </div>
 
@@ -226,13 +181,8 @@ socket.emit("stopTyping");
 },1000);
 });
 
-socket.on("message",msg=>{
-addMessage("stranger",msg);
-});
-
-socket.on("online",count=>{
-document.getElementById("onlineCount").textContent=count;
-});
+socket.on("message",msg=>{ addMessage("stranger",msg); });
+socket.on("online",count=>{ document.getElementById("onlineCount").textContent=count; });
 
 socket.on("waiting",()=>{
 connected=false;
@@ -244,13 +194,8 @@ connected=true;
 document.getElementById("statusText").textContent="Stranger connected";
 });
 
-socket.on("typing",()=>{
-typingIndicator.textContent="Stranger typing...";
-});
-
-socket.on("stopTyping",()=>{
-typingIndicator.textContent="";
-});
+socket.on("typing",()=>{ typingIndicator.textContent="Stranger typing..."; });
+socket.on("stopTyping",()=>{ typingIndicator.textContent=""; });
 
 socket.on("disconnect",()=>{
 connected=false;
