@@ -8,88 +8,31 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
-body{
-  background:#000;
-  color:#fff;
-  font-family:Arial;
-  margin:0;
-  padding:20px;
-}
-
+body{background:#000;color:#fff;font-family:Arial;margin:0;padding:20px}
 .subtitle{color:#ccc}
+.online{text-align:center;color:#00ff9c;margin:10px 0}
+#statusText{color:#00ff9c;margin:6px 0}
+#typingIndicator{color:#888;font-size:14px;height:18px;margin-bottom:6px}
 
-.online{
-  text-align:center;
-  color:#00ff9c;
-  margin:10px 0;
-}
-
-#statusText{
-  color:#00ff9c;
-  margin:6px 0;
-}
-
-/* ⭐ TYPING STYLE */
-#typingIndicator{
-  color:#888;
-  font-size:14px;
-  height:18px;
-  margin-bottom:6px;
-}
-
-.main-container{
-  display:flex;
-  gap:20px;
-}
-
+.main-container{display:flex;gap:20px}
 .left-panel{flex:2}
-
-.right-panel{
-  flex:1;
-  background:#0b0b0b;
-  padding:20px;
-  border-radius:12px;
-}
+.right-panel{flex:1;background:#0b0b0b;padding:20px;border-radius:12px}
 
 .chat-box{
-  height:300px;
-  background:#070707;
-  border-radius:12px;
-  padding:12px;
-  overflow-y:auto;
-  margin-bottom:6px;
+height:300px;
+background:#070707;
+border-radius:12px;
+padding:12px;
+overflow-y:auto;
+margin-bottom:6px;
 }
 
-/* ⭐ MESSAGE COLORS */
-.msg-you{
-  color:#00ff9c;
-  margin:4px 0;
-}
+.msg-you{color:#00ff9c;margin:4px 0}
+.msg-stranger{color:#ffffff;margin:4px 0}
 
-.msg-stranger{
-  color:#ffffff;
-  margin:4px 0;
-}
-
-.controls{
-  display:flex;
-  gap:10px;
-}
-
-input{
-  flex:1;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-button{
-  background:#00ff9c;
-  border:none;
-  padding:10px 16px;
-  border-radius:8px;
-  cursor:pointer;
-}
+.controls{display:flex;gap:10px}
+input{flex:1;padding:10px;border-radius:8px;border:none}
+button{background:#00ff9c;border:none;padding:10px 16px;border-radius:8px;cursor:pointer}
 </style>
 </head>
 
@@ -104,10 +47,7 @@ button{
 <div class="main-container">
 
 <div class="left-panel">
-
 <div id="chat" class="chat-box"></div>
-
-<!-- ⭐ STRANGER TYPING TEXT -->
 <div id="typingIndicator"></div>
 
 <div class="controls">
@@ -115,7 +55,6 @@ button{
 <input id="messageInput" placeholder="Type message..." />
 <button onclick="sendMessage()">Send</button>
 </div>
-
 </div>
 
 <div class="right-panel">
@@ -138,6 +77,13 @@ const input = document.getElementById("messageInput");
 const typingUI = document.getElementById("typingIndicator");
 
 let typingTimer;
+let unseenCount = 0;
+const originalTitle = document.title;
+
+/* ===== ENABLE NOTIFICATIONS ===== */
+if ("Notification" in window && Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
 
 /* ===== ADD MESSAGE ===== */
 function addMessage(sender,text){
@@ -148,16 +94,14 @@ function addMessage(sender,text){
   chat.scrollTop = chat.scrollHeight;
 }
 
-/* ⭐ ENTER KEY SEND */
+/* ===== ENTER KEY SEND + TYPING ===== */
 input.addEventListener("keydown",(e)=>{
   if(e.key==="Enter"){
     sendMessage();
   }else{
     socket.emit("typing");
     clearTimeout(typingTimer);
-    typingTimer=setTimeout(()=>{
-      socket.emit("stopTyping");
-    },800);
+    typingTimer=setTimeout(()=>socket.emit("stopTyping"),800);
   }
 });
 
@@ -168,7 +112,6 @@ function sendMessage(){
 
   addMessage("You",text);
   socket.emit("message",text);
-
   socket.emit("stopTyping");
   input.value="";
 }
@@ -197,12 +140,27 @@ socket.on("strangerConnected",()=>{
   document.getElementById("statusText").innerText="Stranger connected";
 });
 
+/* ⭐ NEW MESSAGE RECEIVED */
 socket.on("message",(msg)=>{
   typingUI.innerText="";
   addMessage("Stranger",msg);
+
+  /* ===== 🔔 NOTIFICATION SYSTEM ===== */
+  if(document.hidden){
+
+    unseenCount++;
+    document.title = "(" + unseenCount + ") New message - Strango";
+
+    if(Notification.permission==="granted"){
+      new Notification("New message on Strango",{
+        body: msg,
+        silent:false
+      });
+    }
+  }
 });
 
-/* ⭐ STRANGER TYPING RECEIVER */
+/* ⭐ STRANGER TYPING */
 socket.on("typing",()=>{
   typingUI.innerText="Stranger is typing...";
 });
@@ -214,6 +172,14 @@ socket.on("stopTyping",()=>{
 socket.on("disconnect",()=>{
   document.getElementById("statusText").innerText="Looking for stranger...";
   typingUI.innerText="";
+});
+
+/* ===== RESET TITLE WHEN TAB ACTIVE ===== */
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden){
+    unseenCount=0;
+    document.title=originalTitle;
+  }
 });
 </script>
 
