@@ -16,7 +16,6 @@ body{
   padding:20px;
 }
 
-h1{margin-bottom:5px}
 .subtitle{color:#ccc}
 
 .online{
@@ -30,12 +29,21 @@ h1{margin-bottom:5px}
   margin:6px 0;
 }
 
+/* ⭐ TYPING STYLE */
+#typingIndicator{
+  color:#888;
+  font-size:14px;
+  height:18px;
+  margin-bottom:6px;
+}
+
 .main-container{
   display:flex;
   gap:20px;
 }
 
 .left-panel{flex:2}
+
 .right-panel{
   flex:1;
   background:#0b0b0b;
@@ -49,7 +57,7 @@ h1{margin-bottom:5px}
   border-radius:12px;
   padding:12px;
   overflow-y:auto;
-  margin-bottom:10px;
+  margin-bottom:6px;
 }
 
 /* ⭐ MESSAGE COLORS */
@@ -96,13 +104,18 @@ button{
 <div class="main-container">
 
 <div class="left-panel">
+
 <div id="chat" class="chat-box"></div>
+
+<!-- ⭐ STRANGER TYPING TEXT -->
+<div id="typingIndicator"></div>
 
 <div class="controls">
 <button onclick="nextStranger()">Next</button>
 <input id="messageInput" placeholder="Type message..." />
 <button onclick="sendMessage()">Send</button>
 </div>
+
 </div>
 
 <div class="right-panel">
@@ -122,7 +135,11 @@ button{
 const socket = io();
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
+const typingUI = document.getElementById("typingIndicator");
 
+let typingTimer;
+
+/* ===== ADD MESSAGE ===== */
 function addMessage(sender,text){
   const div=document.createElement("div");
   div.className = sender==="You" ? "msg-you" : "msg-stranger";
@@ -131,14 +148,20 @@ function addMessage(sender,text){
   chat.scrollTop = chat.scrollHeight;
 }
 
-/* ⭐ ENTER KEY SEND FIX */
+/* ⭐ ENTER KEY SEND */
 input.addEventListener("keydown",(e)=>{
   if(e.key==="Enter"){
     sendMessage();
+  }else{
+    socket.emit("typing");
+    clearTimeout(typingTimer);
+    typingTimer=setTimeout(()=>{
+      socket.emit("stopTyping");
+    },800);
   }
 });
 
-/* ⭐ SEND MESSAGE */
+/* ===== SEND MESSAGE ===== */
 function sendMessage(){
   const text=input.value.trim();
   if(!text) return;
@@ -146,10 +169,11 @@ function sendMessage(){
   addMessage("You",text);
   socket.emit("message",text);
 
+  socket.emit("stopTyping");
   input.value="";
 }
 
-/* ⭐ NEXT BUTTON */
+/* ===== NEXT ===== */
 function nextStranger(){
   chat.innerHTML="";
   socket.emit("next");
@@ -174,11 +198,22 @@ socket.on("strangerConnected",()=>{
 });
 
 socket.on("message",(msg)=>{
+  typingUI.innerText="";
   addMessage("Stranger",msg);
+});
+
+/* ⭐ STRANGER TYPING RECEIVER */
+socket.on("typing",()=>{
+  typingUI.innerText="Stranger is typing...";
+});
+
+socket.on("stopTyping",()=>{
+  typingUI.innerText="";
 });
 
 socket.on("disconnect",()=>{
   document.getElementById("statusText").innerText="Looking for stranger...";
+  typingUI.innerText="";
 });
 </script>
 
