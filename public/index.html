@@ -2,177 +2,267 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Strango — Free Stranger Chat India</title>
 
 <style>
-body{margin:0;background:#000;color:#fff;font-family:Arial;}
-.wrapper{max-width:1100px;margin:auto;padding:10px 20px;}
+body{
+background:#000;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+margin:0;
+}
 
-.header{text-align:center;margin-bottom:2px;}
-.subtitle{color:#ccc;margin-top:4px;}
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+text-align:center;
+}
 
-.status{color:#00ffa6;margin:4px 0;}
+h1{
+margin-bottom:6px;
+}
+
+.subtitle{
+color:#ddd;
+margin-bottom:14px;
+}
+
+.status{
+color:#00ffa6;
+font-size:14px;
+text-align:left;
+max-width:1000px;
+margin:auto;
+}
+
+.chat-wrapper{
+max-width:1000px;
+margin:10px auto;
+border:1px solid #111;
+border-radius:14px;
+padding:14px;
+}
 
 .chat-box{
-background:#070707;
-height:60vh;
+height:45vh;
+min-height:280px;
+background:#050505;
+border-radius:12px;
+padding:12px;
 overflow-y:auto;
-border-radius:14px;
-padding:15px;
-border:1px solid #111;
+text-align:left;
 }
 
-.msg-you{color:#00ffa6;margin:6px 0;}
-.msg-stranger{color:#fff;margin:6px 0;}
+.controls{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
 
-.typing{color:#aaa;font-size:14px;margin-top:6px;}
-
-.controls{display:flex;gap:10px;margin-top:10px;}
-
-input{
+#messageInput{
 flex:1;
-padding:14px;
+padding:12px;
 border-radius:10px;
 border:none;
-background:#ddd;
+outline:none;
 }
 
-button{padding:12px 18px;border:none;border-radius:10px;cursor:pointer;}
-.send{background:#00e68a;}
-.next{background:#222;color:#fff;}
+button{
+padding:10px 16px;
+border-radius:10px;
+border:none;
+cursor:pointer;
+}
 
-.footer{text-align:center;margin-top:20px;}
-.footer a{color:#00ffa6;text-decoration:none;margin:0 6px;}
+.send-btn{
+background:#00ffa6;
+}
 
-.seo{margin-top:60px;color:#ddd;line-height:1.7;}
-.seo h2{color:#fff;margin-top:40px;}
+.next-btn{
+background:#222;
+color:#fff;
+}
+
+.you{
+color:#00ffa6;
+}
+
+.stranger{
+color:#fff;
+}
+
+/* SEO AREA */
+.seo{
+max-width:1000px;
+margin:40px auto;
+text-align:left;
+color:#ddd;
+line-height:1.7;
+}
+
+.seo h2{
+color:#fff;
+margin-top:30px;
+}
+
+.footer{
+text-align:center;
+margin:25px 0;
+color:#00ffa6;
+}
+.footer a{
+color:#00ffa6;
+text-decoration:none;
+margin:0 6px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="container">
 
-<div class="header">
 <h1>Strango — Free Stranger Chat India</h1>
-<p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
+<div class="subtitle">Anonymous text chat without login. Meet strangers instantly.</div>
+
+<div class="status">
+Online: <span id="onlineCount">0</span><br>
+<span id="statusText">Looking for stranger...</span>
 </div>
 
-<div class="status">Online: <span id="onlineCount">0</span></div>
-<div id="statusText" class="status">Looking for stranger...</div>
+<div class="chat-wrapper">
 
 <div id="chat" class="chat-box"></div>
-<div id="typingIndicator" class="typing"></div>
 
 <div class="controls">
-<button class="next" onclick="nextStranger()">Next</button>
+<button class="next-btn" onclick="nextStranger()">Next</button>
 <input id="messageInput" placeholder="Type message...">
-<button class="send" onclick="sendMessage()">Send</button>
+<button class="send-btn" onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= SEO HIGH RICH CONTENT ================= -->
+
+<div class="seo">
+
+<h2>🚀 Free Random Chat With Strangers Worldwide</h2>
+<p>
+Strango is a fast lightweight anonymous chat platform designed for instant
+real-time conversations with strangers around the world. Similar to classic
+random chat services, Strango focuses on privacy, speed, and simplicity
+without requiring registration or personal accounts.
+</p>
+
+<h2>⭐ Why Strango is Different</h2>
+<p>
+Unlike many older chat platforms, Strango uses a minimal modern design that
+loads quickly even on mobile devices. The platform emphasizes distraction-free
+chatting, fast matching, and secure anonymous communication experiences.
+</p>
+
+<h2>🌍 Global Random Matching Experience</h2>
+<p>
+Users connect instantly with people from different countries. Many use Strango
+to practice languages, explore cultures, or simply have spontaneous online
+conversations. The system automatically pairs available users in real time.
+</p>
+
+<h2>❓ Frequently Asked Questions</h2>
+
+<p><b>1. Is Strango free?</b><br>Yes, Strango is completely free to use without hidden costs.</p>
+<p><b>2. Do I need to create an account?</b><br>No login or registration is required.</p>
+<p><b>3. Is Strango similar to classic stranger chat platforms?</b><br>Strango follows the concept of instant random chat but with a modern lightweight design.</p>
+<p><b>4. Is Strango safe?</b><br>Users should follow online safety practices and avoid sharing personal information.</p>
+<p><b>5. Can I use Strango on mobile?</b><br>Yes, it works smoothly on phones, tablets, and desktops.</p>
+<p><b>6. How does matching work?</b><br>The system automatically pairs two waiting users.</p>
+<p><b>7. Are chats stored?</b><br>Conversations are session-based and privacy focused.</p>
+<p><b>8. Why is matching sometimes slow?</b><br>Speed depends on the number of users online.</p>
+<p><b>9. Does Strango work worldwide?</b><br>Yes, users can connect globally.</p>
+<p><b>10. What makes Strango modern?</b><br>Fast performance, minimal UI, and anonymous chatting.</p>
+
 </div>
 
 <div class="footer">
-<a href="privacy-policy.html" target="_blank">Privacy</a> |
-<a href="terms.html" target="_blank">Terms</a> |
-<a href="safety.html" target="_blank">Safety</a> |
-<a href="about-us.html" target="_blank">About</a> |
-<a href="contact.html" target="_blank">Contact</a>
-</div>
-
-<!-- SEO FAQ -->
-<div class="seo">
-
-<h2>FAQ</h2>
-
-<p><b>1. Is Strango free?</b><br>Yes, Strango allows instant chatting without cost.</p>
-<p><b>2. Do I need an account?</b><br>No login is required.</p>
-<p><b>3. Is Strango mobile friendly?</b><br>Works smoothly on phones and desktops.</p>
-<p><b>4. How matching works?</b><br>Connects two random online users instantly.</p>
-<p><b>5. Are chats saved?</b><br>Session-based privacy system.</p>
-<p><b>6. Is it global?</b><br>Users connect worldwide.</p>
-<p><b>7. Why matching slow?</b><br>Depends on online users.</p>
-<p><b>8. Can I practice languages?</b><br>Yes, many use Strango for learning.</p>
-<p><b>9. Is it safe?</b><br>Avoid sharing personal information.</p>
-<p><b>10. What makes Strango different?</b><br>Fast minimal privacy-first design.</p>
-
-</div>
-
+<a href="/privacy-policy.html" target="_blank">Privacy</a> |
+<a href="/terms.html" target="_blank">Terms</a> |
+<a href="/safety.html" target="_blank">Safety</a> |
+<a href="/about-us.html" target="_blank">About</a> |
+<a href="/contact.html" target="_blank">Contact</a>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
+
 <script>
 const socket = io();
+let unreadCount = 0;
 
-const chat=document.getElementById("chat");
-const input=document.getElementById("messageInput");
-const typingIndicator=document.getElementById("typingIndicator");
+const chat = document.getElementById("chat");
+const input = document.getElementById("messageInput");
 
-let connected=false;
-let typingTimeout=null;
-
-function addMessage(type,text){
+/* ========= MESSAGE DISPLAY ========= */
+function addMessage(sender,text){
 const div=document.createElement("div");
-div.className= type==="you"?"msg-you":"msg-stranger";
-div.textContent=(type==="you"?"You: ":"Stranger: ")+text;
+div.className = sender==="You" ? "you" : "stranger";
+div.textContent = sender + ": " + text;
 chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
+chat.scrollTop = chat.scrollHeight;
 }
 
+/* ========= SEND ========= */
 function sendMessage(){
 const text=input.value.trim();
-if(!text||!connected) return;
-addMessage("you",text);
+if(!text) return;
+
+addMessage("You",text);
 socket.emit("message",text);
-socket.emit("stopTyping");
 input.value="";
 }
 
-function nextStranger(){
-socket.emit("next");
-chat.innerHTML="";
-}
-
-input.addEventListener("keypress",e=>{
-if(e.key==="Enter"){sendMessage();}
+/* ENTER SEND */
+input.addEventListener("keydown",e=>{
+if(e.key==="Enter") sendMessage();
 });
 
-input.addEventListener("input",()=>{
-if(!connected) return;
-socket.emit("typing");
-clearTimeout(typingTimeout);
-typingTimeout=setTimeout(()=>socket.emit("stopTyping"),1000);
-});
-
-socket.on("message",msg=>{
-addMessage("stranger",msg);
-});
-
-socket.on("online",c=>{
+/* ========= SOCKET EVENTS ========= */
+socket.on("onlineCount",c=>{
 document.getElementById("onlineCount").textContent=c;
 });
 
 socket.on("waiting",()=>{
-connected=false;
-document.getElementById("statusText").textContent="Looking for stranger...";
+document.getElementById("statusText").innerText="Looking for stranger...";
 });
 
 socket.on("matched",()=>{
-connected=true;
-document.getElementById("statusText").textContent="Stranger connected";
+document.getElementById("statusText").innerText="Stranger connected";
 });
 
-socket.on("typing",()=>{
-typingIndicator.textContent="Stranger typing...";
+socket.on("message",msg=>{
+addMessage("Stranger",msg);
+
+/* UNREAD TAB NOTIFICATION */
+if(document.hidden){
+unreadCount++;
+document.title="("+unreadCount+") New message - Strango";
+}
 });
 
-socket.on("stopTyping",()=>{
-typingIndicator.textContent="";
+/* RESET TITLE WHEN TAB FOCUS */
+document.addEventListener("visibilitychange",()=>{
+if(!document.hidden){
+unreadCount=0;
+document.title="Strango — Free Stranger Chat India";
+}
 });
 
-socket.on("disconnect",()=>{
-connected=false;
-document.getElementById("statusText").textContent="Looking for stranger...";
-});
+function nextStranger(){
+chat.innerHTML="";
+socket.emit("next");
+}
 </script>
 
 </body>
