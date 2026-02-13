@@ -11,51 +11,53 @@ margin:0;
 background:#000;
 color:#fff;
 font-family:Arial,Helvetica,sans-serif;
-overflow-x:hidden;
 }
 
-/* ===== CENTERED MAIN WRAPPER ===== */
+/* ===== MAIN WRAPPER ===== */
 .main-wrapper{
 max-width:1100px;
 margin:0 auto;
 padding:20px;
-display:flex;
-flex-direction:column;
-min-height:100vh;
-box-sizing:border-box;
 }
 
 /* ===== HEADER ===== */
 .header{
 text-align:center;
-margin-bottom:10px;
+margin-bottom:5px; /* 🔥 reduced space so chat touches subtitle */
 }
 
 .subtitle{
 color:#ccc;
 margin-top:4px;
+margin-bottom:8px;
 }
 
+/* ===== STATUS ===== */
 .online{
 color:#00ffa6;
-margin-top:6px;
+margin-top:2px;
 }
 
-/* ===== CHAT PANEL (FIXED HEIGHT — ALWAYS VISIBLE) ===== */
+/* ===== CHAT PANEL ===== */
 .chat-box{
 background:#070707;
-height:48vh;   /* 🔥 MAIN FIX — keeps chat on screen */
+height:52vh;          /* 🔥 ensures chat reaches subtitle area */
 overflow-y:auto;
 border-radius:14px;
 padding:15px;
-margin-top:10px;
+margin-top:6px;       /* 🔥 almost touching subtitle */
 border:1px solid #111;
 }
 
 /* ===== MESSAGES ===== */
 .msg-you{color:#00ffa6;margin:6px 0;}
 .msg-stranger{color:#fff;margin:6px 0;}
-.typing{color:#aaa;font-size:14px;margin-top:6px;}
+
+.typing{
+color:#aaa;
+font-size:14px;
+margin-top:6px;
+}
 
 /* ===== CONTROLS ===== */
 .controls{
@@ -95,7 +97,7 @@ text-decoration:none;
 margin:0 6px;
 }
 
-/* ===== SEO SECTION ===== */
+/* ===== SEO BELOW CHAT ===== */
 .seo{
 max-width:1000px;
 margin:40px auto;
@@ -138,46 +140,27 @@ line-height:1.7;
 
 </div>
 
-<!-- ===== SEO BELOW CHAT (UNCHANGED LOGIC) ===== -->
+<!-- ===== SEO SECTION ===== -->
 <div class="seo">
 
 <h2>🚀 Strango — Free Random Chat With Strangers Worldwide</h2>
 <p>
-Strango is a modern anonymous chat platform designed for fast real-time conversations without accounts.
-Built using lightweight architecture and privacy-first communication principles.
+Strango is a lightweight anonymous chat platform designed for instant conversations
+without registration. Built with modern performance standards and privacy-first design.
 </p>
 
-<h2>⭐ Premium FAQ — Strango Random Chat</h2>
+<h2>⭐ Premium FAQ</h2>
 
-<h3>1. What makes Strango different from other chat sites?</h3>
-<p>Strango focuses on speed, minimal design, and distraction-free communication.</p>
-
-<h3>2. Is Strango free?</h3>
-<p>Yes. Users can chat instantly without subscriptions.</p>
-
-<h3>3. Do I need an account?</h3>
-<p>No registration required.</p>
-
-<h3>4. Is Strango global?</h3>
-<p>Yes. Users connect worldwide.</p>
-
-<h3>5. Is chat stored?</h3>
-<p>Chats are session-based for privacy.</p>
-
-<h3>6. Mobile support?</h3>
-<p>Fully mobile-optimized interface.</p>
-
-<h3>7. Why is matching fast?</h3>
-<p>Lightweight real-time matching system.</p>
-
-<h3>8. Safe to use?</h3>
-<p>Users should follow online safety practices.</p>
-
-<h3>9. Language practice?</h3>
-<p>Many users practice English and meet global strangers.</p>
-
-<h3>10. Future of Strango?</h3>
-<p>Building a modern privacy-focused communication platform.</p>
+<p><b>1. Is Strango free?</b> Yes, completely free to use.</p>
+<p><b>2. Do I need an account?</b> No login required.</p>
+<p><b>3. Is Strango global?</b> Yes, users connect worldwide.</p>
+<p><b>4. Is chat stored?</b> Chats are session-based.</p>
+<p><b>5. Mobile support?</b> Fully mobile optimized.</p>
+<p><b>6. Fast matching?</b> Lightweight real-time pairing.</p>
+<p><b>7. Safe usage?</b> Follow online safety practices.</p>
+<p><b>8. Language practice?</b> Meet people globally.</p>
+<p><b>9. Modern design?</b> Built with minimal UI principles.</p>
+<p><b>10. Future vision?</b> Privacy-focused global chat network.</p>
 
 </div>
 
