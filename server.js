@@ -22,126 +22,88 @@ io.on("connection", (socket) => {
 
   /* ===== MATCHING ENGINE ===== */
 
-  function findPartner(){
+  function findPartner() {
 
-    // if someone waiting
-    if(waitingUser && waitingUser !== socket){
+    // someone already waiting
+    if (waitingUser && waitingUser !== socket) {
 
       socket.partner = waitingUser;
       waitingUser.partner = socket;
+
       socket.emit("matched");
       waitingUser.emit("matched");
 
-
-      // 🔥 REAL STRANGER CONNECTED SIGNAL
       socket.emit("strangerConnected");
       waitingUser.emit("strangerConnected");
 
-      
-
-      socket.emit("connected");
-      waitingUser.emit("connected");
-
-
       waitingUser = null;
-
-    }else{
-      waitingUser = socket;
-      socket.emit("waiting");
-
+      return;
     }
+
+    // otherwise wait
+    waitingUser = socket;
+    socket.emit("waiting");
   }
 
-  // auto search when user joins
   findPartner();
 
-  /* ===== MESSAGE ===== */
+  /* ===== MESSAGE RELAY ===== */
 
-  socket.on("message", msg=>{
-    if(socket.partner){
-
-        // 🔥 REAL STRANGER CONNECTED MESSAGE (FIRST MESSAGE ONLY)
-        if(!socket.connectedShown){
-            socket.emit("system","✅ Stranger connected. Say hello!");
-            socket.partner.emit("system","✅ Stranger connected. Say hello!");
-            socket.connectedShown = true;
-            socket.partner.connectedShown = true;
-        }
-
-        socket.partner.emit("message", msg);
+  socket.on("message", (msg) => {
+    if (socket.partner) {
+      socket.partner.emit("message", msg);
     }
-});
-/* ===== MESSAGE RELAY (SAFE) ===== */
+  });
 
-socket.on("message", (msg) => {
-  if(socket.partner){
-    socket.partner.emit("message", msg);
-  }
-});
+  /* ===== TYPING RELAY ===== */
 
-/* ===== STRANGER TYPING ===== */
-
-socket.on("typing", ()=>{
-   if(socket.partner){
+  socket.on("typing", () => {
+    if (socket.partner) {
       socket.partner.emit("typing");
-   }
-});
-
-socket.on("stopTyping", ()=>{
-   if(socket.partner){
-      socket.partner.emit("stopTyping");
-   }
-});
-// ===== USER DISCONNECT =====
-socket.on("disconnect", () => {
-  onlineUsers--;
-  io.emit("online", onlineUsers);
-
-  if(socket.partner){
-    socket.partner.emit("system", "❌ Stranger disconnected.");
-    socket.partner.partner = null;
-  }
-
-  if(waitingUser === socket){
-    waitingUser = null;
-  }
-});
-
-
-  /* ===== NEXT ===== */
-
-  socket.on("next", ()=>{
-    if(socket.partner){
-      socket.partner.partner = null;
-      socket.partner.emit("stranger-disconnected");
     }
+  });
+
+  socket.on("stopTyping", () => {
+    if (socket.partner) {
+      socket.partner.emit("stopTyping");
+    }
+  });
+
+  /* ===== NEXT STRANGER ===== */
+
+  socket.on("next", () => {
+
+    if (socket.partner) {
+      socket.partner.partner = null;
+      socket.partner.emit("waiting");
+    }
+
     socket.partner = null;
     findPartner();
   });
 
   /* ===== DISCONNECT ===== */
 
-  socket.on("disconnect", ()=>{
+  socket.on("disconnect", () => {
 
     onlineUsers--;
     io.emit("online", onlineUsers);
 
-    if(waitingUser === socket){
+    if (socket.partner) {
+      socket.partner.partner = null;
+      socket.partner.emit("system", "❌ Stranger disconnected.");
+      socket.partner.emit("waiting");
+    }
+
+    if (waitingUser === socket) {
       waitingUser = null;
     }
-
-    if(socket.partner){
-      socket.partner.partner = null;
-      socket.partner.emit("status","Stranger disconnected");
-    }
-
   });
 
 });
 
 /* ===== START SERVER ===== */
 
-const PORT = process.env.PORT || 10000;
-server.listen(PORT, ()=>{
-  console.log("Strango running on port", PORT);
+server.listen(3000, () => {
+  console.log("Strango server running...");
 });
