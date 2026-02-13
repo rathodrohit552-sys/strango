@@ -329,17 +329,6 @@ function closeLegal(){
   document.getElementById("legalFrame").src = "";
 }
 
-// ===== AUTO SYSTEM MESSAGE WHEN CHAT OPENS =====
-setTimeout(() => {
-  const chat = document.getElementById("chat");
-  if(chat){
-    const msg = document.createElement("div");
-    msg.className = "system-msg";
-    msg.innerText = "✅ Stranger connected. Say hello!";
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
-  }
-}, 1200);
 
 </script>
 

@@ -30,6 +30,12 @@ io.on("connection", (socket) => {
       socket.partner = waitingUser;
       waitingUser.partner = socket;
 
+      // 🔥 REAL STRANGER CONNECTED SIGNAL
+      socket.emit("strangerConnected");
+      waitingUser.emit("strangerConnected");
+
+      
+
       socket.emit("connected");
       waitingUser.emit("connected");
 
@@ -50,9 +56,18 @@ io.on("connection", (socket) => {
 
   socket.on("message", msg=>{
     if(socket.partner){
-      socket.partner.emit("message", msg);
+
+        // 🔥 REAL STRANGER CONNECTED MESSAGE (FIRST MESSAGE ONLY)
+        if(!socket.connectedShown){
+            socket.emit("system","✅ Stranger connected. Say hello!");
+            socket.partner.emit("system","✅ Stranger connected. Say hello!");
+            socket.connectedShown = true;
+            socket.partner.connectedShown = true;
+        }
+
+        socket.partner.emit("message", msg);
     }
-  });
+});
 /* ===== STRANGER TYPING ===== */
 
 socket.on("typing", ()=>{
