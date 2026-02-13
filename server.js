@@ -81,6 +81,21 @@ socket.on("stopTyping", ()=>{
       socket.partner.emit("stopTyping");
    }
 });
+// ===== USER DISCONNECT =====
+socket.on("disconnect", () => {
+  onlineUsers--;
+  io.emit("online", onlineUsers);
+
+  if(socket.partner){
+    socket.partner.emit("system", "❌ Stranger disconnected.");
+    socket.partner.partner = null;
+  }
+
+  if(waitingUser === socket){
+    waitingUser = null;
+  }
+});
+
 
   /* ===== NEXT ===== */
 

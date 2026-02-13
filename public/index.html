@@ -317,6 +317,11 @@ z-index:9999;
 
 <!-- LEGAL MODALS + SCRIPT REMAIN EXACTLY SAME AS YOUR CURRENT VERSION -->
 <!-- (I intentionally did NOT modify your chat script or legal logic) -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+</script>
+
 <script>
 // ===== LEGAL POPUP SYSTEM (SAFE — DOES NOT TOUCH CHAT) =====
 function openLegal(page){
@@ -328,6 +333,7 @@ function closeLegal(){
   document.getElementById("legalModal").style.display = "none";
   document.getElementById("legalFrame").src = "";
 }
+
 
 
 </script>
