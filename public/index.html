@@ -17,14 +17,12 @@ display:flex;
 flex-direction:column;
 }
 
-/* ===== TOP SEO + HEADER ===== */
+/* ===== TOP HEADER ===== */
 .top-section{
 padding:20px 30px 10px 30px;
 }
 
-h1{
-margin:0;
-}
+h1{margin:0;}
 
 .subtitle{
 color:#ccc;
@@ -36,11 +34,11 @@ color:#00ff9c;
 margin-top:4px;
 }
 
-/* ===== CHAT AREA ===== */
+/* ===== CHAT AREA LEFT ALIGNED ===== */
 .chat-area{
 flex:1;
 display:flex;
-justify-content:center;
+justify-content:flex-start;   /* 🔥 LEFT ALIGN */
 align-items:flex-start;
 padding:10px 20px;
 }
@@ -62,7 +60,7 @@ padding:14px;
 overflow-y:auto;
 }
 
-/* LEFT ALIGNED MESSAGES */
+/* MESSAGES LEFT */
 .msg{
 margin:6px 0;
 text-align:left;
@@ -109,19 +107,12 @@ padding:12px;
 
 a{color:#00ff9c;text-decoration:none;margin:0 6px;}
 
-/* ===== SEO RICH CONTENT ===== */
-.seo{
-padding:10px 30px 0 30px;
-font-size:14px;
-color:#bbb;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- ===== HEADER + SEO TEXT ABOVE CHAT ===== -->
+<!-- ===== HEADER ===== -->
 <div class="top-section">
 <h1>Strango — Free Stranger Chat India</h1>
 <p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
@@ -130,11 +121,7 @@ color:#bbb;
 <div id="statusText">Looking for stranger...</div>
 </div>
 
-<div class="seo">
-Strango is a lightweight anonymous chat platform designed for real-time global conversations without accounts.
-Built using modern minimal design standards, Strango focuses on privacy-first communication, fast matching,
-and distraction-free chatting similar to premium stranger chat platforms.
-</div>
+<!-- 🔥 SEO paragraph REMOVED as you asked -->
 
 <!-- ===== CHAT PANEL ===== -->
 <div class="chat-area">
