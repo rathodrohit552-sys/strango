@@ -6,48 +6,29 @@
 <title>Strango — Free Stranger Chat India</title>
 
 <style>
-body{
-margin:0;
-background:#000;
-color:#fff;
-font-family:Arial,Helvetica,sans-serif;
-}
+body{margin:0;background:#000;color:#fff;font-family:Arial;}
+.wrapper{max-width:1100px;margin:auto;padding:10px 20px;}
 
-.wrapper{
-max-width:1100px;
-margin:auto;
-padding:10px 20px;
-}
-
-/* ===== HEADER ===== */
-.header{text-align:center;margin-bottom:4px;}
+.header{text-align:center;margin-bottom:2px;}
 .subtitle{color:#ccc;margin-top:4px;}
 
-/* ===== STATUS ===== */
 .status{color:#00ffa6;margin:4px 0;}
 
-/* ===== CHAT PANEL ===== */
 .chat-box{
 background:#070707;
-height:58vh; /* 🔥 FIXED — visible fully */
+height:60vh;
 overflow-y:auto;
 border-radius:14px;
 padding:15px;
 border:1px solid #111;
 }
 
-/* ===== MESSAGES ===== */
 .msg-you{color:#00ffa6;margin:6px 0;}
 .msg-stranger{color:#fff;margin:6px 0;}
 
 .typing{color:#aaa;font-size:14px;margin-top:6px;}
 
-/* ===== INPUT ===== */
-.controls{
-display:flex;
-gap:10px;
-margin-top:10px;
-}
+.controls{display:flex;gap:10px;margin-top:10px;}
 
 input{
 flex:1;
@@ -57,36 +38,15 @@ border:none;
 background:#ddd;
 }
 
-button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-}
-
+button{padding:12px 18px;border:none;border-radius:10px;cursor:pointer;}
 .send{background:#00e68a;}
 .next{background:#222;color:#fff;}
 
-/* ===== SEO SECTION ===== */
-.seo{
-margin-top:60px;
-line-height:1.7;
-color:#ddd;
-}
+.footer{text-align:center;margin-top:20px;}
+.footer a{color:#00ffa6;text-decoration:none;margin:0 6px;}
 
+.seo{margin-top:60px;color:#ddd;line-height:1.7;}
 .seo h2{color:#fff;margin-top:40px;}
-.seo ul{padding-left:20px;}
-
-.footer{
-text-align:center;
-margin-top:20px;
-}
-
-.footer a{
-color:#00ffa6;
-text-decoration:none;
-margin:0 6px;
-}
 </style>
 </head>
 
@@ -119,36 +79,21 @@ margin:0 6px;
 <a href="contact.html" target="_blank">Contact</a>
 </div>
 
-<!-- ===== SEO CONTENT (RESTORED) ===== -->
+<!-- SEO SECTION -->
 <div class="seo">
 
-<h2>🚀 Strango — Free Random Chat With Strangers Worldwide</h2>
-<p>Strango is a fast, lightweight anonymous chat platform that connects users globally through real-time conversations without registration. Built for modern performance and privacy-first communication, Strango provides a distraction-free environment similar to premium stranger chat experiences.</p>
-
-<h2>⭐ Why Strango is Different</h2>
-<ul>
-<li>Instant global random matching</li>
-<li>No signup required</li>
-<li>Mobile-first lightweight design</li>
-<li>Fast loading infrastructure</li>
-<li>Privacy-focused communication</li>
-</ul>
-
-<h2>🌍 Global Community & Language Practice</h2>
-<p>Users join Strango to meet new people, practice languages, explore cultures, and enjoy spontaneous conversations worldwide.</p>
-
-<h2>❓ Premium FAQ</h2>
+<h2>❓ FAQ</h2>
 
 <p><b>1. Is Strango free?</b><br>Yes, Strango allows instant chatting without cost.</p>
 <p><b>2. Do I need an account?</b><br>No login is required.</p>
-<p><b>3. Is Strango mobile friendly?</b><br>Yes, it works smoothly on phones and desktops.</p>
-<p><b>4. How matching works?</b><br>The system connects two random online users instantly.</p>
-<p><b>5. Are chats saved?</b><br>Strango focuses on session-based privacy.</p>
-<p><b>6. Is it global?</b><br>Yes, users connect worldwide.</p>
-<p><b>7. Why is matching sometimes slow?</b><br>Depends on online user count.</p>
-<p><b>8. Can I practice languages?</b><br>Many users join for language learning.</p>
-<p><b>9. Is it safe?</b><br>Users should avoid sharing personal data.</p>
-<p><b>10. What makes Strango unique?</b><br>Minimal design, fast performance, and privacy-first approach.</p>
+<p><b>3. Is Strango mobile friendly?</b><br>Works smoothly on phones and desktops.</p>
+<p><b>4. How matching works?</b><br>Connects two random online users instantly.</p>
+<p><b>5. Are chats saved?</b><br>Session-based privacy system.</p>
+<p><b>6. Is it global?</b><br>Users connect worldwide.</p>
+<p><b>7. Why matching slow?</b><br>Depends on online users.</p>
+<p><b>8. Can I practice languages?</b><br>Yes, many use Strango for learning.</p>
+<p><b>9. Is it safe?</b><br>Avoid sharing personal information.</p>
+<p><b>10. What makes Strango different?</b><br>Fast minimal privacy-first design.</p>
 
 </div>
 
@@ -164,7 +109,15 @@ const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
 let typingTimeout=null;
+let unread=0;
+const baseTitle=document.title;
 
+/* ===== NOTIFICATION PERMISSION ===== */
+if("Notification" in window){
+Notification.requestPermission();
+}
+
+/* ===== MESSAGE ADD ===== */
 function addMessage(type,text){
 const div=document.createElement("div");
 div.className= type==="you"?"msg-you":"msg-stranger";
@@ -173,6 +126,7 @@ chat.appendChild(div);
 chat.scrollTop=chat.scrollHeight;
 }
 
+/* ===== SEND ===== */
 function sendMessage(){
 const text=input.value.trim();
 if(!text||!connected) return;
@@ -182,15 +136,18 @@ socket.emit("stopTyping");
 input.value="";
 }
 
+/* ===== NEXT ===== */
 function nextStranger(){
 socket.emit("next");
 chat.innerHTML="";
 }
 
+/* ===== ENTER SEND ===== */
 input.addEventListener("keypress",e=>{
 if(e.key==="Enter"){sendMessage();}
 });
 
+/* ===== TYPING ===== */
 input.addEventListener("input",()=>{
 if(!connected) return;
 socket.emit("typing");
@@ -198,8 +155,27 @@ clearTimeout(typingTimeout);
 typingTimeout=setTimeout(()=>socket.emit("stopTyping"),1000);
 });
 
-socket.on("message",msg=>addMessage("stranger",msg));
-socket.on("online",c=>document.getElementById("onlineCount").textContent=c);
+/* ===== SOCKET EVENTS ===== */
+
+socket.on("message",msg=>{
+addMessage("stranger",msg);
+
+if(document.hidden){
+unread++;
+document.title="("+unread+") New Message — Strango";
+
+if(Notification.permission==="granted"){
+new Notification("New Message",{
+body:msg,
+icon:"/favicon.ico"
+});
+}
+}
+});
+
+socket.on("online",c=>{
+document.getElementById("onlineCount").textContent=c;
+});
 
 socket.on("waiting",()=>{
 connected=false;
@@ -211,12 +187,23 @@ connected=true;
 document.getElementById("statusText").textContent="Stranger connected";
 });
 
-socket.on("typing",()=>typingIndicator.textContent="Stranger typing...");
-socket.on("stopTyping",()=>typingIndicator.textContent="");
+socket.on("typing",()=>{
+typingIndicator.textContent="Stranger typing...";
+});
+
+socket.on("stopTyping",()=>{
+typingIndicator.textContent="";
+});
 
 socket.on("disconnect",()=>{
 connected=false;
 document.getElementById("statusText").textContent="Looking for stranger...";
+});
+
+/* ===== RESET UNREAD WHEN TAB ACTIVE ===== */
+window.addEventListener("focus",()=>{
+unread=0;
+document.title=baseTitle;
 });
 </script>
 
