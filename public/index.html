@@ -241,18 +241,16 @@ for users who prefer simplicity over complicated social media experiences.
 <!-- LEGAL MODALS + SCRIPT REMAIN EXACTLY SAME AS YOUR CURRENT VERSION -->
 <!-- (I intentionally did NOT modify your chat script or legal logic) -->
 <script src="/socket.io/socket.io.js"></script>
-
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
+
 const socket = io();
 
-
 const chatBox = document.getElementById("chatBox");
-const input = document.querySelector(".input-area input") || null;
-const sendBtn = document.querySelector(".send-btn") || null;
-const nextBtn = document.querySelector(".next-btn") || null;
-
+const input = document.querySelector(".input-area input");
+const sendBtn = document.querySelector(".send-btn");
+const nextBtn = document.querySelector(".next-btn");
 
 function addSystemMessage(text){
 const div=document.createElement("div");
@@ -270,45 +268,48 @@ chatBox.appendChild(div);
 chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-if(sendBtn) sendBtn.onclick = ()=>{
-const msg=input.value.trim();
-if(!msg)return;
-addUserMessage("You: "+msg);
-socket.emit("message",msg);
+if(sendBtn){
+sendBtn.onclick=()=>{
+if(!input.value.trim()) return;
+addUserMessage("You: "+input.value);
+socket.emit("message",input.value);
 input.value="";
 };
+}
 
-input.addEventListener("keypress",(e)=>{
-if(e.key==="Enter")sendBtn.click();
-});
-
-if(nextBtn) nextBtn.onclick = ()=>{
+if(nextBtn){
+nextBtn.onclick=()=>{
 socket.emit("next");
 addSystemMessage("Looking for stranger...");
 };
+}
 
 socket.on("connect",()=>{
 socket.emit("join");
 });
 
-
 socket.on("message",(msg)=>{
 addUserMessage("Stranger: "+msg);
 });
+
 socket.on("status",(msg)=>{
 addSystemMessage(msg);
 });
+
 socket.on("online",(count)=>{
-const onlineText = document.querySelector(".online");
+const onlineText=document.querySelector(".online");
 if(onlineText){
-onlineText.textContent = "Online: " + count;
+onlineText.textContent="Online: "+count;
 }
 });
 
-socket.on("typing",()=>{
-// optional typing UI
+socket.on("typing",()=>{});
+
 });
 
+</script>
+
+<
 
 
 });
