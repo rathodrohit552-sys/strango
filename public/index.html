@@ -340,6 +340,11 @@ socket.on("matched", () => {
   const s = document.getElementById("statusText");
   if(s) s.innerText = "Stranger connected";
 });
+socket.on("strangerConnected", () => {
+const s = document.getElementById("statusText");
+if(s) s.innerText = "Stranger connected";
+});
+
 
 socket.on("disconnect", () => {
   const s = document.getElementById("statusText");

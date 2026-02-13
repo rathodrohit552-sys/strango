@@ -29,6 +29,9 @@ io.on("connection", (socket) => {
 
       socket.partner = waitingUser;
       waitingUser.partner = socket;
+      socket.emit("matched");
+      waitingUser.emit("matched");
+
 
       // 🔥 REAL STRANGER CONNECTED SIGNAL
       socket.emit("strangerConnected");
