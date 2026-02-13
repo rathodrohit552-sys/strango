@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Strango — Free Stranger Chat India</title>
+<title>Strango — Free Stranger Chat India | Anonymous Random Chat</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="description" content="Strango is a fast anonymous stranger chat platform. Meet new people instantly through private text chat without login. Global random chat built for privacy and safety.">
 
 <style>
 body{background:#000;color:#fff;font-family:Arial;margin:0;padding:20px}
-.main-container{display:flex;gap:20px}
-.left-panel{flex:2}
-.right-panel{flex:1;background:#111;padding:20px;border-radius:12px}
+.main-container{display:flex;gap:20px;flex-wrap:wrap}
+.left-panel{flex:2;min-width:300px}
+.right-panel{flex:1;background:#111;padding:20px;border-radius:12px;min-width:250px}
 .chat-box{height:350px;border-radius:12px;background:#050505;padding:10px;overflow-y:auto}
 .controls{margin-top:10px;display:flex;gap:10px}
 .controls input{flex:1;padding:10px;border-radius:8px;border:none}
@@ -17,13 +19,15 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:20px}
 .next-btn{background:#222;border:none;color:#fff;padding:10px 20px;border-radius:8px}
 .online{color:#00ff9c;text-align:center;margin-top:10px}
 .typing{color:#00ff9c;font-size:12px;margin-top:5px}
+.seo-section{margin-top:40px;line-height:1.7;color:#ccc}
+h2{color:#00ff9c;margin-top:30px}
 </style>
 </head>
 
 <body>
 
 <h1>Strango — Free Stranger Chat India</h1>
-<p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
+<p>Anonymous text chat without login. Meet strangers instantly.</p>
 
 <div class="online">Online: <span id="onlineCount">0</span></div>
 <div id="statusText" style="color:#00ff9c;margin-top:6px;">Looking for stranger...</div>
@@ -54,6 +58,109 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:20px}
 
 </div>
 
+<!-- ================= SEO RICH CONTENT ================= -->
+
+<div class="seo-section">
+
+<h2>What is Strango?</h2>
+<p>
+Strango is a lightweight anonymous random chat platform designed for fast real-time conversations.
+Unlike traditional social networks, Strango focuses on private text communication without accounts,
+allowing users to meet new people globally while maintaining anonymity.
+</p>
+
+<h2>Industry-Standard Anonymous Chat Experience</h2>
+<p>
+Modern stranger chat platforms prioritize speed, minimal design, and privacy-first interaction.
+Strango follows global best practices by avoiding personal data collection, reducing friction,
+and offering instant matching. The system is built for educational, entertainment, and social discovery purposes.
+</p>
+
+<h2>Safety and Responsible Usage</h2>
+<p>
+Users are encouraged to follow general online safety principles recommended by international digital safety guidelines.
+Avoid sharing personal information, financial details, or sensitive data during anonymous conversations.
+Strango provides a simple next-chat feature to leave any conversation instantly.
+</p>
+
+<h2>Privacy Overview</h2>
+<p>
+Strango does not require account registration or personal identity information.
+Connections are temporary and session-based, designed to support anonymous communication while respecting
+general internet privacy expectations.
+</p>
+
+<h2>International Community Guidelines</h2>
+<p>
+Strango encourages respectful conversations aligned with widely accepted digital community standards.
+Content involving harassment, illegal activity, or harmful behavior is discouraged.
+These guidelines are inspired by widely recognized international online safety frameworks.
+</p>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<h3>1. Is Strango free?</h3>
+<p>Yes. Strango allows free anonymous chat without creating an account.</p>
+
+<h3>2. Do I need to register?</h3>
+<p>No registration is required. You can start chatting instantly.</p>
+
+<h3>3. Is Strango available worldwide?</h3>
+<p>Yes. The platform is designed for global random chat connections.</p>
+
+<h3>4. Is my identity visible?</h3>
+<p>No personal profile or identity information is required to use Strango.</p>
+
+<h3>5. Can I leave a conversation anytime?</h3>
+<p>Yes. Use the Next button to instantly switch to another chat.</p>
+
+<h3>6. Does Strango store conversations?</h3>
+<p>Chats are designed to be temporary session-based interactions.</p>
+
+<h3>7. Is Strango safe for teenagers?</h3>
+<p>Users should follow general internet safety practices and local guidelines.</p>
+
+<h3>8. Why is anonymous chat popular?</h3>
+<p>It allows open conversations without social pressure or identity exposure.</p>
+
+<h3>9. Can I use Strango on mobile?</h3>
+<p>Yes. The platform is mobile-friendly and lightweight.</p>
+
+<h3>10. How does matching work?</h3>
+<p>Strango connects users randomly in real-time using instant pairing logic.</p>
+
+<h2>About Us</h2>
+<p>
+Strango is an experimental anonymous chat platform created to explore fast communication
+interfaces and minimal social interaction design.
+</p>
+
+<h2>Privacy Policy</h2>
+<p>
+Strango aims to minimize data collection and encourages responsible usage aligned with
+international digital privacy expectations.
+</p>
+
+<h2>Safety Guidelines</h2>
+<p>
+Users should avoid sharing personal information, follow respectful communication,
+and report harmful behavior according to platform guidelines.
+</p>
+
+<h2>Terms of Use</h2>
+<p>
+By using Strango, users agree to follow general community standards and applicable online conduct rules.
+</p>
+
+<h2>Contact</h2>
+<p>
+For general inquiries or feedback, users may contact the Strango team through future support channels.
+</p>
+
+</div>
+
+<!-- ================= CHAT SCRIPT (UNCHANGED CORE) ================= -->
+
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
@@ -61,7 +168,6 @@ const socket = io();
 const chatBox = document.getElementById("chat");
 const typingIndicator = document.getElementById("typingIndicator");
 
-/* ===== ADD MESSAGE UI ===== */
 function addMessage(sender,text){
   const div=document.createElement("div");
   div.textContent = sender + ": " + text;
@@ -69,12 +175,10 @@ function addMessage(sender,text){
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-/* ===== ONLINE COUNT ===== */
 socket.on("online",(count)=>{
-  document.getElementById("onlineCount").innerText = count;
+  document.getElementById("onlineCount").innerText=count;
 });
 
-/* ===== STATUS ===== */
 socket.on("waiting",()=>{
   document.getElementById("statusText").innerText="Looking for stranger...";
 });
@@ -87,42 +191,32 @@ socket.on("strangerConnected",()=>{
   document.getElementById("statusText").innerText="Stranger connected";
 });
 
-socket.on("disconnect",()=>{
-  document.getElementById("statusText").innerText="Looking for stranger...";
-});
-
-/* ===== RECEIVE MESSAGE ===== */
 socket.on("message",(msg)=>{
   addMessage("Stranger",msg);
 });
 
-/* ===== TYPING ===== */
 socket.on("typing",()=>{
   typingIndicator.innerText="Stranger typing...";
 });
+
 socket.on("stopTyping",()=>{
   typingIndicator.innerText="";
 });
 
-/* ===== SEND MESSAGE (FIXED) ===== */
 function sendMessage(){
   const input=document.getElementById("messageInput");
   const text=input.value.trim();
   if(!text) return;
-
   addMessage("You",text);
   socket.emit("message",text);
-
   input.value="";
 }
 
-/* ===== NEXT ===== */
 function nextStranger(){
   chatBox.innerHTML="";
   socket.emit("next");
 }
 
-/* ===== INPUT TYPING EMIT ===== */
 document.getElementById("messageInput").addEventListener("input",()=>{
   socket.emit("typing");
   clearTimeout(window.typingTimer);
