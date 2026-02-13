@@ -13,16 +13,39 @@ color:#fff;
 font-family:Arial,Helvetica,sans-serif;
 }
 
-.container{
+/* ===== MAIN LAYOUT ===== */
+.main-wrapper{
 max-width:1100px;
-margin:auto;
-padding:20px;
+margin:20px auto;
+border:1px solid #111;
+border-radius:18px;
+padding:25px;
+background:#000;
 }
 
-h1{margin-bottom:5px;}
-.subtitle{color:#ccc;margin-bottom:10px;}
-.online{color:#00ffa6;}
+/* ===== HEADER CENTER ===== */
+.header{
+text-align:center;
+margin-bottom:15px;
+}
 
+.header h1{
+margin:0;
+font-size:32px;
+}
+
+.subtitle{
+color:#ccc;
+margin-top:5px;
+}
+
+/* ===== STATUS ===== */
+.online{
+color:#00ffa6;
+margin-top:8px;
+}
+
+/* ===== CHAT ===== */
 .chat-box{
 background:#070707;
 height:55vh;
@@ -30,11 +53,26 @@ overflow-y:auto;
 border-radius:14px;
 padding:15px;
 margin-top:15px;
+border:1px solid #111;
 }
 
-.msg-you{color:#00ffa6;margin:6px 0;}
-.msg-stranger{color:#fff;margin:6px 0;}
+.msg-you{
+color:#00ffa6;
+margin:6px 0;
+}
 
+.msg-stranger{
+color:#fff;
+margin:6px 0;
+}
+
+.typing{
+color:#aaa;
+font-size:14px;
+margin-top:6px;
+}
+
+/* ===== CONTROLS ===== */
 .controls{
 display:flex;
 gap:10px;
@@ -65,9 +103,10 @@ background:#222;
 color:#fff;
 }
 
+/* ===== FOOTER LINKS ===== */
 .footer-links{
 text-align:center;
-margin:20px 0;
+margin:18px 0;
 color:#00ffa6;
 }
 
@@ -77,27 +116,24 @@ text-decoration:none;
 margin:0 6px;
 }
 
+/* ===== SEO ===== */
 .seo{
 max-width:1000px;
-margin:auto;
-padding:40px 20px;
+margin:40px auto;
+padding:0 20px;
 line-height:1.6;
-}
-
-.typing{
-color:#aaa;
-font-size:14px;
-margin-top:5px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="main-wrapper">
 
+<div class="header">
 <h1>Strango — Free Stranger Chat India</h1>
 <p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
+</div>
 
 <div class="online">Online: <span id="onlineCount">0</span></div>
 <div id="statusText" class="online">Looking for stranger...</div>
@@ -121,7 +157,7 @@ margin-top:5px;
 
 </div>
 
-<!-- SEO CONTENT (SCROLL BELOW CHAT) -->
+<!-- ===== SEO CONTENT BELOW CHAT (UNCHANGED) ===== -->
 <div class="seo">
 
 <h2>🚀 Strango — Free Random Chat With Strangers Worldwide</h2>
@@ -141,66 +177,6 @@ for today’s internet experience.
 <li>Privacy-focused communication</li>
 <li>Designed for modern mobile users</li>
 </ul>
-
-<h2>❓ Rich FAQ Section</h2>
-
-<h4>1. What makes Strango different from old stranger chat platforms?</h4>
-<p>
-Strango removes heavy layouts and focuses on performance. The lightweight structure helps reduce loading time,
-improves SEO ranking signals, and keeps conversations smooth even on slower networks.
-</p>
-
-<h4>2. Why does Strango not require sign-up?</h4>
-<p>
-The platform is designed around instant communication. Removing account barriers helps users start conversations
-faster while maintaining anonymous interaction.
-</p>
-
-<h4>3. Is Strango built for global users?</h4>
-<p>
-Yes. Matching works worldwide, allowing users to meet strangers from different countries and cultures.
-This global design increases interaction diversity.
-</p>
-
-<h4>4. Can Strango help practice languages?</h4>
-<p>
-Many users join anonymous chat platforms to practice English or other languages with real people.
-Strango’s simple interface makes conversations natural and fast.
-</p>
-
-<h4>5. How does Strango improve privacy compared to social media chats?</h4>
-<p>
-Strango avoids personal profiles and focuses on temporary real-time messaging,
-reducing long-term digital footprints.
-</p>
-
-<h4>6. Why is minimal design important for chat platforms?</h4>
-<p>
-Clean interfaces reduce distraction and improve engagement signals like session duration,
-which indirectly supports search visibility.
-</p>
-
-<h4>7. Is Strango optimized for mobile devices?</h4>
-<p>
-Yes. The layout scales automatically, providing an app-like chat experience on phones and tablets.
-</p>
-
-<h4>8. Does Strango store conversations?</h4>
-<p>
-Chats are designed to be temporary and session-based to encourage privacy-focused communication.
-</p>
-
-<h4>9. Why is anonymous chatting popular globally?</h4>
-<p>
-Anonymous platforms allow people to share ideas openly without social pressure,
-making conversations more spontaneous and diverse.
-</p>
-
-<h4>10. How does Strango aim to grow as a premium chat platform?</h4>
-<p>
-By combining fast performance, modern design, and global accessibility,
-Strango evolves toward a premium-feeling random chat experience while remaining lightweight.
-</p>
 
 </div>
 
