@@ -320,9 +320,15 @@ z-index:9999;
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket = io();
-</script>
 
-<script>
+// ===== ONLINE COUNT LISTENER =====
+socket.on("online", (count) => {
+  const el = document.getElementById("onlineCount");
+  if(el){
+    el.innerText = count;
+  }
+});
+</script>
 // ===== LEGAL POPUP SYSTEM (SAFE — DOES NOT TOUCH CHAT) =====
 function openLegal(page){
   document.getElementById("legalModal").style.display = "flex";
