@@ -8,29 +8,43 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
+*{box-sizing:border-box;}
+
 body{
 margin:0;
 background:#000;
 color:#fff;
 font-family:Arial,Helvetica,sans-serif;
-padding:30px;
+height:100vh;
+display:flex;
+flex-direction:column;
 }
 
-h1{margin:0 0 6px 0;}
-.subtitle{opacity:.8;margin-bottom:10px}
+/* ===== HEADER ===== */
+.header{
+padding:25px 30px 10px 30px;
+}
 
-.online{color:#00ff9c;margin-top:8px}
-#statusText{color:#00ff9c;margin-top:4px}
+.subtitle{opacity:.8;margin:6px 0 10px 0;}
+.online,#statusText{color:#00ff9c;}
+
+/* ===== MAIN CHAT AREA ===== */
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+padding:0 30px 20px 30px;
+}
 
 .chat-box{
-margin-top:14px;
+flex:1;
 background:#050505;
-height:420px;
 border-radius:14px;
 padding:14px;
 overflow-y:auto;
 }
 
+/* ===== CONTROLS ===== */
 .controls{
 display:flex;
 gap:10px;
@@ -63,12 +77,13 @@ border-radius:10px;
 cursor:pointer;
 }
 
-.you{color:#00ff9c}
-.stranger{color:#fff}
+/* ===== MESSAGE COLORS ===== */
+.you{color:#00ff9c;text-align:left;}
+.stranger{color:#fff;text-align:left;}
 
 footer{
-margin-top:14px;
 text-align:center;
+padding-bottom:10px;
 }
 
 footer a{
@@ -81,18 +96,22 @@ margin:0 6px;
 
 <body>
 
+<div class="header">
 <h1>Strango — Free Stranger Chat India</h1>
 <p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
 
 <div class="online">Online: <span id="onlineCount">0</span></div>
 <div id="statusText">Looking for stranger...</div>
+</div>
 
+<div class="main">
 <div id="chat" class="chat-box"></div>
 
 <div class="controls">
 <button class="next-btn" onclick="nextStranger()">Next</button>
 <input id="messageInput" placeholder="Type message...">
 <button class="send-btn" onclick="sendMessage()">Send</button>
+</div>
 </div>
 
 <footer>
@@ -109,14 +128,14 @@ const chat = document.getElementById("chat");
 const statusText = document.getElementById("statusText");
 const input = document.getElementById("messageInput");
 
-let connected = false;
+let connected=false;
 
-/* ===== ONLINE COUNT ===== */
+/* ONLINE COUNT */
 socket.on("online",(count)=>{
 document.getElementById("onlineCount").innerText=count;
 });
 
-/* ===== STATUS ===== */
+/* STATUS */
 socket.on("waiting",()=>{
 connected=false;
 statusText.innerText="Looking for stranger...";
@@ -125,6 +144,7 @@ statusText.innerText="Looking for stranger...";
 socket.on("matched",()=>{
 connected=true;
 statusText.innerText="Stranger connected";
+input.focus();
 });
 
 socket.on("disconnect",()=>{
@@ -132,22 +152,22 @@ connected=false;
 statusText.innerText="Looking for stranger...";
 });
 
-/* ===== RECEIVE MESSAGE ===== */
+/* RECEIVE MESSAGE */
 socket.on("message",(msg)=>{
 addMessage("Stranger",msg);
 notifyIfHidden();
 });
 
-/* ===== TYPING ===== */
+/* TYPING */
 socket.on("typing",()=>{
-statusText.innerText="Stranger typing...";
+if(connected) statusText.innerText="Stranger typing...";
 });
 
 socket.on("stopTyping",()=>{
 if(connected) statusText.innerText="Stranger connected";
 });
 
-/* ===== ADD MESSAGE UI ===== */
+/* ADD MESSAGE */
 function addMessage(sender,text){
 const div=document.createElement("div");
 
@@ -163,34 +183,29 @@ chat.appendChild(div);
 chat.scrollTop=chat.scrollHeight;
 }
 
-/* ===== SEND MESSAGE (SAFE FIXED VERSION) ===== */
+/* SEND MESSAGE */
 function sendMessage(){
-
 const text=input.value.trim();
-if(!text) return;
-
-/* BLOCK IF NOT CONNECTED */
-if(!connected) return;
+if(!text || !connected) return;
 
 addMessage("You",text);
 socket.emit("message",text);
 input.value="";
 }
 
-/* ENTER KEY SEND */
 input.addEventListener("keydown",(e)=>{
 if(e.key==="Enter") sendMessage();
 });
 
-/* ===== NEXT STRANGER ===== */
+/* NEXT STRANGER */
 function nextStranger(){
 socket.emit("next");
 chat.innerHTML="";
-statusText.innerText="Looking for stranger...";
 connected=false;
+statusText.innerText="Looking for stranger...";
 }
 
-/* ===== TYPING EMIT ===== */
+/* TYPING EMIT */
 input.addEventListener("input",()=>{
 if(!connected) return;
 socket.emit("typing");
@@ -200,7 +215,7 @@ socket.emit("stopTyping");
 },1000);
 });
 
-/* ===== NEW MESSAGE NOTIFICATION ===== */
+/* NOTIFICATION */
 function notifyIfHidden(){
 if(document.hidden){
 if(Notification.permission==="granted"){
