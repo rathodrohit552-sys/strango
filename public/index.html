@@ -107,7 +107,7 @@ input{flex:1;padding:10px;border-radius:8px;border:none;}
 <h1>Strango — Free Stranger Chat India</h1>
 <p class="subtitle">Anonymous text chat without login. Meet strangers instantly.</p>
 <div class="online">Online: <span id="onlineCount">0</span></div>
-
+<div id="statusText" style="color:#00ff9c;margin-top:6px;">Looking for stranger...</div>
 <div class="main-container">
 
 <div class="left-panel">
@@ -326,8 +326,27 @@ socket.on("online", (count) => {
   const el = document.getElementById("onlineCount");
   if(el){
     el.innerText = count;
-  }
+ }
+ });
+/* ===== PRESENT STATUS (SAFE) ===== */
+
+
+socket.on("waiting", () => {
+  const s = document.getElementById("statusText");
+  if(s) s.innerText = "Looking for stranger...";
 });
+
+socket.on("matched", () => {
+  const s = document.getElementById("statusText");
+  if(s) s.innerText = "Stranger connected";
+});
+
+socket.on("disconnect", () => {
+  const s = document.getElementById("statusText");
+  if(s) s.innerText = "Looking for stranger...";
+});
+
+
 
 </script>
 <script>
