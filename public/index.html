@@ -351,6 +351,21 @@ socket.on("disconnect", () => {
   if(s) s.innerText = "Looking for stranger...";
 });
 
+/* ===== SEND MESSAGE (SAFE) ===== */
+function sendMessage(){
+
+  const input = document.getElementById("messageInput");
+  const text = input.value.trim();
+
+  if(!text) return;
+
+  addMessage("You", text);
+
+  socket.emit("message", text);
+
+  input.value = "";
+}
+
 
 
 </script>
