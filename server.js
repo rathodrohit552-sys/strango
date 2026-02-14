@@ -7,42 +7,40 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: { origin: "*" }
+  cors: { origin: "*" },
+  transports: ["websocket", "polling"]
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
-let waitingQueue = [];
+let waitingUser = null;
 let onlineCount = 0;
 
 io.on("connection", (socket) => {
+
   onlineCount++;
   io.emit("onlineCount", onlineCount);
 
   socket.partner = null;
 
-  // ===== ADD USER TO QUEUE =====
-  waitingQueue.push(socket);
+  // ===== MATCH SYSTEM (STABLE VERSION) =====
+  if (waitingUser && waitingUser.id !== socket.id) {
 
-  tryMatch();
+    const partner = waitingUser;
 
-  function tryMatch() {
-    if (waitingQueue.length >= 2) {
-      const user1 = waitingQueue.shift();
-      const user2 = waitingQueue.shift();
+    socket.partner = partner.id;
+    partner.partner = socket.id;
 
-      if (!user1 || !user2) return;
-      if (user1.id === user2.id) return;
+    socket.emit("connected");
+    partner.emit("connected");
 
-      user1.partner = user2.id;
-      user2.partner = user1.id;
+    waitingUser = null;
 
-      user1.emit("connected");
-      user2.emit("connected");
-    }
+  } else {
+    waitingUser = socket;
   }
 
-  // ===== MESSAGE =====
+  // ===== MESSAGE RELAY =====
   socket.on("message", (msg) => {
     if (socket.partner) {
       io.to(socket.partner).emit("message", msg);
@@ -51,6 +49,7 @@ io.on("connection", (socket) => {
 
   // ===== NEXT =====
   socket.on("next", () => {
+
     if (socket.partner) {
       io.to(socket.partner).emit("strangerDisconnected");
 
@@ -60,16 +59,18 @@ io.on("connection", (socket) => {
       socket.partner = null;
     }
 
-    waitingQueue.push(socket);
-    tryMatch();
+    if (!waitingUser) waitingUser = socket;
   });
 
   // ===== DISCONNECT =====
   socket.on("disconnect", () => {
+
     onlineCount--;
     io.emit("onlineCount", onlineCount);
 
-    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
+    if (waitingUser && waitingUser.id === socket.id) {
+      waitingUser = null;
+    }
 
     if (socket.partner) {
       io.to(socket.partner).emit("strangerDisconnected");
