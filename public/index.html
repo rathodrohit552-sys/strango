@@ -180,9 +180,9 @@ socket.on("connected",()=>{
 });
 
 socket.on("strangerDisconnected",()=>{
+addSystemMessage("Stranger disconnected");
   connected=false;
-  status.innerText="Stranger disconnected";
-  chat.innerHTML="";
+  status.innerText="Looking for stranger...";
 });
 
 /* ===== MESSAGE EVENTS ===== */
@@ -212,7 +212,9 @@ input.addEventListener("keypress",(e)=>{
 /* ===== NEXT ===== */
 nextBtn.onclick=()=>{
   socket.emit("next");
+  chat.innerHTML = "";
 };
+
 </script>
 
 </body>
