@@ -2,39 +2,49 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Strango — Free Stranger Chat India</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
 body{
-  margin:0;
   background:#000;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
   text-align:center;
 }
 
-h1{margin-top:30px;}
+h1{margin-top:40px;}
+
+#chatWrapper{
+  width:80%;
+  margin:30px auto;
+  position:relative;
+}
+
+#status{
+  position:absolute;
+  top:-18px;
+  left:20px;
+  color:#00ffb3;
+  font-size:14px;
+}
 
 #chat{
-  width:80%;
-  margin:20px auto;
   border:1px solid #222;
-  border-radius:15px;
-  padding:20px;
-  height:55vh;              /* ✅ fixed height — fully visible */
+  border-radius:14px;
+  height:60vh;
   overflow-y:auto;
   text-align:left;
-  box-sizing:border-box;
+  padding:20px;
 }
 
 .msg{
+  background:#2a2a2a;
   display:inline-block;
   padding:10px 14px;
-  border-radius:15px;
   margin:6px 0;
-  max-width:60%;
-  clear:both;
+  border-radius:14px;
 }
 
 .you{
@@ -42,26 +52,14 @@ h1{margin-top:30px;}
   color:#000;
 }
 
-.stranger{
-  background:#2b2b2b;
-  color:#fff;
-}
-
-.system{
-  color:#00ffc8;
-  font-size:14px;
-  margin:6px 0;
-}
-
-.controls{
+#controls{
   width:80%;
-  margin:auto;
+  margin:10px auto;
   display:flex;
   gap:10px;
-  justify-content:center;
 }
 
-input{
+#msg{
   flex:1;
   padding:12px;
   border-radius:10px;
@@ -69,22 +67,18 @@ input{
 }
 
 button{
-  padding:12px 18px;
-  border:none;
-  border-radius:10px;
   background:#00e676;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
   cursor:pointer;
 }
 
-footer{
-  margin:15px 0 25px 0;
+.footer{
+  margin-top:20px;
 }
 
-footer a{
-  color:#00ffc8;
-  text-decoration:none;
-  margin:0 6px;
-}
+a{color:#00ffb3;text-decoration:none;margin:0 6px;}
 </style>
 </head>
 
@@ -93,103 +87,85 @@ footer a{
 <h1>Strango — Free Stranger Chat India</h1>
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 
-<div id="chat"></div>
+<div id="chatWrapper">
+  <div id="status">Looking for stranger...</div>
+  <div id="chat"></div>
+</div>
 
-<div class="controls">
+<div id="controls">
   <button id="next">Next</button>
   <input id="msg" placeholder="Type message...">
   <button id="send">Send</button>
 </div>
 
-<footer>
+<div class="footer">
 <a href="/privacy.html">Privacy</a> |
 <a href="/terms.html">Terms</a> |
 <a href="/safety.html">Safety</a> |
 <a href="/about.html">About</a> |
 <a href="/contact.html">Contact</a>
-</footer>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
 const socket = io();
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("msg");
 const sendBtn = document.getElementById("send");
 const nextBtn = document.getElementById("next");
+const status = document.getElementById("status");
 
 let connected=false;
 
-/* ===== ADD MESSAGE ===== */
-function addMsg(type,text){
+/* ===== UI MESSAGE ===== */
+function addMsg(sender,text){
   const div=document.createElement("div");
-
-  if(type==="you"){
-    div.className="msg you";
-    div.textContent="You: "+text;
-  }
-  else if(type==="stranger"){
-    div.className="msg stranger";
-    div.textContent="Stranger: "+text;
-  }
-  else{
-    div.className="system";
-    div.textContent=text;
-  }
-
+  div.className="msg "+(sender==="You"?"you":"");
+  div.innerText=sender+": "+text;
   chat.appendChild(div);
   chat.scrollTop=chat.scrollHeight;
 }
 
-/* ===== SOCKET EVENTS ===== */
+/* ===== STATUS EVENTS ===== */
 
-socket.on("connect",()=>{
+socket.on("waiting",()=>{
+  connected=false;
+  status.innerText="Looking for stranger...";
   chat.innerHTML="";
-  addMsg("system","Connected to server");
 });
 
-socket.on("online",(n)=>{
-  // ONLY show latest status (no stacking)
-  const old=document.querySelectorAll(".system.online");
-  old.forEach(e=>e.remove());
-
-  const s=document.createElement("div");
-  s.className="system online";
-  s.textContent="Online: "+n;
-  chat.appendChild(s);
-});
-
-socket.on("start",()=>{
+socket.on("connected",()=>{
   connected=true;
-  chat.innerHTML="";               /* ✅ CLEAR OLD CHAT */
-  addMsg("system","Stranger connected");
+  status.innerText="Stranger connected";
+  chat.innerHTML="";
 });
+
+socket.on("strangerDisconnected",()=>{
+  connected=false;
+  status.innerText="Stranger disconnected";
+  chat.innerHTML="";
+});
+
+/* ===== MESSAGE EVENTS ===== */
 
 socket.on("message",(msg)=>{
-  addMsg("stranger",msg);
+  addMsg("Stranger",msg);
 });
 
-socket.on("disconnectPeer",()=>{
-  connected=false;
-  chat.innerHTML="";               /* ✅ CLEAR OLD CHAT */
-  addMsg("system","Stranger disconnected");
-});
-
-/* ===== SEND MESSAGE ===== */
+/* ===== SEND ===== */
 
 function sendMessage(){
   const text=input.value.trim();
-  if(!text || !connected) return;
-
+  if(!text||!connected) return;
   socket.emit("message",text);
-  addMsg("you",text);
+  addMsg("You",text);
   input.value="";
 }
 
 sendBtn.onclick=sendMessage;
 
-input.addEventListener("keypress",e=>{
+input.addEventListener("keypress",(e)=>{
   if(e.key==="Enter"){
     e.preventDefault();
     sendMessage();
@@ -200,11 +176,8 @@ input.addEventListener("keypress",e=>{
 
 nextBtn.onclick=()=>{
   socket.emit("next");
-  chat.innerHTML="";               /* ✅ CLEAR CHAT WHEN NEXT */
-  connected=false;
-  addMsg("system","Looking for stranger...");
 };
-
 </script>
+
 </body>
 </html>
