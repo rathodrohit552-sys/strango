@@ -217,7 +217,11 @@ The platform focuses on privacy-first communication, mobile-optimized design, an
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-const socket = io();
+const socket = io("https://strango-1.onrender.com", {
+  transports: ["websocket"],
+  secure: true
+});
+
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("msg");
