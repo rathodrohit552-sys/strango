@@ -18,33 +18,73 @@ let onlineCount = 0;
 
 io.on("connection", (socket) => {
 
-  console.log("Connected:", socket.id);
   onlineCount++;
   io.emit("online", onlineCount);
 
   socket.partner = null;
 
-  // ===== AUTO MATCH =====
-  if (waitingUser && waitingUser.id !== socket.id) {
+  // AUTO MATCH
+  if (waitingUser && waitingUser !== socket) {
+      socket.partner = waitingUser;
+      waitingUser.partner = socket;
 
-    socket.partner = waitingUser;
-    waitingUser.partner = socket;
+      socket.emit("status","Stranger connected");
+      waitingUser.emit("status","Stranger connected");
 
-    socket.emit("status","Stranger connected");
-    waitingUser.emit("status","Stranger connected");
-
-    waitingUser = null;
-
+      waitingUser = null;
   } else {
-    waitingUser = socket;
-    socket.emit("status","Looking for stranger...");
+      waitingUser = socket;
+      socket.emit("status","Looking for stranger...");
   }
 
-  // ===== MESSAGE =====
-  socket.on("message",(msg)=>{
-    if(!socket.partner) return;
-    socket.partner.emit("message",msg);
+  // MESSAGE RELAY
+  socket.on("msg", (msg)=>{
+      if(socket.partner){
+          socket.partner.emit("msg", msg);
+      }
   });
+
+  // NEXT BUTTON
+  socket.on("next", ()=>{
+      if(socket.partner){
+          socket.partner.partner = null;
+          socket.partner.emit("status","Stranger disconnected");
+          socket.partner.emit("status","Looking for stranger...");
+          waitingUser = socket.partner;
+      }
+      socket.partner = null;
+
+      if(waitingUser && waitingUser !== socket){
+          socket.partner = waitingUser;
+          waitingUser.partner = socket;
+
+          socket.emit("status","Stranger connected");
+          waitingUser.emit("status","Stranger connected");
+
+          waitingUser = null;
+      }else{
+          waitingUser = socket;
+          socket.emit("status","Looking for stranger...");
+      }
+  });
+
+  // DISCONNECT
+  socket.on("disconnect", ()=>{
+      onlineCount--;
+      io.emit("online", onlineCount);
+
+      if(waitingUser === socket){
+          waitingUser = null;
+      }
+
+      if(socket.partner){
+          socket.partner.partner = null;
+          socket.partner.emit("status","Stranger disconnected");
+          socket.partner.emit("status","Looking for stranger...");
+          waitingUser = socket.partner;
+      }
+  });
+
 
   // ===== NEXT BUTTON =====
   socket.on("next",()=>{
