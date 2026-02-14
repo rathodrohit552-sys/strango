@@ -35,7 +35,6 @@ body{
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  text-align:left;
 }
 
 .msg{
@@ -43,8 +42,13 @@ body{
   padding:10px 14px;
   margin:6px 0;
   border-radius:14px;
-  display:inline-block;
   max-width:70%;
+}
+
+.you{
+  align-self:flex-end;
+  background:#12d27c;
+  color:#000;
 }
 
 .bottom-bar{
@@ -56,7 +60,6 @@ body{
 button{
   background:#12d27c;
   border:none;
-  color:#000;
   padding:10px 18px;
   border-radius:10px;
   font-weight:bold;
@@ -73,12 +76,11 @@ input{
 
 footer{
   margin:18px 0;
-  color:#00ff9d;
 }
 footer a{
   color:#00ff9d;
-  margin:0 6px;
   text-decoration:none;
+  margin:0 6px;
 }
 </style>
 </head>
@@ -91,7 +93,7 @@ footer a{
 👥 Online: 0
 </div>
 
-<div class="subtitle">Anonymous text chat without login. Meet strangers instantly.</div>
+<div>Anonymous text chat without login. Meet strangers instantly.</div>
 
 <div class="wrapper">
   <div id="statusBar">Looking for stranger...</div>
@@ -126,26 +128,26 @@ const onlineUI = document.getElementById("onlineCount");
 
 /* ===== ONLINE COUNT ===== */
 socket.on("online",(count)=>{
-  onlineUI.innerText = "👥 Online: " + count;
+  onlineUI.innerText="👥 Online: "+count;
 });
 
 /* ===== CONNECTED ===== */
 socket.on("connected",()=>{
-  statusBar.innerText = "Stranger connected";
+  statusBar.innerText="Stranger connected";
 });
 
 /* ===== WAITING ===== */
 socket.on("waiting",()=>{
-  statusBar.innerText = "Looking for stranger...";
+  statusBar.innerText="Looking for stranger...";
 });
 
 /* ===== STRANGER LEFT ===== */
 socket.on("strangerDisconnected",()=>{
-  statusBar.innerText = "Looking for stranger...";
+  statusBar.innerText="Looking for stranger...";
   chat.innerHTML="";
 });
 
-/* ===== RECEIVE MESSAGE (ONLY HERE WE ADD TO CHAT) ===== */
+/* ===== RECEIVE MESSAGE FROM STRANGER ===== */
 socket.on("message",(msg)=>{
   const div=document.createElement("div");
   div.className="msg";
@@ -159,7 +161,15 @@ sendBtn.onclick=()=>{
   const text=messageInput.value.trim();
   if(!text) return;
 
-  socket.emit("message",text); // server will echo to partner
+  socket.emit("message",text);
+
+  // SHOW SENDER MESSAGE LOCALLY (IMPORTANT FIX)
+  const div=document.createElement("div");
+  div.className="msg you";
+  div.textContent=text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+
   messageInput.value="";
 };
 
@@ -178,6 +188,5 @@ nextBtn.onclick=()=>{
 };
 
 </script>
-
 </body>
 </html>
