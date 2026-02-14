@@ -33,9 +33,9 @@ h1{margin-top:30px;}
   align-items:flex-start;
 }
 
-/* ===== MESSAGE STYLE (ALL LEFT SIDE) ===== */
+/* ===== MESSAGE STYLE ===== */
 .message{
-  background:#1f1f1f;
+  background:#333;
   color:#fff;
   padding:10px 14px;
   border-radius:14px;
@@ -46,16 +46,9 @@ h1{margin-top:30px;}
   font-size:14px;
 }
 
-/* YOUR MESSAGE COLOR */
 .you{
   background:#00e676;
   color:#000;
-}
-
-/* STRANGER MESSAGE COLOR */
-.stranger{
-  background:#333;
-  color:#fff;
 }
 
 input{
@@ -114,18 +107,10 @@ a{color:#00e676;text-decoration:none;margin:0 6px;}
 <a href="#">Contact</a>
 </div>
 
-<!-- ===== SEO SECTION (UNCHANGED) ===== -->
 <div class="seo">
 <p><strong>1. Is Strango free?</strong><br>Yes chatting is completely free.</p>
-<p><strong>2. Do I need account?</strong><br>No login required.</p>
+<p><strong>2. Need account?</strong><br>No login required.</p>
 <p><strong>3. Is Strango safe?</strong><br>Avoid sharing personal info.</p>
-<p><strong>4. Does Strango store chats?</strong><br>Messages are session-based.</p>
-<p><strong>5. Can I use Strango on mobile?</strong><br>Yes works on phones and desktop.</p>
-<p><strong>6. Why is matching slow sometimes?</strong><br>Depends on online users.</p>
-<p><strong>7. Is Strango global?</strong><br>Users connect worldwide.</p>
-<p><strong>8. Can I practice languages?</strong><br>Many users join for language exchange.</p>
-<p><strong>9. Is Strango anonymous?</strong><br>No personal identity required.</p>
-<p><strong>10. Real-time chat?</strong><br>Yes instant messaging supported.</p>
 </div>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
@@ -143,6 +128,9 @@ const status = document.getElementById("status");
 const online = document.getElementById("online");
 
 let connected=false;
+
+// ===== AUTO JOIN QUEUE WHEN PAGE LOADS =====
+socket.emit("next");
 
 // ===== ONLINE COUNT =====
 socket.on("onlineCount",(c)=>{
@@ -167,7 +155,7 @@ socket.on("strangerDisconnected",()=>{
 
 // ===== RECEIVE MESSAGE =====
 socket.on("message",(msg)=>{
-  addMsg("Stranger",msg);
+  addMsg("stranger",msg);
 });
 
 // ===== SEND MESSAGE =====
@@ -176,7 +164,7 @@ function sendMessage(){
   if(!text || !connected) return;
 
   socket.emit("message",text);
-  addMsg("You",text);
+  addMsg("you",text);
   input.value="";
 }
 
@@ -195,15 +183,13 @@ nextBtn.onclick=()=>{
   chat.innerHTML="";
 };
 
-// ===== UI MESSAGE (ALL LEFT SIDE) =====
-function addMsg(sender,text){
+// ===== UI MESSAGE =====
+function addMsg(type,text){
   const div=document.createElement("div");
   div.classList.add("message");
 
-  if(sender==="You"){
+  if(type==="you"){
     div.classList.add("you");
-  }else{
-    div.classList.add("stranger");
   }
 
   div.innerText=text;
