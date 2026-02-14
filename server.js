@@ -1,122 +1,75 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 
-const io = new Server(server,{
-  cors:{ origin:"*" },
-  transports:["websocket","polling"]
+const io = new Server(server, {
+  cors: { origin: "*" },
+  transports: ["websocket", "polling"]
 });
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
-/* ====== STRANGO CORE STATE ====== */
+let waitingUser = null;
+let onlineCount = 0;
 
-let waitingQueue = [];
-let partners = {};
-let online = 0;
+io.on("connection", (socket) => {
+  onlineCount++;
+  io.emit("onlineCount", onlineCount);
 
-/* ====== MATCHING FUNCTION ====== */
-function tryMatch(){
+  // ===== MATCHING SYSTEM (PREVENT SELF CONNECT) =====
+  if (waitingUser && waitingUser.id !== socket.id) {
+    const partner = waitingUser;
 
-  while(waitingQueue.length >= 2){
+    socket.partner = partner.id;
+    partner.partner = socket.id;
 
-    const a = waitingQueue.shift();
-    const b = waitingQueue.shift();
+    socket.emit("connected");
+    partner.emit("connected");
 
-    if(!a || !b) return;
-
-    partners[a.id] = b.id;
-    partners[b.id] = a.id;
-
-    a.emit("connected");
-    b.emit("connected");
+    waitingUser = null;
+  } else {
+    waitingUser = socket;
   }
-}
 
-/* ====== SOCKET CONNECTION ====== */
-io.on("connection",(socket)=>{
-
-  online++;
-  io.emit("online",online);
-
-  /* ADD USER TO WAITING */
-  waitingQueue.push(socket);
-  socket.emit("waiting");
-
-  tryMatch();
-
-  /* ===== MESSAGE FORWARD ===== */
-  socket.on("message",(msg)=>{
-
-    const partnerId = partners[socket.id];
-
-    if(partnerId){
-      io.to(partnerId).emit("message",msg);
+  // ===== MESSAGE RELAY =====
+  socket.on("message", (msg) => {
+    if (socket.partner) {
+      io.to(socket.partner).emit("message", msg);
     }
-
   });
 
-  /* ===== NEXT BUTTON ===== */
-  socket.on("next",()=>{
-
-    const partnerId = partners[socket.id];
-
-    if(partnerId){
-
-      io.to(partnerId).emit("strangerDisconnected");
-
-      const partnerSocket = io.sockets.sockets.get(partnerId);
-
-      if(partnerSocket){
-        partnerSocket.emit("waiting");
-        waitingQueue.push(partnerSocket);
-      }
-
-      delete partners[partnerId];
+  // ===== NEXT BUTTON =====
+  socket.on("next", () => {
+    if (socket.partner) {
+      io.to(socket.partner).emit("strangerDisconnected");
+      const partnerSocket = io.sockets.sockets.get(socket.partner);
+      if (partnerSocket) partnerSocket.partner = null;
+      socket.partner = null;
     }
 
-    delete partners[socket.id];
-
-    waitingQueue.push(socket);
-    socket.emit("waiting");
-
-    tryMatch();
+    if (!waitingUser) waitingUser = socket;
   });
 
-  /* ===== DISCONNECT ===== */
-  socket.on("disconnect",()=>{
+  // ===== DISCONNECT =====
+  socket.on("disconnect", () => {
+    onlineCount--;
+    io.emit("onlineCount", onlineCount);
 
-    online--;
-    io.emit("online",online);
-
-    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
-
-    const partnerId = partners[socket.id];
-
-    if(partnerId){
-
-      io.to(partnerId).emit("strangerDisconnected");
-
-      const partnerSocket = io.sockets.sockets.get(partnerId);
-
-      if(partnerSocket){
-        partnerSocket.emit("waiting");
-        waitingQueue.push(partnerSocket);
-      }
-
-      delete partners[partnerId];
+    if (waitingUser && waitingUser.id === socket.id) {
+      waitingUser = null;
     }
 
-    delete partners[socket.id];
+    if (socket.partner) {
+      io.to(socket.partner).emit("strangerDisconnected");
+      const partnerSocket = io.sockets.sockets.get(socket.partner);
+      if (partnerSocket) partnerSocket.partner = null;
+    }
   });
-
 });
 
-/* ===== SERVER START ===== */
 const PORT = process.env.PORT || 3000;
-server.listen(PORT,()=>{
-  console.log("Strango running on port",PORT);
-});
+server.listen(PORT, () => console.log("Server running on port " + PORT));
