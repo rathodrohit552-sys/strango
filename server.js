@@ -57,6 +57,28 @@ io.on("connection",(socket)=>{
       io.to(partnerId).emit("message",msg);
     }
   });
+/* ===== NEXT EVENT (FIX SELF MATCH) ===== */
+
+  const partnerId = partners[socket.id];
+
+  // remove old partner link
+  if(partnerId){
+    const partnerSocket = io.sockets.sockets.get(partnerId);
+
+    if(partnerSocket){
+      delete partners[partnerSocket.id];
+      partnerSocket.emit("waiting");
+      waitingQueue.push(partnerSocket);
+    }
+
+    delete partners[socket.id];
+  }
+
+  // add current user back to queue
+  waitingQueue.push(socket);
+  socket.emit("waiting");
+
+  tryMatch();
 
   /* ===== TYPING ===== */
   socket.on("typing",()=>{
@@ -72,9 +94,16 @@ io.on("connection",(socket)=>{
     const partnerId = partners[socket.id];
 
     if(partnerId){
-      io.to(partnerId).emit("strangerDisconnected");
-      delete partners[partnerId];
-    }
+  io.to(partnerId).emit("strangerDisconnected");
+
+  const partnerSocket = io.sockets.sockets.get(partnerId);
+  if(partnerSocket){
+    partnerSocket.emit("waiting");
+    waitingQueue.push(partnerSocket);
+  }
+
+  delete partners[partnerId];
+}
 
     delete partners[socket.id];
 
