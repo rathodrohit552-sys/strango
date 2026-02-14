@@ -139,7 +139,9 @@ footer a{
     const socket = io();
     const sendBtn = document.getElementById("sendBtn");
 const messageInput = document.getElementById("messageInput");
+const nextBtn = document.getElementById("nextBtn");
 const chat = document.getElementById("chat");
+const statusBar = document.getElementById("statusBar");
 
 /* ===== SEND MESSAGE ===== */
 sendBtn.onclick = () => {
@@ -156,9 +158,20 @@ sendBtn.onclick = () => {
   messageInput.value = "";
 };
 
+/* ===== NEXT BUTTON ===== */
+nextBtn.onclick = () => {
+  socket.emit("next");
+  chat.innerHTML = "";
+  statusBar.innerText = "Looking for stranger...";
+};
+/* ===== ENTER TO SEND ===== */
+messageInput.addEventListener("keydown",(e)=>{
+  if(e.key === "Enter"){
+    sendBtn.click();
+  }
+});
 
 
-const statusBar = document.getElementById("statusBar");
 const onlineUI = document.getElementById("onlineCount");
 
 /* ===== ONLINE COUNT ===== */
