@@ -1,24 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strango — Free Stranger Chat India</title>
 
 <style>
-body{
-  background:#000;
-  color:#fff;
-  font-family:Arial;
-  text-align:center;
-  margin:0;
-}
-
-/* ===== ORIGINAL LAYOUT RESTORED ===== */
+body{background:#000;color:#fff;font-family:Arial;text-align:center;margin:0;}
 #online{color:#00ff9c;}
 #status{color:#00ff9c;}
 
-/* ===== CHAT PANEL (FULLY VISIBLE AGAIN) ===== */
 #chat{
   width:80%;
   height:45vh;
@@ -33,7 +24,6 @@ body{
   align-items:flex-start;
 }
 
-/* ===== MESSAGE STYLE ===== */
 .message{
   background:#333;
   color:#fff;
@@ -42,42 +32,23 @@ body{
   margin:6px 0;
   max-width:70%;
   text-align:left;
-  word-wrap:break-word;
-  font-size:14px;
 }
 
-.you{
-  background:#00e676;
-  color:#000;
+.you{background:#00e676;color:#000;}
+
+#typing{
+  font-size:13px;
+  color:#aaa;
+  margin-top:4px;
 }
 
-input{
-  width:60%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  outline:none;
-}
-
-button{
-  padding:10px 16px;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-}
-
+input{width:60%;padding:12px;border-radius:12px;border:none;}
+button{padding:10px 16px;border-radius:12px;border:none;cursor:pointer;}
 #send{background:#00e676;}
 #next{background:#333;color:#fff;}
 
-.footer-links{
-  margin-top:15px;
-}
-
-.footer-links a{
-  color:#00e676;
-  text-decoration:none;
-  margin:0 6px;
-}
+.footer-links{margin-top:15px;}
+.footer-links a{color:#00e676;margin:0 6px;text-decoration:none;}
 </style>
 </head>
 
@@ -90,6 +61,7 @@ button{
 <div id="status">Looking for stranger...</div>
 
 <div id="chat"></div>
+<div id="typing"></div>
 
 <div>
 <button id="next">Next</button>
@@ -108,85 +80,96 @@ button{
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
 const socket = io("https://strango-1.onrender.com");
 
-const chat = document.getElementById("chat");
-const input = document.getElementById("msg");
-const sendBtn = document.getElementById("send");
-const nextBtn = document.getElementById("next");
-const status = document.getElementById("status");
-const online = document.getElementById("online");
+const chat=document.getElementById("chat");
+const input=document.getElementById("msg");
+const sendBtn=document.getElementById("send");
+const nextBtn=document.getElementById("next");
+const status=document.getElementById("status");
+const online=document.getElementById("online");
+const typingDiv=document.getElementById("typing");
 
 let connected=false;
+let typingTimeout=null;
 
-/* ===== AUTO CONNECT (UNCHANGED) ===== */
+// AUTO CONNECT
 socket.emit("next");
 
-/* ===== ONLINE COUNT ===== */
 socket.on("onlineCount",(c)=>{
-  online.innerText="Online: "+c;
+ online.innerText="Online: "+c;
 });
 
 socket.on("waiting",()=>{
-  connected=false;
-  status.innerText="Looking for stranger...";
+ connected=false;
+ status.innerText="Looking for stranger...";
 });
 
 socket.on("strangerConnected",()=>{
-  connected=true;
-  status.innerText="Stranger connected";
+ connected=true;
+ status.innerText="Stranger connected";
 });
 
 socket.on("strangerDisconnected",()=>{
-  connected=false;
-  status.innerText="Stranger disconnected";
+ connected=false;
+ status.innerText="Stranger disconnected";
+ typingDiv.innerText="";
 });
 
-/* ===== RECEIVE ===== */
 socket.on("message",(msg)=>{
-  addMsg("Stranger",msg);
+ addMsg("Stranger",msg);
+ typingDiv.innerText="";
 });
 
-/* ===== SEND ===== */
-function sendMessage(){
-  const text=input.value.trim();
-  if(!text || !connected) return;
+// ===== SHOW STRANGER TYPING =====
+socket.on("strangerTyping",()=>{
+ typingDiv.innerText="Stranger is typing...";
+ clearTimeout(typingTimeout);
+ typingTimeout=setTimeout(()=>{
+   typingDiv.innerText="";
+ },1500);
+});
 
-  socket.emit("message",text);
-  addMsg("You",text);
-  input.value="";
+function sendMessage(){
+ const text=input.value.trim();
+ if(!text||!connected) return;
+
+ socket.emit("message",text);
+ addMsg("You",text);
+ input.value="";
 }
 
 sendBtn.onclick=sendMessage;
 
 input.addEventListener("keypress",(e)=>{
-  if(e.key==="Enter"){
-    e.preventDefault();
-    sendMessage();
-  }
+ if(e.key==="Enter"){
+   e.preventDefault();
+   sendMessage();
+ }
 });
 
-/* ===== NEXT ===== */
+// SEND TYPING SIGNAL
+input.addEventListener("input",()=>{
+ if(connected){
+   socket.emit("typing");
+ }
+});
+
 nextBtn.onclick=()=>{
-  socket.emit("next");
-  chat.innerHTML="";
+ socket.emit("next");
+ chat.innerHTML="";
+ typingDiv.innerText="";
 };
 
-/* ===== MESSAGE UI ===== */
 function addMsg(sender,text){
-  const div=document.createElement("div");
-  div.classList.add("message");
-
-  if(sender==="You"){
-    div.classList.add("you");
-  }
-
-  div.innerText = sender + ": " + text;
-
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+ const div=document.createElement("div");
+ div.classList.add("message");
+ if(sender==="You"){div.classList.add("you");}
+ div.innerText=sender+": "+text;
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
 }
 
 });
