@@ -12,16 +12,21 @@ body{
   font-family:Arial;
   text-align:center;
   margin:0;
+  padding:0;
 }
 
-h1{margin-top:30px;}
+/* ===== FIX SCREEN HEIGHT ISSUE ===== */
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 
-#online{color:#00ff9c;}
-#status{color:#00ff9c;}
-
+/* ===== CHAT PANEL ===== */
 #chat{
   width:80%;
-  height:350px;
+  height:55vh; /* responsive height so it won't hide */
   margin:20px auto;
   border:1px solid #222;
   border-radius:14px;
@@ -51,6 +56,9 @@ h1{margin-top:30px;}
   color:#000;
 }
 
+#online{color:#00ff9c;}
+#status{color:#00ff9c;}
+
 input{
   width:60%;
   padding:12px;
@@ -74,14 +82,14 @@ a{color:#00e676;text-decoration:none;margin:0 6px;}
 .seo{
   margin-top:40px;
   width:80%;
-  margin-left:auto;
-  margin-right:auto;
   text-align:left;
 }
 </style>
 </head>
 
 <body>
+
+<div class="wrapper">
 
 <h1>Strango — Free Stranger Chat India</h1>
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
@@ -113,6 +121,8 @@ a{color:#00e676;text-decoration:none;margin:0 6px;}
 <p><strong>3. Is Strango safe?</strong><br>Avoid sharing personal info.</p>
 </div>
 
+</div>
+
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
 <script>
@@ -129,15 +139,14 @@ const online = document.getElementById("online");
 
 let connected=false;
 
-// ===== AUTO JOIN QUEUE WHEN PAGE LOADS =====
+/* ===== AUTO CONNECT ===== */
 socket.emit("next");
 
-// ===== ONLINE COUNT =====
+/* ===== ONLINE ===== */
 socket.on("onlineCount",(c)=>{
   online.innerText="Online: "+c;
 });
 
-// ===== MATCH EVENTS =====
 socket.on("waiting",()=>{
   connected=false;
   status.innerText="Looking for stranger...";
@@ -153,18 +162,18 @@ socket.on("strangerDisconnected",()=>{
   status.innerText="Stranger disconnected";
 });
 
-// ===== RECEIVE MESSAGE =====
+/* ===== RECEIVE MESSAGE ===== */
 socket.on("message",(msg)=>{
-  addMsg("stranger",msg);
+  addMsg("Stranger",msg);
 });
 
-// ===== SEND MESSAGE =====
+/* ===== SEND ===== */
 function sendMessage(){
   const text=input.value.trim();
   if(!text || !connected) return;
 
   socket.emit("message",text);
-  addMsg("you",text);
+  addMsg("You",text);
   input.value="";
 }
 
@@ -177,24 +186,25 @@ input.addEventListener("keypress",(e)=>{
   }
 });
 
-// ===== NEXT BUTTON =====
+/* ===== NEXT ===== */
 nextBtn.onclick=()=>{
   socket.emit("next");
   chat.innerHTML="";
 };
 
-// ===== UI MESSAGE =====
-function addMsg(type,text){
+/* ===== MESSAGE UI ===== */
+function addMsg(sender,text){
   const div=document.createElement("div");
   div.classList.add("message");
 
-  if(type==="you"){
+  if(sender==="You"){
     div.classList.add("you");
   }
 
-  div.innerText=text;
+  div.innerText = sender + ": " + text;
+
   chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
+  chat.scrollTop = chat.scrollHeight;
 }
 
 });
