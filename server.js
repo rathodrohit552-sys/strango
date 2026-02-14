@@ -1,110 +1,95 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
 
-app.use(express.static("public"));
+const io = new Server(server, {
+  cors: { origin: "*" },
+  transports: ["websocket","polling"]
+});
+
+app.use(express.static(path.join(__dirname,"public")));
 
 let waitingUser = null;
-let onlineUsers = 0;
-
-/* ===== CONNECTION ===== */
-
-const users = [];
+let onlineCount = 0;
 
 io.on("connection", (socket) => {
 
-  console.log("User connected:", socket.id);
+  console.log("Connected:", socket.id);
+  onlineCount++;
+  io.emit("online", onlineCount);
 
   socket.partner = null;
 
-  // ===== AUTO MATCHING =====
-  const waiting = users.find(u => !u.partner);
+  // ===== AUTO MATCH =====
+  if (waitingUser && waitingUser.id !== socket.id) {
 
-  if (waiting) {
-    socket.partner = waiting;
-    waiting.partner = socket;
+    socket.partner = waitingUser;
+    waitingUser.partner = socket;
 
     socket.emit("status","Stranger connected");
-    waiting.emit("status","Stranger connected");
+    waitingUser.emit("status","Stranger connected");
+
+    waitingUser = null;
 
   } else {
-    users.push(socket);
+    waitingUser = socket;
     socket.emit("status","Looking for stranger...");
   }
 
-  // ===== MESSAGE SYSTEM =====
-  socket.on("message", (msg) => {
-    if (!socket.partner) return;
-    socket.partner.emit("message", msg);
+  // ===== MESSAGE =====
+  socket.on("message",(msg)=>{
+    if(!socket.partner) return;
+    socket.partner.emit("message",msg);
+  });
+
+  // ===== NEXT BUTTON =====
+  socket.on("next",()=>{
+
+    if(socket.partner){
+      socket.partner.emit("status","Stranger disconnected");
+      socket.partner.partner=null;
+    }
+
+    socket.partner=null;
+
+    if(waitingUser && waitingUser.id!==socket.id){
+      socket.partner=waitingUser;
+      waitingUser.partner=socket;
+
+      socket.emit("status","Stranger connected");
+      waitingUser.emit("status","Stranger connected");
+
+      waitingUser=null;
+    }else{
+      waitingUser=socket;
+      socket.emit("status","Looking for stranger...");
+    }
+
   });
 
   // ===== DISCONNECT =====
-  socket.on("disconnect", () => {
+  socket.on("disconnect",()=>{
 
-    if (socket.partner) {
-      socket.partner.partner = null;
+    onlineCount--;
+    io.emit("online", onlineCount);
+
+    if(waitingUser && waitingUser.id===socket.id){
+      waitingUser=null;
+    }
+
+    if(socket.partner){
       socket.partner.emit("status","Stranger disconnected");
+      socket.partner.partner=null;
     }
 
-    const i = users.indexOf(socket);
-    if (i !== -1) users.splice(i,1);
-
-  });
-
-
-  /* ===== TYPING RELAY ===== */
-
-  socket.on("typing", () => {
-    if (socket.partner) {
-      socket.partner.emit("typing");
-    }
-  });
-
-  socket.on("stopTyping", () => {
-    if (socket.partner) {
-      socket.partner.emit("stopTyping");
-    }
-  });
-
-  /* ===== NEXT STRANGER ===== */
-
-  socket.on("next", () => {
-
-    if (socket.partner) {
-      socket.partner.partner = null;
-      socket.partner.emit("waiting");
-    }
-
-    socket.partner = null;
-    findPartner();
-  });
-
-  /* ===== DISCONNECT ===== */
-
-  socket.on("disconnect", () => {
-
-    onlineUsers--;
-    io.emit("online", onlineUsers);
-
-    if (socket.partner) {
-      socket.partner.partner = null;
-      socket.partner.emit("system", "❌ Stranger disconnected.");
-      socket.partner.emit("waiting");
-    }
-
-    if (waitingUser === socket) {
-      waitingUser = null;
-    }
   });
 
 });
 
-/* ===== START SERVER ===== */
-
-server.listen(3000, () => {
-  console.log("Strango server running...");
+server.listen(process.env.PORT || 3000, ()=>{
+  console.log("Server running");
 });
