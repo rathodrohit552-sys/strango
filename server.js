@@ -13,47 +13,49 @@ let onlineUsers = 0;
 
 /* ===== CONNECTION ===== */
 
+const users = [];
+
 io.on("connection", (socket) => {
 
-  onlineUsers++;
-  io.emit("online", onlineUsers);
+  console.log("User connected:", socket.id);
 
   socket.partner = null;
 
-  /* ===== MATCHING ENGINE ===== */
+  // ===== AUTO MATCHING =====
+  const waiting = users.find(u => !u.partner);
 
-  function findPartner() {
+  if (waiting) {
+    socket.partner = waiting;
+    waiting.partner = socket;
 
-    // someone already waiting
-    if (waitingUser && waitingUser !== socket) {
+    socket.emit("status","Stranger connected");
+    waiting.emit("status","Stranger connected");
 
-      socket.partner = waitingUser;
-      waitingUser.partner = socket;
-
-      socket.emit("matched");
-      waitingUser.emit("matched");
-
-      socket.emit("strangerConnected");
-      waitingUser.emit("strangerConnected");
-
-      waitingUser = null;
-      return;
-    }
-
-    // otherwise wait
-    waitingUser = socket;
-    socket.emit("waiting");
+  } else {
+    users.push(socket);
+    socket.emit("status","Looking for stranger...");
   }
 
-  findPartner();
-
-  /* ===== MESSAGE RELAY ===== */
-
+  // ===== MESSAGE SYSTEM =====
   socket.on("message", (msg) => {
-    if (socket.partner) {
-      socket.partner.emit("message", msg);
-    }
+    if (!socket.partner) return;
+    socket.partner.emit("message", msg);
   });
+
+  // ===== DISCONNECT =====
+  socket.on("disconnect", () => {
+
+    if (socket.partner) {
+      socket.partner.partner = null;
+      socket.partner.emit("status","Stranger disconnected");
+    }
+
+    const i = users.indexOf(socket);
+    if (i !== -1) users.splice(i,1);
+
+  });
+
+
 
   /* ===== TYPING RELAY ===== */
 
