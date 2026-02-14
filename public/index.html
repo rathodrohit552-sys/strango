@@ -143,14 +143,14 @@ const onlineUI = document.getElementById("onlineCount");
 const chat = document.getElementById("chat");
 
 /* ===== ONLINE COUNT ===== */
-socket.on("onlineCount",(count)=>{
+socket.on("online",(count)=>{
   if(onlineUI){
     onlineUI.innerText = "👥 Online: " + count;
   }
 });
 
 /* ===== MATCHED ===== */
-socket.on("matched",()=>{
+socket.on("connected",()=>{
   if(statusBar){
     statusBar.innerText = "Stranger connected";
   }
