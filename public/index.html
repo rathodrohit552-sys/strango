@@ -136,6 +136,25 @@ footer a{
 <!-- KEEP YOUR EXISTING STRANGO SOCKET SCRIPT BELOW (UNCHANGED) -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    const sendBtn = document.getElementById("sendBtn");
+const messageInput = document.getElementById("messageInput");
+const chat = document.getElementById("chat");
+
+/* ===== SEND MESSAGE ===== */
+sendBtn.onclick = () => {
+  const text = messageInput.value.trim();
+  if(!text) return;
+
+  socket.emit("message", text);   // IMPORTANT: must be "message"
+
+  const div = document.createElement("div");
+  div.className = "msg";
+  div.textContent = "You: " + text;
+  chat.appendChild(div);
+
+  messageInput.value = "";
+};
+
 const socket = io();
 
 const statusBar = document.getElementById("statusBar");
