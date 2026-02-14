@@ -216,7 +216,7 @@ The platform focuses on privacy-first communication, mobile-optimized design, an
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
+document.addEventListener("DOMContentLoaded", () => {
 const socket = io("https://strango-1.onrender.com", {
   transports: ["websocket"],
   secure: true
@@ -276,10 +276,10 @@ input.addEventListener("keypress",(e)=>{
 });
 
 // ===== NEXT =====
-nextBtn?.addEventListener("click", () =>{
+  nextBtn?.addEventListener("click", () => {
   socket.emit("next");
-  chat.innerHTML="";
-};
+  chat.innerHTML = "";
+});
 
 // ===== UI MESSAGE =====
 function addMsg(sender,text){
@@ -287,7 +287,7 @@ function addMsg(sender,text){
   div.innerHTML = sender + ": " + text;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
-}
+});
 
 </script>
 
