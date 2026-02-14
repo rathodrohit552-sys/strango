@@ -276,7 +276,7 @@ input.addEventListener("keypress",(e)=>{
 });
 
 // ===== NEXT =====
-  nextBtn?.addEventListener("click", () => {
+  nextBtn.addEventListener("click", () => {
   socket.emit("next");
   chat.innerHTML = "";
 });
