@@ -214,74 +214,76 @@ The platform focuses on privacy-first communication, mobile-optimized design, an
 
 </div>
 
+<script src="/socket.io/socket.io.js"></script>
 <script>
 
 const socket = io();
 
 const chat = document.getElementById("chat");
-const msg = document.getElementById("msg");
-const sendBtn = document.getElementById("sendBtn");
-const nextBtn = document.getElementById("nextBtn");
+const input = document.getElementById("msg");
+const sendBtn = document.getElementById("send");
+const nextBtn = document.getElementById("next");
+const status = document.getElementById("status");
 const online = document.getElementById("online");
-const state = document.getElementById("state");
 
-let unread = 0;
+let connected = false;
 
-/* ===== SOCKET EVENTS ===== */
-
-socket.on("online", n=>{
-online.innerText="Online: "+n;
+// ===== ONLINE COUNT =====
+socket.on("online",(count)=>{
+  online.innerText = "Online: " + count;
 });
 
-socket.on("connected", ()=>{
-state.innerText="Stranger connected";
+// ===== STATUS =====
+socket.on("status",(msg)=>{
+  status.innerText = msg;
+
+  if(msg === "Stranger connected"){
+    connected = true;
+  }else{
+    connected = false;
+  }
 });
 
-socket.on("waiting", ()=>{
-state.innerText="Looking for stranger...";
+// ===== RECEIVE MESSAGE =====
+socket.on("message",(msg)=>{
+  addMsg("Stranger",msg);
 });
 
-socket.on("msg", data=>{
-addMsg("Stranger: "+data);
+// ===== SEND MESSAGE =====
+function sendMessage(){
 
-if(document.hidden){
-unread++;
-document.title="("+unread+") New Message - Strango";
-}
-});
+  const text = input.value.trim();
+  if(!text) return;
+  if(!connected) return;
 
-sendBtn.onclick=send;
-msg.addEventListener("keydown",e=>{
-if(e.key==="Enter") send();
-});
+  socket.emit("message",text);
 
-function send(){
-if(!msg.value.trim()) return;
-addMsg("You: "+msg.value);
-socket.emit("msg",msg.value);
-msg.value="";
+  addMsg("You",text);
+  input.value="";
 }
 
-nextBtn.onclick=()=>{
-chat.innerHTML="";
-socket.emit("next");
+sendBtn.onclick = sendMessage;
+
+input.addEventListener("keypress",(e)=>{
+  if(e.key==="Enter"){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// ===== NEXT =====
+nextBtn.onclick = ()=>{
+  socket.emit("next");
+  chat.innerHTML="";
 };
 
-/* MESSAGE UI */
-function addMsg(text){
-const div=document.createElement("div");
-div.textContent=text;
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
+// ===== UI MESSAGE =====
+function addMsg(sender,text){
+  const div = document.createElement("div");
+  div.innerHTML = sender + ": " + text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
-
-/* TAB NOTIFICATION RESET */
-document.addEventListener("visibilitychange",()=>{
-if(!document.hidden){
-unread=0;
-document.title="Strango — Free Stranger Chat India";
-}
-});
 
 </script>
 
