@@ -56,7 +56,6 @@ io.on("connection", (socket) => {
   });
 
 
-
   /* ===== TYPING RELAY ===== */
 
   socket.on("typing", () => {
