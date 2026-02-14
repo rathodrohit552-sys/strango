@@ -8,12 +8,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: { origin: "*" },
-  transports: ["websocket", "polling"]
+  transports: ["websocket","polling"]
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
-let waitingUser = null;
+let waitingQueue = [];   // users waiting for stranger
 let onlineCount = 0;
 
 io.on("connection", (socket) => {
@@ -23,22 +23,8 @@ io.on("connection", (socket) => {
 
   socket.partner = null;
 
-  // ===== MATCH SYSTEM (STABLE VERSION) =====
-  if (waitingUser && waitingUser.id !== socket.id) {
-
-    const partner = waitingUser;
-
-    socket.partner = partner.id;
-    partner.partner = socket.id;
-
-    socket.emit("connected");
-    partner.emit("connected");
-
-    waitingUser = null;
-
-  } else {
-    waitingUser = socket;
-  }
+  // ===== ADD USER TO WAITING QUEUE =====
+  addToQueue(socket);
 
   // ===== MESSAGE RELAY =====
   socket.on("message", (msg) => {
@@ -47,7 +33,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  // ===== NEXT =====
+  // ===== NEXT BUTTON =====
   socket.on("next", () => {
 
     if (socket.partner) {
@@ -59,7 +45,7 @@ io.on("connection", (socket) => {
       socket.partner = null;
     }
 
-    if (!waitingUser) waitingUser = socket;
+    addToQueue(socket);
   });
 
   // ===== DISCONNECT =====
@@ -68,9 +54,7 @@ io.on("connection", (socket) => {
     onlineCount--;
     io.emit("onlineCount", onlineCount);
 
-    if (waitingUser && waitingUser.id === socket.id) {
-      waitingUser = null;
-    }
+    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
 
     if (socket.partner) {
       io.to(socket.partner).emit("strangerDisconnected");
@@ -80,6 +64,35 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+// ===== AUTO MATCH FUNCTION =====
+function addToQueue(socket){
+
+  // prevent duplicates
+  waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
+  waitingQueue.push(socket);
+
+  tryMatch();
+}
+
+function tryMatch(){
+
+  // AUTO CONNECT WHEN TWO WAITING
+  while (waitingQueue.length >= 2){
+
+    const user1 = waitingQueue.shift();
+    const user2 = waitingQueue.shift();
+
+    if(!user1 || !user2) return;
+    if(user1.id === user2.id) continue;
+
+    user1.partner = user2.id;
+    user2.partner = user1.id;
+
+    user1.emit("connected");
+    user2.emit("connected");
+  }
+}
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log("Server running on " + PORT));
