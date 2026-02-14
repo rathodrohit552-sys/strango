@@ -266,7 +266,7 @@ function sendMessage(){
   input.value="";
 }
 
-sendBtn.onclick = sendMessage;
+sendBtn?.addEventListener("click", sendMessage);
 
 input.addEventListener("keypress",(e)=>{
   if(e.key==="Enter"){
@@ -276,7 +276,7 @@ input.addEventListener("keypress",(e)=>{
 });
 
 // ===== NEXT =====
-nextBtn.onclick = ()=>{
+nextBtn?.addEventListener("click", () =>{
   socket.emit("next");
   chat.innerHTML="";
 };
