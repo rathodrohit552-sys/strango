@@ -7,46 +7,38 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: { origin: "*" },
-  transports: ["websocket","polling"]
+  transports: ["websocket", "polling"]
 });
 
 app.use(express.static("public"));
 
-let waitingUser = null;
+let waitingQueue = [];
 let onlineCount = 0;
 
 io.on("connection", (socket) => {
-
-  console.log("User connected:", socket.id);
 
   onlineCount++;
   io.emit("onlineCount", onlineCount);
 
   socket.partner = null;
 
-  // ===== NEXT BUTTON =====
+  // ===== NEXT =====
   socket.on("next", () => {
-
-    console.log("Next clicked:", socket.id);
 
     // disconnect old partner
     if(socket.partner){
       io.to(socket.partner).emit("strangerDisconnected");
-      const oldPartner = io.sockets.sockets.get(socket.partner);
-      if(oldPartner) oldPartner.partner = null;
+      const old = io.sockets.sockets.get(socket.partner);
+      if(old) old.partner = null;
       socket.partner = null;
     }
 
-    // remove from waiting
-    if(waitingUser === socket){
-      waitingUser = null;
-    }
+    // remove from queue if already there
+    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
 
-    // match users
-    if(waitingUser && waitingUser.id !== socket.id){
-
-      const partner = waitingUser;
-      waitingUser = null;
+    // if someone waiting -> match
+    if(waitingQueue.length > 0){
+      const partner = waitingQueue.shift();
 
       socket.partner = partner.id;
       partner.partner = socket.id;
@@ -54,10 +46,10 @@ io.on("connection", (socket) => {
       socket.emit("strangerConnected");
       partner.emit("strangerConnected");
 
-      console.log("Matched:", socket.id, partner.id);
+      console.log("MATCHED:", socket.id, partner.id);
 
     }else{
-      waitingUser = socket;
+      waitingQueue.push(socket);
       socket.emit("waiting");
     }
 
@@ -75,19 +67,17 @@ io.on("connection", (socket) => {
     onlineCount--;
     io.emit("onlineCount", onlineCount);
 
-    if(waitingUser === socket){
-      waitingUser = null;
-    }
+    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
 
     if(socket.partner){
       io.to(socket.partner).emit("strangerDisconnected");
-      const partner = io.sockets.sockets.get(socket.partner);
-      if(partner) partner.partner = null;
+      const p = io.sockets.sockets.get(socket.partner);
+      if(p) p.partner = null;
     }
   });
 
 });
 
 server.listen(process.env.PORT || 3000, ()=>{
-  console.log("Server running");
+  console.log("Strango server running");
 });

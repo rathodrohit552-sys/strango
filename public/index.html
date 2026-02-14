@@ -100,9 +100,7 @@ a{ color:#00e676; text-decoration:none; margin:0 6px;}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-const socket = io("https://strango-1.onrender.com",{
- transports:["websocket"]
-});
+const socket = io("https://strango-1.onrender.com");
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("msg");
@@ -113,66 +111,57 @@ const online = document.getElementById("online");
 
 let connected=false;
 
-// ===== ONLINE COUNT =====
-socket.on("onlineCount",(count)=>{
- online.innerText="Online: "+count;
+socket.on("onlineCount",(c)=>{
+  online.innerText="Online: "+c;
 });
 
-// ===== WAITING =====
 socket.on("waiting",()=>{
- connected=false;
- status.innerText="Looking for stranger...";
+  connected=false;
+  status.innerText="Looking for stranger...";
 });
 
-// ===== CONNECTED =====
 socket.on("strangerConnected",()=>{
- connected=true;
- status.innerText="Stranger connected";
+  connected=true;
+  status.innerText="Stranger connected";
 });
 
-// ===== DISCONNECTED =====
 socket.on("strangerDisconnected",()=>{
- connected=false;
- status.innerText="Stranger disconnected";
+  connected=false;
+  status.innerText="Stranger disconnected";
 });
 
-// ===== RECEIVE MESSAGE =====
 socket.on("message",(msg)=>{
- addMsg("Stranger",msg);
+  addMsg("Stranger",msg);
 });
 
-// ===== SEND MESSAGE =====
 function sendMessage(){
- const text=input.value.trim();
- if(!text) return;
- if(!connected) return;
+  const text=input.value.trim();
+  if(!text || !connected) return;
 
- socket.emit("message",text);
- addMsg("You",text);
- input.value="";
+  socket.emit("message",text);
+  addMsg("You",text);
+  input.value="";
 }
 
-// ===== BUTTON EVENTS =====
-sendBtn.addEventListener("click",sendMessage);
+sendBtn.onclick=sendMessage;
 
 input.addEventListener("keypress",(e)=>{
- if(e.key==="Enter"){
-  e.preventDefault();
-  sendMessage();
- }
+  if(e.key==="Enter"){
+    e.preventDefault();
+    sendMessage();
+  }
 });
 
-nextBtn.addEventListener("click",()=>{
- socket.emit("next");
- chat.innerHTML="";
-});
+nextBtn.onclick=()=>{
+  socket.emit("next");
+  chat.innerHTML="";
+};
 
-// ===== UI MESSAGE =====
 function addMsg(sender,text){
- const div=document.createElement("div");
- div.innerHTML = sender + ": " + text;
- chat.appendChild(div);
- chat.scrollTop = chat.scrollHeight;
+  const div=document.createElement("div");
+  div.innerHTML=sender+": "+text;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
 }
 
 });
