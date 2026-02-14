@@ -106,6 +106,9 @@ footer a{
 <body>
 
 <h1>Strango — Free Stranger Chat India</h1>
+<div id="onlineCount" style="color:#00ff9d;margin-top:6px;font-size:14px;">
+👥 Online: 0
+</div>
 <div class="subtitle">Anonymous text chat without login. Meet strangers instantly.</div>
 
 <div class="wrapper">
@@ -133,7 +136,42 @@ footer a{
 <!-- KEEP YOUR EXISTING STRANGO SOCKET SCRIPT BELOW (UNCHANGED) -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
-// Your original Strango JS logic stays here.
+const socket = io();
+
+const statusBar = document.getElementById("statusBar");
+const onlineUI = document.getElementById("onlineCount");
+const chat = document.getElementById("chat");
+
+/* ===== ONLINE COUNT ===== */
+socket.on("onlineCount",(count)=>{
+  if(onlineUI){
+    onlineUI.innerText = "👥 Online: " + count;
+  }
+});
+
+/* ===== MATCHED ===== */
+socket.on("matched",()=>{
+  if(statusBar){
+    statusBar.innerText = "Stranger connected";
+  }
+});
+
+/* ===== WAITING ===== */
+socket.on("waiting",()=>{
+  if(statusBar){
+    statusBar.innerText = "Looking for stranger...";
+  }
+});
+
+/* ===== RECEIVE MESSAGE ===== */
+socket.on("message",(msg)=>{
+  const div = document.createElement("div");
+  div.className="msg";
+  div.textContent = msg;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+});
+
 </script>
 
 </body>
