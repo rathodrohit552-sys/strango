@@ -7,87 +7,96 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: { origin: "*" },
-  transports: ["websocket", "polling"]
+  transports: ["websocket","polling"]
 });
 
 app.use(express.static("public"));
 
 /* =========================
-   STRANGO MATCH SYSTEM
+   STRANGO MATCH ENGINE
 ========================= */
 
-let waitingUser = null;
+let waitingQueue = [];
+let partners = {};
 let online = 0;
-const partners = {};
 
-io.on("connection", (socket) => {
+/* ===== MATCH FUNCTION ===== */
+function tryMatch(){
+
+  while(waitingQueue.length >= 2){
+
+    const a = waitingQueue.shift();
+    const b = waitingQueue.shift();
+
+    if(!a || !b) return;
+
+    partners[a.id] = b.id;
+    partners[b.id] = a.id;
+
+    a.emit("connected");
+    b.emit("connected");
+  }
+}
+
+io.on("connection",(socket)=>{
 
   online++;
-  io.emit("online", online);
+  io.emit("online",online);
 
-  /* ===== AUTO MATCH ===== */
-  if (waitingUser && waitingUser.id !== socket.id) {
+  /* ADD TO QUEUE */
+  waitingQueue.push(socket);
+  socket.emit("waiting");
 
-    partners[socket.id] = waitingUser.id;
-    partners[waitingUser.id] = socket.id;
-
-    socket.emit("connected");
-    waitingUser.emit("connected");
-
-    waitingUser = null;
-
-  } else {
-    waitingUser = socket;
-    socket.emit("waiting");
-  }
+  /* TRY AUTO MATCH */
+  tryMatch();
 
   /* ===== MESSAGE ===== */
-  socket.on("message", (msg) => {
+  socket.on("message",(msg)=>{
     const partnerId = partners[socket.id];
-    if (partnerId) {
-      io.to(partnerId).emit("message", msg);
+    if(partnerId){
+      io.to(partnerId).emit("message",msg);
     }
   });
 
   /* ===== TYPING ===== */
-  socket.on("typing", () => {
+  socket.on("typing",()=>{
     const partnerId = partners[socket.id];
-    if (partnerId) {
+    if(partnerId){
       io.to(partnerId).emit("typing");
     }
   });
 
   /* ===== NEXT ===== */
-  socket.on("next", () => {
+  socket.on("next",()=>{
 
     const partnerId = partners[socket.id];
 
-    if (partnerId) {
+    if(partnerId){
       io.to(partnerId).emit("strangerDisconnected");
       delete partners[partnerId];
     }
 
     delete partners[socket.id];
 
-    waitingUser = socket;
+    waitingQueue.push(socket);
     socket.emit("waiting");
+
+    tryMatch();
   });
 
   /* ===== DISCONNECT ===== */
-  socket.on("disconnect", () => {
+  socket.on("disconnect",()=>{
 
     online--;
-    io.emit("online", online);
+    io.emit("online",online);
+
+    waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
 
     const partnerId = partners[socket.id];
 
-    if (partnerId) {
+    if(partnerId){
       io.to(partnerId).emit("strangerDisconnected");
       delete partners[partnerId];
-    }
-
-    if (waitingUser && waitingUser.id === socket.id) {
-      waitingUser = null;
     }
 
     delete partners[socket.id];
@@ -95,6 +104,6 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT || 3000,()=>{
   console.log("Strango server running");
 });
