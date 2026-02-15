@@ -12,7 +12,7 @@
 body{
  background:#000;
  color:#fff;
- min-height:100vh;   /* ⭐ changed from height to min-height */
+ min-height:100vh;
  display:flex;
  flex-direction:column;
 }
@@ -55,10 +55,7 @@ body{
 .chat-container{
  width:100%;
  max-width:1000px;
-
- /* ⭐ FIXED — NO flex:1 (this was hiding space) */
  height:60vh;
-
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -85,6 +82,12 @@ body{
 }
 
 .message.you{background:#2e7d32;}
+
+/* ⭐ SPACE ABOVE INPUT AREA (THIS IS WHAT YOU WANTED) */
+.tools-space{
+ height:60px;
+ border-top:1px solid #222;
+}
 
 /* INPUT AREA */
 .input-area{
@@ -117,15 +120,6 @@ body{
  border:none;
  padding:15px;
  outline:none;
-}
-
-/* ⭐ SPACE AREA (NOW ALWAYS VISIBLE) */
-.tools-space{
- width:100%;
- max-width:1000px;
- height:60px;
- border-top:1px solid #222;
- margin-top:12px;
 }
 
 /* FOOTER */
@@ -163,6 +157,9 @@ footer a{
 
 <div id="chatBox" class="chat-box"></div>
 
+<!-- ⭐ SPACE NOW INSIDE CHAT LAYOUT -->
+<div class="tools-space"></div>
+
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
@@ -170,9 +167,6 @@ footer a{
 </div>
 
 </div>
-
-<!-- ⭐ SPACE NOW VISIBLE -->
-<div class="tools-space"></div>
 
 </div>
 
