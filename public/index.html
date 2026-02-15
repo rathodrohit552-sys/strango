@@ -21,7 +21,7 @@ body{
  min-height:100vh;
 }
 
-/* HEADER */
+/* HEADER (UNCHANGED) */
 .header{text-align:center;padding:20px 10px;}
 
 .status-bar{
@@ -42,19 +42,18 @@ body{
  width:100%;
 }
 
-/* ⭐ BIG CHAT WRAPPER */
+/* ⭐ FULL WIDTH CHAT */
 .chat-wrapper{
  width:100%;
- max-width:1000px;
- min-height:70vh; /* ⭐ makes chat large again */
+ min-height:70vh;
  display:flex;
  flex-direction:column;
- padding:10px;
+ padding:10px 20px; /* small safe spacing */
 }
 
-/* CHAT CONTAINER */
 .chat-container{
  flex:1;
+ width:100%;        /* ⭐ FULL WIDTH */
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -114,7 +113,7 @@ body{
  outline:none;
 }
 
-/* ⭐ SEO SECTION */
+/* SEO SECTION (UNCHANGED) */
 .seo-section{
  width:100%;
  max-width:1000px;
@@ -183,17 +182,13 @@ footer a:hover{color:#fff;}
 
 </div>
 
-<!-- ⭐ SEO CONTENT (Google-friendly) -->
 <section class="seo-section">
 
 <h2>Free Anonymous Stranger Chat Online</h2>
-<p>Strango is designed for people who want fast and anonymous conversations without registration. Unlike traditional chat platforms, Strango focuses on speed, privacy, and simplicity. You can instantly connect with random strangers and start meaningful conversations from anywhere in the world.</p>
+<p>Strango lets you connect with random people instantly. No login required — just open and start chatting. Designed for speed, privacy, and simplicity.</p>
 
 <h2>Why Strango is Different</h2>
-<p>Our platform uses lightweight technology that allows quick connections and smooth chatting experience. The interface is simple, distraction-free, and optimized for both mobile and desktop users. This helps users stay longer — which improves search engine trust and ranking.</p>
-
-<h2>SEO Optimized Chat Experience</h2>
-<p>Strango follows modern SEO practices including structured headings, helpful content, and fast loading performance. Search engines prefer websites that provide useful information alongside functionality, which is why this section exists.</p>
+<p>Our platform uses lightweight technology for faster connections and smooth chatting. The interface is optimized for both mobile and desktop users.</p>
 
 <h2>Frequently Asked Questions</h2>
 
@@ -219,8 +214,8 @@ footer a:hover{color:#fff;}
 </footer>
 
 <script src="/socket.io/socket.io.js"></script>
-<script>
 
+<script>
 const socket=io({transports:["websocket","polling"]});
 
 const chatBox=document.getElementById("chatBox");
@@ -277,7 +272,6 @@ function addMessage(text,type){
  chatBox.appendChild(div);
  chatBox.scrollTop=chatBox.scrollHeight;
 }
-
 </script>
 
 </body>
