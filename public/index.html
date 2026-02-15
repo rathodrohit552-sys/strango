@@ -3,186 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Strango — Free Stranger Chat India</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, sans-serif;
-}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 body{
-  background:#000;
-  color:#fff;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
+ background:#000;
+ color:#fff;
+ height:100vh;
+ display:flex;
+ flex-direction:column;
 }
 
-.header{
-  text-align:center;
-  padding:20px 10px;
-}
-
-.header h1{
-  font-size:32px;
-}
-
-.online{
-  margin-top:10px;
-  font-size:18px;
-}
+.header{text-align:center;padding:20px 10px;}
 
 .main{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:10px;
+ flex:1;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:10px;
 }
 
 .chat-container{
-  width:100%;
-  max-width:1000px;
-  height:100%;
-  border:1px solid #333;
-  border-radius:12px;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  background:#000;
+ width:100%;
+ max-width:1000px;
+ height:100%;
+ border:1px solid #333;
+ border-radius:12px;
+ display:flex;
+ flex-direction:column;
+ overflow:hidden;
 }
 
 .chat-box{
-  flex:1;
-  padding:15px;
-  overflow-y:auto;
+ flex:1;
+ padding:15px;
+ overflow-y:auto;
 }
 
+/* ⭐ INPUT BAR */
 .input-area{
-  display:flex;
-  border-top:1px solid #333;
+ display:flex;
+ border-top:1px solid #333;
+}
+
+/* ⭐ NEXT BUTTON LEFT */
+.next-btn{
+ background:#ff3b3b;
+ color:#fff;
+ border:none;
+ padding:15px 20px;
+ cursor:pointer;
+ font-weight:bold;
+}
+
+/* ⭐ SEND BUTTON RIGHT */
+.send-btn{
+ background:#00c853;
+ color:#fff;
+ border:none;
+ padding:15px 20px;
+ cursor:pointer;
+ font-weight:bold;
 }
 
 .input-area input{
-  flex:1;
-  background:#000;
-  color:#fff;
-  border:none;
-  padding:15px;
-  outline:none;
-}
-
-.input-area button{
-  background:#111;
-  color:#fff;
-  border:none;
-  padding:15px 20px;
-  cursor:pointer;
+ flex:1;
+ background:#000;
+ color:#fff;
+ border:none;
+ padding:15px;
+ outline:none;
 }
 
 footer{
-  text-align:center;
-  padding:12px;
-  font-size:14px;
-  border-top:1px solid #222;
+ text-align:center;
+ padding:12px;
+ font-size:14px;
+ border-top:1px solid #222;
 }
 
-footer a{
-  color:#aaa;
-  text-decoration:none;
-  margin:0 10px;
-}
+footer a{color:#aaa;margin:0 10px;text-decoration:none;}
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <h1>Strango — Free Stranger Chat India</h1>
-  <p>Anonymous text chat without login. Meet strangers instantly.</p>
-  <div class="online">Online: <span id="onlineCount">0</span></div>
-  <div id="status">Connecting...</div>
+<h1>Strango — Free Stranger Chat India</h1>
+<p>Anonymous text chat without login. Meet strangers instantly.</p>
+<div>Online: <span id="onlineCount">0</span></div>
+<div id="status">Connecting...</div>
 </div>
 
 <div class="main">
-  <div class="chat-container">
-    <div id="chatBox" class="chat-box"></div>
+<div class="chat-container">
 
-    <div class="input-area">
-      <input id="messageInput" placeholder="Type a message..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
+<div id="chatBox" class="chat-box"></div>
+
+<div class="input-area">
+<button class="next-btn" onclick="nextStranger()">NEXT</button>
+<input id="messageInput" placeholder="Type a message..." />
+<button class="send-btn" onclick="sendMessage()">SEND</button>
+</div>
+
+</div>
 </div>
 
 <footer>
-  <a href="/privacy.html">Privacy</a> |
-  <a href="/terms.html">Terms</a> |
-  <a href="/safety.html">Safety</a> |
-  <a href="/about.html">About</a> |
-  <a href="/contact.html">Contact</a>
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/safety.html">Safety</a> |
+<a href="/about.html">About</a> |
+<a href="/contact.html">Contact</a>
 </footer>
 
-<!-- ⭐⭐⭐ VERY IMPORTANT — SOCKET SCRIPT (YOU WERE MISSING THIS) -->
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-const socket = io({
-  transports:["websocket","polling"]
-});
 
-const chatBox = document.getElementById("chatBox");
-const input = document.getElementById("messageInput");
-const onlineCount = document.getElementById("onlineCount");
-const status = document.getElementById("status");
+const socket = io({transports:["websocket","polling"]});
 
-let connected = false;
+const chatBox=document.getElementById("chatBox");
+const input=document.getElementById("messageInput");
+const onlineCount=document.getElementById("onlineCount");
+const status=document.getElementById("status");
+
+let connected=false;
 
 socket.on("connect",()=>{
-  status.innerText="Connected. Waiting for stranger...";
+ status.innerText="Connected. Waiting for stranger...";
 });
 
-socket.on("onlineCount",(count)=>{
-  onlineCount.innerText=count;
+socket.on("onlineCount",(c)=>{
+ onlineCount.innerText=c;
 });
 
 socket.on("strangerConnected",()=>{
-  connected=true;
-  status.innerText="Stranger connected";
-  addMessage("⚡ Stranger connected. Say hi!");
+ connected=true;
+ status.innerText="Stranger connected";
+ addMessage("⚡ Stranger connected");
 });
 
 socket.on("message",(msg)=>{
-  addMessage("Stranger: "+msg);
+ addMessage("Stranger: "+msg);
 });
 
 socket.on("strangerDisconnected",()=>{
-  connected=false;
-  status.innerText="Stranger disconnected. Waiting...";
+ connected=false;
+ status.innerText="Stranger disconnected. Waiting...";
 });
 
+/* ⭐ SEND MESSAGE */
 function sendMessage(){
-  if(!connected) return;
+ const msg=input.value.trim();
+ if(msg==="") return;
 
-  const msg=input.value.trim();
-  if(msg==="") return;
-
-  socket.emit("message",msg);
-  addMessage("You: "+msg);
-  input.value="";
+ socket.emit("message",msg);
+ addMessage("You: "+msg);
+ input.value="";
 }
 
+/* ⭐ NEXT BUTTON */
+function nextStranger(){
+ connected=false;
+ socket.emit("next");
+ status.innerText="Finding new stranger...";
+ chatBox.innerHTML="";
+}
+
+/* ⭐ ADD MESSAGE */
 function addMessage(text){
-  const div=document.createElement("div");
-  div.innerText=text;
-  div.style.marginBottom="8px";
-  chatBox.appendChild(div);
-  chatBox.scrollTop=chatBox.scrollHeight;
+ const div=document.createElement("div");
+ div.innerText=text;
+ div.style.marginBottom="8px";
+ chatBox.appendChild(div);
+ chatBox.scrollTop=chatBox.scrollHeight;
 }
+
 </script>
 
 </body>
