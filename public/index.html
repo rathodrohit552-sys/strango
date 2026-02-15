@@ -17,21 +17,20 @@ html,body{
  height:100%;
 }
 
-/* ⭐ FULLSCREEN PAGE */
+/* ⭐ BODY */
 body{
  background:#000;
  color:#fff;
  display:flex;
  flex-direction:column;
- height:100vh;
- overflow:hidden; /* page does not scroll */
+ min-height:100vh;
+ overflow-y:auto; /* allows trust pages scroll */
 }
 
 /* HEADER */
 .header{
  text-align:center;
  padding:20px 10px;
- flex-shrink:0;
 }
 
 .status-bar{
@@ -44,21 +43,20 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* ⭐ MAIN FULLSCREEN CHAT AREA */
+/* ⭐ MAIN FULLSCREEN CHAT */
 .main{
  flex:1;
  display:flex;
  flex-direction:column;
- overflow:hidden;
 }
 
-/* CHAT WRAPPER TAKES FULL HEIGHT */
+/* CHAT WRAPPER */
 .chat-wrapper{
- flex:1;
  width:100%;
  padding:10px 20px;
  display:flex;
  flex-direction:column;
+ min-height:60vh;
 }
 
 /* CHAT CONTAINER */
@@ -71,7 +69,7 @@ body{
  overflow:hidden;
 }
 
-/* MESSAGE AREA (ONLY THIS SCROLLS) */
+/* MESSAGE AREA */
 .chat-box{
  flex:1;
  padding:20px;
@@ -81,7 +79,7 @@ body{
  gap:8px;
 }
 
-/* MESSAGES */
+/* MESSAGE STYLE */
 .message{
  align-self:flex-start;
  background:#1e1e1e;
@@ -98,7 +96,6 @@ body{
 .input-area{
  display:flex;
  border-top:1px solid #333;
- flex-shrink:0;
 }
 
 .next-btn{
@@ -128,14 +125,11 @@ body{
  outline:none;
 }
 
-/* ⭐ SEO CONTENT (hidden from layout height but visible to Google) */
+/* ⭐ SEO SECTION */
 .seo-section{
- position:absolute;
- top:120vh; /* placed below viewport so chat stays fullscreen */
  width:100%;
  max-width:1000px;
- left:50%;
- transform:translateX(-50%);
+ margin:40px auto;
  color:#ccc;
  line-height:1.8;
 }
@@ -152,11 +146,8 @@ body{
  margin-bottom:12px;
 }
 
-/* FOOTER */
+/* FOOTER TRUST LINKS */
 footer{
- position:absolute;
- top:220vh;
- width:100%;
  background:#050505;
  text-align:center;
  padding:12px;
@@ -168,7 +159,9 @@ footer a{
  text-decoration:none;
 }
 
-footer a:hover{color:#fff;}
+footer a:hover{
+ color:#fff;
+}
 
 </style>
 </head>
@@ -203,7 +196,7 @@ footer a:hover{color:#fff;}
 
 </div>
 
-<!-- ⭐ SEO CONTENT (kept for Google indexing) -->
+<!-- ⭐ SEO CONTENT -->
 <section class="seo-section">
 
 <h2>Free Anonymous Stranger Chat Online</h2>
@@ -222,6 +215,7 @@ footer a:hover{color:#fff;}
 
 </section>
 
+<!-- ⭐ TRUST PAGES FOOTER -->
 <footer>
 <a href="/privacy.html">Privacy</a> |
 <a href="/terms.html">Terms</a> |
