@@ -3,32 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Strango — Free Anonymous Stranger Chat India</title>
 
 <style>
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+html,body{height:100%;background:#000;color:#fff;}
 
-html,body{height:100%;}
-
-/* ⭐ BODY FULLSCREEN */
-body{
- background:#000;
- color:#fff;
- display:flex;
- flex-direction:column;
- height:100vh;
- overflow:hidden; /* ⭐ fullscreen chat */
-}
-
-/* HEADER */
+/* ⭐ HEADER */
 .header{
  text-align:center;
  padding:20px 10px 10px;
- flex-shrink:0;
 }
 
+/* ⭐ STATUS */
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
@@ -39,16 +27,17 @@ body{
  display:flex;
  gap:12px;
  font-size:14px;
- flex-shrink:0;
 }
 
-/* ⭐ FULLSCREEN MAIN */
+/* ⭐🔥 FULLSCREEN CHAT AREA */
 .main{
+ position:fixed;
+ top:110px;      /* header height */
+ bottom:0;
+ left:0;
+ right:0;
  display:flex;
  flex-direction:column;
- flex:1;
- min-height:0;
- height:100%;
 }
 
 /* CHAT */
@@ -57,8 +46,6 @@ body{
  padding:10px 20px;
  display:flex;
  flex-direction:column;
- min-height:0;
- height:100%;
 }
 
 .chat-container{
@@ -67,7 +54,6 @@ body{
  border-radius:12px;
  display:flex;
  flex-direction:column;
- min-height:0;
 }
 
 .chat-box{
@@ -77,7 +63,6 @@ body{
  display:flex;
  flex-direction:column;
  gap:8px;
- min-height:0;
 }
 
 .message{
@@ -119,25 +104,22 @@ body{
  outline:none;
 }
 
-/* SEO */
+/* ⭐ SEO stays BELOW screen */
 .seo-section{
  width:100%;
  max-width:900px;
  margin:40px auto;
  line-height:1.7;
  color:#ccc;
- flex-shrink:0;
+ margin-top:100vh; /* pushes below fullscreen chat */
 }
 
-.seo-section h1,
-.seo-section h2,
-.seo-section h3{color:#fff;margin-top:20px;}
+.seo-section h1{color:#fff;margin-top:20px;}
 
 footer{
  background:#050505;
  text-align:center;
  padding:12px;
- flex-shrink:0;
 }
 
 footer a{
@@ -145,7 +127,6 @@ footer a{
  margin:0 10px;
  text-decoration:none;
 }
-
 footer a:hover{color:#fff;}
 
 </style>
