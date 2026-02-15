@@ -23,6 +23,7 @@ body{
  padding:20px 10px;
 }
 
+/* STATUS BAR */
 .status-bar{
  display:flex;
  justify-content:center;
@@ -54,7 +55,10 @@ body{
 .chat-container{
  width:100%;
  max-width:1000px;
- height:65vh;
+
+ /* ⭐ FIXED — FLEXIBLE HEIGHT */
+ flex:1;
+
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -80,7 +84,7 @@ body{
  color:#fff;
 }
 
-.message.you{ background:#2e7d32; }
+.message.you{background:#2e7d32;}
 
 /* INPUT AREA */
 .input-area{
@@ -119,7 +123,7 @@ body{
 .tools-space{
  width:100%;
  max-width:1000px;
- height:60px;             /* adjust space size here */
+ height:60px;
  border-top:1px solid #222;
  margin-top:8px;
 }
@@ -167,7 +171,7 @@ footer a{
 
 </div>
 
-<!-- ⭐ THIS IS YOUR SEPARATE SPACE -->
+<!-- ⭐ SEPARATE SPACE (VISIBLE NOW) -->
 <div class="tools-space"></div>
 
 </div>
@@ -198,9 +202,9 @@ function setStatus(text,type){
  status.className="status "+type;
 }
 
-socket.on("connect",()=>{ setStatus("Waiting for stranger...","waiting"); });
+socket.on("connect",()=> setStatus("Waiting for stranger...","waiting"));
 
-socket.on("onlineCount",(c)=>{ onlineCount.innerText=c; });
+socket.on("onlineCount",(c)=> onlineCount.innerText=c);
 
 socket.on("strangerConnected",()=>{
  connected=true;
@@ -225,7 +229,7 @@ function sendMessage(){
  input.value="";
 }
 
-input.addEventListener("keypress",function(e){
+input.addEventListener("keypress",(e)=>{
  if(e.key==="Enter"){ e.preventDefault(); sendMessage(); }
 });
 
