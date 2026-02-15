@@ -21,7 +21,7 @@ body{
  min-height:100vh;
 }
 
-/* HEADER (UNCHANGED) */
+/* HEADER */
 .header{text-align:center;padding:20px 10px;}
 
 .status-bar{
@@ -34,26 +34,28 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* MAIN */
+/* ⭐ MAIN FULL HEIGHT */
 .main{
  display:flex;
  flex-direction:column;
  align-items:center;
  width:100%;
+ flex:1;
+ min-height:100vh;
 }
 
-/* ⭐ FULL WIDTH CHAT */
+/* FULL WIDTH CHAT */
 .chat-wrapper{
  width:100%;
  min-height:70vh;
  display:flex;
  flex-direction:column;
- padding:10px 20px; /* small safe spacing */
+ padding:10px 20px;
 }
 
 .chat-container{
  flex:1;
- width:100%;        /* ⭐ FULL WIDTH */
+ width:100%;
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -113,7 +115,7 @@ body{
  outline:none;
 }
 
-/* SEO SECTION (UNCHANGED) */
+/* SEO SECTION */
 .seo-section{
  width:100%;
  max-width:1000px;
@@ -185,10 +187,10 @@ footer a:hover{color:#fff;}
 <section class="seo-section">
 
 <h2>Free Anonymous Stranger Chat Online</h2>
-<p>Strango lets you connect with random people instantly. No login required — just open and start chatting. Designed for speed, privacy, and simplicity.</p>
+<p>Strango lets you connect with random people instantly. No login required — just open and start chatting.</p>
 
 <h2>Why Strango is Different</h2>
-<p>Our platform uses lightweight technology for faster connections and smooth chatting. The interface is optimized for both mobile and desktop users.</p>
+<p>Our platform uses lightweight technology for faster connections and smooth chatting. Optimized for both mobile and desktop users.</p>
 
 <h2>Frequently Asked Questions</h2>
 
