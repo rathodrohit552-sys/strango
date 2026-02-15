@@ -39,7 +39,7 @@ body{
  font-size:14px;
 }
 
-/* ⭐ MAIN (RESTORED WORKING STRUCTURE) */
+/* MAIN */
 .main{
  display:flex;
  flex-direction:column;
@@ -50,7 +50,7 @@ body{
 /* CHAT */
 .chat-wrapper{
  flex:1;
- padding:10px 20px 0; /* ⭐ ONLY CHANGE: removed bottom padding */
+ padding:10px 20px 0;
  display:flex;
  flex-direction:column;
 }
@@ -73,14 +73,19 @@ body{
  gap:8px;
 }
 
+/* ⭐ MESSAGE SIZE FIX */
 .message{
  background:#1e1e1e;
  padding:10px 14px;
  border-radius:12px;
- max-width:90%;
+ width:fit-content;      /* ⭐ new */
+ max-width:70%;          /* ⭐ smaller bubble */
 }
 
-.message.you{background:#2e7d32;}
+.message.you{
+ background:#2e7d32;
+ align-self:flex-end;
+}
 
 .input-area{
  display:flex;
@@ -175,9 +180,43 @@ footer a:hover{color:#fff;}
 
 </div>
 
+<!-- ⭐ FULL SEO YOU PROVIDED (REPLACED) -->
 <section class="seo-section">
+
 <h1>Free Anonymous Stranger Chat Online – Strango</h1>
-<p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account.</p>
+
+<p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account. Built with lightweight technology, Strango allows users to start conversations in seconds while keeping their identity private. Whether you are using mobile or desktop, the experience is fast, simple, and focused on real-time communication.</p>
+
+<h2>What is Strango?</h2>
+<p>Strango is an online random chat platform where users are connected with strangers from different locations.</p>
+
+<h2>Why Strango is Different</h2>
+
+<ul>
+<li>Instant anonymous connections</li>
+<li>No login or personal data required</li>
+<li>Lightweight design for faster loading</li>
+<li>Mobile-friendly and desktop optimized</li>
+<li>Smooth real-time messaging experience</li>
+</ul>
+
+<h2>Features of Strango Anonymous Chat</h2>
+
+<h3>Instant Matching</h3>
+<p>Strango automatically connects you with another online user.</p>
+
+<h3>Private and Anonymous</h3>
+<p>Your identity is not shared.</p>
+
+<h3>Fast and Simple Interface</h3>
+<p>The minimal design reduces clutter.</p>
+
+<h3>Cross-Device Compatibility</h3>
+<p>Strango works smoothly on smartphones, tablets, and desktops.</p>
+
+<h2>Start Anonymous Chatting Now</h2>
+<p>Open the chat, connect instantly, and start conversations with people around the world.</p>
+
 </section>
 
 <footer>
