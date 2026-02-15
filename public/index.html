@@ -42,15 +42,38 @@ body{
  flex:1;
  padding:15px;
  overflow-y:auto;
+ display:flex;
+ flex-direction:column;
+ gap:8px;
 }
 
-/* ⭐ INPUT BAR */
+/* ⭐ CHAT BUBBLES */
+.message{
+ max-width:60%;
+ padding:10px 14px;
+ border-radius:14px;
+ font-size:15px;
+ word-wrap:break-word;
+}
+
+.you{
+ align-self:flex-end;
+ background:#00c853;
+ color:#fff;
+}
+
+.stranger{
+ align-self:flex-start;
+ background:#1e1e1e;
+ color:#fff;
+}
+
+/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
 }
 
-/* ⭐ NEXT BUTTON LEFT */
 .next-btn{
  background:#ff3b3b;
  color:#fff;
@@ -60,7 +83,6 @@ body{
  font-weight:bold;
 }
 
-/* ⭐ SEND BUTTON RIGHT */
 .send-btn{
  background:#00c853;
  color:#fff;
@@ -135,7 +157,6 @@ const status=document.getElementById("status");
 
 let connected=false;
 
-/* ⭐ SERVER CONNECTED (NOT STRANGER) */
 socket.on("connect",()=>{
  status.innerText="Waiting for stranger...";
 });
@@ -144,14 +165,13 @@ socket.on("onlineCount",(c)=>{
  onlineCount.innerText=c;
 });
 
-/* ⭐ REAL STRANGER MATCH */
 socket.on("strangerConnected",()=>{
  connected=true;
  status.innerText="Stranger connected";
 });
 
 socket.on("message",(msg)=>{
- addMessage("Stranger: "+msg);
+ addMessage(msg,"stranger");
 });
 
 socket.on("strangerDisconnected",()=>{
@@ -159,7 +179,7 @@ socket.on("strangerDisconnected",()=>{
  status.innerText="Waiting for stranger...";
 });
 
-/* ⭐ SEND MESSAGE (BLOCK IF NOT CONNECTED) */
+/* SEND MESSAGE */
 function sendMessage(){
 
  if(!connected){
@@ -171,11 +191,11 @@ function sendMessage(){
  if(msg==="") return;
 
  socket.emit("message",msg);
- addMessage("You: "+msg);
+ addMessage(msg,"you");
  input.value="";
 }
 
-/* ⭐ ENTER KEY = SEND */
+/* ENTER = SEND */
 input.addEventListener("keypress",function(e){
  if(e.key==="Enter"){
   e.preventDefault();
@@ -183,7 +203,7 @@ input.addEventListener("keypress",function(e){
  }
 });
 
-/* ⭐ NEXT BUTTON */
+/* NEXT BUTTON */
 function nextStranger(){
  connected=false;
  socket.emit("next");
@@ -191,11 +211,11 @@ function nextStranger(){
  chatBox.innerHTML="";
 }
 
-/* ⭐ ADD MESSAGE */
-function addMessage(text){
+/* ⭐ ADD MESSAGE WITH BUBBLE STYLE */
+function addMessage(text,type){
  const div=document.createElement("div");
+ div.classList.add("message",type);
  div.innerText=text;
- div.style.marginBottom="8px";
  chatBox.appendChild(div);
  chatBox.scrollTop=chatBox.scrollHeight;
 }
