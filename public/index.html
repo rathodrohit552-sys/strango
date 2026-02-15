@@ -6,9 +6,6 @@
 
 <title>Strango — Free Stranger Chat India | Anonymous Random Chat</title>
 
-<meta name="description" content="Strango is a free anonymous stranger chat platform in India. Talk to random people instantly without login.">
-<meta name="robots" content="index, follow">
-
 <style>
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
@@ -17,17 +14,16 @@ html,body{
  height:100%;
 }
 
-/* ⭐ BODY */
 body{
  background:#000;
  color:#fff;
  display:flex;
  flex-direction:column;
- min-height:100vh;
- overflow-y:auto;
+ height:100vh;
+ overflow:hidden; /* ⭐ FULLSCREEN CHAT */
 }
 
-/* ⭐ HEADER CENTERED */
+/* HEADER CENTER */
 .header{
  text-align:center;
  padding:20px 10px 10px;
@@ -36,7 +32,7 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* ⭐ STATUS BAR LEFT */
+/* STATUS LEFT */
 .status-bar{
  width:100%;
  padding-left:20px;
@@ -47,25 +43,22 @@ body{
  font-size:14px;
 }
 
-/* ⭐ MAIN FULL HEIGHT */
+/* MAIN FULL HEIGHT */
 .main{
+ flex:1;
  display:flex;
  flex-direction:column;
- align-items:center;
- width:100%;
- flex:1; /* ⭐ fills remaining screen */
 }
 
-/* ⭐ CHAT WRAPPER FULL HEIGHT */
+/* CHAT WRAPPER */
 .chat-wrapper{
- width:100%;
- padding:10px 20px;
+ flex:1;
+ padding:10px 20px 60px; /* ⭐ space for footer bar */
  display:flex;
  flex-direction:column;
- flex:1; /* ⭐ removes bottom gap */
 }
 
-/* CHAT CONTAINER */
+/* CHAT BOX */
 .chat-container{
  flex:1;
  border:1px solid #333;
@@ -75,7 +68,6 @@ body{
  overflow:hidden;
 }
 
-/* MESSAGE AREA */
 .chat-box{
  flex:1;
  padding:20px;
@@ -85,7 +77,6 @@ body{
  gap:8px;
 }
 
-/* MESSAGE STYLE */
 .message{
  align-self:flex-start;
  background:#1e1e1e;
@@ -98,7 +89,6 @@ body{
  background:#2e7d32;
 }
 
-/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
@@ -131,38 +121,22 @@ body{
  outline:none;
 }
 
-/* ⭐ SEO SECTION */
-.seo-section{
- width:100%;
- max-width:1000px;
- margin:40px auto;
- color:#ccc;
- line-height:1.8;
-}
-
-.seo-section h2{
- color:#fff;
- margin:20px 0 10px;
-}
-
-.faq-item{
- background:#0d0d0d;
- padding:14px;
- border-radius:8px;
- margin-bottom:12px;
-}
-
-/* FOOTER TRUST LINKS */
+/* ⭐ FIXED TRUST FOOTER */
 footer{
+ position:fixed;
+ bottom:0;
+ width:100%;
  background:#050505;
  text-align:center;
- padding:12px;
+ padding:10px;
+ border-top:1px solid #222;
 }
 
 footer a{
  color:#aaa;
  margin:0 10px;
  text-decoration:none;
+ font-size:13px;
 }
 
 footer a:hover{
@@ -181,7 +155,6 @@ footer a:hover{
 
 <div class="main">
 
-<!-- ⭐ STATUS LEFT ABOVE CHAT -->
 <div class="status-bar">
 👤 <span id="onlineCount">0</span>
 <span id="status" class="status waiting">Waiting for stranger...</span>
@@ -203,25 +176,7 @@ footer a:hover{
 
 </div>
 
-<!-- ⭐ SEO CONTENT -->
-<section class="seo-section">
-
-<h2>Free Anonymous Stranger Chat Online</h2>
-<p>Strango lets you connect with random people instantly. No login required — just open and start chatting.</p>
-
-<h2>Why Strango is Different</h2>
-<p>Our platform uses lightweight technology for faster connections and smooth chatting. Optimized for both mobile and desktop users.</p>
-
-<h2>Frequently Asked Questions</h2>
-
-<div class="faq-item"><strong>1. Is Strango free?</strong><br>Yes, completely free anonymous chat.</div>
-<div class="faq-item"><strong>2. Do I need login?</strong><br>No signup required.</div>
-<div class="faq-item"><strong>3. Is chat anonymous?</strong><br>Yes, identity is not shared.</div>
-<div class="faq-item"><strong>4. How fast is matching?</strong><br>Instant when users are online.</div>
-<div class="faq-item"><strong>5. Can I skip strangers?</strong><br>Use NEXT anytime.</div>
-
-</section>
-
+<!-- ⭐ CLICKABLE TRUST LINKS -->
 <footer>
 <a href="/privacy.html">Privacy</a> |
 <a href="/terms.html">Terms</a> |
