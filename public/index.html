@@ -39,18 +39,19 @@ body{
  font-size:14px;
 }
 
-/* ⭐ MAIN */
+/* ⭐ MAIN FULLSCREEN AREA */
 .main{
  display:flex;
  flex-direction:column;
- flex:1;   /* ⭐ IMPORTANT — removed min-height:100vh */
+ min-height:100vh;   /* keeps chat full screen */
 }
 
+/* CHAT AREA */
 .chat-wrapper{
+ flex:1;
  padding:10px 20px;
  display:flex;
  flex-direction:column;
- flex:1;
 }
 
 .chat-container{
@@ -59,7 +60,7 @@ body{
  border-radius:12px;
  display:flex;
  flex-direction:column;
- min-height:0;
+ overflow:hidden;
 }
 
 .chat-box{
@@ -69,7 +70,6 @@ body{
  display:flex;
  flex-direction:column;
  gap:8px;
- min-height:0;
 }
 
 .message{
@@ -111,7 +111,7 @@ body{
  outline:none;
 }
 
-/* SEO */
+/* ⭐ SEO BELOW CHAT */
 .seo-section{
  width:100%;
  max-width:900px;
@@ -171,9 +171,33 @@ footer a:hover{color:#fff;}
 
 </div>
 
+<!-- ⭐ SEO BELOW FULLSCREEN CHAT -->
 <section class="seo-section">
+
 <h1>Free Anonymous Stranger Chat Online – Strango</h1>
+
 <p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account.</p>
+
+<h2>What is Strango?</h2>
+<p>Strango is an online random chat platform where users are connected with strangers from different locations.</p>
+
+<h2>Why Strango is Different</h2>
+<ul>
+<li>Instant anonymous connections</li>
+<li>No login or personal data required</li>
+<li>Lightweight design for faster loading</li>
+<li>Mobile-friendly and desktop optimized</li>
+<li>Smooth real-time messaging experience</li>
+</ul>
+
+<h2>How Strango Works</h2>
+<ol>
+<li>Open the chat page.</li>
+<li>Wait while the system finds another online user.</li>
+<li>Start messaging instantly.</li>
+<li>Press “Next” anytime.</li>
+</ol>
+
 </section>
 
 <footer>
