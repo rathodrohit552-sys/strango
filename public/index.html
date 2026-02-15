@@ -23,7 +23,7 @@ body{
  padding:20px 10px 5px;
 }
 
-/* STATUS ABOVE CHAT */
+/* STATUS */
 .status-area{
  display:flex;
  justify-content:center;
@@ -49,15 +49,15 @@ body{
  display:flex;
  justify-content:center;
  align-items:flex-start;
- padding:0 10px 10px;
+ padding:0 10px 0;
 }
 
-/* ⭐ CHAT PANEL WITH SINGLE TOP LINE */
+/* CHAT PANEL */
 .chat-container{
  width:100%;
  max-width:1000px;
- height:100%;
- border-top:1px solid #222;   /* ⭐ YOUR RED LINE POSITION */
+ height:70vh;
+ border-top:1px solid #222;
  border-left:1px solid #333;
  border-right:1px solid #333;
  border-bottom:1px solid #333;
@@ -126,6 +126,16 @@ body{
  outline:none;
 }
 
+/* ⭐ NEW UTILITIES SPACE */
+.utilities-space{
+ width:100%;
+ max-width:1000px;
+ margin:18px auto;
+ min-height:60px;  /* ⭐ YOUR EMPTY TOOL AREA */
+ border-top:1px solid #222;
+}
+
+/* FOOTER */
 footer{
  text-align:center;
  padding:12px;
@@ -149,7 +159,6 @@ footer a{
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 </div>
 
-<!-- STATUS -->
 <div class="status-area">
   <div class="online">👤 <span id="onlineCount">0</span></div>
   <div id="status" class="status waiting">Waiting for stranger...</div>
@@ -168,6 +177,11 @@ footer a{
 </div>
 
 </div>
+</div>
+
+<!-- ⭐ YOUR NEW EMPTY AREA -->
+<div class="utilities-space">
+<!-- future tools will go here -->
 </div>
 
 <footer>
@@ -194,7 +208,6 @@ let connected=false;
 let typingTimeout;
 let unseenCount=0;
 
-/* TAB NOTIFICATION */
 document.addEventListener("visibilitychange",()=>{
  if(!document.hidden){
    unseenCount=0;
