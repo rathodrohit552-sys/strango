@@ -40,25 +40,22 @@ body{
  color:#ccc;
 }
 
-.status{
- font-weight:bold;
-}
-
-.status.connected{ color:#00c853; }
-.status.waiting{ color:#ffc107; }
+.status.connected{color:#00c853;}
+.status.waiting{color:#ffc107;}
 
 .main{
  flex:1;
  display:flex;
- justify-content:center;
+ flex-direction:column;
  align-items:center;
  padding:10px;
 }
 
+/* CHAT BOX */
 .chat-container{
  width:100%;
  max-width:1000px;
- height:100%;
+ height:65vh;
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -66,7 +63,6 @@ body{
  overflow:hidden;
 }
 
-/* CHAT AREA */
 .chat-box{
  flex:1;
  padding:15px;
@@ -76,13 +72,6 @@ body{
  gap:8px;
 }
 
-/* ⭐ NEW SPACE LIKE FOOTER AREA ⭐ */
-.typing-space{
- height:45px;              /* adjust space here */
- border-top:1px solid #222;
-}
-
-/* MESSAGE STYLE */
 .message{
  max-width:70%;
  padding:10px 14px;
@@ -90,7 +79,6 @@ body{
  font-size:15px;
  background:#1e1e1e;
  color:#fff;
- align-self:flex-start;
 }
 
 .message.you{
@@ -130,6 +118,16 @@ body{
  outline:none;
 }
 
+/* ⭐ SEPARATE SPACE OUTSIDE CHAT */
+.typing-space{
+ width:100%;
+ max-width:1000px;
+ height:45px;
+ border-top:1px solid #222;
+ margin-top:6px;
+}
+
+/* FOOTER */
 footer{
  text-align:center;
  padding:12px;
@@ -160,12 +158,10 @@ footer a{
 </div>
 
 <div class="main">
+
 <div class="chat-container">
 
 <div id="chatBox" class="chat-box"></div>
-
-<!-- ⭐ NEW FOOTER-LIKE SPACE ABOVE TYPING -->
-<div class="typing-space"></div>
 
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
@@ -174,6 +170,10 @@ footer a{
 </div>
 
 </div>
+
+<!-- ⭐ NOW SEPARATE FROM CHAT LAYOUT -->
+<div class="typing-space"></div>
+
 </div>
 
 <footer>
@@ -202,13 +202,9 @@ function setStatus(text,type){
  status.className="status "+type;
 }
 
-socket.on("connect",()=>{
- setStatus("Waiting for stranger...","waiting");
-});
+socket.on("connect",()=>{ setStatus("Waiting for stranger...","waiting"); });
 
-socket.on("onlineCount",(c)=>{
- onlineCount.innerText=c;
-});
+socket.on("onlineCount",(c)=>{ onlineCount.innerText=c; });
 
 socket.on("strangerConnected",()=>{
  connected=true;
@@ -225,25 +221,16 @@ socket.on("strangerDisconnected",()=>{
 });
 
 function sendMessage(){
-
- if(!connected){
-   setStatus("Waiting for stranger...","waiting");
-   return;
- }
-
+ if(!connected) return;
  const msg=input.value.trim();
  if(msg==="") return;
-
  socket.emit("message",msg);
  addMessage("You: "+msg,"you");
  input.value="";
 }
 
 input.addEventListener("keypress",function(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  sendMessage();
- }
+ if(e.key==="Enter"){ e.preventDefault(); sendMessage(); }
 });
 
 function nextStranger(){
