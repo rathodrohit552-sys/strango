@@ -64,9 +64,11 @@ body{
  overflow:hidden;
 }
 
+/* ⭐ UPDATED SPACE ABOVE INPUT BAR */
 .chat-box{
  flex:1;
  padding:15px;
+ padding-bottom:40px;   /* ⭐ ADDED GAP ABOVE SEND/NEXT */
  overflow-y:auto;
  display:flex;
  flex-direction:column;
@@ -123,13 +125,12 @@ body{
  outline:none;
 }
 
-/* ⭐ UPDATED VERTICAL SPACE */
 .utilities-space{
  width:100%;
  max-width:1000px;
  margin:18px auto;
- min-height:120px;   /* ⭐ MORE SPACE ADDED */
- padding-top:20px;   /* ⭐ BREATHING SPACE */
+ min-height:120px;
+ padding-top:20px;
  border-top:1px solid #222;
 }
 
@@ -176,7 +177,6 @@ footer a{
 </div>
 </div>
 
-<!-- ⭐ BIGGER SPACE -->
 <div class="utilities-space"></div>
 
 <footer>
@@ -190,6 +190,7 @@ footer a{
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
+
 const socket = io({transports:["websocket","polling"]});
 
 const chatBox=document.getElementById("chatBox");
@@ -259,6 +260,7 @@ function addMessage(text,type){
  chatBox.appendChild(div);
  chatBox.scrollTop=chatBox.scrollHeight;
 }
+
 </script>
 
 </body>
