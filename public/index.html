@@ -20,6 +20,7 @@ body{
  min-height:100vh;
 }
 
+/* HEADER */
 .header{text-align:center;padding:20px 10px 10px;}
 
 .status.connected{color:#00c853;}
@@ -34,6 +35,7 @@ body{
  font-size:14px;
 }
 
+/* MAIN LAYOUT */
 .main{
  display:flex;
  flex-direction:column;
@@ -41,8 +43,9 @@ body{
  min-height:calc(100vh - 110px);
 }
 
+/* CHAT WRAPPER */
 .chat-wrapper{
- flex:1;
+ flex:5; /* ⭐ reduced height */
  padding:10px 20px 0;
  display:flex;
  flex-direction:column;
@@ -66,31 +69,19 @@ body{
  gap:8px;
 }
 
-.message{
- background:#1e1e1e;
- padding:10px 14px;
- border-radius:12px;
- width:fit-content;
- max-width:70%;
- align-self:flex-start;
+/* ⭐ NEW UTILITY SECTION */
+.utility-section{
+ flex:1;
+ border-top:1px solid #111;
+ border-bottom:1px solid #111;
+ margin:10px 20px 0;
 }
 
-.message.you{
- background:#2e7d32;
- align-self:flex-start;
-}
-
-/* ⭐ NEW TYPING INDICATOR STYLE */
-.typing-indicator{
- padding:6px 15px;
- color:#aaa;
- font-size:14px;
- display:none;
-}
-
+/* ⭐ MESSAGE INPUT OUTSIDE CHAT */
 .input-area{
  display:flex;
  border-top:1px solid #333;
+ margin:0 20px;
 }
 
 .next-btn{
@@ -118,6 +109,28 @@ body{
  outline:none;
 }
 
+.message{
+ background:#1e1e1e;
+ padding:10px 14px;
+ border-radius:12px;
+ width:fit-content;
+ max-width:70%;
+ align-self:flex-start;
+}
+
+.message.you{
+ background:#2e7d32;
+}
+
+/* TYPING INDICATOR */
+.typing-indicator{
+ padding:6px 15px;
+ color:#aaa;
+ font-size:14px;
+ display:none;
+}
+
+/* SEO */
 .seo-section{
  width:100%;
  max-width:900px;
@@ -151,23 +164,26 @@ footer a:hover{color:#fff;}
 <span id="status" class="status waiting">Waiting for stranger...</span>
 </div>
 
+<!-- ⭐ CHAT -->
 <div class="chat-wrapper">
 <div class="chat-container">
-
 <div id="chatBox" class="chat-box"></div>
+</div>
+</div>
 
-<!-- ⭐ NEW TYPING INDICATOR JUST ABOVE NEXT BUTTON -->
+<!-- ⭐ NEW EMPTY UTILITY AREA -->
+<div class="utility-section"></div>
+
+<!-- ⭐ TYPING TEXT ABOVE INPUT -->
 <div id="typingIndicator" class="typing-indicator">
 Stranger is typing...
 </div>
 
+<!-- ⭐ MESSAGE INPUT NOW OUTSIDE CHAT -->
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
 <button class="send-btn" onclick="sendMessage()">SEND</button>
-</div>
-
-</div>
 </div>
 
 </div>
@@ -188,6 +204,7 @@ Stranger is typing...
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
+/* ⭐ EXACT SAME JS AS BEFORE — NO CHANGES */
 const socket=io({transports:["websocket","polling"]});
 
 const chatBox=document.getElementById("chatBox");
@@ -200,7 +217,6 @@ let connected=false;
 let originalTitle="Strango — Free Anonymous Stranger Chat India";
 let unread=0;
 
-/* PAGE VISIBILITY */
 document.addEventListener("visibilitychange",()=>{
  if(!document.hidden){
  unread=0;
@@ -208,7 +224,6 @@ document.addEventListener("visibilitychange",()=>{
  }
 });
 
-/* NOTIFICATIONS */
 if("Notification" in window){
  Notification.requestPermission();
 }
@@ -260,10 +275,8 @@ socket.on("strangerDisconnected",()=>{
  socket.emit("next");
 });
 
-/* YOU TYPING */
 input.addEventListener("input",()=>{
  socket.emit("typing");
-
  clearTimeout(window.stopTypingTimer);
  window.stopTypingTimer=setTimeout(()=>{
    socket.emit("stopTyping");
