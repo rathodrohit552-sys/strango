@@ -1,151 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Strango — Free Stranger Chat India</title>
 
-<script src="/socket.io/socket.io.js"></script>
-
 <style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
 body{
-background:#000;
-color:#fff;
-font-family:Arial;
-text-align:center;
-margin:0;
+  background:#000;
+  color:#fff;
+
+  /* ⭐ IMPORTANT FIX */
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-.logo{
-font-size:34px;
-font-weight:bold;
-margin-top:20px;
+/* ===== HEADER ===== */
+.header{
+  text-align:center;
+  padding:20px 10px;
 }
 
-.subtitle{
-color:#aaa;
-margin-bottom:10px;
+.header h1{
+  font-size:32px;
 }
 
-#chat{
-width:80%;
-height:420px;
-margin:auto;
-border:1px solid #333;
-border-radius:12px;
-padding:10px;
-overflow-y:auto;
-text-align:left;
+.online{
+  margin-top:10px;
+  font-size:18px;
 }
 
-.you{color:#00ff9c;}
-.stranger{color:#ccc;}
-
-input{
-width:60%;
-padding:12px;
-border-radius:6px;
-border:none;
+/* ===== MAIN CHAT AREA ===== */
+.main{
+  flex:1;                 /* ⭐ fills remaining screen */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
 }
 
-button{
-padding:12px 20px;
-background:#00c46a;
-border:none;
-border-radius:8px;
-cursor:pointer;
-color:#000;
-font-weight:bold;
+/* ⭐ PROFESSIONAL CHAT BOX */
+.chat-container{
+  width:100%;
+  max-width:1000px;
+  height:100%;            /* ⭐ stays inside screen */
+  border:1px solid #333;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:#000;
 }
 
+/* CHAT MESSAGES AREA */
+.chat-box{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+}
+
+/* INPUT AREA */
+.input-area{
+  display:flex;
+  border-top:1px solid #333;
+}
+
+.input-area input{
+  flex:1;
+  background:#000;
+  color:#fff;
+  border:none;
+  padding:15px;
+  outline:none;
+}
+
+.input-area button{
+  background:#111;
+  color:#fff;
+  border:none;
+  padding:15px 20px;
+  cursor:pointer;
+}
+
+/* ===== FOOTER ===== */
 footer{
-margin-top:20px;
+  text-align:center;
+  padding:12px;
+  font-size:14px;
+  border-top:1px solid #222;
 }
 
 footer a{
-color:#aaa;
-margin:0 10px;
-text-decoration:none;
+  color:#aaa;
+  text-decoration:none;
+  margin:0 10px;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="logo">Strango — Free Stranger Chat India</div>
-<div class="subtitle">Anonymous text chat without login. Meet strangers instantly.</div>
+<div class="header">
+  <h1>Strango — Free Stranger Chat India</h1>
+  <p>Anonymous text chat without login. Meet strangers instantly.</p>
+  <div class="online">Online: <span id="onlineCount">0</span></div>
+  <div id="status">Connecting...</div>
+</div>
 
-<h3>Online: <span id="online">0</span></h3>
-<p id="status">Connecting...</p>
+<div class="main">
 
-<div id="chat"></div>
+  <div class="chat-container">
 
-<br>
+    <div id="chatBox" class="chat-box"></div>
 
-<button onclick="nextStranger()">Next</button>
-<input id="msg" placeholder="Type message...">
-<button onclick="sendMsg()">Send</button>
+    <div class="input-area">
+      <input id="messageInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+  </div>
+
+</div>
 
 <footer>
-<br>
-<a href="/privacy.html">Privacy</a> |
-<a href="/terms.html">Terms</a> |
-<a href="/safety.html">Safety</a> |
-<a href="/about.html">About</a> |
-<a href="/contact.html">Contact</a>
+  <a href="/privacy.html">Privacy</a> |
+  <a href="/terms.html">Terms</a> |
+  <a href="/safety.html">Safety</a> |
+  <a href="/about.html">About</a> |
+  <a href="/contact.html">Contact</a>
 </footer>
-
-<script>
-const socket = io();
-
-const chat=document.getElementById("chat");
-const statusText=document.getElementById("status");
-const online=document.getElementById("online");
-
-let connected=false;
-
-function addMessage(text,cls){
-const div=document.createElement("div");
-div.className=cls;
-div.innerText=text;
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
-}
-
-socket.on("onlineCount",(c)=>{
-online.innerText=c;
-});
-
-socket.on("connected",()=>{
-connected=true;
-statusText.innerText="Stranger connected";
-});
-
-socket.on("message",(msg)=>{
-addMessage("Stranger: "+msg,"stranger");
-});
-
-socket.on("strangerDisconnected",()=>{
-connected=false;
-statusText.innerText="Waiting for stranger...";
-});
-
-function sendMsg(){
-const input=document.getElementById("msg");
-const msg=input.value.trim();
-if(!msg || !connected) return;
-
-addMessage("You: "+msg,"you");
-socket.emit("message",msg);
-input.value="";
-}
-
-function nextStranger(){
-chat.innerHTML="";
-connected=false;
-statusText.innerText="Finding new stranger...";
-socket.emit("next");
-}
-</script>
 
 </body>
 </html>
