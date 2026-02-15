@@ -33,6 +33,13 @@ io.on("connection", (socket) => {
     }
   });
 
+  // ⭐⭐⭐ TYPING INDICATOR RELAY (NEW)
+  socket.on("typing", () => {
+    if(socket.partner){
+      io.to(socket.partner).emit("typing");
+    }
+  });
+
   // ===== NEXT BUTTON =====
   socket.on("next", () => {
 
@@ -88,7 +95,6 @@ function tryMatch(){
     user1.partner = user2.id;
     user2.partner = user1.id;
 
-    // ⭐⭐⭐ FIXED EVENT NAME
     user1.emit("strangerConnected");
     user2.emit("strangerConnected");
   }

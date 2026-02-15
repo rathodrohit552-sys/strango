@@ -47,7 +47,6 @@ body{
  gap:8px;
 }
 
-/* ⭐ LEFT SIDE CHAT STYLE */
 .message{
  max-width:70%;
  padding:10px 14px;
@@ -55,15 +54,16 @@ body{
  font-size:15px;
  background:#1e1e1e;
  color:#fff;
- align-self:flex-start;   /* ⭐ ALWAYS LEFT */
+ align-self:flex-start;
 }
 
-.message.you{
- background:#2e7d32; /* darker green */
-}
+.message.you{ background:#2e7d32; }
+.message.stranger{ background:#1e1e1e; }
 
-.message.stranger{
- background:#1e1e1e;
+.typing{
+ font-size:13px;
+ color:#aaa;
+ margin-top:4px;
 }
 
 /* INPUT AREA */
@@ -128,6 +128,7 @@ footer a{
 <div class="chat-container">
 
 <div id="chatBox" class="chat-box"></div>
+<div id="typingIndicator" class="typing"></div>
 
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
@@ -156,8 +157,19 @@ const chatBox=document.getElementById("chatBox");
 const input=document.getElementById("messageInput");
 const onlineCount=document.getElementById("onlineCount");
 const status=document.getElementById("status");
+const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
+let typingTimeout;
+let unseenCount=0;
+
+/* ⭐ TAB VISIBILITY */
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden){
+   unseenCount=0;
+   document.title="Strango — Free Stranger Chat India";
+ }
+});
 
 socket.on("connect",()=>{
  status.innerText="Waiting for stranger...";
@@ -173,11 +185,28 @@ socket.on("strangerConnected",()=>{
 });
 
 socket.on("message",(msg)=>{
+
+ typingIndicator.innerText="";
+
  addMessage("Stranger: "+msg,"stranger");
+
+ if(document.hidden){
+   unseenCount++;
+   document.title="("+unseenCount+") New message — Strango";
+ }
+});
+
+socket.on("typing",()=>{
+ typingIndicator.innerText="Stranger is typing...";
+ clearTimeout(typingTimeout);
+ typingTimeout=setTimeout(()=>{
+   typingIndicator.innerText="";
+ },1200);
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
+ typingIndicator.innerText="";
  status.innerText="Waiting for stranger...";
 });
 
@@ -196,6 +225,13 @@ function sendMessage(){
  input.value="";
 }
 
+/* ⭐ EMIT TYPING */
+input.addEventListener("input",()=>{
+ if(connected){
+   socket.emit("typing");
+ }
+});
+
 input.addEventListener("keypress",function(e){
  if(e.key==="Enter"){
   e.preventDefault();
@@ -205,12 +241,12 @@ input.addEventListener("keypress",function(e){
 
 function nextStranger(){
  connected=false;
+ typingIndicator.innerText="";
  socket.emit("next");
  status.innerText="Finding new stranger...";
  chatBox.innerHTML="";
 }
 
-/* ⭐ LEFT SIDE MESSAGE CREATION */
 function addMessage(text,type){
  const div=document.createElement("div");
  div.classList.add("message",type);
