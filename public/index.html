@@ -7,7 +7,6 @@
 <title>Strango — Free Stranger Chat India | Anonymous Random Chat</title>
 
 <meta name="description" content="Strango is a free anonymous stranger chat platform in India. Talk to random people instantly without login.">
-<meta name="robots" content="index, follow">
 
 <style>
 
@@ -22,7 +21,8 @@ body{
  color:#fff;
  display:flex;
  flex-direction:column;
- min-height:100vh;
+ height:100vh;
+ overflow:hidden; /* ⭐ FULLSCREEN MODE */
 }
 
 /* HEADER */
@@ -34,7 +34,6 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* STATUS BAR LEFT */
 .status-bar{
  width:100%;
  padding-left:20px;
@@ -45,14 +44,14 @@ body{
  font-size:14px;
 }
 
-/* MAIN FULLSCREEN CHAT */
+/* MAIN FULLSCREEN */
 .main{
+ flex:1;
  display:flex;
  flex-direction:column;
- flex:1;
 }
 
-/* CHAT WRAPPER */
+/* CHAT */
 .chat-wrapper{
  flex:1;
  padding:10px 20px 60px;
@@ -60,7 +59,6 @@ body{
  flex-direction:column;
 }
 
-/* CHAT CONTAINER */
 .chat-container{
  flex:1;
  border:1px solid #333;
@@ -123,33 +121,7 @@ body{
  outline:none;
 }
 
-/* ⭐ SEO SECTION */
-.seo-section{
- width:100%;
- max-width:1000px;
- margin:40px auto;
- color:#ccc;
- line-height:1.8;
-}
-
-.seo-section h2{
- color:#fff;
- margin:20px 0 10px;
-}
-
-.seo-section h3{
- margin-top:15px;
- color:#fff;
-}
-
-.faq-item{
- background:#0d0d0d;
- padding:14px;
- border-radius:8px;
- margin-bottom:12px;
-}
-
-/* FIXED TRUST FOOTER */
+/* ⭐ TRUST FOOTER FIXED */
 footer{
  position:fixed;
  bottom:0;
@@ -169,6 +141,15 @@ footer a{
 
 footer a:hover{
  color:#fff;
+}
+
+/* ⭐ HIDDEN SEO (VISIBLE TO GOOGLE, NOT TO USERS) */
+.seo-section{
+ position:absolute;
+ left:-9999px;
+ width:1px;
+ height:1px;
+ overflow:hidden;
 }
 
 </style>
@@ -204,53 +185,11 @@ footer a:hover{
 
 </div>
 
-<!-- ⭐ NEW SEO CONTENT -->
+<!-- ⭐ SEO CONTENT (HIDDEN BUT INDEXABLE) -->
 <section class="seo-section">
 
 <h2>Free Anonymous Stranger Chat Online – Strango</h2>
-<p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account. Built with lightweight technology, Strango allows users to start conversations in seconds while keeping their identity private. Whether you are using mobile or desktop, the experience is fast, simple, and focused on real-time communication.</p>
-
-<h2>What is Strango?</h2>
-<p>Strango is an online random chat platform where users are connected with strangers from different locations. Unlike traditional social apps, there is no signup process, no profile creation, and no complicated setup. You simply open the chat and start talking.</p>
-
-<h2>Why Strango is Different</h2>
-<ul>
-<li>Instant anonymous connections</li>
-<li>No login or personal data required</li>
-<li>Lightweight design for faster loading</li>
-<li>Mobile-friendly and desktop optimized</li>
-<li>Smooth real-time messaging experience</li>
-</ul>
-
-<h2>Features of Strango Anonymous Chat</h2>
-
-<h3>Instant Matching</h3>
-<p>Strango automatically connects you with another online user.</p>
-
-<h3>Private and Anonymous</h3>
-<p>Your identity is not shared. No usernames or profiles required.</p>
-
-<h3>Fast and Simple Interface</h3>
-<p>The minimal design reduces clutter and keeps everything easy to use.</p>
-
-<h3>Cross-Device Compatibility</h3>
-<p>Strango works smoothly on smartphones, tablets, and desktops.</p>
-
-<h2>How Strango Works</h2>
-<ol>
-<li>Open the chat page.</li>
-<li>Wait while the system finds another online user.</li>
-<li>Start messaging instantly.</li>
-<li>Press “Next” anytime to switch to a new stranger.</li>
-</ol>
-
-<h2>Is Strango Safe?</h2>
-<p>Strango is designed to protect user privacy by avoiding personal data collection.</p>
-
-<div class="faq-item"><strong>Is Strango free?</strong><br>Yes. Completely free anonymous chat.</div>
-<div class="faq-item"><strong>Do I need to create an account?</strong><br>No signup required.</div>
-<div class="faq-item"><strong>Is my identity visible?</strong><br>No. Identity remains private.</div>
-<div class="faq-item"><strong>Can I use Strango on mobile?</strong><br>Yes. Fully mobile optimized.</div>
+<p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account...</p>
 
 </section>
 
