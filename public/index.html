@@ -17,16 +17,22 @@ html,body{
  height:100%;
 }
 
+/* ⭐ FULLSCREEN PAGE */
 body{
  background:#000;
  color:#fff;
  display:flex;
  flex-direction:column;
- min-height:100vh;
+ height:100vh;
+ overflow:hidden; /* page does not scroll */
 }
 
 /* HEADER */
-.header{text-align:center;padding:20px 10px;}
+.header{
+ text-align:center;
+ padding:20px 10px;
+ flex-shrink:0;
+}
 
 .status-bar{
  display:flex;
@@ -38,27 +44,26 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* ⭐ MAIN FULL HEIGHT FIXED */
+/* ⭐ MAIN FULLSCREEN CHAT AREA */
 .main{
+ flex:1;
  display:flex;
  flex-direction:column;
- align-items:center;
- width:100%;
- flex:1;   /* ✅ grows automatically */
+ overflow:hidden;
 }
 
-/* FULL WIDTH CHAT */
+/* CHAT WRAPPER TAKES FULL HEIGHT */
 .chat-wrapper{
- width:100%;
- display:flex;
- flex-direction:column;
- padding:10px 20px;
- flex:1;   /* ✅ makes wrapper stretch */
-}
-
-.chat-container{
  flex:1;
  width:100%;
+ padding:10px 20px;
+ display:flex;
+ flex-direction:column;
+}
+
+/* CHAT CONTAINER */
+.chat-container{
+ flex:1;
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -66,6 +71,7 @@ body{
  overflow:hidden;
 }
 
+/* MESSAGE AREA (ONLY THIS SCROLLS) */
 .chat-box{
  flex:1;
  padding:20px;
@@ -75,6 +81,7 @@ body{
  gap:8px;
 }
 
+/* MESSAGES */
 .message{
  align-self:flex-start;
  background:#1e1e1e;
@@ -83,11 +90,15 @@ body{
  max-width:90%;
 }
 
-.message.you{background:#2e7d32;}
+.message.you{
+ background:#2e7d32;
+}
 
+/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
+ flex-shrink:0;
 }
 
 .next-btn{
@@ -117,11 +128,14 @@ body{
  outline:none;
 }
 
-/* SEO SECTION */
+/* ⭐ SEO CONTENT (hidden from layout height but visible to Google) */
 .seo-section{
+ position:absolute;
+ top:120vh; /* placed below viewport so chat stays fullscreen */
  width:100%;
  max-width:1000px;
- margin:40px auto;
+ left:50%;
+ transform:translateX(-50%);
  color:#ccc;
  line-height:1.8;
 }
@@ -140,6 +154,9 @@ body{
 
 /* FOOTER */
 footer{
+ position:absolute;
+ top:220vh;
+ width:100%;
  background:#050505;
  text-align:center;
  padding:12px;
@@ -186,7 +203,9 @@ footer a:hover{color:#fff;}
 
 </div>
 
+<!-- ⭐ SEO CONTENT (kept for Google indexing) -->
 <section class="seo-section">
+
 <h2>Free Anonymous Stranger Chat Online</h2>
 <p>Strango lets you connect with random people instantly. No login required — just open and start chatting.</p>
 
@@ -200,11 +219,7 @@ footer a:hover{color:#fff;}
 <div class="faq-item"><strong>3. Is chat anonymous?</strong><br>Yes, identity is not shared.</div>
 <div class="faq-item"><strong>4. How fast is matching?</strong><br>Instant when users are online.</div>
 <div class="faq-item"><strong>5. Can I skip strangers?</strong><br>Use NEXT anytime.</div>
-<div class="faq-item"><strong>6. Is Strango mobile friendly?</strong><br>Yes, fully responsive design.</div>
-<div class="faq-item"><strong>7. Are chats stored?</strong><br>Minimal anonymous system.</div>
-<div class="faq-item"><strong>8. Is it safe?</strong><br>Follow safety guidelines.</div>
-<div class="faq-item"><strong>9. Why use Strango?</strong><br>Fast, simple, anonymous chatting.</div>
-<div class="faq-item"><strong>10. Does SEO help ranking?</strong><br>Yes, strong content improves visibility.</div>
+
 </section>
 
 <footer>
