@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">Strango — Free Anonymous Stranger Chat India</title>
+<title>Strango — Free Anonymous Stranger Chat India</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
 html,body{
- height:100%;
  background:#000;
  color:#fff;
 }
 
-/* ⭐ FULL SCREEN CHAT WRAPPER */
+/* ⭐ MAIN WRAPPER */
 .app-wrapper{
  display:flex;
  flex-direction:column;
@@ -38,18 +37,18 @@ html,body{
  font-size:14px;
 }
 
-/* ⭐ CHAT PANEL TAKES REMAINING SPACE */
+/* ⭐ CHAT PANEL SHORTER HEIGHT */
 .chat-container{
- flex:1;
- display:flex;
- flex-direction:column;
+ width:calc(100% - 40px);
+ margin:0 auto;
+ height:380px; /* 👈 reduced height */
  border:1px solid #333;
  border-radius:12px;
- margin:0 20px;
- min-height:0;
+ display:flex;
+ flex-direction:column;
 }
 
-/* ⭐ MESSAGES AREA SCROLLABLE */
+/* MESSAGES AREA */
 .chat-box{
  flex:1;
  overflow-y:auto;
@@ -59,13 +58,21 @@ html,body{
  gap:8px;
 }
 
-/* INPUT BAR AT BOTTOM (NO FIXED POSITION) */
+/* ⭐ NEW UTILITIES AREA */
+.utilities-area{
+ width:calc(100% - 40px);
+ margin:10px auto;
+ height:70px;  /* empty space for future tools */
+}
+
+/* INPUT BAR (UNCHANGED POSITION) */
 .input-area{
+ width:calc(100% - 40px);
+ margin:0 auto;
  display:flex;
  border-top:1px solid #333;
 }
 
-/* BUTTONS */
 .next-btn{
  background:#ff3b3b;
  color:#fff;
@@ -104,12 +111,11 @@ html,body{
  background:#2e7d32;
 }
 
-/* FAQ + FOOTER OUTSIDE CHAT WRAPPER */
+/* SEO + FOOTER */
 .seo-section{
  width:100%;
  max-width:900px;
  margin:40px auto;
- line-height:1.7;
  color:#ccc;
 }
 
@@ -131,7 +137,6 @@ footer a:hover{color:#fff;}
 
 <body>
 
-<!-- ⭐ FULL SCREEN CHAT -->
 <div class="app-wrapper">
 
 <div class="header">
@@ -144,10 +149,15 @@ footer a:hover{color:#fff;}
 <span id="status" class="status waiting">Waiting for stranger...</span>
 </div>
 
+<!-- ⭐ CHAT PANEL -->
 <div class="chat-container">
-
 <div id="chatBox" class="chat-box"></div>
+</div>
 
+<!-- ⭐ UTILITIES AREA BETWEEN CHAT AND INPUT -->
+<div class="utilities-area"></div>
+
+<!-- ⭐ INPUT BAR (UNCHANGED) -->
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
@@ -156,9 +166,7 @@ footer a:hover{color:#fff;}
 
 </div>
 
-</div>
-
-<!-- ⭐ NOW FAQ ONLY APPEARS AFTER SCROLLING PAST FULL CHAT -->
+<!-- FAQ + FOOTER OUTSIDE CHAT -->
 <section class="seo-section">
 <h2>Frequently Asked Questions</h2>
 <p>Strango provides completely free anonymous chat without hidden charges.</p>
