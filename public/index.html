@@ -43,13 +43,13 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* ⭐ MAIN LAYOUT — PUSH CHAT DOWN */
+/* ⭐ CHAT NOW STARTS HIGHER */
 .main{
  flex:1;
  display:flex;
  flex-direction:column;
  align-items:center;
- justify-content:flex-end;   /* ⭐ IMPORTANT */
+ justify-content:flex-start; /* ⭐ moved up */
  padding:10px;
 }
 
@@ -74,16 +74,27 @@ body{
  gap:8px;
 }
 
+/* ⭐ MESSAGE STYLE UPDATED */
 .message{
- max-width:70%;
+ display:inline-block;
+ width:auto;
+ max-width:90%;   /* ⭐ bigger flexible bubble */
  padding:10px 14px;
  border-radius:12px;
  font-size:15px;
  background:#1e1e1e;
  color:#fff;
+ word-wrap:break-word;
 }
 
-.message.you{background:#2e7d32;}
+.message.you{
+ background:#2e7d32;
+ align-self:flex-end; /* right side */
+}
+
+.message.stranger{
+ align-self:flex-start; /* left side */
+}
 
 /* INPUT AREA */
 .input-area{
