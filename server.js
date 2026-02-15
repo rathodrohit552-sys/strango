@@ -23,20 +23,30 @@ io.on("connection", (socket) => {
 
   socket.partner = null;
 
-  // ⭐ add user to queue immediately
+  // ⭐ auto join queue
   addToQueue(socket);
 
   // ===== MESSAGE RELAY =====
   socket.on("message", (msg) => {
     if (socket.partner) {
       io.to(socket.partner).emit("message", msg);
+
+      // ⭐ STOP TYPING WHEN MESSAGE SENT
+      io.to(socket.partner).emit("stopTyping");
     }
   });
 
-  // ⭐⭐⭐ TYPING INDICATOR RELAY (NEW)
+  // ===== TYPING RELAY =====
   socket.on("typing", () => {
     if(socket.partner){
       io.to(socket.partner).emit("typing");
+    }
+  });
+
+  // ⭐ NEW: STOP TYPING RELAY
+  socket.on("stopTyping", () => {
+    if(socket.partner){
+      io.to(socket.partner).emit("stopTyping");
     }
   });
 
@@ -45,6 +55,7 @@ io.on("connection", (socket) => {
 
     if (socket.partner) {
       io.to(socket.partner).emit("strangerDisconnected");
+      io.to(socket.partner).emit("stopTyping"); // ⭐ clear dots
 
       const p = io.sockets.sockets.get(socket.partner);
       if (p) p.partner = null;
@@ -65,6 +76,7 @@ io.on("connection", (socket) => {
 
     if (socket.partner) {
       io.to(socket.partner).emit("strangerDisconnected");
+      io.to(socket.partner).emit("stopTyping"); // ⭐ clear dots
 
       const p = io.sockets.sockets.get(socket.partner);
       if (p) p.partner = null;
@@ -73,12 +85,10 @@ io.on("connection", (socket) => {
 });
 
 
-// ===== AUTO MATCH FUNCTION =====
+// ===== AUTO MATCH =====
 function addToQueue(socket){
-
   waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
   waitingQueue.push(socket);
-
   tryMatch();
 }
 
@@ -97,6 +107,10 @@ function tryMatch(){
 
     user1.emit("strangerConnected");
     user2.emit("strangerConnected");
+
+    // ⭐ clear typing on new match
+    user1.emit("stopTyping");
+    user2.emit("stopTyping");
   }
 }
 
