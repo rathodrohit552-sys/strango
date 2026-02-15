@@ -83,12 +83,6 @@ body{
 
 .message.you{background:#2e7d32;}
 
-/* ⭐ SPACE ABOVE INPUT AREA (THIS IS WHAT YOU WANTED) */
-.tools-space{
- height:60px;
- border-top:1px solid #222;
-}
-
 /* INPUT AREA */
 .input-area{
  display:flex;
@@ -122,18 +116,32 @@ body{
  outline:none;
 }
 
-/* FOOTER */
+/* ⭐ SPACE ABOVE FOOTER */
+.tools-space{
+ width:100%;
+ max-width:1000px;
+ height:60px;
+ border-top:1px solid #222;
+ margin-top:12px;
+}
+
+/* FOOTER (LINE REMOVED) */
 footer{
  text-align:center;
  padding:12px;
  font-size:14px;
- border-top:1px solid #222;
+ border-top:none; /* ⭐ removed grey line */
+ background:#050505;
 }
 
 footer a{
  color:#aaa;
  margin:0 10px;
  text-decoration:none;
+}
+
+footer a:hover{
+ color:#fff;
 }
 
 </style>
@@ -157,9 +165,6 @@ footer a{
 
 <div id="chatBox" class="chat-box"></div>
 
-<!-- ⭐ SPACE NOW INSIDE CHAT LAYOUT -->
-<div class="tools-space"></div>
-
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
@@ -167,6 +172,8 @@ footer a{
 </div>
 
 </div>
+
+<div class="tools-space"></div>
 
 </div>
 
