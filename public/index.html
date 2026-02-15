@@ -23,7 +23,7 @@ body{
  padding:20px 10px 5px;
 }
 
-/* ⭐ STATUS ABOVE CHAT */
+/* STATUS ABOVE CHAT */
 .status-area{
  display:flex;
  justify-content:center;
@@ -44,15 +44,6 @@ body{
 .status.waiting{color:#ffc107;}
 .status.disconnected{color:#ff3b3b;}
 
-/* ⭐ DIVIDER LINE */
-.divider{
- width:100%;
- max-width:1000px;
- height:1px;
- background:#222;
- margin:0 auto 8px auto;
-}
-
 .main{
  flex:1;
  display:flex;
@@ -61,11 +52,15 @@ body{
  padding:0 10px 10px;
 }
 
+/* ⭐ CHAT PANEL WITH SINGLE TOP LINE */
 .chat-container{
  width:100%;
  max-width:1000px;
  height:100%;
- border:1px solid #333;
+ border-top:1px solid #222;   /* ⭐ YOUR RED LINE POSITION */
+ border-left:1px solid #333;
+ border-right:1px solid #333;
+ border-bottom:1px solid #333;
  border-radius:12px;
  display:flex;
  flex-direction:column;
@@ -154,14 +149,11 @@ footer a{
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 </div>
 
-<!-- ⭐ STATUS MOVED ABOVE CHAT -->
+<!-- STATUS -->
 <div class="status-area">
   <div class="online">👤 <span id="onlineCount">0</span></div>
   <div id="status" class="status waiting">Waiting for stranger...</div>
 </div>
-
-<!-- ⭐ NEW SEPARATE LINE -->
-<div class="divider"></div>
 
 <div class="main">
 <div class="chat-container">
@@ -199,6 +191,16 @@ const status=document.getElementById("status");
 const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
+let typingTimeout;
+let unseenCount=0;
+
+/* TAB NOTIFICATION */
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden){
+   unseenCount=0;
+   document.title="Strango — Free Stranger Chat India";
+ }
+});
 
 function setStatus(text,type){
  status.innerText=text;
@@ -220,8 +222,8 @@ socket.on("strangerConnected",()=>{
 
 socket.on("typing",()=>{
  typingIndicator.innerText="Stranger is typing...";
- clearTimeout(window.typingTimeout);
- window.typingTimeout=setTimeout(()=>{
+ clearTimeout(typingTimeout);
+ typingTimeout=setTimeout(()=>{
    typingIndicator.innerText="";
  },1200);
 });
@@ -229,14 +231,21 @@ socket.on("typing",()=>{
 socket.on("message",(msg)=>{
  typingIndicator.innerText="";
  addMessage("Stranger: "+msg,"stranger");
+
+ if(document.hidden){
+   unseenCount++;
+   document.title="("+unseenCount+") New message — Strango";
+ }
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
+ typingIndicator.innerText="";
  setStatus("Waiting for stranger...","waiting");
 });
 
 function sendMessage(){
+
  if(!connected){
    setStatus("Waiting for stranger...","waiting");
    return;
