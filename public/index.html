@@ -20,38 +20,17 @@ body{
 /* HEADER */
 .header{
  text-align:center;
- padding:20px 10px 8px;
+ padding:20px 10px 5px;
 }
 
-/* MAIN LAYOUT */
-.main{
- flex:1;
+/* ⭐ STATUS ABOVE CHAT */
+.status-area{
  display:flex;
  justify-content:center;
- align-items:flex-start; /* ⭐ PUSH CHAT UP */
- padding:0 10px 10px;
-}
-
-/* CHAT CONTAINER */
-.chat-container{
- width:100%;
- max-width:1000px;
- height:100%;
- border:1px solid #333;
- border-radius:12px;
- display:flex;
- flex-direction:column;
- overflow:hidden;
-}
-
-/* ⭐ CHAT HEADER BAR */
-.chat-top{
- display:flex;
  align-items:center;
  gap:15px;
- padding:10px 15px;
- border-bottom:1px solid #222;
  font-size:14px;
+ margin-bottom:6px;
 }
 
 .online{
@@ -64,6 +43,34 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 .status.disconnected{color:#ff3b3b;}
+
+/* ⭐ DIVIDER LINE */
+.divider{
+ width:100%;
+ max-width:1000px;
+ height:1px;
+ background:#222;
+ margin:0 auto 8px auto;
+}
+
+.main{
+ flex:1;
+ display:flex;
+ justify-content:center;
+ align-items:flex-start;
+ padding:0 10px 10px;
+}
+
+.chat-container{
+ width:100%;
+ max-width:1000px;
+ height:100%;
+ border:1px solid #333;
+ border-radius:12px;
+ display:flex;
+ flex-direction:column;
+ overflow:hidden;
+}
 
 .chat-box{
  flex:1;
@@ -92,7 +99,6 @@ body{
  padding:0 15px 8px;
 }
 
-/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
@@ -148,14 +154,17 @@ footer a{
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 </div>
 
-<div class="main">
-<div class="chat-container">
-
-<!-- ⭐ MOVED STATUS INTO CHAT HEADER -->
-<div class="chat-top">
+<!-- ⭐ STATUS MOVED ABOVE CHAT -->
+<div class="status-area">
   <div class="online">👤 <span id="onlineCount">0</span></div>
   <div id="status" class="status waiting">Waiting for stranger...</div>
 </div>
+
+<!-- ⭐ NEW SEPARATE LINE -->
+<div class="divider"></div>
+
+<div class="main">
+<div class="chat-container">
 
 <div id="chatBox" class="chat-box"></div>
 <div id="typingIndicator" class="typing"></div>
