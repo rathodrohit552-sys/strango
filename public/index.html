@@ -23,7 +23,6 @@ body{
  padding:20px 10px;
 }
 
-/* STATUS BAR */
 .status-bar{
  display:flex;
  justify-content:center;
@@ -51,7 +50,7 @@ body{
  padding:10px;
 }
 
-/* CHAT BOX */
+/* CHAT CONTAINER */
 .chat-container{
  width:100%;
  max-width:1000px;
@@ -81,9 +80,7 @@ body{
  color:#fff;
 }
 
-.message.you{
- background:#2e7d32;
-}
+.message.you{ background:#2e7d32; }
 
 /* INPUT AREA */
 .input-area{
@@ -118,13 +115,13 @@ body{
  outline:none;
 }
 
-/* ⭐ SEPARATE SPACE OUTSIDE CHAT */
-.typing-space{
+/* ⭐ YOUR SPACE AREA (SEPARATE FROM CHAT) */
+.tools-space{
  width:100%;
  max-width:1000px;
- height:45px;
+ height:60px;             /* adjust space size here */
  border-top:1px solid #222;
- margin-top:6px;
+ margin-top:8px;
 }
 
 /* FOOTER */
@@ -154,7 +151,6 @@ footer a{
   <div class="online">👤 <span id="onlineCount">0</span></div>
   <div id="status" class="status waiting">Waiting for stranger...</div>
 </div>
-
 </div>
 
 <div class="main">
@@ -171,8 +167,8 @@ footer a{
 
 </div>
 
-<!-- ⭐ NOW SEPARATE FROM CHAT LAYOUT -->
-<div class="typing-space"></div>
+<!-- ⭐ THIS IS YOUR SEPARATE SPACE -->
+<div class="tools-space"></div>
 
 </div>
 
