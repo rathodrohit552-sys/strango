@@ -3,7 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strango — Free Stranger Chat India</title>
+
+<title>Strango — Free Stranger Chat India | Anonymous Random Chat</title>
+
+<meta name="description" content="Strango is a free anonymous stranger chat platform in India. Talk to random people online without login. Safe, fast and instant chat experience.">
+<meta name="keywords" content="stranger chat, random chat india, anonymous chat online, free chat website, meet strangers online">
+<meta name="robots" content="index, follow">
+
+<!-- ⭐ Google FAQ Structured Data -->
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"FAQPage",
+ "mainEntity":[
+  {"@type":"Question","name":"What is Strango?","acceptedAnswer":{"@type":"Answer","text":"Strango is a free anonymous stranger chat platform that lets you talk with random people online instantly."}},
+  {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No. Strango works without login or registration."}},
+  {"@type":"Question","name":"Is Strango safe?","acceptedAnswer":{"@type":"Answer","text":"Strango includes safety guidelines and moderation tools to help users chat responsibly."}},
+  {"@type":"Question","name":"Is this chat free?","acceptedAnswer":{"@type":"Answer","text":"Yes, Strango is completely free to use."}},
+  {"@type":"Question","name":"Can I chat anonymously?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your identity is not shared while chatting."}},
+  {"@type":"Question","name":"Does Strango work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Strango works smoothly on phones and desktops."}},
+  {"@type":"Question","name":"How fast is stranger matching?","acceptedAnswer":{"@type":"Answer","text":"Matching happens instantly when two users are online."}},
+  {"@type":"Question","name":"Can I leave chat anytime?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can click NEXT to connect with a new stranger anytime."}},
+  {"@type":"Question","name":"Is personal data stored?","acceptedAnswer":{"@type":"Answer","text":"Strango focuses on anonymous conversations and minimal data usage."}},
+  {"@type":"Question","name":"Why choose Strango over other chat sites?","acceptedAnswer":{"@type":"Answer","text":"Strango offers a simple, fast and clean anonymous chat experience without signups."}}
+ ]
+}
+</script>
 
 <style>
 
@@ -18,12 +43,8 @@ body{
 }
 
 /* HEADER */
-.header{
- text-align:center;
- padding:20px 10px;
-}
+.header{text-align:center;padding:20px 10px;}
 
-/* STATUS BAR */
 .status-bar{
  display:flex;
  justify-content:center;
@@ -33,13 +54,7 @@ body{
  align-items:center;
 }
 
-.online{
- display:flex;
- align-items:center;
- gap:6px;
- color:#ccc;
-}
-
+.online{display:flex;align-items:center;gap:6px;color:#ccc;}
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
@@ -51,7 +66,7 @@ body{
  padding:10px;
 }
 
-/* CHAT CONTAINER */
+/* CHAT */
 .chat-container{
  width:100%;
  max-width:1000px;
@@ -65,14 +80,13 @@ body{
 
 .chat-box{
  flex:1;
- padding:20px 15px; /* ⭐ more space */
+ padding:20px 15px;
  overflow-y:auto;
  display:flex;
  flex-direction:column;
  gap:8px;
 }
 
-/* ⭐ ALL MESSAGES LEFT */
 .message{
  display:inline-block;
  max-width:90%;
@@ -85,46 +99,51 @@ body{
  align-self:flex-start;
 }
 
-.message.you{
- background:#2e7d32;
-}
+.message.you{background:#2e7d32;}
 
-.message.stranger{
- background:#1e1e1e;
-}
-
-/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
- padding-top:10px; /* ⭐ SPACE ABOVE INPUT */
+ padding-top:10px;
 }
 
 .next-btn{
- background:#ff3b3b;
- color:#fff;
- border:none;
- padding:15px 20px;
- cursor:pointer;
- font-weight:bold;
+ background:#ff3b3b;color:#fff;border:none;padding:15px 20px;
+ cursor:pointer;font-weight:bold;
 }
 
 .send-btn{
- background:#00c853;
- color:#fff;
- border:none;
- padding:15px 20px;
- cursor:pointer;
- font-weight:bold;
+ background:#00c853;color:#fff;border:none;padding:15px 20px;
+ cursor:pointer;font-weight:bold;
 }
 
 .input-area input{
- flex:1;
- background:#000;
+ flex:1;background:#000;color:#fff;border:none;padding:15px;outline:none;
+}
+
+/* ⭐ SEO CONTENT AREA */
+.seo-section{
+ max-width:1000px;
+ margin:40px auto;
+ padding:20px;
+ color:#ccc;
+ line-height:1.7;
+}
+
+.seo-section h2{
  color:#fff;
- border:none;
- padding:15px;
- outline:none;
+ margin-bottom:10px;
+}
+
+.faq{
+ margin-top:20px;
+}
+
+.faq-item{
+ margin-bottom:12px;
+ padding:12px;
+ background:#0d0d0d;
+ border-radius:8px;
 }
 
 /* FOOTER */
@@ -132,19 +151,11 @@ footer{
  text-align:center;
  padding:12px;
  font-size:14px;
- border-top:none;
  background:#050505;
 }
 
-footer a{
- color:#aaa;
- margin:0 10px;
- text-decoration:none;
-}
-
-footer a:hover{
- color:#fff;
-}
+footer a{color:#aaa;margin:0 10px;text-decoration:none;}
+footer a:hover{color:#fff;}
 
 </style>
 </head>
@@ -156,8 +167,8 @@ footer a:hover{
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
 
 <div class="status-bar">
-  <div class="online">👤 <span id="onlineCount">0</span></div>
-  <div id="status" class="status waiting">Waiting for stranger...</div>
+<div class="online">👤 <span id="onlineCount">0</span></div>
+<div id="status" class="status waiting">Waiting for stranger...</div>
 </div>
 </div>
 
@@ -176,6 +187,27 @@ footer a:hover{
 </div>
 
 </div>
+
+<!-- ⭐ SEO CONTENT -->
+<section class="seo-section">
+<h2>Free Anonymous Stranger Chat Online</h2>
+<p>Strango lets you talk with random strangers online instantly. No login, no signup — just open and start chatting. Our platform focuses on simplicity, speed, and privacy while helping users meet new people worldwide.</p>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq">
+<div class="faq-item"><strong>1. Is Strango free?</strong><br>Yes, completely free.</div>
+<div class="faq-item"><strong>2. Do I need an account?</strong><br>No registration required.</div>
+<div class="faq-item"><strong>3. Is my identity hidden?</strong><br>Yes, chats are anonymous.</div>
+<div class="faq-item"><strong>4. Can I skip strangers?</strong><br>Use the NEXT button anytime.</div>
+<div class="faq-item"><strong>5. Does it work on phones?</strong><br>Yes, mobile friendly.</div>
+<div class="faq-item"><strong>6. Is it safe?</strong><br>Follow safety guidelines.</div>
+<div class="faq-item"><strong>7. How fast is matching?</strong><br>Instant when users are online.</div>
+<div class="faq-item"><strong>8. Is login required?</strong><br>No login needed.</div>
+<div class="faq-item"><strong>9. Are chats stored?</strong><br>Minimal anonymous system.</div>
+<div class="faq-item"><strong>10. Why use Strango?</strong><br>Simple fast anonymous chatting.</div>
+</div>
+</section>
 
 <footer>
 <a href="/privacy.html" target="_blank">Privacy</a> |
@@ -204,7 +236,6 @@ function setStatus(text,type){
 }
 
 socket.on("connect",()=> setStatus("Waiting for stranger...","waiting"));
-
 socket.on("onlineCount",(c)=> onlineCount.innerText=c);
 
 socket.on("strangerConnected",()=>{
