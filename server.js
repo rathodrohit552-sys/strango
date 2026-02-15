@@ -13,7 +13,7 @@ const io = new Server(server, {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-let waitingQueue = [];   // users waiting for stranger
+let waitingQueue = [];
 let onlineCount = 0;
 
 io.on("connection", (socket) => {
@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
 
   socket.partner = null;
 
-  // ===== ADD USER TO WAITING QUEUE =====
+  // ⭐ add user to queue immediately
   addToQueue(socket);
 
   // ===== MESSAGE RELAY =====
@@ -65,10 +65,10 @@ io.on("connection", (socket) => {
   });
 });
 
+
 // ===== AUTO MATCH FUNCTION =====
 function addToQueue(socket){
 
-  // prevent duplicates
   waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
   waitingQueue.push(socket);
 
@@ -77,8 +77,7 @@ function addToQueue(socket){
 
 function tryMatch(){
 
-  // AUTO CONNECT WHEN TWO WAITING
-  while (waitingQueue.length >= 2){
+  while(waitingQueue.length >= 2){
 
     const user1 = waitingQueue.shift();
     const user2 = waitingQueue.shift();
@@ -89,8 +88,9 @@ function tryMatch(){
     user1.partner = user2.id;
     user2.partner = user1.id;
 
-    user1.emit("connected");
-    user2.emit("connected");
+    // ⭐⭐⭐ FIXED EVENT NAME
+    user1.emit("strangerConnected");
+    user2.emit("strangerConnected");
   }
 }
 
