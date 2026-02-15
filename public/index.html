@@ -143,10 +143,10 @@ socket.on("onlineCount",(c)=>{
  onlineCount.innerText=c;
 });
 
+/* ✅ REMOVED EXTRA CHAT MESSAGE HERE */
 socket.on("strangerConnected",()=>{
  connected=true;
  status.innerText="Stranger connected";
- addMessage("⚡ Stranger connected");
 });
 
 socket.on("message",(msg)=>{
@@ -167,6 +167,14 @@ function sendMessage(){
  addMessage("You: "+msg);
  input.value="";
 }
+
+/* ⭐ ENTER KEY = SEND */
+input.addEventListener("keypress",function(e){
+ if(e.key==="Enter"){
+  e.preventDefault();
+  sendMessage();
+ }
+});
 
 /* ⭐ NEXT BUTTON */
 function nextStranger(){
