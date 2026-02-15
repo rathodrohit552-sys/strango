@@ -17,13 +17,11 @@ body{
  flex-direction:column;
 }
 
-/* HEADER */
 .header{
  text-align:center;
  padding:20px 10px 5px;
 }
 
-/* STATUS */
 .status-area{
  display:flex;
  justify-content:center;
@@ -52,7 +50,6 @@ body{
  padding:0 10px 0;
 }
 
-/* CHAT PANEL */
 .chat-container{
  width:100%;
  max-width:1000px;
@@ -126,16 +123,16 @@ body{
  outline:none;
 }
 
-/* ⭐ NEW UTILITIES SPACE */
+/* ⭐ UPDATED VERTICAL SPACE */
 .utilities-space{
  width:100%;
  max-width:1000px;
  margin:18px auto;
- min-height:60px;  /* ⭐ YOUR EMPTY TOOL AREA */
+ min-height:120px;   /* ⭐ MORE SPACE ADDED */
+ padding-top:20px;   /* ⭐ BREATHING SPACE */
  border-top:1px solid #222;
 }
 
-/* FOOTER */
 footer{
  text-align:center;
  padding:12px;
@@ -179,10 +176,8 @@ footer a{
 </div>
 </div>
 
-<!-- ⭐ YOUR NEW EMPTY AREA -->
-<div class="utilities-space">
-<!-- future tools will go here -->
-</div>
+<!-- ⭐ BIGGER SPACE -->
+<div class="utilities-space"></div>
 
 <footer>
 <a href="/privacy.html" target="_blank">Privacy</a> |
@@ -195,7 +190,6 @@ footer a{
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-
 const socket = io({transports:["websocket","polling"]});
 
 const chatBox=document.getElementById("chatBox");
@@ -205,28 +199,14 @@ const status=document.getElementById("status");
 const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
-let typingTimeout;
-let unseenCount=0;
-
-document.addEventListener("visibilitychange",()=>{
- if(!document.hidden){
-   unseenCount=0;
-   document.title="Strango — Free Stranger Chat India";
- }
-});
 
 function setStatus(text,type){
  status.innerText=text;
  status.className="status "+type;
 }
 
-socket.on("connect",()=>{
- setStatus("Waiting for stranger...","waiting");
-});
-
-socket.on("onlineCount",(c)=>{
- onlineCount.innerText=c;
-});
+socket.on("connect",()=> setStatus("Waiting for stranger...","waiting"));
+socket.on("onlineCount",(c)=> onlineCount.innerText=c);
 
 socket.on("strangerConnected",()=>{
  connected=true;
@@ -235,54 +215,33 @@ socket.on("strangerConnected",()=>{
 
 socket.on("typing",()=>{
  typingIndicator.innerText="Stranger is typing...";
- clearTimeout(typingTimeout);
- typingTimeout=setTimeout(()=>{
-   typingIndicator.innerText="";
- },1200);
+ clearTimeout(window.typingTimeout);
+ window.typingTimeout=setTimeout(()=> typingIndicator.innerText="",1200);
 });
 
 socket.on("message",(msg)=>{
  typingIndicator.innerText="";
  addMessage("Stranger: "+msg,"stranger");
-
- if(document.hidden){
-   unseenCount++;
-   document.title="("+unseenCount+") New message — Strango";
- }
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
- typingIndicator.innerText="";
  setStatus("Waiting for stranger...","waiting");
 });
 
 function sendMessage(){
-
- if(!connected){
-   setStatus("Waiting for stranger...","waiting");
-   return;
- }
-
+ if(!connected){ setStatus("Waiting for stranger...","waiting"); return; }
  const msg=input.value.trim();
  if(msg==="") return;
-
  socket.emit("message",msg);
  addMessage("You: "+msg,"you");
  input.value="";
 }
 
-input.addEventListener("input",()=>{
- if(connected){
-   socket.emit("typing");
- }
-});
+input.addEventListener("input",()=>{ if(connected) socket.emit("typing"); });
 
-input.addEventListener("keypress",function(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  sendMessage();
- }
+input.addEventListener("keypress",(e)=>{
+ if(e.key==="Enter"){ e.preventDefault(); sendMessage(); }
 });
 
 function nextStranger(){
@@ -300,7 +259,6 @@ function addMessage(text,type){
  chatBox.appendChild(div);
  chatBox.scrollTop=chatBox.scrollHeight;
 }
-
 </script>
 
 </body>
