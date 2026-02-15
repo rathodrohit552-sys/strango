@@ -8,7 +8,12 @@
 <style>
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-html,body{height:100%;background:#000;color:#fff;}
+html,body{
+ height:100%;
+ background:#000;
+ color:#fff;
+ overflow-x:hidden;
+}
 
 /* ⭐ HEADER */
 .header{
@@ -16,7 +21,7 @@ html,body{height:100%;background:#000;color:#fff;}
  padding:20px 10px 10px;
 }
 
-/* ⭐ STATUS */
+/* STATUS */
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
@@ -29,18 +34,19 @@ html,body{height:100%;background:#000;color:#fff;}
  font-size:14px;
 }
 
-/* ⭐🔥 FULLSCREEN CHAT AREA */
+/* ⭐🔥 FULLSCREEN CHAT (LOCKED) */
 .main{
  position:fixed;
- top:110px;      /* header height */
- bottom:0;
+ top:110px; /* header height */
  left:0;
  right:0;
+ bottom:0;
+ background:#000;
  display:flex;
  flex-direction:column;
+ z-index:5; /* keeps chat above seo */
 }
 
-/* CHAT */
 .chat-wrapper{
  flex:1;
  padding:10px 20px;
@@ -104,14 +110,19 @@ html,body{height:100%;background:#000;color:#fff;}
  outline:none;
 }
 
-/* ⭐ SEO stays BELOW screen */
+/* ⭐ SEO LAYER (SEPARATE FROM CHAT) */
+.page-content{
+ position:relative;
+ z-index:1;
+ margin-top:100vh; /* push completely below chat */
+}
+
 .seo-section{
  width:100%;
  max-width:900px;
  margin:40px auto;
  line-height:1.7;
  color:#ccc;
- margin-top:100vh; /* pushes below fullscreen chat */
 }
 
 .seo-section h1{color:#fff;margin-top:20px;}
@@ -139,6 +150,7 @@ footer a:hover{color:#fff;}
 <p>Chat instantly with real strangers. No login. Safe, fast and completely anonymous.</p>
 </div>
 
+<!-- ⭐ FULLSCREEN CHAT -->
 <div class="main">
 
 <div class="status-bar">
@@ -162,6 +174,9 @@ footer a:hover{color:#fff;}
 
 </div>
 
+<!-- ⭐ SEO + FOOTER (SEPARATE SCROLL AREA) -->
+<div class="page-content">
+
 <section class="seo-section">
 <h1>Free Anonymous Stranger Chat Online – Strango</h1>
 <p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account.</p>
@@ -174,6 +189,8 @@ footer a:hover{color:#fff;}
 <a href="/about.html">About</a> |
 <a href="/contact.html">Contact</a>
 </footer>
+
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 
