@@ -20,40 +20,19 @@ body{
 /* HEADER */
 .header{
  text-align:center;
- padding:20px 10px;
+ padding:20px 10px 8px;
 }
 
-/* ⭐ PREMIUM STATUS BAR */
-.status-bar{
- display:flex;
- justify-content:center;
- gap:20px;
- margin-top:8px;
- font-size:15px;
- align-items:center;
-}
-
-.online{
- display:flex;
- align-items:center;
- gap:6px;
- color:#ccc;
-}
-
-.status{ font-weight:bold; }
-
-.status.connected{ color:#00c853; }
-.status.waiting{ color:#ffc107; }
-.status.disconnected{ color:#ff3b3b;}
-
+/* MAIN LAYOUT */
 .main{
  flex:1;
  display:flex;
  justify-content:center;
- align-items:center;
- padding:10px;
+ align-items:flex-start; /* ⭐ PUSH CHAT UP */
+ padding:0 10px 10px;
 }
 
+/* CHAT CONTAINER */
 .chat-container{
  width:100%;
  max-width:1000px;
@@ -64,6 +43,27 @@ body{
  flex-direction:column;
  overflow:hidden;
 }
+
+/* ⭐ CHAT HEADER BAR */
+.chat-top{
+ display:flex;
+ align-items:center;
+ gap:15px;
+ padding:10px 15px;
+ border-bottom:1px solid #222;
+ font-size:14px;
+}
+
+.online{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ color:#ccc;
+}
+
+.status.connected{color:#00c853;}
+.status.waiting{color:#ffc107;}
+.status.disconnected{color:#ff3b3b;}
 
 .chat-box{
  flex:1;
@@ -84,7 +84,7 @@ body{
  align-self:flex-start;
 }
 
-.message.you{ background:#2e7d32; }
+.message.you{background:#2e7d32;}
 
 .typing{
  font-size:13px;
@@ -92,6 +92,7 @@ body{
  padding:0 15px 8px;
 }
 
+/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
@@ -145,16 +146,16 @@ footer a{
 <div class="header">
 <h1>Strango — Free Stranger Chat India</h1>
 <p>Anonymous text chat without login. Meet strangers instantly.</p>
-
-<div class="status-bar">
-  <div class="online">👤 <span id="onlineCount">0</span></div>
-  <div id="status" class="status waiting">Waiting for stranger...</div>
-</div>
-
 </div>
 
 <div class="main">
 <div class="chat-container">
+
+<!-- ⭐ MOVED STATUS INTO CHAT HEADER -->
+<div class="chat-top">
+  <div class="online">👤 <span id="onlineCount">0</span></div>
+  <div id="status" class="status waiting">Waiting for stranger...</div>
+</div>
 
 <div id="chatBox" class="chat-box"></div>
 <div id="typingIndicator" class="typing"></div>
@@ -189,16 +190,6 @@ const status=document.getElementById("status");
 const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
-let typingTimeout;
-let unseenCount=0;
-
-/* ⭐ TAB VISIBILITY NOTIFICATION */
-document.addEventListener("visibilitychange",()=>{
- if(!document.hidden){
-   unseenCount=0;
-   document.title="Strango — Free Stranger Chat India";
- }
-});
 
 function setStatus(text,type){
  status.innerText=text;
@@ -220,31 +211,23 @@ socket.on("strangerConnected",()=>{
 
 socket.on("typing",()=>{
  typingIndicator.innerText="Stranger is typing...";
- clearTimeout(typingTimeout);
- typingTimeout=setTimeout(()=>{
+ clearTimeout(window.typingTimeout);
+ window.typingTimeout=setTimeout(()=>{
    typingIndicator.innerText="";
  },1200);
 });
 
 socket.on("message",(msg)=>{
-
  typingIndicator.innerText="";
  addMessage("Stranger: "+msg,"stranger");
-
- if(document.hidden){
-   unseenCount++;
-   document.title="("+unseenCount+") New message — Strango";
- }
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
- typingIndicator.innerText="";
  setStatus("Waiting for stranger...","waiting");
 });
 
 function sendMessage(){
-
  if(!connected){
    setStatus("Waiting for stranger...","waiting");
    return;
@@ -258,7 +241,6 @@ function sendMessage(){
  input.value="";
 }
 
-/* ⭐ EMIT TYPING */
 input.addEventListener("input",()=>{
  if(connected){
    socket.emit("typing");
