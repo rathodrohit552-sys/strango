@@ -80,7 +80,13 @@ body{
  align-self:flex-start;
 }
 
-.typing{opacity:.6;font-style:italic;}
+/* ⭐ NEW TYPING INDICATOR STYLE */
+.typing-indicator{
+ padding:6px 15px;
+ color:#aaa;
+ font-size:14px;
+ display:none;
+}
 
 .input-area{
  display:flex;
@@ -150,6 +156,11 @@ footer a:hover{color:#fff;}
 
 <div id="chatBox" class="chat-box"></div>
 
+<!-- ⭐ NEW TYPING INDICATOR JUST ABOVE NEXT BUTTON -->
+<div id="typingIndicator" class="typing-indicator">
+Stranger is typing...
+</div>
+
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
@@ -183,13 +194,13 @@ const chatBox=document.getElementById("chatBox");
 const input=document.getElementById("messageInput");
 const onlineCount=document.getElementById("onlineCount");
 const status=document.getElementById("status");
+const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
-let typingEl=null;
 let originalTitle="Strango — Free Anonymous Stranger Chat India";
 let unread=0;
 
-/* ⭐ PAGE VISIBILITY */
+/* PAGE VISIBILITY */
 document.addEventListener("visibilitychange",()=>{
  if(!document.hidden){
  unread=0;
@@ -197,7 +208,7 @@ document.addEventListener("visibilitychange",()=>{
  }
 });
 
-/* ⭐ NOTIFICATION PERMISSION */
+/* NOTIFICATIONS */
 if("Notification" in window){
  Notification.requestPermission();
 }
@@ -207,19 +218,13 @@ function notifyUser(msg){
  unread++;
  document.title="("+unread+") New Message";
  if(Notification.permission==="granted"){
- new Notification("New message",{
- body:msg
- });
+ new Notification("New message",{body:msg});
  }
  }
 }
 
-function removeTyping(){
- if(typingEl){
- typingEl.remove();
- typingEl=null;
- }
-}
+function showTyping(){ typingIndicator.style.display="block"; }
+function hideTyping(){ typingIndicator.style.display="none"; }
 
 function setStatus(text,type){
  status.innerText=text;
@@ -235,37 +240,34 @@ socket.on("onlineCount",(c)=>onlineCount.innerText=c);
 
 socket.on("strangerConnected",()=>{
  connected=true;
- removeTyping();
+ hideTyping();
  setStatus("Stranger connected","connected");
 });
 
-socket.on("typing",()=>{
- if(typingEl) return;
- typingEl=document.createElement("div");
- typingEl.className="message typing";
- typingEl.innerText="......";
- chatBox.appendChild(typingEl);
- chatBox.scrollTop=chatBox.scrollHeight;
-});
-
-socket.on("stopTyping",removeTyping);
+socket.on("typing",showTyping);
+socket.on("stopTyping",hideTyping);
 
 socket.on("message",(msg)=>{
- removeTyping();
+ hideTyping();
  addMessage("Stranger: "+msg,"stranger");
  notifyUser(msg);
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
- removeTyping();
+ hideTyping();
  setStatus("Waiting for stranger...","waiting");
  socket.emit("next");
 });
 
-/* ⭐ YOU TYPING */
+/* YOU TYPING */
 input.addEventListener("input",()=>{
  socket.emit("typing");
+
+ clearTimeout(window.stopTypingTimer);
+ window.stopTypingTimer=setTimeout(()=>{
+   socket.emit("stopTyping");
+ },1200);
 });
 
 function sendMessage(){
@@ -274,7 +276,7 @@ function sendMessage(){
  if(!msg)return;
  socket.emit("message",msg);
  socket.emit("stopTyping");
- removeTyping();
+ hideTyping();
  addMessage("You: "+msg,"you");
  input.value="";
 }
@@ -285,7 +287,7 @@ input.addEventListener("keypress",(e)=>{
 
 function nextStranger(){
  connected=false;
- removeTyping();
+ hideTyping();
  setStatus("Finding new stranger...","waiting");
  socket.emit("next");
  chatBox.innerHTML="";
