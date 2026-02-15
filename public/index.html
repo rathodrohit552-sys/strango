@@ -14,20 +14,23 @@ html,body{
  color:#fff;
 }
 
+/* ⭐ FULL HEIGHT FLEX LAYOUT */
 body{
  display:flex;
  flex-direction:column;
- min-height:100vh;
+ height:100vh;
 }
 
 /* HEADER */
-.header{text-align:center;padding:20px 10px 10px;}
+.header{
+ text-align:center;
+ padding:20px 10px 10px;
+}
 
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
 .status-bar{
- width:100%;
  padding-left:20px;
  margin-bottom:6px;
  display:flex;
@@ -35,27 +38,26 @@ body{
  font-size:14px;
 }
 
+/* ⭐ MAIN TAKES REMAINING HEIGHT */
 .main{
  display:flex;
  flex-direction:column;
  flex:1;
- min-height:calc(100vh - 110px);
+ min-height:0;
+ padding:0 20px;
 }
 
-/* ⭐ CHAT PANEL SHORTER HEIGHT */
-.chat-wrapper{
- padding:10px 20px 0;
-}
-
+/* ⭐ CHAT PANEL FILLS SPACE */
 .chat-container{
- width:100%;
- height:360px; /* 👈 reduced height */
+ flex:1;
  border:1px solid #333;
  border-radius:12px;
  display:flex;
  flex-direction:column;
+ min-height:0;
 }
 
+/* ⭐ MESSAGES AREA EXPANDS */
 .chat-box{
  flex:1;
  padding:20px;
@@ -65,20 +67,13 @@ body{
  gap:8px;
 }
 
-/* ⭐ NEW UTILITIES AREA */
-.utilities-area{
- width:calc(100% - 40px);
- height:70px; /* utility space */
- margin:0 auto;
-}
-
-/* INPUT BAR (UNCHANGED POSITION) */
+/* INPUT BAR AT BOTTOM NATURALLY */
 .input-area{
  display:flex;
  border-top:1px solid #333;
- margin:0 20px;
 }
 
+/* BUTTONS */
 .next-btn{
  background:#ff3b3b;
  color:#fff;
@@ -104,6 +99,7 @@ body{
  outline:none;
 }
 
+/* MESSAGES */
 .message{
  background:#1e1e1e;
  padding:10px 14px;
@@ -116,6 +112,7 @@ body{
  background:#2e7d32;
 }
 
+/* SEO */
 .seo-section{
  width:100%;
  max-width:900px;
@@ -142,26 +139,23 @@ footer a:hover{color:#fff;}
 <p>Chat instantly with real strangers. No login. Safe, fast and completely anonymous.</p>
 </div>
 
-<div class="main">
-
 <div class="status-bar">
 👤 <span id="onlineCount">0</span>
 <span id="status" class="status waiting">Waiting for stranger...</span>
 </div>
 
-<div class="chat-wrapper">
-<div class="chat-container">
-<div id="chatBox" class="chat-box"></div>
-</div>
-</div>
+<div class="main">
 
-<!-- ⭐ UTILITIES AREA BETWEEN CHAT AND INPUT -->
-<div class="utilities-area"></div>
+<div class="chat-container">
+
+<div id="chatBox" class="chat-box"></div>
 
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
 <button class="send-btn" onclick="sendMessage()">SEND</button>
+</div>
+
 </div>
 
 </div>
@@ -182,7 +176,6 @@ footer a:hover{color:#fff;}
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-/* ⭐ SOCKET + CHAT LOGIC UNCHANGED */
 const socket=io({transports:["websocket","polling"]});
 
 const chatBox=document.getElementById("chatBox");
