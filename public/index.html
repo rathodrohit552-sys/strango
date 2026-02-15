@@ -43,11 +43,13 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
+/* ⭐ MAIN LAYOUT — PUSH CHAT DOWN */
 .main{
  flex:1;
  display:flex;
  flex-direction:column;
  align-items:center;
+ justify-content:flex-end;   /* ⭐ IMPORTANT */
  padding:10px;
 }
 
@@ -116,21 +118,12 @@ body{
  outline:none;
 }
 
-/* ⭐ SPACE ABOVE FOOTER */
-.tools-space{
- width:100%;
- max-width:1000px;
- height:60px;
- border-top:1px solid #222;
- margin-top:12px;
-}
-
-/* FOOTER (LINE REMOVED) */
+/* FOOTER */
 footer{
  text-align:center;
  padding:12px;
  font-size:14px;
- border-top:none; /* ⭐ removed grey line */
+ border-top:none;
  background:#050505;
 }
 
@@ -172,8 +165,6 @@ footer a:hover{
 </div>
 
 </div>
-
-<div class="tools-space"></div>
 
 </div>
 
