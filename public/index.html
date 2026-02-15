@@ -12,20 +12,21 @@
 
 html,body{height:100%;}
 
-/* ⭐ BODY CONTROLS HEIGHT */
+/* ⭐ BODY FULLSCREEN */
 body{
  background:#000;
  color:#fff;
  display:flex;
  flex-direction:column;
  height:100vh;
- overflow-y:auto;
+ overflow:hidden; /* ⭐ fullscreen chat */
 }
 
 /* HEADER */
 .header{
  text-align:center;
  padding:20px 10px 10px;
+ flex-shrink:0;
 }
 
 .status.connected{color:#00c853;}
@@ -38,14 +39,16 @@ body{
  display:flex;
  gap:12px;
  font-size:14px;
+ flex-shrink:0;
 }
 
-/* ⭐ MAIN FLEX AREA (NO 100VH HERE) */
+/* ⭐ FULLSCREEN MAIN */
 .main{
  display:flex;
  flex-direction:column;
  flex:1;
  min-height:0;
+ height:100%;
 }
 
 /* CHAT */
@@ -55,6 +58,7 @@ body{
  display:flex;
  flex-direction:column;
  min-height:0;
+ height:100%;
 }
 
 .chat-container{
@@ -122,6 +126,7 @@ body{
  margin:40px auto;
  line-height:1.7;
  color:#ccc;
+ flex-shrink:0;
 }
 
 .seo-section h1,
@@ -132,6 +137,7 @@ footer{
  background:#050505;
  text-align:center;
  padding:12px;
+ flex-shrink:0;
 }
 
 footer a{
