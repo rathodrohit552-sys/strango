@@ -43,7 +43,6 @@ body{
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-/* ⭐ MAIN AREA FILLS SPACE */
 .main{
  flex:1;
  display:flex;
@@ -52,11 +51,11 @@ body{
  padding:10px;
 }
 
-/* ⭐ CHAT NOW STRETCHES TOP → FOOTER */
+/* CHAT CONTAINER */
 .chat-container{
  width:100%;
  max-width:1000px;
- flex:1;   /* ⭐ KEY CHANGE */
+ flex:1;
  border:1px solid #333;
  border-radius:12px;
  display:flex;
@@ -66,13 +65,14 @@ body{
 
 .chat-box{
  flex:1;
- padding:15px;
+ padding:20px 15px; /* ⭐ more space */
  overflow-y:auto;
  display:flex;
  flex-direction:column;
  gap:8px;
 }
 
+/* ⭐ ALL MESSAGES LEFT */
 .message{
  display:inline-block;
  max-width:90%;
@@ -82,21 +82,22 @@ body{
  background:#1e1e1e;
  color:#fff;
  word-wrap:break-word;
+ align-self:flex-start;
 }
 
 .message.you{
  background:#2e7d32;
- align-self:flex-end;
 }
 
 .message.stranger{
- align-self:flex-start;
+ background:#1e1e1e;
 }
 
 /* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
+ padding-top:10px; /* ⭐ SPACE ABOVE INPUT */
 }
 
 .next-btn{
