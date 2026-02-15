@@ -47,21 +47,22 @@ body{
  font-size:14px;
 }
 
-/* ⭐ MAIN */
+/* ⭐ MAIN FULL HEIGHT */
 .main{
  display:flex;
  flex-direction:column;
  align-items:center;
  width:100%;
+ flex:1; /* ⭐ fills remaining screen */
 }
 
-/* ⭐ CHAT WRAPPER FULLSCREEN */
+/* ⭐ CHAT WRAPPER FULL HEIGHT */
 .chat-wrapper{
  width:100%;
  padding:10px 20px;
  display:flex;
  flex-direction:column;
- height:calc(100vh - 140px);
+ flex:1; /* ⭐ removes bottom gap */
 }
 
 /* CHAT CONTAINER */
@@ -180,7 +181,7 @@ footer a:hover{
 
 <div class="main">
 
-<!-- ⭐ LEFT STATUS BAR ABOVE CHAT -->
+<!-- ⭐ STATUS LEFT ABOVE CHAT -->
 <div class="status-bar">
 👤 <span id="onlineCount">0</span>
 <span id="status" class="status waiting">Waiting for stranger...</span>
