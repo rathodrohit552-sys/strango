@@ -135,15 +135,16 @@ const status=document.getElementById("status");
 
 let connected=false;
 
+/* ⭐ SERVER CONNECTED (NOT STRANGER) */
 socket.on("connect",()=>{
- status.innerText="Connected. Waiting for stranger...";
+ status.innerText="Waiting for stranger...";
 });
 
 socket.on("onlineCount",(c)=>{
  onlineCount.innerText=c;
 });
 
-/* ✅ REMOVED EXTRA CHAT MESSAGE HERE */
+/* ⭐ REAL STRANGER MATCH */
 socket.on("strangerConnected",()=>{
  connected=true;
  status.innerText="Stranger connected";
@@ -155,11 +156,17 @@ socket.on("message",(msg)=>{
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
- status.innerText="Stranger disconnected. Waiting...";
+ status.innerText="Waiting for stranger...";
 });
 
-/* ⭐ SEND MESSAGE */
+/* ⭐ SEND MESSAGE (BLOCK IF NOT CONNECTED) */
 function sendMessage(){
+
+ if(!connected){
+   status.innerText="Waiting for stranger...";
+   return;
+ }
+
  const msg=input.value.trim();
  if(msg==="") return;
 
