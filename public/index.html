@@ -46,7 +46,6 @@ body{
 
 .status.connected{ color:#00c853; }
 .status.waiting{ color:#ffc107; }
-.status.disconnected{ color:#ff3b3b; }
 
 .main{
  flex:1;
@@ -77,6 +76,12 @@ body{
  gap:8px;
 }
 
+/* ⭐ NEW SPACE LIKE FOOTER AREA ⭐ */
+.typing-space{
+ height:45px;              /* adjust space here */
+ border-top:1px solid #222;
+}
+
 /* MESSAGE STYLE */
 .message{
  max-width:70%;
@@ -92,11 +97,10 @@ body{
  background:#2e7d32;
 }
 
-/* ⭐ INPUT AREA WITH SPACE ABOVE TYPING BAR ⭐ */
+/* INPUT AREA */
 .input-area{
  display:flex;
  border-top:1px solid #333;
- margin-top:30px;   /* ⭐ SPACE ABOVE "TYPE A MESSAGE" */
 }
 
 .next-btn{
@@ -159,6 +163,9 @@ footer a{
 <div class="chat-container">
 
 <div id="chatBox" class="chat-box"></div>
+
+<!-- ⭐ NEW FOOTER-LIKE SPACE ABOVE TYPING -->
+<div class="typing-space"></div>
 
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
