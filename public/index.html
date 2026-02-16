@@ -25,25 +25,27 @@ width:100%;
 padding:0 10px 10px;
 }
 
-/* ===== TOP BAR ABOVE CHAT ===== */
+/* ===== TOP BAR ===== */
 .top-bar{
 display:flex;
 justify-content:space-between;
 align-items:center;
+margin-bottom:4px;
+}
+
+.status{font-size:14px;}
+.status.waiting{color:#ffd54f;}
+.status.connected{color:#00ff88;}
+.status.disconnected{color:#ff5252;}
+
+.online{font-size:14px;}
+
+/* typing text */
+.typing{
+font-size:12px;
+color:#aaa;
+height:16px;
 margin-bottom:6px;
-}
-
-.status{
-font-size:14px;
-}
-
-.status.waiting{color:#ffd54f;}   /* yellow */
-.status.connected{color:#00ff88;} /* green */
-.status.disconnected{color:#ff5252;} /* red */
-
-.online{
-font-size:14px;
-opacity:.9;
 }
 
 /* ===== CHAT ===== */
@@ -67,40 +69,13 @@ gap:10px;
 }
 
 .msg{padding:10px 14px;border-radius:18px;max-width:70%;font-size:14px;}
+.you{background:#0f3d1f;align-self:flex-start;}
+.stranger{background:#1b1b1b;align-self:flex-start;}
 
-.you{
-background:#0f3d1f;
-align-self:flex-start;
-}
+.input-bar{display:flex;border-top:1px solid #111;background:#000;}
+.input-bar input{flex:1;background:#000;border:none;color:#fff;padding:14px;outline:none;}
 
-.stranger{
-background:#1b1b1b;
-align-self:flex-start;
-}
-
-/* ===== INPUT ===== */
-.input-bar{
-display:flex;
-border-top:1px solid #111;
-background:#000;
-}
-
-.input-bar input{
-flex:1;
-background:#000;
-border:none;
-color:#fff;
-padding:14px;
-outline:none;
-}
-
-.btn{
-border:none;
-padding:0 18px;
-font-weight:bold;
-cursor:pointer;
-}
-
+.btn{border:none;padding:0 18px;font-weight:bold;cursor:pointer;}
 .next{background:#ff4040;color:#fff;}
 .send{background:#00c853;color:#fff;}
 
@@ -115,18 +90,17 @@ cursor:pointer;
 
 <div class="header">
 <h1>Strango</h1>
-<div class="subtitle">
-Random Anonymous Chat • No Login • Fast Stranger Matching India
-</div>
+<div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
 </div>
 
 <div class="main">
 
-<!-- ===== TOP BAR ===== -->
 <div class="top-bar">
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
 <div id="online" class="online">👤 0</div>
 </div>
+
+<div id="typing" class="typing"></div>
 
 <div class="chat-container">
 
@@ -148,6 +122,7 @@ const messages = document.getElementById("messages");
 const input = document.getElementById("messageInput");
 const status = document.getElementById("status");
 const online = document.getElementById("online");
+const typingText = document.getElementById("typing");
 
 function addMessage(text,type){
 const div=document.createElement("div");
@@ -157,13 +132,13 @@ messages.appendChild(div);
 messages.scrollTop=messages.scrollHeight;
 }
 
-/* Clear old chat on load */
 messages.innerHTML="";
 
-/* ===== STATUS COLOR LOGIC ===== */
+/* STATUS COLORS */
 socket.on("status",(msg)=>{
 
 status.textContent="⚡ "+msg;
+typingText.textContent="";
 
 status.classList.remove("waiting","connected","disconnected");
 
@@ -179,28 +154,48 @@ status.classList.add("disconnected");
 
 });
 
-/* ===== ONLINE COUNT ===== */
+/* ONLINE COUNT */
 socket.on("onlineCount",(count)=>{
 online.textContent="👤 "+count;
 });
 
-/* ===== RECEIVE MESSAGE ===== */
+/* RECEIVE MESSAGE */
 socket.on("message",(msg)=>{
+typingText.textContent="";
 addMessage("Stranger: "+msg,"stranger");
 });
 
-/* ===== SEND ===== */
+/* TYPING INDICATOR */
+socket.on("typing",(state)=>{
+typingText.textContent = state ? "Stranger is typing..." : "";
+});
+
+/* SEND */
 document.getElementById("sendBtn").onclick=()=>{
 if(input.value.trim()){
 addMessage("You: "+input.value,"you");
 socket.emit("message",input.value);
+socket.emit("typing",false);
 input.value="";
 }
 };
 
-/* ===== NEXT ===== */
+/* INPUT TYPING EVENT */
+let typingTimer;
+
+input.addEventListener("input",()=>{
+socket.emit("typing",true);
+
+clearTimeout(typingTimer);
+typingTimer=setTimeout(()=>{
+socket.emit("typing",false);
+},800);
+});
+
+/* NEXT */
 document.getElementById("nextBtn").onclick=()=>{
 messages.innerHTML="";
+typingText.textContent="";
 socket.emit("next");
 };
 

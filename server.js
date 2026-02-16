@@ -20,10 +20,8 @@ io.on("connection",(socket)=>{
   onlineCount++;
   io.emit("onlineCount",onlineCount);
 
-  // CLEAR OLD ROOMS
-  socket.removeAllListeners();
-
   if(waitingUser){
+
     const room = waitingUser.id + "#" + socket.id;
 
     socket.join(room);
@@ -35,6 +33,7 @@ io.on("connection",(socket)=>{
     io.to(room).emit("status","Stranger connected");
 
     waitingUser = null;
+
   }else{
     waitingUser = socket;
     socket.emit("status","Waiting for stranger...");
@@ -43,6 +42,13 @@ io.on("connection",(socket)=>{
   socket.on("message",(msg)=>{
     if(socket.room){
       socket.to(socket.room).emit("message",msg);
+    }
+  });
+
+  /* ===== TYPING EVENT ===== */
+  socket.on("typing",(state)=>{
+    if(socket.room){
+      socket.to(socket.room).emit("typing",state);
     }
   });
 
@@ -57,6 +63,7 @@ io.on("connection",(socket)=>{
   });
 
   socket.on("disconnect",()=>{
+
     onlineCount--;
     io.emit("onlineCount",onlineCount);
 
