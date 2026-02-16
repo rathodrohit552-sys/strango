@@ -25,8 +25,28 @@ width:100%;
 padding:0 10px 10px;
 }
 
-.status{color:#00ff88;margin-bottom:6px;}
+/* ===== TOP BAR ABOVE CHAT ===== */
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:6px;
+}
 
+.status{
+font-size:14px;
+}
+
+.status.waiting{color:#ffd54f;}   /* yellow */
+.status.connected{color:#00ff88;} /* green */
+.status.disconnected{color:#ff5252;} /* red */
+
+.online{
+font-size:14px;
+opacity:.9;
+}
+
+/* ===== CHAT ===== */
 .chat-container{
 flex:1;
 display:flex;
@@ -47,13 +67,40 @@ gap:10px;
 }
 
 .msg{padding:10px 14px;border-radius:18px;max-width:70%;font-size:14px;}
-.you{background:#0f3d1f;align-self:flex-start;}
-.stranger{background:#1b1b1b;align-self:flex-start;}
 
-.input-bar{display:flex;border-top:1px solid #111;background:#000;}
-.input-bar input{flex:1;background:#000;border:none;color:#fff;padding:14px;outline:none;}
+.you{
+background:#0f3d1f;
+align-self:flex-start;
+}
 
-.btn{border:none;padding:0 18px;font-weight:bold;cursor:pointer;}
+.stranger{
+background:#1b1b1b;
+align-self:flex-start;
+}
+
+/* ===== INPUT ===== */
+.input-bar{
+display:flex;
+border-top:1px solid #111;
+background:#000;
+}
+
+.input-bar input{
+flex:1;
+background:#000;
+border:none;
+color:#fff;
+padding:14px;
+outline:none;
+}
+
+.btn{
+border:none;
+padding:0 18px;
+font-weight:bold;
+cursor:pointer;
+}
+
 .next{background:#ff4040;color:#fff;}
 .send{background:#00c853;color:#fff;}
 
@@ -68,12 +115,18 @@ gap:10px;
 
 <div class="header">
 <h1>Strango</h1>
-<div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
+<div class="subtitle">
+Random Anonymous Chat • No Login • Fast Stranger Matching India
+</div>
 </div>
 
 <div class="main">
 
-<div class="status" id="status">Connecting...</div>
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+<div id="status" class="status waiting">⚡ Waiting for stranger...</div>
+<div id="online" class="online">👤 0</div>
+</div>
 
 <div class="chat-container">
 
@@ -94,6 +147,7 @@ const socket = io();
 const messages = document.getElementById("messages");
 const input = document.getElementById("messageInput");
 const status = document.getElementById("status");
+const online = document.getElementById("online");
 
 function addMessage(text,type){
 const div=document.createElement("div");
@@ -103,21 +157,39 @@ messages.appendChild(div);
 messages.scrollTop=messages.scrollHeight;
 }
 
-// CLEAR OLD CHAT ON LOAD
+/* Clear old chat on load */
 messages.innerHTML="";
 
+/* ===== STATUS COLOR LOGIC ===== */
 socket.on("status",(msg)=>{
+
 status.textContent="⚡ "+msg;
+
+status.classList.remove("waiting","connected","disconnected");
+
+if(msg.toLowerCase().includes("waiting")){
+status.classList.add("waiting");
+}
+else if(msg.toLowerCase().includes("connected")){
+status.classList.add("connected");
+}
+else{
+status.classList.add("disconnected");
+}
+
 });
 
+/* ===== ONLINE COUNT ===== */
 socket.on("onlineCount",(count)=>{
-// only show if needed
+online.textContent="👤 "+count;
 });
 
+/* ===== RECEIVE MESSAGE ===== */
 socket.on("message",(msg)=>{
 addMessage("Stranger: "+msg,"stranger");
 });
 
+/* ===== SEND ===== */
 document.getElementById("sendBtn").onclick=()=>{
 if(input.value.trim()){
 addMessage("You: "+input.value,"you");
@@ -126,6 +198,7 @@ input.value="";
 }
 };
 
+/* ===== NEXT ===== */
 document.getElementById("nextBtn").onclick=()=>{
 messages.innerHTML="";
 socket.emit("next");
