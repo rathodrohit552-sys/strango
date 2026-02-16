@@ -10,11 +10,24 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-body{background:#000;color:#fff;height:100vh;display:flex;flex-direction:column;}
 
-.header{text-align:center;padding:20px 10px 10px;}
+body{
+background:#000;
+color:#fff;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* ===== HEADER ===== */
+.header{
+text-align:center;
+padding:20px 10px 10px;
+}
+
 .subtitle{font-size:14px;opacity:.8;}
 
+/* ===== MAIN ===== */
 .main{
 flex:1;
 display:flex;
@@ -30,23 +43,14 @@ padding:0 10px 10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:4px;
+margin-bottom:6px;
 }
 
-.status{font-size:14px;}
 .status.waiting{color:#ffd54f;}
 .status.connected{color:#00ff88;}
 .status.disconnected{color:#ff5252;}
 
 .online{font-size:14px;}
-
-/* typing text */
-.typing{
-font-size:12px;
-color:#aaa;
-height:16px;
-margin-bottom:6px;
-}
 
 /* ===== CHAT ===== */
 .chat-container{
@@ -79,6 +83,21 @@ gap:10px;
 .next{background:#ff4040;color:#fff;}
 .send{background:#00c853;color:#fff;}
 
+/* ===== FOOTER ===== */
+.footer{
+text-align:center;
+padding:14px;
+font-size:13px;
+opacity:.8;
+border-top:1px solid #111;
+}
+
+.footer a{
+color:#00ff88;
+text-decoration:none;
+margin:0 6px;
+}
+
 @media(max-width:600px){
 .you{align-self:flex-end;}
 .stranger{align-self:flex-start;}
@@ -100,8 +119,6 @@ gap:10px;
 <div id="online" class="online">👤 0</div>
 </div>
 
-<div id="typing" class="typing"></div>
-
 <div class="chat-container">
 
 <div class="messages" id="messages"></div>
@@ -113,16 +130,25 @@ gap:10px;
 </div>
 
 </div>
+
+</div>
+
+<!-- ✅ TRUST FOOTER (VISIBLE NOW) -->
+<div class="footer">
+<a href="/about.html">About</a> •
+<a href="/privacy.html">Privacy</a> •
+<a href="/terms.html">Terms</a> •
+<a href="/safety.html">Safety</a> •
+<a href="/contact.html">Contact</a>
 </div>
 
 <script>
 const socket = io();
 
-const messages = document.getElementById("messages");
-const input = document.getElementById("messageInput");
-const status = document.getElementById("status");
-const online = document.getElementById("online");
-const typingText = document.getElementById("typing");
+const messages=document.getElementById("messages");
+const input=document.getElementById("messageInput");
+const status=document.getElementById("status");
+const online=document.getElementById("online");
 
 function addMessage(text,type){
 const div=document.createElement("div");
@@ -132,70 +158,33 @@ messages.appendChild(div);
 messages.scrollTop=messages.scrollHeight;
 }
 
-messages.innerHTML="";
-
-/* STATUS COLORS */
 socket.on("status",(msg)=>{
-
 status.textContent="⚡ "+msg;
-typingText.textContent="";
-
 status.classList.remove("waiting","connected","disconnected");
 
-if(msg.toLowerCase().includes("waiting")){
-status.classList.add("waiting");
-}
-else if(msg.toLowerCase().includes("connected")){
-status.classList.add("connected");
-}
-else{
-status.classList.add("disconnected");
-}
-
+if(msg.toLowerCase().includes("waiting")) status.classList.add("waiting");
+else if(msg.toLowerCase().includes("connected")) status.classList.add("connected");
+else status.classList.add("disconnected");
 });
 
-/* ONLINE COUNT */
 socket.on("onlineCount",(count)=>{
 online.textContent="👤 "+count;
 });
 
-/* RECEIVE MESSAGE */
 socket.on("message",(msg)=>{
-typingText.textContent="";
 addMessage("Stranger: "+msg,"stranger");
 });
 
-/* TYPING INDICATOR */
-socket.on("typing",(state)=>{
-typingText.textContent = state ? "Stranger is typing..." : "";
-});
-
-/* SEND */
 document.getElementById("sendBtn").onclick=()=>{
 if(input.value.trim()){
 addMessage("You: "+input.value,"you");
 socket.emit("message",input.value);
-socket.emit("typing",false);
 input.value="";
 }
 };
 
-/* INPUT TYPING EVENT */
-let typingTimer;
-
-input.addEventListener("input",()=>{
-socket.emit("typing",true);
-
-clearTimeout(typingTimer);
-typingTimer=setTimeout(()=>{
-socket.emit("typing",false);
-},800);
-});
-
-/* NEXT */
 document.getElementById("nextBtn").onclick=()=>{
 messages.innerHTML="";
-typingText.textContent="";
 socket.emit("next");
 };
 
