@@ -25,6 +25,7 @@ color:#e6e6e6;
 min-height:100vh;
 display:flex;
 flex-direction:column;
+overflow:hidden;
 }
 
 .header{text-align:center;padding:22px 10px 12px;}
@@ -383,6 +384,33 @@ if(e.key==="Enter"){
 document.getElementById("sendBtn").click();
 }
 });
+/* ============================= */
+/* MOBILE KEYBOARD FIX (PRO)     */
+/* ============================= */
+
+function adjustChatHeight(){
+  const chat = document.querySelector(".chat-container");
+
+  if(window.visualViewport){
+    const vh = window.visualViewport.height;
+    chat.style.height = (vh - 170) + "px"; 
+  }
+}
+
+/* Detect keyboard open/close */
+if(window.visualViewport){
+  window.visualViewport.addEventListener("resize",adjustChatHeight);
+}
+
+/* iOS + Android focus fix */
+input.addEventListener("focus",()=>{
+  setTimeout(adjustChatHeight,100);
+});
+
+input.addEventListener("blur",()=>{
+  setTimeout(adjustChatHeight,100);
+});
+
 </script>
 
 </body>
