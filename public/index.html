@@ -30,11 +30,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 html,body{height:100%;background:#000;color:#fff;}
 
-.chat-wrapper{
-display:flex;
-flex-direction:column;
-min-height:100vh;
-}
+.chat-wrapper{display:flex;flex-direction:column;min-height:100vh;}
 
 .header{
 max-width:1100px;
@@ -53,23 +49,9 @@ user-select:none;
 -moz-user-select:none;
 }
 
-.subtitle{
-font-size:13px;
-color:#888;
-margin-top:4px;
-}
-
-.header p{
-color:#aaa;
-margin-top:6px;
-font-size:15px;
-}
-
-.trust-row{
-margin-top:10px;
-font-size:13px;
-color:#777;
-}
+.subtitle{font-size:13px;color:#888;margin-top:4px;}
+.header p{color:#aaa;margin-top:6px;font-size:15px;}
+.trust-row{margin-top:10px;font-size:13px;color:#777;}
 
 .chat-container{
 border:1px solid #1a1a1a;
@@ -111,10 +93,16 @@ border-radius:14px;
 width:fit-content;
 max-width:70%;
 line-height:1.4;
-box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 .message.you{background:#2e7d32;}
+
+.typing{
+font-size:13px;
+color:#888;
+padding:6px 14px;
+display:none;
+}
 
 .input-area{display:flex;border-top:1px solid #111;}
 
@@ -142,28 +130,6 @@ border:none;
 padding:15px;
 outline:none;
 }
-
-.seo-section{
-width:100%;
-max-width:100%;
-margin:60px 0 20px;
-padding:60px 8%;
-line-height:1.9;
-color:#d0d0d0;
-font-size:15px;
-background:#000;
-border-top:1px solid #111;
-}
-
-footer{
-background:#050505;
-text-align:center;
-padding:14px;
-border-top:1px solid #111;
-}
-
-footer a{color:#aaa;margin:0 10px;text-decoration:none;}
-footer a:hover{color:#fff;}
 </style>
 </head>
 
@@ -187,6 +153,8 @@ footer a:hover{color:#fff;}
 
 <div id="chatBox" class="chat-box"></div>
 
+<div id="typingIndicator" class="typing">Stranger is typing...</div>
+
 <div class="input-area">
 <button class="next-btn" onclick="nextStranger()">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
@@ -197,14 +165,6 @@ footer a:hover{color:#fff;}
 
 </div>
 
-<footer>
-<a href="/privacy.html" target="_blank">Privacy</a> |
-<a href="/terms.html" target="_blank">Terms</a> |
-<a href="/safety.html" target="_blank">Safety</a> |
-<a href="/about.html" target="_blank">About</a> |
-<a href="/contact.html" target="_blank">Contact</a>
-</footer>
-
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket=io({transports:["websocket","polling"]});
@@ -212,8 +172,10 @@ const chatBox=document.getElementById("chatBox");
 const input=document.getElementById("messageInput");
 const onlineCount=document.getElementById("onlineCount");
 const status=document.getElementById("status");
+const typingIndicator=document.getElementById("typingIndicator");
 
 let connected=false;
+let typingTimer=null;
 
 function setStatus(text,type){
  status.innerText=text;
@@ -234,10 +196,20 @@ socket.on("strangerConnected",()=>{
 
 socket.on("message",(msg)=>{
  addMessage("Stranger: "+msg,"stranger");
+ typingIndicator.style.display="none";
+});
+
+socket.on("typing",()=>{
+ typingIndicator.style.display="block";
+});
+
+socket.on("stopTyping",()=>{
+ typingIndicator.style.display="none";
 });
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
+ typingIndicator.style.display="none";
  setStatus("Waiting for stranger...","waiting");
  socket.emit("next");
 });
@@ -249,7 +221,19 @@ function sendMessage(){
  socket.emit("message",msg);
  addMessage("You: "+msg,"you");
  input.value="";
+ socket.emit("stopTyping");
 }
+
+input.addEventListener("input",()=>{
+ if(!connected)return;
+
+ socket.emit("typing");
+
+ clearTimeout(typingTimer);
+ typingTimer=setTimeout(()=>{
+  socket.emit("stopTyping");
+ },1200);
+});
 
 input.addEventListener("keypress",(e)=>{
  if(e.key==="Enter"){e.preventDefault();sendMessage();}
@@ -257,6 +241,7 @@ input.addEventListener("keypress",(e)=>{
 
 function nextStranger(){
  connected=false;
+ typingIndicator.style.display="none";
  setStatus("Finding new stranger...","waiting");
  socket.emit("next");
  chatBox.innerHTML="";
