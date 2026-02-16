@@ -341,10 +341,32 @@ socket.on("onlineCount",(count)=>{
 online.textContent="👤 "+count;
 });
 
+/* ============================= */
+/* TAB NOTIFICATION SYSTEM       */
+/* ============================= */
+
+let unreadCount = 0;
+const originalTitle = document.title;
+
 socket.on("message",(msg)=>{
-typing.textContent="";
-addMessage("Stranger: "+msg,"stranger");
+  typing.textContent="";
+  addMessage("Stranger: "+msg,"stranger");
+
+  // ⭐ If tab not active → show notification
+  if(document.hidden){
+    unreadCount++;
+    document.title = "(" + unreadCount + ") New Message • Strango";
+  }
 });
+
+/* Reset when user returns to tab */
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden){
+    unreadCount = 0;
+    document.title = originalTitle;
+  }
+});
+
 
 socket.on("typing",(state)=>{
 typing.textContent = state ? "Stranger is typing..." : "";
