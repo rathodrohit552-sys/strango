@@ -6,24 +6,44 @@
 
 <title>Strango — Free Anonymous Stranger Chat India</title>
 
-<meta name="description" content="Strango is a free anonymous stranger chat platform for India. Talk instantly with no login. Safe, fast and private conversations.">
+<meta name="description" content="Strango is a premium free anonymous stranger chat platform for India. Talk instantly with no login. Fast, private and secure conversations online.">
 
 <script src="/socket.io/socket.io.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+letter-spacing:0.2px;
+}
 
 body{
 background:#000;
-color:#fff;
+color:#e6e6e6;
 min-height:100vh;
 display:flex;
 flex-direction:column;
 }
 
-.header{text-align:center;padding:20px 10px 10px;}
-.subtitle{font-size:14px;opacity:.8;}
+/* HEADER */
+.header{
+text-align:center;
+padding:22px 10px 12px;
+}
 
+h1{
+font-weight:600;
+color:#fff;
+}
+
+.subtitle{
+font-size:14px;
+opacity:.75;
+}
+
+/* MAIN */
 .main{
 display:flex;
 flex-direction:column;
@@ -45,7 +65,7 @@ margin-bottom:6px;
 .status.connected{color:#00ff88;}
 .status.disconnected{color:#ff5252;}
 
-.online{font-size:14px;}
+.online{font-size:14px;color:#bbb;}
 
 /* CHAT */
 .chat-container{
@@ -67,40 +87,69 @@ flex-direction:column;
 gap:10px;
 }
 
-.msg{padding:10px 14px;border-radius:18px;max-width:70%;font-size:14px;}
-.you{background:#0f3d1f;align-self:flex-start;}
-.stranger{background:#1b1b1b;align-self:flex-start;}
+.msg{
+padding:10px 14px;
+border-radius:18px;
+max-width:70%;
+font-size:14px;
+}
 
-.input-bar{display:flex;border-top:1px solid #111;background:#000;}
-.input-bar input{flex:1;background:#000;border:none;color:#fff;padding:14px;outline:none;}
+.you{background:#0f3d1f;align-self:flex-start;color:#d8ffd8;}
+.stranger{background:#1b1b1b;align-self:flex-start;color:#fff;}
 
-.btn{border:none;padding:0 18px;font-weight:bold;cursor:pointer;}
+.input-bar{
+display:flex;
+border-top:1px solid #111;
+background:#000;
+}
+
+.input-bar input{
+flex:1;
+background:#000;
+border:none;
+color:#fff;
+padding:14px;
+outline:none;
+font-size:14px;
+}
+
+.btn{
+border:none;
+padding:0 18px;
+font-weight:600;
+cursor:pointer;
+}
+
 .next{background:#ff4040;color:#fff;}
 .send{background:#00c853;color:#fff;}
 
-/* ===== SEO SECTION ===== */
+/* PREMIUM SEO SECTION */
 .seo-section{
 max-width:900px;
-margin:30px auto;
-padding:0 12px;
-line-height:1.6;
-opacity:.9;
+margin:32px auto;
+padding:0 14px;
+line-height:1.75;
+color:#cfcfcf;
+font-size:15px;
 }
 
 .seo-section h2{
-margin:18px 0 10px;
-font-size:20px;
+margin:22px 0 12px;
+font-size:21px;
+color:#fff;
+font-weight:600;
 }
 
 .faq{
-margin-bottom:14px;
+margin-bottom:16px;
 }
 
+/* FOOTER */
 .footer{
 text-align:center;
-padding:14px;
+padding:16px;
 font-size:13px;
-opacity:.8;
+opacity:.85;
 border-top:1px solid #111;
 }
 
@@ -108,6 +157,11 @@ border-top:1px solid #111;
 color:#00ff88;
 text-decoration:none;
 margin:0 6px;
+font-weight:500;
+}
+
+.footer a:hover{
+text-decoration:underline;
 }
 
 @media(max-width:600px){
@@ -143,58 +197,40 @@ margin:0 6px;
 
 </div>
 
-<!-- ⭐⭐⭐ PRO SEO CONTENT + FAQ SECTION -->
+<!-- ⭐ PREMIUM RICH SEO CONTENT -->
 <div class="seo-section">
 
 <h2>About Strango</h2>
 <p>
-Strango is a free anonymous stranger chat platform designed for fast and private conversations online.
-You can talk to real people instantly without creating an account or sharing personal information.
-The platform focuses on lightweight performance, privacy awareness, and safe communication aligned with
-Indian cyber law principles and international digital rights standards.
+Strango is a premium anonymous stranger chat platform built for fast and private conversations.
+Users can connect instantly without registration, maintaining anonymity while enjoying a smooth
+and lightweight experience designed especially for India. The platform encourages respectful
+communication and follows responsible digital practices aligned with Indian cyber law and
+international online safety principles.
 </p>
 
 <h2>Frequently Asked Questions</h2>
 
-<div class="faq"><b>1. What is Strango and how does it work?</b><br>
-Strango connects two random users instantly for private anonymous chat. Conversations are temporary and users can disconnect anytime.</div>
-
-<div class="faq"><b>2. Do I need an account?</b><br>
-No login or registration is required. You can start chatting instantly.</div>
-
-<div class="faq"><b>3. Is Strango safe?</b><br>
-Strango encourages respectful communication and provides safety guidelines, but users should avoid sharing personal details.</div>
-
-<div class="faq"><b>4. Are messages stored?</b><br>
-Chats are temporary and not permanently saved.</div>
-
-<div class="faq"><b>5. Which Indian laws apply?</b><br>
-Usage is expected to follow the Information Technology Act, 2000 and IT Rules 2021.</div>
-
-<div class="faq"><b>6. Can minors use Strango?</b><br>
-The platform supports safety principles aligned with the UN Convention on the Rights of the Child.</div>
-
-<div class="faq"><b>7. How is privacy protected?</b><br>
-Minimal technical data may be processed only for stability and abuse prevention.</div>
-
-<div class="faq"><b>8. Why show online user count?</b><br>
-It helps users understand activity level and matching speed.</div>
-
-<div class="faq"><b>9. What if someone behaves badly?</b><br>
-Use NEXT to disconnect instantly and contact support if needed.</div>
-
-<div class="faq"><b>10. Is Strango free?</b><br>
-Yes. The core anonymous chat experience is designed to remain simple and accessible.</div>
+<div class="faq"><b>1. What is Strango and how does it work?</b><br>Strango connects two random users instantly for anonymous private chat.</div>
+<div class="faq"><b>2. Do I need an account?</b><br>No login is required.</div>
+<div class="faq"><b>3. Is Strango safe?</b><br>Users should avoid sharing personal details and disconnect anytime.</div>
+<div class="faq"><b>4. Are messages stored?</b><br>Chats are temporary and not permanently saved.</div>
+<div class="faq"><b>5. Which Indian laws apply?</b><br>Usage aligns with the Information Technology Act, 2000 and IT Rules 2021.</div>
+<div class="faq"><b>6. Can minors use Strango?</b><br>The platform promotes safety aligned with UN child protection principles.</div>
+<div class="faq"><b>7. How is privacy protected?</b><br>Minimal technical data is processed only for stability.</div>
+<div class="faq"><b>8. Why show online user count?</b><br>It helps indicate activity level and matching speed.</div>
+<div class="faq"><b>9. What if someone behaves badly?</b><br>Use NEXT to disconnect instantly.</div>
+<div class="faq"><b>10. Is Strango free?</b><br>Yes. The core anonymous chat experience remains free.</div>
 
 </div>
 
-<!-- TRUST FOOTER -->
+<!-- ✅ CLICKABLE TRUST FOOTER -->
 <div class="footer">
-<span class="footer-link" onclick="goPage('/about.html')">About</span> •
-<span class="footer-link" onclick="goPage('/privacy.html')">Privacy</span> •
-<span class="footer-link" onclick="goPage('/terms.html')">Terms</span> •
-<span class="footer-link" onclick="goPage('/safety.html')">Safety</span> •
-<span class="footer-link" onclick="goPage('/contact.html')">Contact</span>
+<a href="/about.html">About</a> •
+<a href="/privacy.html">Privacy</a> •
+<a href="/terms.html">Terms</a> •
+<a href="/safety.html">Safety</a> •
+<a href="/contact.html">Contact</a>
 </div>
 
 <script>
