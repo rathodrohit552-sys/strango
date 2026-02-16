@@ -10,21 +10,6 @@
 
 <meta property="og:title" content="Strango — Free Anonymous Stranger Chat India">
 <meta property="og:description" content="Random anonymous chat with real strangers. No login, fast matching, mobile friendly.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://strango-1.onrender.com/">
-<meta property="og:image" content="https://strango-1.onrender.com/og-image.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Strango — Free Anonymous Stranger Chat India">
-<meta name="twitter:description" content="Random anonymous chat. No signup required. Fast stranger matching India.">
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"Strango","url":"https://strango-1.onrender.com/"}
-</script>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Strango","url":"https://strango-1.onrender.com/"}
-</script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
@@ -32,21 +17,12 @@ html,body{height:100%;background:#000;color:#fff;}
 
 .chat-wrapper{display:flex;flex-direction:column;min-height:100vh;}
 
-.header{
-max-width:1100px;
-margin:0 auto;
-text-align:center;
-padding:30px 20px 10px;
-}
+.header{max-width:1100px;margin:0 auto;text-align:center;padding:30px 20px 10px;}
 
 .header h1{
 font-size:34px;
 font-weight:600;
-letter-spacing:.4px;
-margin-bottom:4px;
 user-select:none;
--webkit-user-select:none;
--moz-user-select:none;
 }
 
 .subtitle{font-size:13px;color:#888;margin-top:4px;}
@@ -79,28 +55,50 @@ align-items:center;
 
 .chat-box{
 flex:1;
-padding:24px;
+padding:20px 18px;
 overflow-y:auto;
 display:flex;
 flex-direction:column;
-gap:12px;
 }
 
+/* ⭐ INDUSTRY STANDARD MESSAGE STACKING */
 .message{
-background:#141414;
-padding:12px 16px;
-border-radius:14px;
-width:fit-content;
-max-width:70%;
-line-height:1.4;
+max-width:65%;
+padding:10px 14px;
+border-radius:18px;
+margin:2px 0;
+line-height:1.45;
+font-size:14px;
+word-wrap:break-word;
 }
 
-.message.you{background:#2e7d32;}
+.message.stranger{
+background:#1c1c1c;
+align-self:flex-start;
+margin-right:auto;
+border-bottom-left-radius:6px;
+}
+
+.message.you{
+background:#2e7d32;
+align-self:flex-end;
+margin-left:auto;
+border-bottom-right-radius:6px;
+}
+
+/* ⭐ message grouping spacing like WhatsApp */
+.message + .message.stranger{
+margin-top:2px;
+}
+
+.message + .message.you{
+margin-top:2px;
+}
 
 .typing{
 font-size:13px;
 color:#888;
-padding:6px 14px;
+padding:4px 14px;
 display:none;
 }
 
@@ -152,7 +150,6 @@ outline:none;
 </div>
 
 <div id="chatBox" class="chat-box"></div>
-
 <div id="typingIndicator" class="typing">Stranger is typing...</div>
 
 <div class="input-area">
@@ -195,17 +192,12 @@ socket.on("strangerConnected",()=>{
 });
 
 socket.on("message",(msg)=>{
- addMessage("Stranger: "+msg,"stranger");
+ addMessage(msg,"stranger");
  typingIndicator.style.display="none";
 });
 
-socket.on("typing",()=>{
- typingIndicator.style.display="block";
-});
-
-socket.on("stopTyping",()=>{
- typingIndicator.style.display="none";
-});
+socket.on("typing",()=> typingIndicator.style.display="block");
+socket.on("stopTyping",()=> typingIndicator.style.display="none");
 
 socket.on("strangerDisconnected",()=>{
  connected=false;
@@ -219,20 +211,16 @@ function sendMessage(){
  const msg=input.value.trim();
  if(!msg)return;
  socket.emit("message",msg);
- addMessage("You: "+msg,"you");
+ addMessage(msg,"you");
  input.value="";
  socket.emit("stopTyping");
 }
 
 input.addEventListener("input",()=>{
  if(!connected)return;
-
  socket.emit("typing");
-
  clearTimeout(typingTimer);
- typingTimer=setTimeout(()=>{
-  socket.emit("stopTyping");
- },1200);
+ typingTimer=setTimeout(()=>socket.emit("stopTyping"),1200);
 });
 
 input.addEventListener("keypress",(e)=>{
@@ -250,7 +238,7 @@ function nextStranger(){
 function addMessage(text,type){
  const div=document.createElement("div");
  div.classList.add("message",type);
- div.innerText=text;
+ div.innerText=(type==="you"?"You: ":"Stranger: ")+text;
  chatBox.appendChild(div);
  chatBox.scrollTop=chatBox.scrollHeight;
 }
