@@ -435,19 +435,19 @@ input.addEventListener("focus",()=>{
 /* HIDE BUTTONS WHEN TYPING (MOBILE) */
 /* ============================= */
 
+/* ============================= */
+/* MOBILE KEYBOARD SAFE MODE     */
+/* ============================= */
+
 const nextBtn = document.getElementById("nextBtn");
 const sendBtn = document.getElementById("sendBtn");
 
 input.addEventListener("focus",()=>{
-  if(window.innerWidth <= 768){
-    if(nextBtn) nextBtn.style.display="none";
-    if(sendBtn) sendBtn.style.display="none";
-  }
+  // keep buttons visible, only adjust chat height
+  setTimeout(adjustChatHeight,100);
 });
 
 input.addEventListener("blur",()=>{
-  if(nextBtn) nextBtn.style.display="";
-  if(sendBtn) sendBtn.style.display="";
   setTimeout(adjustChatHeight,100);
 });
 
