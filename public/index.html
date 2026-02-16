@@ -25,6 +25,10 @@ color:#e6e6e6;
 min-height:100vh;
 display:flex;
 flex-direction:column;
+overscroll-behavior-y: contain;
+touch-action: manipulation;
+-webkit-overflow-scrolling: touch;
+-webkit-text-size-adjust:100%;
 }
 
 .header{text-align:center;padding:22px 10px 12px;}
@@ -173,6 +177,26 @@ font-weight:500;
     align-self:flex-start !important;
   }
 }
+/* ⭐ ULTRA SAFE MOBILE CHAT POLISH */
+@media (max-width:768px){
+
+  html, body{
+    height:100%;
+    overflow:hidden;
+  }
+
+  .main{
+    flex:1;
+    overflow:hidden;
+  }
+
+  .chat-container{
+    height:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+}
 
 /* Tablet / Desktop / Landscape */
 @media (min-width:769px){
@@ -242,7 +266,15 @@ font-weight:500;
 
 </div>
 
-<div class="seo-section">
+<!-- ⭐ COLLAPSIBLE SEO BLOCK -->
+<div class="seo-wrapper">
+
+  <div class="seo-toggle" id="seoToggle">
+    About Strango <span class="seo-arrow">▼</span>
+  </div>
+
+  <div class="seo-content">
+
 
 <h2 style="color:#00ff88;">Modern Random Chat Platform</h2>
 <p>
@@ -309,7 +341,9 @@ Strango primarily offers instant text-based stranger chat.</p>
 <p><b>🔟 How can I have a better experience on Strango?</b><br>
 Use a stable internet connection, keep conversations respectful, and avoid sharing sensitive personal details.</p>
 
-</div>
+</div>   <!-- close seo-content -->
+</div>   <!-- close seo-wrapper -->
+
 
 
 <div class="footer">
@@ -335,8 +369,14 @@ function addMessage(text,type){
 const div=document.createElement("div");
 div.className="msg "+type;
 div.textContent=text;
+const isNearBottom =
+  messages.scrollHeight - messages.scrollTop - messages.clientHeight < 120;
+
 messages.appendChild(div);
-messages.scrollTop=messages.scrollHeight;
+
+if(isNearBottom){
+  messages.scrollTop = messages.scrollHeight;
+}
 }
 
 socket.on("status",(msg)=>{
@@ -487,6 +527,39 @@ function disableChatLock(){
 
 input.addEventListener("focus", enableChatLock);
 input.addEventListener("blur", disableChatLock);
+/* ⭐ AUTO COLLAPSE SEO WHEN TYPING (SAFE MOBILE FIX) */
+const seoWrapper = document.querySelector(".seo-wrapper");
+const seoContent = document.querySelector(".seo-content");
+const seoToggle = document.getElementById("seoToggle");
+/* ⭐ SEO TOGGLE CLICK (LOCK CHAT POSITION) */
+if(seoToggle){
+seoToggle.addEventListener("click",()=>{
+
+  const scrollY = window.scrollY;
+
+  seoWrapper.classList.toggle("active");
+
+  if(seoWrapper.classList.contains("active")){
+    seoContent.style.maxHeight = seoContent.scrollHeight + "px";
+    seoToggle.querySelector(".seo-arrow").textContent = "▲";
+  }else{
+    seoContent.style.maxHeight = "0px";
+    seoToggle.querySelector(".seo-arrow").textContent = "▼";
+  }
+
+  window.scrollTo(0, scrollY);
+});
+}
+
+input.addEventListener("focus", () => {
+  if (window.innerWidth <= 768 && seoWrapper && seoContent) {
+    seoWrapper.classList.remove("active");
+    seoContent.style.maxHeight = "0px";
+
+    const arrow = document.querySelector(".seo-arrow");
+    if (arrow) arrow.textContent = "▼";
+  }
+});
 
 </script>
 
