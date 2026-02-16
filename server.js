@@ -1,118 +1,76 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
-const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: { origin: "*" },
-  transports: ["websocket","polling"]
+const io = new Server(server,{
+  cors:{ origin:"*" },
+  transports:["websocket","polling"]
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
-let waitingQueue = [];
+let waitingUser = null;
 let onlineCount = 0;
 
-io.on("connection", (socket) => {
+io.on("connection",(socket)=>{
 
   onlineCount++;
-  io.emit("onlineCount", onlineCount);
+  io.emit("onlineCount",onlineCount);
 
-  socket.partner = null;
+  // CLEAR OLD ROOMS
+  socket.removeAllListeners();
 
-  // ⭐ auto join queue
-  addToQueue(socket);
+  if(waitingUser){
+    const room = waitingUser.id + "#" + socket.id;
 
-  // ===== MESSAGE RELAY =====
-  socket.on("message", (msg) => {
-    if (socket.partner) {
-      io.to(socket.partner).emit("message", msg);
+    socket.join(room);
+    waitingUser.join(room);
 
-      // ⭐ STOP TYPING WHEN MESSAGE SENT
-      io.to(socket.partner).emit("stopTyping");
+    socket.room = room;
+    waitingUser.room = room;
+
+    io.to(room).emit("status","Stranger connected");
+
+    waitingUser = null;
+  }else{
+    waitingUser = socket;
+    socket.emit("status","Waiting for stranger...");
+  }
+
+  socket.on("message",(msg)=>{
+    if(socket.room){
+      socket.to(socket.room).emit("message",msg);
     }
   });
 
-  // ===== TYPING RELAY =====
-  socket.on("typing", () => {
-    if(socket.partner){
-      io.to(socket.partner).emit("typing");
+  socket.on("next",()=>{
+    if(socket.room){
+      io.to(socket.room).emit("status","Stranger disconnected");
     }
+    socket.leave(socket.room);
+    socket.room = null;
+    waitingUser = socket;
+    socket.emit("status","Waiting for stranger...");
   });
 
-  // ⭐ NEW: STOP TYPING RELAY
-  socket.on("stopTyping", () => {
-    if(socket.partner){
-      io.to(socket.partner).emit("stopTyping");
-    }
-  });
-
-  // ===== NEXT BUTTON =====
-  socket.on("next", () => {
-
-    if (socket.partner) {
-      io.to(socket.partner).emit("strangerDisconnected");
-      io.to(socket.partner).emit("stopTyping"); // ⭐ clear dots
-
-      const p = io.sockets.sockets.get(socket.partner);
-      if (p) p.partner = null;
-
-      socket.partner = null;
-    }
-
-    addToQueue(socket);
-  });
-
-  // ===== DISCONNECT =====
-  socket.on("disconnect", () => {
-
+  socket.on("disconnect",()=>{
     onlineCount--;
-    io.emit("onlineCount", onlineCount);
+    io.emit("onlineCount",onlineCount);
 
-    waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
+    if(waitingUser && waitingUser.id === socket.id){
+      waitingUser = null;
+    }
 
-    if (socket.partner) {
-      io.to(socket.partner).emit("strangerDisconnected");
-      io.to(socket.partner).emit("stopTyping"); // ⭐ clear dots
-
-      const p = io.sockets.sockets.get(socket.partner);
-      if (p) p.partner = null;
+    if(socket.room){
+      socket.to(socket.room).emit("status","Stranger disconnected");
     }
   });
+
 });
 
-
-// ===== AUTO MATCH =====
-function addToQueue(socket){
-  waitingQueue = waitingQueue.filter(s => s.id !== socket.id);
-  waitingQueue.push(socket);
-  tryMatch();
-}
-
-function tryMatch(){
-
-  while(waitingQueue.length >= 2){
-
-    const user1 = waitingQueue.shift();
-    const user2 = waitingQueue.shift();
-
-    if(!user1 || !user2) return;
-    if(user1.id === user2.id) continue;
-
-    user1.partner = user2.id;
-    user2.partner = user1.id;
-
-    user1.emit("strangerConnected");
-    user2.emit("strangerConnected");
-
-    // ⭐ clear typing on new match
-    user1.emit("stopTyping");
-    user2.emit("stopTyping");
-  }
-}
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log("Server running on " + PORT));
+server.listen(3000,()=>{
+  console.log("Server running...");
+});
