@@ -12,32 +12,37 @@ const io = new Server(server,{
 
 app.use(express.static("public"));
 
-let waitingUser = null;
+let waitingQueue = [];
 let onlineCount = 0;
+
+function tryMatch(){
+  while(waitingQueue.length >= 2){
+
+    const user1 = waitingQueue.shift();
+    const user2 = waitingQueue.shift();
+
+    if(!user1 || !user2) return;
+
+    const room = user1.id + "#" + user2.id;
+
+    user1.join(room);
+    user2.join(room);
+
+    user1.room = room;
+    user2.room = room;
+
+    io.to(room).emit("status","Stranger connected");
+  }
+}
 
 io.on("connection",(socket)=>{
 
   onlineCount++;
   io.emit("onlineCount",onlineCount);
 
-  if(waitingUser){
-
-    const room = waitingUser.id + "#" + socket.id;
-
-    socket.join(room);
-    waitingUser.join(room);
-
-    socket.room = room;
-    waitingUser.room = room;
-
-    io.to(room).emit("status","Stranger connected");
-
-    waitingUser = null;
-
-  }else{
-    waitingUser = socket;
-    socket.emit("status","Waiting for stranger...");
-  }
+  waitingQueue.push(socket);
+  socket.emit("status","Waiting for stranger...");
+  tryMatch();
 
   socket.on("message",(msg)=>{
     if(socket.room){
@@ -45,7 +50,6 @@ io.on("connection",(socket)=>{
     }
   });
 
-  /* ===== TYPING EVENT ===== */
   socket.on("typing",(state)=>{
     if(socket.room){
       socket.to(socket.room).emit("typing",state);
@@ -53,13 +57,32 @@ io.on("connection",(socket)=>{
   });
 
   socket.on("next",()=>{
+
     if(socket.room){
+
       io.to(socket.room).emit("status","Stranger disconnected");
+
+      const room = socket.room;
+      const clients = io.sockets.adapter.rooms.get(room);
+
+      if(clients){
+        clients.forEach(id=>{
+          const s = io.sockets.sockets.get(id);
+          if(s){
+            s.leave(room);
+            s.room = null;
+            waitingQueue.push(s);
+            s.emit("status","Waiting for stranger...");
+          }
+        });
+      }
+
+    }else{
+      waitingQueue.push(socket);
+      socket.emit("status","Waiting for stranger...");
     }
-    socket.leave(socket.room);
-    socket.room = null;
-    waitingUser = socket;
-    socket.emit("status","Waiting for stranger...");
+
+    tryMatch();
   });
 
   socket.on("disconnect",()=>{
@@ -67,12 +90,28 @@ io.on("connection",(socket)=>{
     onlineCount--;
     io.emit("onlineCount",onlineCount);
 
-    if(waitingUser && waitingUser.id === socket.id){
-      waitingUser = null;
-    }
+    waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
 
     if(socket.room){
+
       socket.to(socket.room).emit("status","Stranger disconnected");
+
+      const room = socket.room;
+      const clients = io.sockets.adapter.rooms.get(room);
+
+      if(clients){
+        clients.forEach(id=>{
+          const s = io.sockets.sockets.get(id);
+          if(s){
+            s.leave(room);
+            s.room = null;
+            waitingQueue.push(s);
+            s.emit("status","Waiting for stranger...");
+          }
+        });
+      }
+
+      tryMatch();
     }
   });
 

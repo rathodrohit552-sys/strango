@@ -299,6 +299,8 @@ Use a stable internet connection, keep conversations respectful, and avoid shari
 
 <script>
 const socket = io();
+let connected = false;   // ⭐ connection state guard
+
 
 const messages=document.getElementById("messages");
 const input=document.getElementById("messageInput");
@@ -319,10 +321,22 @@ status.textContent="⚡ "+msg;
 typing.textContent="";
 status.classList.remove("waiting","connected","disconnected");
 
-if(msg.toLowerCase().includes("waiting")) status.classList.add("waiting");
-else if(msg.toLowerCase().includes("connected")) status.classList.add("connected");
-else status.classList.add("disconnected");
+const m = msg.toLowerCase();
+
+if(m.includes("connected")){
+  status.classList.add("connected");
+  connected = true;            // ⭐ allow sending
+}
+else if(m.includes("waiting")){
+  status.classList.add("waiting");
+  connected = false;           // ⭐ block sending
+}
+else{
+  status.classList.add("disconnected");
+  connected = false;           // ⭐ block sending
+}
 });
+
 
 socket.on("onlineCount",(count)=>{
 online.textContent="👤 "+count;
@@ -338,6 +352,8 @@ typing.textContent = state ? "Stranger is typing..." : "";
 });
 
 document.getElementById("sendBtn").onclick=()=>{
+if(!connected) return;   // ⭐ PREVENT self-message bug
+
 if(input.value.trim()){
 addMessage("You: "+input.value,"you");
 socket.emit("message",input.value);
@@ -348,6 +364,7 @@ input.value="";
 
 let typingTimer;
 input.addEventListener("input",()=>{
+if(!connected) return;
 socket.emit("typing",true);
 clearTimeout(typingTimer);
 typingTimer=setTimeout(()=>{
