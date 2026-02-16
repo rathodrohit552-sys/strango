@@ -12,29 +12,59 @@ html,body{height:100%;background:#000;color:#fff;}
 
 .chat-wrapper{display:flex;flex-direction:column;min-height:100vh;}
 
-.header{max-width:1100px;margin:0 auto;text-align:center;padding:30px 20px 10px;}
+.header{
+max-width:1100px;
+margin:0 auto;
+text-align:center;
+padding:30px 20px 10px;
+}
 
-.header h1{font-size:34px;font-weight:600;}
+.header h1{
+font-size:34px;
+font-weight:600;
+margin-bottom:4px;
+}
+
+.subtitle{
+font-size:13px;
+color:#888;
+margin-top:4px;
+}
+
+.header p{
+color:#aaa;
+margin-top:6px;
+font-size:15px;
+}
+
+.trust-row{
+margin-top:10px;
+font-size:13px;
+color:#777;
+}
+
+/* ⭐ STATUS ABOVE CHAT */
+.top-status{
+max-width:1100px;
+width:95%;
+margin:0 auto;
+font-size:14px;
+padding:6px 4px;
+}
+
+.status.connected{color:#00c853;}
+.status.waiting{color:#ffc107;}
 
 .chat-container{
 border:1px solid #1a1a1a;
 border-radius:16px;
-margin:8px auto;
+margin:4px auto;
 max-width:1100px;
 width:95%;
 display:flex;
 flex-direction:column;
 background:#050505;
 flex:1;
-}
-
-.status-bar{
-padding:10px 14px;
-border-bottom:1px solid #111;
-display:flex;
-gap:12px;
-font-size:14px;
-align-items:center;
 }
 
 .chat-box{
@@ -45,7 +75,7 @@ display:flex;
 flex-direction:column;
 }
 
-/* ⭐ DESKTOP DEFAULT — ALL LEFT SIDE */
+/* ⭐ DESKTOP DEFAULT — ALL LEFT */
 .message{
 max-width:70%;
 padding:10px 14px;
@@ -53,35 +83,56 @@ border-radius:18px;
 margin:3px 0;
 line-height:1.45;
 font-size:14px;
-background:#1c1c1c;
 align-self:flex-start;
 }
 
-.message.you{
-background:#1c1c1c; /* same as stranger on desktop */
+/* ⭐ DIFFERENT COLORS */
+.message.stranger{
+background:#1c1c1c;
+color:#fff;
 }
 
-/* ⭐ MOBILE ONLY — INDUSTRY STYLE */
-@media (max-width:768px){
+.message.you{
+background:#1a3e1a;
+color:#fff;
+}
 
+/* ⭐ MOBILE INDUSTRY STYLE */
+@media (max-width:768px){
 .message.stranger{
 align-self:flex-start;
 background:#1c1c1c;
 }
-
 .message.you{
 align-self:flex-end;
 background:#2e7d32;
 }
-
 }
 
-.typing{font-size:13px;color:#888;padding:4px 14px;display:none;}
+.typing{
+font-size:13px;
+color:#888;
+padding:4px 14px;
+display:none;
+}
 
 .input-area{display:flex;border-top:1px solid #111;}
 
-.next-btn{background:#ff3b3b;color:#fff;border:none;padding:15px 20px;}
-.send-btn{background:#00c853;color:#fff;border:none;padding:15px 20px;}
+.next-btn{
+background:#ff3b3b;
+color:#fff;
+border:none;
+padding:15px 20px;
+cursor:pointer;
+}
+
+.send-btn{
+background:#00c853;
+color:#fff;
+border:none;
+padding:15px 20px;
+cursor:pointer;
+}
 
 .input-area input{
 flex:1;
@@ -100,14 +151,18 @@ outline:none;
 
 <div class="header">
 <h1>Strango</h1>
+<div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
+<p>Chat instantly with real strangers. No login. Safe, fast and completely anonymous.</p>
+<div class="trust-row">⚡ Instant Matching • 🔒 Anonymous • 🇮🇳 India Friendly</div>
+</div>
+
+<!-- ⭐ STATUS MOVED ABOVE CHAT -->
+<div class="top-status">
+👤 <span id="onlineCount">0</span>
+<span id="status" class="status waiting">Waiting for stranger...</span>
 </div>
 
 <div class="chat-container">
-
-<div class="status-bar">
-👤 <span id="onlineCount">0</span>
-<span id="status">Waiting for stranger...</span>
-</div>
 
 <div id="chatBox" class="chat-box"></div>
 <div id="typingIndicator" class="typing">Stranger is typing...</div>
@@ -134,15 +189,27 @@ const typingIndicator=document.getElementById("typingIndicator");
 let connected=false;
 let typingTimer=null;
 
-function setStatus(text){ status.innerText=text; }
+function setStatus(text,type){
+ status.innerText=text;
+ status.className="status "+type;
+}
 
-socket.on("connect",()=>{ setStatus("Waiting for stranger..."); socket.emit("next"); });
+socket.on("connect",()=>{
+ setStatus("Waiting for stranger...","waiting");
+ socket.emit("next");
+});
 
 socket.on("onlineCount",(c)=>onlineCount.innerText=c);
 
-socket.on("strangerConnected",()=>{ connected=true; setStatus("Stranger connected"); });
+socket.on("strangerConnected",()=>{
+ connected=true;
+ setStatus("Stranger connected","connected");
+});
 
-socket.on("message",(msg)=>{ addMessage(msg,"stranger"); typingIndicator.style.display="none"; });
+socket.on("message",(msg)=>{
+ addMessage(msg,"stranger");
+ typingIndicator.style.display="none";
+});
 
 socket.on("typing",()=> typingIndicator.style.display="block");
 socket.on("stopTyping",()=> typingIndicator.style.display="none");
@@ -150,7 +217,7 @@ socket.on("stopTyping",()=> typingIndicator.style.display="none");
 socket.on("strangerDisconnected",()=>{
  connected=false;
  typingIndicator.style.display="none";
- setStatus("Waiting for stranger...");
+ setStatus("Waiting for stranger...","waiting");
  socket.emit("next");
 });
 
@@ -178,7 +245,7 @@ input.addEventListener("keypress",(e)=>{
 function nextStranger(){
  connected=false;
  typingIndicator.style.display="none";
- setStatus("Finding new stranger...");
+ setStatus("Finding new stranger...","waiting");
  socket.emit("next");
  chatBox.innerHTML="";
 }
