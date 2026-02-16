@@ -109,6 +109,9 @@ display:flex;
 border-top:1px solid #111;
 background:#000;
 padding:0 20px;
+position:sticky;
+bottom:0;
+z-index:5;
 }
 
 .input-bar input{
@@ -411,10 +414,12 @@ document.getElementById("sendBtn").click();
 function adjustChatHeight(){
   const chat = document.querySelector(".chat-container");
 
-  if(window.visualViewport){
-    const vh = window.visualViewport.height;
-    chat.style.height = (vh - 170) + "px"; 
-  }
+  if(!window.visualViewport || window.innerWidth > 768) return;
+
+  const vh = window.visualViewport.height;
+
+  // ⭐ safer mobile height
+  chat.style.height = vh + "px";
 }
 
 /* Detect keyboard open/close */
@@ -426,8 +431,23 @@ if(window.visualViewport){
 input.addEventListener("focus",()=>{
   setTimeout(adjustChatHeight,100);
 });
+/* ============================= */
+/* HIDE BUTTONS WHEN TYPING (MOBILE) */
+/* ============================= */
+
+const nextBtn = document.getElementById("nextBtn");
+const sendBtn = document.getElementById("sendBtn");
+
+input.addEventListener("focus",()=>{
+  if(window.innerWidth <= 768){
+    if(nextBtn) nextBtn.style.display="none";
+    if(sendBtn) sendBtn.style.display="none";
+  }
+});
 
 input.addEventListener("blur",()=>{
+  if(nextBtn) nextBtn.style.display="";
+  if(sendBtn) sendBtn.style.display="";
   setTimeout(adjustChatHeight,100);
 });
 
