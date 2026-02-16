@@ -189,6 +189,27 @@ font-weight:500;
   position:relative;
   z-index:2;
 }
+/* ============================= */
+/* MOBILE FULL CHAT LOCK         */
+/* ============================= */
+
+@media (max-width:768px){
+
+  body.chat-lock{
+    overflow:hidden;
+  }
+
+  body.chat-lock .main{
+    height:100dvh;
+    max-height:100dvh;
+  }
+
+  body.chat-lock .chat-container{
+    flex:1;
+    height:auto !important;
+  }
+
+}
 
 </style>
 </head>
@@ -450,6 +471,22 @@ input.addEventListener("focus",()=>{
 input.addEventListener("blur",()=>{
   setTimeout(adjustChatHeight,100);
 });
+/* ============================= */
+/* MOBILE CHAT VIEW LOCK         */
+/* ============================= */
+
+function enableChatLock(){
+  if(window.innerWidth <= 768){
+    document.body.classList.add("chat-lock");
+  }
+}
+
+function disableChatLock(){
+  document.body.classList.remove("chat-lock");
+}
+
+input.addEventListener("focus", enableChatLock);
+input.addEventListener("blur", disableChatLock);
 
 </script>
 
