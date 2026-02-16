@@ -26,102 +26,97 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Strango","url":"https://strango-1.onrender.com/"}
 </script>
 
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"FAQPage",
- "mainEntity":[
-  {"@type":"Question","name":"Is Strango free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Strango provides completely free anonymous chat without hidden charges."}},
-  {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No signup is required. You can start chatting instantly."}},
-  {"@type":"Question","name":"Is my identity visible?","acceptedAnswer":{"@type":"Answer","text":"No. Strango does not share personal identity during chats."}},
-  {"@type":"Question","name":"Can I use Strango on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes. The platform is optimized for both mobile and desktop devices."}}
- ]
-}
-</script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 html,body{height:100%;background:#000;color:#fff;}
 
-.chat-wrapper{display:flex;flex-direction:column;min-height:100vh;}
+.chat-wrapper{
+display:flex;
+flex-direction:column;
+min-height:100vh;
+}
 
-/* ⭐ PREMIUM HEADER V2 */
+/* ⭐ HEADER PUSHED UP */
 .header{
 max-width:1100px;
 margin:0 auto;
 text-align:center;
-padding:50px 20px 30px;
-border-bottom:1px solid #111;
+padding:30px 20px 10px;
 }
 
 .header h1{
 font-size:34px;
 font-weight:600;
 letter-spacing:.4px;
-margin-bottom:6px;
-}
-
-.header p{
-color:#aaa;
-margin-top:10px;
-font-size:15px;
+margin-bottom:4px;
 }
 
 .subtitle{
 font-size:13px;
 color:#888;
+margin-top:4px;
+}
+
+.header p{
+color:#aaa;
 margin-top:6px;
+font-size:15px;
 }
 
 .trust-row{
-margin-top:14px;
+margin-top:10px;
 font-size:13px;
 color:#777;
-letter-spacing:.3px;
+}
+
+/* ⭐ CHAT CONTAINER UP TO RED LINE */
+.chat-container{
+border:1px solid #1a1a1a;
+border-radius:16px;
+margin:8px auto;
+max-width:1100px;
+width:95%;
+display:flex;
+flex-direction:column;
+background:#050505;
+flex:1;
+}
+
+/* ⭐ STATUS BAR INSIDE CHAT */
+.status-bar{
+padding:10px 14px;
+border-bottom:1px solid #111;
+display:flex;
+gap:12px;
+font-size:14px;
+align-items:center;
 }
 
 .status.connected{color:#00c853;}
 .status.waiting{color:#ffc107;}
 
-.status-bar{
-width:100%;
-padding-left:20px;
-margin-bottom:6px;
-display:flex;
-gap:12px;
-font-size:14px;
-}
-
-.chat-container{
-flex:1;
-border:1px solid #333;
-border-radius:12px;
-margin:10px 20px;
-display:flex;
-flex-direction:column;
-min-height:0;
-}
-
 .chat-box{
 flex:1;
-padding:20px;
+padding:24px;
 overflow-y:auto;
 display:flex;
 flex-direction:column;
-gap:8px;
+gap:12px;
 }
 
 .message{
-background:#1e1e1e;
-padding:10px 14px;
-border-radius:12px;
+background:#141414;
+padding:12px 16px;
+border-radius:14px;
 width:fit-content;
 max-width:70%;
+line-height:1.4;
+box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 .message.you{background:#2e7d32;}
 
-.input-area{display:flex;border-top:1px solid #333;}
+.input-area{display:flex;border-top:1px solid #111;}
 
 .next-btn{
 background:#ff3b3b;
@@ -148,7 +143,7 @@ padding:15px;
 outline:none;
 }
 
-/* ⭐ FULL WIDTH PREMIUM SEO SECTION */
+/* ⭐ FULL WIDTH SEO */
 .seo-section{
 width:100%;
 max-width:100%;
@@ -161,39 +156,6 @@ background:#000;
 border-top:1px solid #111;
 }
 
-.seo-section h1{
-font-size:32px;
-margin-bottom:20px;
-color:#fff;
-font-weight:600;
-}
-
-.seo-section h2{
-font-size:24px;
-margin-top:40px;
-margin-bottom:12px;
-color:#fff;
-font-weight:600;
-}
-
-.seo-section h3{
-font-size:18px;
-margin-top:20px;
-color:#eee;
-}
-
-.seo-section p{
-margin-bottom:12px;
-max-width:1100px;
-}
-
-.seo-section ul,
-.seo-section ol{
-margin-left:22px;
-margin-top:10px;
-max-width:1000px;
-}
-
 footer{
 background:#050505;
 text-align:center;
@@ -201,12 +163,7 @@ padding:14px;
 border-top:1px solid #111;
 }
 
-footer a{
-color:#aaa;
-margin:0 10px;
-text-decoration:none;
-}
-
+footer a{color:#aaa;margin:0 10px;text-decoration:none;}
 footer a:hover{color:#fff;}
 </style>
 </head>
@@ -216,29 +173,19 @@ footer a:hover{color:#fff;}
 <div class="chat-wrapper">
 
 <div class="header">
-
 <h1>Strango — Free Anonymous Stranger Chat India</h1>
-
-<div class="subtitle">
-Random Anonymous Chat • No Login • Fast Stranger Matching India
+<div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
+<p>Chat instantly with real strangers. No login. Safe, fast and completely anonymous.</p>
+<div class="trust-row">⚡ Instant Matching • 🔒 Anonymous • 🇮🇳 India Friendly</div>
 </div>
 
-<p>
-Chat instantly with real strangers. No login. Safe, fast and completely anonymous.
-</p>
-
-<div class="trust-row">
-⚡ Instant Matching &nbsp; • &nbsp; 🔒 Anonymous &nbsp; • &nbsp; 🇮🇳 India Friendly
-</div>
-
-</div>
+<div class="chat-container">
 
 <div class="status-bar">
 👤 <span id="onlineCount">0</span>
 <span id="status" class="status waiting">Waiting for stranger...</span>
 </div>
 
-<div class="chat-container">
 <div id="chatBox" class="chat-box"></div>
 
 <div class="input-area">
@@ -246,62 +193,10 @@ Chat instantly with real strangers. No login. Safe, fast and completely anonymou
 <input id="messageInput" placeholder="Type a message..." />
 <button class="send-btn" onclick="sendMessage()">SEND</button>
 </div>
-</div>
 
 </div>
 
-<section class="seo-section">
-
-<h1>Free Anonymous Stranger Chat Online – Strango</h1>
-<p>Strango is a free anonymous stranger chat platform designed for people who want to meet new individuals instantly without creating an account...</p>
-
-<h2>What is Strango?</h2>
-<p>Strango is an online random chat platform where users are connected with strangers from different locations...</p>
-
-<h2>Why Strango is Different</h2>
-<ul>
-<li>Instant anonymous connections</li>
-<li>No login or personal data required</li>
-<li>Lightweight design for faster loading</li>
-<li>Mobile-friendly and desktop optimized</li>
-<li>Smooth real-time messaging experience</li>
-</ul>
-
-<h2>Features of Strango Anonymous Chat</h2>
-<h3>Instant Matching</h3>
-<p>Strango automatically connects you with another online user...</p>
-
-<h3>Private and Anonymous</h3>
-<p>Your identity is not shared...</p>
-
-<h3>Fast and Simple Interface</h3>
-<p>The minimal design reduces clutter...</p>
-
-<h3>Cross-Device Compatibility</h3>
-<p>Strango works smoothly on smartphones, tablets, and desktops...</p>
-
-<h2>How Strango Works</h2>
-<ol>
-<li>Open the chat page.</li>
-<li>Wait while the system finds another online user.</li>
-<li>Start messaging instantly.</li>
-<li>Press “Next” anytime to switch to a new stranger.</li>
-</ol>
-
-<h2>Is Strango Safe?</h2>
-<p>Strango is designed to protect user privacy by avoiding personal data collection...</p>
-
-<h2>Frequently Asked Questions</h2>
-<h3>Is Strango free?</h3>
-<p>Yes. Strango provides completely free anonymous chat without hidden charges.</p>
-<h3>Do I need to create an account?</h3>
-<p>No signup is required.</p>
-<h3>Is my identity visible?</h3>
-<p>No. Strango does not share personal identity during chats.</p>
-<h3>Can I use Strango on mobile?</h3>
-<p>Yes. The platform is optimized for both mobile and desktop devices.</p>
-
-</section>
+</div>
 
 <footer>
 <a href="/privacy.html" target="_blank">Privacy</a> |
@@ -312,7 +207,6 @@ Chat instantly with real strangers. No login. Safe, fast and completely anonymou
 </footer>
 
 <script src="/socket.io/socket.io.js"></script>
-
 <script>
 const socket=io({transports:["websocket","polling"]});
 const chatBox=document.getElementById("chatBox");
