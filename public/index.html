@@ -6,11 +6,6 @@
 
 <title>Strango — Free Anonymous Stranger Chat India</title>
 
-<link rel="canonical" href="https://strango-1.onrender.com/">
-
-<meta property="og:title" content="Strango — Free Anonymous Stranger Chat India">
-<meta property="og:description" content="Random anonymous chat with real strangers. No login, fast matching, mobile friendly.">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 html,body{height:100%;background:#000;color:#fff;}
@@ -19,15 +14,7 @@ html,body{height:100%;background:#000;color:#fff;}
 
 .header{max-width:1100px;margin:0 auto;text-align:center;padding:30px 20px 10px;}
 
-.header h1{
-font-size:34px;
-font-weight:600;
-user-select:none;
-}
-
-.subtitle{font-size:13px;color:#888;margin-top:4px;}
-.header p{color:#aaa;margin-top:6px;font-size:15px;}
-.trust-row{margin-top:10px;font-size:13px;color:#777;}
+.header h1{font-size:34px;font-weight:600;}
 
 .chat-container{
 border:1px solid #1a1a1a;
@@ -50,9 +37,6 @@ font-size:14px;
 align-items:center;
 }
 
-.status.connected{color:#00c853;}
-.status.waiting{color:#ffc107;}
-
 .chat-box{
 flex:1;
 padding:20px 18px;
@@ -61,64 +45,43 @@ display:flex;
 flex-direction:column;
 }
 
-/* ⭐ INDUSTRY STANDARD MESSAGE STACKING */
+/* ⭐ DESKTOP DEFAULT — ALL LEFT SIDE */
 .message{
-max-width:65%;
+max-width:70%;
 padding:10px 14px;
 border-radius:18px;
-margin:2px 0;
+margin:3px 0;
 line-height:1.45;
 font-size:14px;
-word-wrap:break-word;
-}
-
-.message.stranger{
 background:#1c1c1c;
 align-self:flex-start;
-margin-right:auto;
-border-bottom-left-radius:6px;
 }
 
 .message.you{
-background:#2e7d32;
+background:#1c1c1c; /* same as stranger on desktop */
+}
+
+/* ⭐ MOBILE ONLY — INDUSTRY STYLE */
+@media (max-width:768px){
+
+.message.stranger{
+align-self:flex-start;
+background:#1c1c1c;
+}
+
+.message.you{
 align-self:flex-end;
-margin-left:auto;
-border-bottom-right-radius:6px;
+background:#2e7d32;
 }
 
-/* ⭐ message grouping spacing like WhatsApp */
-.message + .message.stranger{
-margin-top:2px;
 }
 
-.message + .message.you{
-margin-top:2px;
-}
-
-.typing{
-font-size:13px;
-color:#888;
-padding:4px 14px;
-display:none;
-}
+.typing{font-size:13px;color:#888;padding:4px 14px;display:none;}
 
 .input-area{display:flex;border-top:1px solid #111;}
 
-.next-btn{
-background:#ff3b3b;
-color:#fff;
-border:none;
-padding:15px 20px;
-cursor:pointer;
-}
-
-.send-btn{
-background:#00c853;
-color:#fff;
-border:none;
-padding:15px 20px;
-cursor:pointer;
-}
+.next-btn{background:#ff3b3b;color:#fff;border:none;padding:15px 20px;}
+.send-btn{background:#00c853;color:#fff;border:none;padding:15px 20px;}
 
 .input-area input{
 flex:1;
@@ -137,16 +100,13 @@ outline:none;
 
 <div class="header">
 <h1>Strango</h1>
-<div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
-<p>Chat instantly with real strangers. No login. Safe, fast and completely anonymous.</p>
-<div class="trust-row">⚡ Instant Matching • 🔒 Anonymous • 🇮🇳 India Friendly</div>
 </div>
 
 <div class="chat-container">
 
 <div class="status-bar">
 👤 <span id="onlineCount">0</span>
-<span id="status" class="status waiting">Waiting for stranger...</span>
+<span id="status">Waiting for stranger...</span>
 </div>
 
 <div id="chatBox" class="chat-box"></div>
@@ -174,27 +134,15 @@ const typingIndicator=document.getElementById("typingIndicator");
 let connected=false;
 let typingTimer=null;
 
-function setStatus(text,type){
- status.innerText=text;
- status.className="status "+type;
-}
+function setStatus(text){ status.innerText=text; }
 
-socket.on("connect",()=>{
- setStatus("Waiting for stranger...","waiting");
- socket.emit("next");
-});
+socket.on("connect",()=>{ setStatus("Waiting for stranger..."); socket.emit("next"); });
 
 socket.on("onlineCount",(c)=>onlineCount.innerText=c);
 
-socket.on("strangerConnected",()=>{
- connected=true;
- setStatus("Stranger connected","connected");
-});
+socket.on("strangerConnected",()=>{ connected=true; setStatus("Stranger connected"); });
 
-socket.on("message",(msg)=>{
- addMessage(msg,"stranger");
- typingIndicator.style.display="none";
-});
+socket.on("message",(msg)=>{ addMessage(msg,"stranger"); typingIndicator.style.display="none"; });
 
 socket.on("typing",()=> typingIndicator.style.display="block");
 socket.on("stopTyping",()=> typingIndicator.style.display="none");
@@ -202,7 +150,7 @@ socket.on("stopTyping",()=> typingIndicator.style.display="none");
 socket.on("strangerDisconnected",()=>{
  connected=false;
  typingIndicator.style.display="none";
- setStatus("Waiting for stranger...","waiting");
+ setStatus("Waiting for stranger...");
  socket.emit("next");
 });
 
@@ -230,7 +178,7 @@ input.addEventListener("keypress",(e)=>{
 function nextStranger(){
  connected=false;
  typingIndicator.style.display="none";
- setStatus("Finding new stranger...","waiting");
+ setStatus("Finding new stranger...");
  socket.emit("next");
  chatBox.innerHTML="";
 }
