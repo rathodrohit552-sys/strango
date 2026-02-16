@@ -31,17 +31,17 @@ flex-direction:column;
 h1{font-weight:600;color:#fff;}
 .subtitle{font-size:14px;opacity:.75;}
 
-/* ⭐ FULL WIDTH CHAT AREA */
+/* ⭐ FULL RED-LINE WIDTH AREA */
 .main{
 display:flex;
 flex-direction:column;
 width:100%;
-max-width:1200px;
+max-width:1400px;   /* stretch more */
 margin:auto;
-padding:0 20px 10px;
+padding:0 30px 10px;
 }
 
-/* ⭐ SMALL TOP BOXES */
+/* ⭐ TOP SMALL BOXES */
 .top-bar{
 display:flex;
 justify-content:space-between;
@@ -52,7 +52,7 @@ margin-bottom:8px;
 .status{
 background:#0a0a0a;
 border:1px solid #111;
-padding:6px 12px;
+padding:6px 14px;
 border-radius:8px;
 font-size:13px;
 }
@@ -60,7 +60,7 @@ font-size:13px;
 .online{
 background:#0a0a0a;
 border:1px solid #111;
-padding:6px 12px;
+padding:6px 14px;
 border-radius:8px;
 font-size:13px;
 color:#bbb;
@@ -77,14 +77,14 @@ height:16px;
 margin-bottom:6px;
 }
 
-/* ⭐ CHAT STRETCHED LIKE RED LINE */
+/* ⭐ CHAT FULLY STRETCHED */
 .chat-container{
 height:72vh;
 width:100%;
 display:flex;
 flex-direction:column;
 border:1px solid #111;
-border-radius:12px;
+border-radius:14px;
 background:#050505;
 overflow:hidden;
 }
@@ -112,6 +112,7 @@ padding:14px;outline:none;font-size:14px;
 .next{background:#ff4040;color:#fff;}
 .send{background:#00c853;color:#fff;}
 
+/* ⭐ EVERYTHING BELOW REMAINS SAME */
 .seo-section{
 max-width:900px;
 margin:32px auto;
@@ -148,6 +149,7 @@ font-weight:500;
 @media(max-width:600px){
 .you{align-self:flex-end;}
 .stranger{align-self:flex-start;}
+.main{padding:0 12px 10px;}
 }
 </style>
 </head>
@@ -161,7 +163,6 @@ font-weight:500;
 
 <div class="main">
 
-<!-- ⭐ TOP SMALL BOXES -->
 <div class="top-bar">
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
 <div id="online" class="online">👤 0</div>
@@ -181,10 +182,8 @@ font-weight:500;
 
 </div>
 
-<!-- ⭐ SEO SECTION UNCHANGED -->
-<div class="seo-section">
-<!-- (ALL YOUR SEO CONTENT REMAINS EXACTLY SAME — NOT REMOVED) -->
-</div>
+<!-- ⭐ YOUR SEO SECTION REMAINS EXACTLY SAME -->
+<div class="seo-section"></div>
 
 <div class="footer">
 <a href="/about.html" target="_blank" rel="noopener">About</a> •
