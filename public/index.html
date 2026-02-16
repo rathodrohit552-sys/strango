@@ -156,7 +156,37 @@ font-weight:500;
 @media(max-width:600px){
 .you{align-self:flex-end;}
 .stranger{align-self:flex-start;}
+/* ============================= */
+/* ADD BELOW EXISTING CHAT CSS   */
+/* Smart Alignment Switching     */
+/* ============================= */
+
+/* Default (mobile portrait) — ALL messages LEFT */
+@media (max-width:768px){
+  .you{
+    align-self:flex-start !important;
+  }
+  .stranger{
+    align-self:flex-start !important;
+  }
 }
+
+/* Tablet / Desktop / Landscape */
+@media (min-width:769px){
+  .you{
+    align-self:flex-end !important;
+  }
+  .stranger{
+    align-self:flex-start !important;
+  }
+}
+
+/* Safety: keep input always visible */
+.input-bar{
+  position:relative;
+  z-index:2;
+}
+
 </style>
 </head>
 
