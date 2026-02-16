@@ -40,9 +40,6 @@ io.on("connection",(socket)=>{
   onlineCount++;
   io.emit("onlineCount",onlineCount);
 
-  waitingQueue.push(socket);
-  socket.emit("status","Waiting for stranger...");
-  tryMatch();
 
   socket.on("message",(msg)=>{
     if(socket.room){
@@ -99,6 +96,16 @@ io.on("connection",(socket)=>{
 
     onlineCount--;
     io.emit("onlineCount",onlineCount);
+    /* SAFE JOIN DELAY (prevents ghost sockets on refresh) */
+setTimeout(()=>{
+
+  if(!socket.connected) return; // ignore ghost reconnects
+
+  waitingQueue.push(socket);
+  socket.emit("status","Waiting for stranger...");
+  tryMatch();
+
+},300);
 
     waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
 
