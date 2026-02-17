@@ -37,9 +37,15 @@ function tryMatch(){
 
 io.on("connection",(socket)=>{
 
+  console.log("User connected:", socket.id);
+
   onlineCount++;
   io.emit("onlineCount",onlineCount);
 
+  // ✅ AUTO JOIN QUEUE ON CONNECT (THIS WAS MISSING)
+  waitingQueue.push(socket);
+  socket.emit("status","Waiting for stranger...");
+  tryMatch();
 
   socket.on("message",(msg)=>{
     if(socket.room){
@@ -55,58 +61,48 @@ io.on("connection",(socket)=>{
 
   socket.on("next",()=>{
 
-  if(socket.room){
+    if(socket.room){
 
-    const room = socket.room;
+      const room = socket.room;
 
-    // Notify partner only
-    socket.to(room).emit("status","Stranger disconnected");
+      socket.to(room).emit("status","Stranger disconnected");
 
-    const clients = io.sockets.adapter.rooms.get(room);
+      const clients = io.sockets.adapter.rooms.get(room);
 
-    if(clients){
-      clients.forEach(id=>{
-        const s = io.sockets.sockets.get(id);
-        if(!s) return;
+      if(clients){
+        clients.forEach(id=>{
+          const s = io.sockets.sockets.get(id);
+          if(!s) return;
 
-        s.leave(room);
-        s.room = null;
+          s.leave(room);
+          s.room = null;
 
-        // ⭐ ONLY partner goes to waiting queue
-        if(s.id !== socket.id){
-          waitingQueue.push(s);
-          s.emit("status","Waiting for stranger...");
-        }
-      });
+          if(s.id !== socket.id){
+            waitingQueue.push(s);
+            s.emit("status","Waiting for stranger...");
+          }
+        });
+      }
+
+      waitingQueue.unshift(socket);
+      socket.emit("status","Waiting for stranger...");
+
+    }else{
+      waitingQueue.unshift(socket);
+      socket.emit("status","Waiting for stranger...");
     }
 
-    // ⭐ NEXT clicker gets priority (front of queue)
-    waitingQueue.unshift(socket);
-    socket.emit("status","Waiting for stranger...");
-
-  }else{
-    waitingQueue.unshift(socket);
-    socket.emit("status","Waiting for stranger...");
-  }
-
-  tryMatch();
-});
+    tryMatch();
+  });
 
   socket.on("disconnect",()=>{
 
+    console.log("User disconnected:", socket.id);
+
     onlineCount--;
     io.emit("onlineCount",onlineCount);
-    /* SAFE JOIN DELAY (prevents ghost sockets on refresh) */
-setTimeout(()=>{
 
-  if(!socket.connected) return; // ignore ghost reconnects
-
-  waitingQueue.push(socket);
-  socket.emit("status","Waiting for stranger...");
-  tryMatch();
-
-},300);
-
+    // ✅ REMOVE USER FROM QUEUE
     waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
 
     if(socket.room){
