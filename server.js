@@ -39,8 +39,9 @@ io.on("connection",(socket)=>{
 
   console.log("User connected:", socket.id);
 
-  onlineCount++;
-  io.emit("onlineCount",onlineCount);
+  const count = io.engine.clientsCount;
+io.emit("onlineCount", count);
+
 
   // ✅ AUTO JOIN QUEUE ON CONNECT (THIS WAS MISSING)
   waitingQueue.push(socket);
@@ -99,8 +100,9 @@ io.on("connection",(socket)=>{
 
     console.log("User disconnected:", socket.id);
 
-    onlineCount--;
-    io.emit("onlineCount",onlineCount);
+    const count = io.engine.clientsCount;
+  io.emit("onlineCount", count);
+
 
     // ✅ REMOVE USER FROM QUEUE
     waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
