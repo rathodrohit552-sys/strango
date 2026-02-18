@@ -65,12 +65,20 @@ background:#0a0a0a;
 border:1px solid #111;
 padding:8px 16px;
 border-radius:10px;
-font-size:18px;      /* ⭐ BIGGER HUMANOID */
-color:#00ff88;
+
 display:flex;
 align-items:center;
-gap:6px;
+gap:8px;
+
+/* ⭐ BIGGER DOUBLE HUMANOID */
+.online::before{
+content:"👥";
+font-size:32px;
+color:#ffd54f;
+margin-right:6px;
 }
+
+
 
 .status.waiting{color:#ffd54f;}
 .status.connected{color:#00ff88;}
@@ -343,7 +351,7 @@ font-size:15px;
 
 <div class="top-bar">
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
-<div id="online" class="online">👥 <span id="onlineCount">0</span></div>
+<div id="online" class="online"><span id="onlineCount">0</span></div>
 </div>
 
 <div id="typing" class="typing"></div>
