@@ -151,6 +151,29 @@ body{
 input, select, textarea {
   font-size:16px !important;
 }
+/* ✅ MOBILE STACK LAYOUT (FIX SQUEEZED TABLE) */
+@media (max-width:768px){
+
+  .main{
+    display:block !important;
+    padding:12px;
+  }
+
+  .calculator{
+    width:100% !important;
+    max-width:100% !important;
+    margin-bottom:16px;
+  }
+
+  .tableBox{
+    width:100% !important;
+    max-width:100% !important;
+    margin-top:12px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+}
 
 </style>
 </head>
