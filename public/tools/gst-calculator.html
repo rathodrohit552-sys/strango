@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{margin:0;font-family:Arial;background:#0f172a;color:white;display:flex;justify-content:center;align-items:center;min-height:100vh;}
+.container{width:95%;max-width:420px;background:#111827;padding:20px;border-radius:14px;}
+input,select,button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;}
+button{background:#22c55e;font-weight:bold;}
+.result{margin-top:15px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>GST Calculator</h2>
+
+<input id="amount" placeholder="Amount">
+<input id="gst" placeholder="GST %">
+<select id="type">
+<option value="add">Add GST</option>
+<option value="remove">Remove GST</option>
+</select>
+
+<button onclick="calculateGST()">Calculate GST</button>
+
+<div class="result" id="result"></div>
+<canvas id="pieChart"></canvas>
+<canvas id="barChart" style="margin-top:20px;"></canvas>
+</div>
+
+<script>
+let chart;
+
+let pieChart;
+let barChart;
+
+function drawChart(labels,data){
+
+const pieCtx=document.getElementById("pieChart");
+const barCtx=document.getElementById("barChart");
+
+if(pieChart){pieChart.destroy();}
+if(barChart){barChart.destroy();}
+
+// PIE CHART
+pieChart=new Chart(pieCtx,{
+type:'pie',
+data:{
+labels:labels,
+datasets:[{data:data}]
+},
+options:{responsive:true}
+});
+
+// BAR GRAPH
+barChart=new Chart(barCtx,{
+type:'bar',
+data:{
+labels:labels,
+datasets:[{data:data}]
+},
+options:{
+responsive:true,
+scales:{y:{beginAtZero:true}}
+}
+});
+
+const ctx=document.getElementById("chart");
+if(chart){chart.destroy();}
+chart=new Chart(ctx,{
+type:'pie',
+data:{labels:labels,datasets:[{data:data}]},
+options:{responsive:true}
+});
+}
+
+function calculateGST(){
+let amt=parseFloat(amount.value);
+let g=parseFloat(gst.value);
+
+let gstValue=amt*g/100;
+let total=amt+gstValue;
+
+result.innerHTML="Total with GST: ₹ "+total.toFixed(2);
+
+drawChart(["Base Amount","GST"],[amt,gstValue]);
+}
+</script>
+</body>
+</html>

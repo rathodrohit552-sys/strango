@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIP Calculator — Premium Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+/* ===== GLOBAL ===== */
+body{
+    margin:0;
+    background:#020817;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#fff;
+    height:100vh;
+    overflow:hidden; /* 🚀 NO PAGE SCROLL */
+}
+
+/* ===== MAIN DASHBOARD GRID ===== */
+.wrapper{
+    width:95%;
+    margin:auto;
+    height:100vh;
+
+    display:grid;
+    grid-template-columns:35% 65%;
+    grid-template-rows:48% 52%;
+    gap:18px;
+    padding:18px 0;
+}
+
+/* ===== CARD STYLE ===== */
+.card{
+    background:#071028;
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+    overflow:hidden;
+}
+
+h3{
+    margin-top:0;
+    margin-bottom:12px;
+}
+
+/* ===== GRID POSITIONS ===== */
+.calculator{ grid-column:1; grid-row:1; }
+.yearly{ grid-column:2; grid-row:1; }
+.graph{ grid-column:1 / span 2; grid-row:2; }
+
+/* ===== INPUTS ===== */
+label{
+    font-size:13px;
+    color:#94a3b8;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:6px 0 12px;
+    border-radius:6px;
+    border:1px solid #1a2445;
+    background:#020817;
+    color:#fff;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ===== TABLE ===== */
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+th,td{
+    padding:8px;
+    border-bottom:1px solid #1a2445;
+}
+
+th{
+    color:#94a3b8;
+    text-align:left;
+}
+
+/* TABLE INTERNAL SCROLL (NOT PAGE SCROLL) */
+.yearly{
+    overflow:auto;
+}
+
+/* ===== GRAPH ===== */
+.graph canvas{
+    height:100% !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<!-- ===== CALCULATOR ===== -->
+<div class="card calculator">
+<h3>SIP Calculator</h3>
+
+<label>Monthly Investment (₹)</label>
+<input type="number" id="monthly" value="5000">
+
+<label>Duration (Years)</label>
+<input type="number" id="years" value="15">
+
+<label>Expected Return (%)</label>
+<input type="number" id="rate" value="12">
+
+<button onclick="calculateSIP()">Calculate SIP</button>
+
+</div>
+
+<!-- ===== YEAR TABLE ===== -->
+<div class="card yearly">
+<h3>Yearly Growth</h3>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Amount (₹)</th>
+</tr>
+</thead>
+<tbody id="yearTable"></tbody>
+</table>
+</div>
+
+<!-- ===== GRAPH ===== -->
+<div class="card graph">
+<h3>Investment Growth</h3>
+<canvas id="sipChart"></canvas>
+</div>
+
+</div>
+
+<script>
+
+let chart;
+
+/* ===== SIP CALCULATION FUNCTION ===== */
+function calculateSIP(){
+
+let monthly = parseFloat(document.getElementById("monthly").value);
+let years = parseFloat(document.getElementById("years").value);
+let rate = parseFloat(document.getElementById("rate").value)/100/12;
+
+let tableHTML="";
+let investedData=[];
+let totalData=[];
+let labels=[];
+
+let futureValue=0;
+
+for(let y=1;y<=years;y++){
+
+let months=y*12;
+
+futureValue = monthly *
+((Math.pow(1+rate,months)-1)/rate)*(1+rate);
+
+labels.push("Year "+y);
+totalData.push(Math.round(futureValue));
+investedData.push(monthly*months);
+
+tableHTML += `
+<tr>
+<td>${y}</td>
+<td>₹ ${Math.round(futureValue).toLocaleString()}</td>
+</tr>
+`;
+}
+
+document.getElementById("yearTable").innerHTML = tableHTML;
+
+/* ===== GRAPH ===== */
+
+if(chart) chart.destroy();
+
+chart = new Chart(document.getElementById("sipChart"),{
+type:"line",
+data:{
+labels:labels,
+datasets:[
+{
+label:"Total Value",
+data:totalData,
+borderColor:"#22c55e",
+backgroundColor:"rgba(34,197,94,0.15)",
+fill:true,
+tension:0.4
+},
+{
+label:"Invested Amount",
+data:investedData,
+borderColor:"#6366f1",
+tension:0.4
+}
+]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false,
+plugins:{
+legend:{labels:{color:"#fff"}}
+},
+scales:{
+x:{ticks:{color:"#94a3b8"}},
+y:{ticks:{color:"#94a3b8"}}
+}
+}
+});
+
+}
+
+/* AUTO LOAD DEFAULT */
+calculateSIP();
+
+</script>
+
+</body>
+</html>

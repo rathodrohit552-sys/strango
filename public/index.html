@@ -237,6 +237,41 @@ font-weight:500;
   }
 
 }
+/* ⭐ STRANGO UTILITY BAR (SAFE ADD) */
+.utility-bar{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:8px 0;
+border-top:1px solid #111;
+background:#000;
+}
+
+.utility-btn{
+text-decoration:none;
+background:#111;
+color:#00ff88;
+padding:6px 14px;
+border-radius:8px;
+font-size:13px;
+border:1px solid rgba(255,255,255,0.1);
+display:flex;
+align-items:center;
+gap:6px;
+transition:.2s;
+}
+
+.utility-btn:hover{
+background:#00ff88;
+color:#000;
+}
+
+.rupee{
+color:#FFD700;
+font-weight:bold;
+font-size:15px;
+}
+
 /* ===== STRANGO SAFE COLLAPSIBLE SEO (CLASS VERSION) ===== */
 
 .seo-wrapper{
@@ -312,6 +347,12 @@ font-weight:500;
 
 <div class="chat-container">
 <div class="messages" id="messages"></div>
+<!-- ⭐ EMI UTILITY BUTTON -->
+<div class="utility-bar">
+  <a href="/tools/emi-calculator.html" class="utility-btn">
+    <span class="rupee">₹</span> EMI Calculator
+  </a>
+</div>
 
 <div class="input-bar">
 <button class="btn next" id="nextBtn">NEXT</button>
