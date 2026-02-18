@@ -661,37 +661,6 @@ input.addEventListener("focus", () => {
   }
 });
 
-(function(){
-
-  const seoWrapper = document.querySelector(".seo-wrapper");
-  const seoToggle  = document.getElementById("seoToggle");
-
-  if(!seoWrapper || !seoToggle) return;
-
-  seoToggle.addEventListener("click", function(){
-
-    if(window.innerWidth <= 768){
-
-      const isOpen = seoWrapper.classList.contains("active");
-
-      if(!isOpen){
-        seoWrapper.classList.add("active");
-
-        setTimeout(()=>{
-          seoWrapper.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-          });
-        },200);
-
-      }else{
-        seoWrapper.classList.remove("active");
-      }
-    }
-
-  });
-
-})();
 </script>
 
 </body>
