@@ -63,10 +63,13 @@ font-size:13px;
 .online{
 background:#0a0a0a;
 border:1px solid #111;
-padding:6px 14px;
-border-radius:8px;
-font-size:13px;
-color:#bbb;
+padding:8px 16px;
+border-radius:10px;
+font-size:18px;      /* ⭐ BIGGER HUMANOID */
+color:#00ff88;
+display:flex;
+align-items:center;
+gap:6px;
 }
 
 .status.waiting{color:#ffd54f;}
@@ -340,7 +343,7 @@ font-size:15px;
 
 <div class="top-bar">
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
-<div id="online" class="online">👤 0</div>
+<div id="online" class="online">👥 <span id="onlineCount">0</span></div>
 </div>
 
 <div id="typing" class="typing"></div>
@@ -502,7 +505,7 @@ else{
 
 
 socket.on("onlineCount",(count)=>{
-online.textContent="👤 "+count;
+document.getElementById("onlineCount").textContent = count;
 });
 
 /* ============================= */
