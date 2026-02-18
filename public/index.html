@@ -511,8 +511,10 @@ online.textContent="👤 "+count;
 
 let unreadCount = 0;
 const originalTitle = document.title;
-
 socket.on("message",(msg)=>{
+
+  if(!connected) return;   // ⭐ BLOCK OLD ROOM MESSAGES
+
   typing.textContent="";
   addMessage("Stranger: "+msg,"stranger");
 
@@ -521,7 +523,9 @@ socket.on("message",(msg)=>{
     unreadCount++;
     document.title = "(" + unreadCount + ") New Message • Strango";
   }
+
 });
+
 
 /* Reset when user returns to tab */
 document.addEventListener("visibilitychange",()=>{
@@ -560,8 +564,10 @@ socket.emit("typing",false);
 document.getElementById("nextBtn").onclick=()=>{
 messages.innerHTML="";
 typing.textContent="";
+connected = false;     // ⭐ RESET STATE
 socket.emit("next");
 };
+
 
 input.addEventListener("keypress",(e)=>{
 if(e.key==="Enter"){
