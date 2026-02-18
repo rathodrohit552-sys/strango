@@ -463,6 +463,12 @@ Use a stable internet connection, keep conversations respectful, and avoid shari
 
 <script>
 const socket = io();
+function trackEvent(name){
+  if(typeof gtag === "function"){
+    gtag('event', name);
+  }
+}
+
 let connected = false;   // ⭐ connection state guard
 
 
@@ -496,6 +502,7 @@ const m = msg.toLowerCase();
 if(m.includes("connected")){
   status.classList.add("connected");
   connected = true;            // ⭐ allow sending
+  trackEvent('stranger_connected');
 }
 else if(m.includes("waiting")){
   status.classList.add("waiting");
