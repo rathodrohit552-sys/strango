@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://strango-1.onrender.com/sitemap.xml
+Sitemap: https://strango.xyz/sitemap.xml
