@@ -500,7 +500,10 @@ typing.textContent="";
 status.classList.remove("waiting","connected","disconnected");
 
 const m = msg.toLowerCase();
-
+// ⭐ Clear old chat when status changes
+if(m.includes("connected") || m.includes("waiting") || m.includes("disconnected")){
+  messages.innerHTML = "";
+}
 if(m.includes("connected")){
   status.classList.add("connected");
   connected = true;            // ⭐ allow sending
