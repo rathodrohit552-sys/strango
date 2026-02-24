@@ -89,7 +89,7 @@ margin:0 20px 6px 20px;
 
 /* ⭐ CHAT NOW TOUCHES RED LINE */
 .chat-container{
-height:72vh;
+height:calc(100vh - 220px);
 width:100%;
 display:flex;
 flex-direction:column;
@@ -241,6 +241,7 @@ font-weight:500;
   body.chat-lock .chat-container{
     flex:1;
     height:auto !important;
+    min-height:0;
   }
 
 }
