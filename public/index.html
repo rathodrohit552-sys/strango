@@ -47,12 +47,10 @@ h1{font-weight:600;color:#fff;}
 
 /* ⭐ MATCH RED LINE EXACT WIDTH */
 .main{
-display:flex;
-flex-direction:column;
-width:100%;
-max-width:1200px;
-margin:auto;
-padding:0;                 /* ⭐ removed side padding */
+ display:flex;
+ flex-direction:column;
+ height:100vh;      /* full mobile screen */
+ overflow:hidden;
 }
 
 .top-bar{
@@ -382,7 +380,33 @@ font-size:15px;
     font-size: 13px;
     font-weight: 600;
 }
+/* ===== WHATSAPP MOBILE CHAT FIX ===== */
 
+.main{
+ height:100vh;
+ overflow:hidden;
+}
+
+.messages{
+ flex:1;
+ overflow-y:auto;
+ padding-bottom:80px;
+}
+
+.chat-container{
+ display:flex;
+ flex-direction:column;
+ height:100vh;
+}
+
+.chat-container > div:last-child{
+ position:fixed;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:#000;
+ z-index:999;
+}
 </style>
 </head>
 
