@@ -134,9 +134,26 @@ flex:1;background:#000;border:none;color:#fff;
 padding:14px;outline:none;font-size:14px;
 }
 
-.btn{border:none;padding:0 18px;font-weight:600;cursor:pointer;}
-.next{background:#ff4040;color:#fff;border-radius:10px 0 0 10px;}
-.send{background:#00c853;color:#fff;border-radius:0 10px 10px 0;}
+.btn{
+ border:none;
+ padding:14px 22px;   /* ⭐ bigger buttons */
+ font-weight:600;
+ cursor:pointer;
+ flex:0 0 auto;       /* ⭐ stop shrinking */
+ font-size:14px;
+}
+.next{
+ background:#ff4040;
+ color:#fff;
+ border-radius:10px 0 0 10px;
+ min-width:95px;      /* ⭐ restore big size */
+}
+.send{
+ background:#00c853;
+ color:#fff;
+ border-radius:0 10px 10px 0;
+ min-width:95px;      /* ⭐ restore big size */
+}
 
 .seo-section{
 max-width:900px;
