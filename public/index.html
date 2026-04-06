@@ -463,17 +463,18 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
 </div>
 
 
-<div class="main">
+<div class="main mobile-hide"></div>
 
-<div class="top-bar">
+<div class="top-bar mobile-hide"></div>
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
 <div id="online" class="online"><span id="onlineCount">0</span></div>
 </div>
 
 <div id="typing" class="typing"></div>
 
-<div class="chat-container">
-<div class="messages" id="messages"></div>
+<div class="chat-container" style="height:calc(100vh - 260px);">
+  <div class="messages" id="messages"></div>
+</div>
 <!-- ⭐ EMI UTILITY BUTTON -->
 <div class="utility-bar">
   <a href="/tools/emi-calculator.html"
@@ -887,6 +888,36 @@ input.addEventListener("focus", () => {
 }
 .seo-footer-links a:hover{
   text-decoration:underline;
+}
+/* ===== STRANGO MOBILE PREVIEW FIX ===== */
+
+@media (max-width:768px){
+
+.chat-container{
+  height:60vh;
+  overflow-y:auto;
+}
+
+.chat-input-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background#000;
+  z-index:9999;
+  padding:10px;
+}
+
+.content-section{
+  padding-bottom:80px;
+/* 🔥 MAKE MOBILE LOOK LIKE SECOND SITE */
+  .mobile-hide{
+    display:none;
+  }
+
+  .chat-container{
+    height:80vh !important;
+  }
 }
 </style>
 </body>

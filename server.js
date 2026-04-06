@@ -10,7 +10,13 @@ const io = new Server(server,{
   transports:["websocket","polling"]
 });
 
-app.use(express.static("public"));
+app.use(express.static("public", {
+  setHeaders: (res, path) => {
+    if (path.endsWith("sitemap.xml")) {
+      res.setHeader("Content-Type", "application/xml");
+    }
+  }
+}));
 
 let waitingQueue = [];
 let onlineCount = 0;
@@ -132,6 +138,6 @@ io.emit("onlineCount", count);
 
 });
 
-server.listen(3000,()=>{
-  console.log("Server running...");
+server.listen(5000,'0.0.0.0',()=>{
+ console.log("Server running...");
 });

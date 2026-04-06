@@ -1,0 +1,406 @@
+[33m09ef518[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m git commit -m "Mobile UI fix: input bar + keyboard height fix"
+[33m2474805[m "UI: Add ChatGPT-style premium input bar (blur backdrop + glass effect + refined input styling)"
+[33m10d1538[m "UI: Final clean input-bar polish (flex input stretch + stable button sizing + premium spacing)"
+[33m1a90540[m UI: Restore large NEXT/SEND buttons and improve input-bar layout stability
+[33m22d23b2[m UI: Fix chat layout stability (sticky input-bar + flex messages min-height fix for mobile & desktop)
+[33m4ec0a57[m "UI: Mobile WhatsApp-style chat layout fix (full height main + fixed input bar)"
+[33mc65a3bd[m "UI polish: typography upgrade"
+[33ma7ab6d2[m "Fix chat panel height after SEO intro"
+[33ma6e3a31[m "Fix homepage SEO intro placement"
+[33m7688d37[m "fixed homepage seo intro position"
+[33m11458cf[m "added homepage seo intro"
+[33mc46c71a[m "added topical authority links"
+[33m9d7044b[m "added breadcrumb schema to all seo pages"
+[33m36262c8[m "fixed breadcrumb schema quotes"
+[33me1653cf[m "added faq schema"
+[33mdd52431[m "updated sitemap with all seo pages"
+[33m67e4dbb[m "added strango vs omegle comparison page"
+[33m0e89b16[m "added strango vs omegle comparison page"
+[33m5aad90e[m added omegle alternatives page
+[33mfdd277f[m "added omegle alternatives page"
+[33m931534f[m "clean seo footer layout" git push
+[33m21219a8[m "added india chat homepage link"
+[33mac050ac[m "added india stranger chat page"
+[33mde0833c[m "added random video chat link"
+[33mb17dd00[m "seo links open in new page"
+[33m1b3558c[m "added homepage seo internal links"
+[33m98a9c0a[m "added seo pages"
+[33m11114b7[m fix: update robots and sitemap for custom domain
+[33m3f2c3e1[m fix: updated sitemap to custom domain
+[33m2fe6520[m fix(chat): clear old messages when stranger status changes
+[33md36df6b[m Added EMI analytics tracking"
+[33m1112e20[m Added stranger_connected analytics tracking"
+[33m70798b6[m Added Google Analytics Tracking
+[33m06212af[m feat(ui): upgrade online count badge 👥
+[33m31f7bb3[m fix(ui): remove duplicate humanoid icon from online counter
+[33m59e2b70[m feat(ui): upgrade online count UI with bigger humanoid icon
+[33m781dbbe[m fix(server): accurate real-time online user count using io.engine.clientsCount
+[33m7b0eeb4[m fix(chat-flow): reset connection state on NEXT to prevent old chat bleed
+[33me5d6a83[m feat(mobile-ui): stack EMI calculator and table vertically on mobile
+[33me1608e5[m fix(mobile-ui): improve EMI calculator mobile layout and prevent iOS input zoom
+[33m9e0b009[m fix(mobile-ui): resolve About Strango collapsible not closing on mobile
+[33mf6c2323[m feat(ui): open ₹ EMI calculator in new tab to preserve chat session
+[33m5d8145b[m feat(ui): add ₹ EMI calculator utility bar above input area
+[33m3eda52b[m  "add robots.txt"
+[33mb00c225[m "fix(js): removed nested script tag breaking socket"
+[33m2771dc5[m "fix(match): auto queue users on connect and repair online counter"
+[33m6307576[m "feat(seo): add safe collapsible SEO block for mobile"
+[33m6da5b07[m feat(mobile): lock chat layout + prevent SEO push on keyboard
+[33m4f12564[m fix(server): prevent ghost users and incorrect online count on mobile refresh
+[33mba48aa8[m feat(mobile): lock chat layout to viewport and prevent SEO push during typing
+[33mbc93ace[m fix(mobile): keep NEXT and SEND buttons visible during typing
+[33m7ff5b09[m fix(matchmaking): prioritize NEXT clicker and prevent wrong auto-pairing
+[33m2ccd39a[m feat(mobile): improve typing experience and keyboard behavior
+[33m273978d[m feat(notification): add tab title message alerts when inactive
+[33mc04f0be[m fix(layout): restore SEO section visibility below chat
+[33m7ffce00[m feat(mobile): add keyboard-safe chat layout adjustment
+[33m61757aa[m fix(strango): stable auto-match + disconnect safety update
+[33mb508cad[m feat(responsive): add smart message alignment for mobile and desktop
+[33m11f53f7[m git add . git commit -m "feat(seo): add green heading SEO section below chat layout" git push
+[33m82de151[m feat(layout): stretch chat container exactly to red-line width
+[33m7fc4e12[m feat(layout): stretch chat container to full red-line width
+[33md0ba53e[m feat(layout): stretch chat layout full width and add top status boxes
+[33m8c7ae0a[m feat(seo): add additional rich SEO content blocks after Modern Random Chat Platform
+[33m1b12e01[m feat(seo): add extended FAQ section with rich content
+[33m31d41fc[m feat(seo): add rich SEO introduction and keyword content blocks
+[33m776d94b[m feat(chat): add stranger typing indicator without disrupting session
+[33mb8eb70b[m feat: trust pages open in new tab without disrupting chat session"
+[33m91ac4f8[m feat(seo): add rich SEO introduction, keyword sections, and premium FAQ content
+[33m9b019d8[m "feat: premium SEO + clickable trust footer + typography upgrade"
+[33mf73288d[m "fix: footer links redirect to trust pages"
+[33mef01656[m feat: add rich SEO content + 10 FAQ section"
+[33m1cb43dc[m "feat: add visible trust footer with page redirects"
+[33m8ead75d[m feat: legal rich trust pages with Indian laws + UN frameworks + contact"
+[33md222760[m feat: stranger typing indicator"
+[33m8625e39[m "feat: online counter UI + colored status states"
+[33m61524d9[m fix: socket session reset + correct stranger connection logic"
+[33m7343dc5[m feat(chat-layout): stretch chat to full height + move stranger status above chat
+[33m402cb7c[m feat(chat-ui): restore header subtitle, adjust status placement, and refine message styling
+[33m4dd0d6a[m feat(chat-ui): add responsive message alignment (desktop left, mobile split)
+[33m7a07ec7[m feat(chat-ui): improve message spacing to industry-standard layout
+[33mf0b0c51[m feat(chat): add real-time stranger typing indicator
+[33m026e810[m chore(ui): simplify header title to "Strango"
+[33m1e42147[m fix(ui): disable title text selection to remove highlight effect
+[33m071d0d1[m feat(layout): adjust chat layout positioning and integrate status bar
+[33m37388ca[m feat(ui): add Premium Header V2 and improve visual hierarchy
+[33m23336be[m feat(ui): upgrade SEO section to full-width premium layout
+[33m9678cc7[m fix(seo): add sitemap.xml inside public folder for Google indexing
+[33m2b0a371[m feat(seo): add sitemap.xml for Google indexing
+[33m42cace8[m "Added sitemap.xml"
+[33m91e8eed[m "Google Search Console verification added"
+[33mcb53d80[m seo(head): add structured data, canonical, OG, and Twitter meta tags to homepage
+[33mc0e8760[m content(seo): replace landing SEO section with updated Strango anonymous chat content
+[33m34e82f1[m layout(chat): fix bottom-anchored full-screen flex chat layout
+[33m5e53999[m layout(chat-ui): add utilities-area between chat panel and input bar
+[33mf595511[m layout(chat): implement full-screen flex chat wrapper and move FAQ outside viewport
+[33mdd8742a[m layout(chat): anchor chat panel to viewport bottom using flexbox layout
+[33mc3398a6[m layout(ui): add utilities-area between chat panel and input bar without moving input controls
+[33m06561b3[m layout(chat-ui): reduce chat container height to create fixed utility gap above input bar
+[33m6b2515b[m layout(ui): add fixed utility-area spacing and convert chat container to fixed height
+[33m413cef0[m feat(layout): separate input bar and add utility section below chat container
+[33m721cccb[m fix(chat): replace dots with bottom typing indicator and prevent stuck typing state
+[33ma617cf2[m feat(server): improve typing indicator handling and auto-clear dots
+[33m572c77a[m feat(chat): fix typing indicator removal and add inactive tab notifications
+[33mce48ef5[m feat(chat): add auto-queue connect and stranger typing dots indicator
+[33ma53658b[m feat(seo): add FAQ section to landing content without layout changes
+[33m2c67105[m style(chat): align all message bubbles to left side
+[33m6c1ca3d[m feat(ui): compact message bubble size + replace SEO content
+[33ma568f04[m fix(layout): restore stable fullscreen chat and remove bottom padding gap
+[33m20e015d[m fix(layout): remove bottom gap and stretch chat container to screen edge
+[33m11e2415[m feat(seo): add full optimized Strango SEO content section without altering chat layout
+[33m2db4866[m feat(footer): open legal pages in new tab without interrupting chat
+[33m3f49ce4[m feat(seo): replace landing SEO content with full optimized Strango description and FAQ
+[33m3432e9f[m fix(layout): switch to standard flex fullscreen chat layout
+[33me2c36af[m fix(layout): prevent SEO overlap and lock chat to fullscreen layer
+[33mb99f1fe[m feat(layout): convert chat to true fullscreen using fixed main container
+[33m4d70868[m feat(layout): make chat fullscreen layout
+[33m869d881[m fix(layout): use flex height system so chat fills viewport and input bar stays visible
+[33m7a32a29[m fix(layout): restore fullscreen chat while keeping visible SEO section below
+[33m51f5140[m fix(layout): remove extra viewport height from main container to keep input bar visible
+[33m9e726c0[m fix(layout): restore fullscreen chat height using flex stretch without altering SEO or UI
+[33mfea811d[m feat(seo): add visible SEO section below fullscreen chat without breaking layout
+[33m9f84a21[m feat(seo): embed long-form SEO content using template tag to preserve fullscreen chat layout
+[33m5e3bf4a[m feat(seo): add full long-form Strango SEO content without modifying existing fullscreen UI
+[33mbad9569[m feat(seo): add full long-form Strango SEO content without altering current chat layout
+[33md2628cb[m feat(seo): add long-form anonymous stranger chat SEO content without changing fullscreen chat layout
+[33maea8122[m fix(layout): restore fullscreen chat and move SEO content offscreen for indexing
+[33m773801f[m feat(seo): replace homepage SEO content with long-form optimized anonymous chat content while keeping fullscreen layout
+[33mf54768f[m feat(ui): restore fullscreen chat and add fixed bottom trust navigation links
+[33ma91cb5f[m fix(ui): remove bottom gap by converting chat layout to flex full-height structure
+[33m4c7354e[m ui: center title and move online status to left above chat layout
+[33m121a7c2[m content: update main title and subtitle text for Strango homepage
+[33m19a1247[m fix(ui): force chat container to fill viewport so SEO content starts below screen
+[33mde5d6c7[m feat(layout): restore trust pages footer and enable scroll while keeping fullscreen chat
+[33m0e686d9[m feat(trust-pages): add Indian IT Act references and UN digital safety principles to privacy, terms, and safety pages
+[33m3dd5d47[m feat(ui): convert Strango to fullscreen chat layout
+[33m87d6863[m ✅ Fix: Chat layout now fills full screen height
+[33mf07abf3[m Layout: extend chat container to full viewport height
+[33m2805ae8[m UI: make chat layout full-width while preserving header and SEO sections
+[33m0dfab01[m Enhance layout: restore large chat area and keep SEO content
+[33md2fc9d8[m Fix layout with SEO section and enhance on-page content
+[33m8f45695[m Add rich SEO content and FAQ structured data
+[33m3aaba7a[m UI: align chat messages left and improve input spacing
+[33m0851c13[m Refactor layout: stretch chat between header and footer
+[33m13d7dcf[m Update chat layout and message bubble sizing
+[33m2c4314b[m Improve layout: move chat closer to footer and remove spacer
+[33mb9c7caf[m Remove footer top border and clean layout
+[33m94a3ca9[m Added internal tools-space above typing area inside chat layout
+[33me57703d[m Fix layout spacing and restore tools space visibility
+[33mfe9e607[m fix(layout): restore and stabilize tools-space outside chat container
+[33m02c1d76[m fix(layout): restore tools-space and separate it from chat container
+[33m7328d68[m refactor(layout): separate utilities spacer from chat container
+[33ma20ed4d[m feat(layout): add dedicated spacer section above typing area
+[33m8f6019f[m style(ui): add spacing above typing bar without affecting chat layout
+[33m50566a3[m style(chat-ui): add internal spacing above typing area for improved layout balance
+[33m5305d5c[m style(ui): add vertical spacing above typing area for improved chat layout
+[33m0104100[m style(chat-ui): add spacing above input bar for improved layout balance
+[33m76b0974[m style(layout): increase vertical utilities space below chat panel
+[33mc1b6180[m feat(layout): add independent utilities space below chat panel
+[33m5d38443[m style(ui): simplify divider layout and add single top border to chat panel
+[33m7ec248c[m refactor(ui): move status section above chat and add independent divider line
+[33mb9fda82[m feat(ui): introduce chat header bar and remove top layout gap
+[33mc5db173[m feat(realtime): restore typing indicator and tab notification with premium status UI
+[33m5654158[m feat(ui): add premium status bar with humanoid online indicator and dynamic status colors
+[33m27c1531[m feat(realtime): add stranger typing indicator and tab notification support
+[33mcb3f0af[m feat(ui): align all messages left and open footer links in new tab
+[33m045b83a[m feat(ui): implement professional chat bubbles with sender/receiver styling
+[33m1cabf5b[m fix(chat): prevent self messaging and correct connection status logic
+[33m7fb1e7b[m feat(chat): enable Enter-to-send and remove duplicate connection message
+[33m8ee0aa4[m feat(ui): add WhatsApp-style chat bubbles and enter-to-send support ``` 👍
+[33m131136c[m feat(ui): add professional Next button with auto reconnect logic
+[33mac095ff[m fix(ui): chat panel now fits full screen using flex layout
+[33m818769b[m Add auto-connect queue + fix online count and matching stability
+[33m99ebd49[m Fix connection logic + restore header UI and page routing
+[33m2bca01a[m Fix matching logic + enable separate legal pages routing
+[33m3c52651[m Fix self messaging + enable separate privacy/terms pages routing
+[33mee496d5[m fix footer link routing paths"
+[33mde7aaac[m "legal: add privacy, terms, safety, about and contact pages"
+[33mf02660a[m ui: switch chat layout to left-side text style with You/Stranger labels
+[33m74ddbd0[m fix(ui): restore sender message bubble display
+[33m5c34912[m core fix: stable matching and message forwarding"
+[33mbc1d548[m fix: remove duplicate local message render"
+[33m79cf477[m fix: stabilize next event and requeue both users properly
+[33me1c8d6f[m fix: move statusBar declaration before nextBtn usage"
+[33m1e12ac7[m fix: move socket initialization before usage"
+[33md43bd1c[m fix: enable message sending via sendBtn"
+[33m95eea55[m fix: align socket event names with server (online + connected)"
+[33m42a2110[m added online count and stranger connection UI
+[33md87aa1e[m UI Fix: restored original chat panel size and layout, reverted height to maintain Strango design stability
+[33m30aeb56[m no height change in chat panel
+[33m5c90854[m UI: increased chat panel height
+[33m2ea847c[m Add WhatsApp-style mobile responsive layout without affecting desktop chat
+[33m72853e8[m Make STRANGO SEO PRO section visible on desktop while preserving chat functionality
+[33mdaa4c47[m Add hidden STRANGO SEO PRO content without affecting live chat system
+[33m1c4fd84[m Add STRANGO SEO PRO section with high-traffic keywords and FAQ schema (UI unchanged)
+[33m692a197[m Strango: Footer policy links open in new tab without interrupting active chat
+[33m6e69bfd[m Strango: Preserve chat history on partner Next action and improve reconnect status flow
+[33m072d4f4[m Strango: Adjust chat container height using viewport calculation to prevent bottom overflow
+[33m83dc514[m Strango: Fix flex stretch issue — chat bubbles now auto-size to message text length
+[33m80be84f[m Strango: Adjust chat bubble sizing to auto-fit text width instead of full-row stretch
+[33mb59307d[m Strango: Fix message bubble CSS block to restore proper vertical stacking and spacing
+[33mbd17fee[m Strango: Implement queue-based auto matching engine to fix waiting state and enable instant stranger pairing
+[33m5c73d2a[m Strango: Introduce 👤 online indicator in chat border and refine real-time stranger connection flow
+[33mcc74f0a[m Strango: Refactor status display by placing connection state on chat border and simplifying UI messaging
+[33ma2b3b7b[m Strango: Implement stable auto pairing system, resolve waiting state issue, and refine chat panel positioning
+[33m738852d[m Strango: Improve session handling by clearing previous messages, stabilizing system status display, and fixing chat container visibility
+[33m1124dc0[m Strango: Integrate online/status updates inside chat panel and enhance chat container height without affecting functionality
+[33m08a6231[m Strango: Introduce legal and policy pages with India IT Act alignment, IPC guidelines, and UN online safety framework content
+[33m26b500b[m Strango: Implement typing event and UI indicator for real-time stranger typing feedback
+[33mf8b8795[m Strango: Optimize chat panel height using responsive viewport units to keep footer visible on screen
+[33mc08d3a7[m Strango: Fix chat panel visibility issue by reverting to original layout while preserving auto-connect and messaging
+[33m2ca85e1[m Strango: Fix chat panel alignment to match original layout while preserving auto-connect and message indicators
+[33m0e90611[m Restore sender labels in chat bubbles and fix chat panel height to prevent screen overflow
+[33mf13d035[m Enable auto-connect on page load and update chat bubbles to show messages without sender labels
+[33m4993493[m Update chat UI to left-aligned message bubbles with WhatsApp-style colors without changing functionality
+[33m6febacb[m Strango: Implement waitingQueue pairing logic, stabilize Next matching and fix non-connecting strangers
+[33m2edeb88[m Fix server-side stranger matching logic and restore pairing on Next event
+[33m6dba637[m Rebuild index.html using original Strango structure and fix socket connection issues
+[33m871c89f[m Fix syntax error in Next button event listener to restore script execution
+[33m633c5a9[m Strango: Fix broken Next handler, correct DOMContentLoaded structure, restore online counter and matching
+[33mf886b7b[m Strango: Make button listeners null-safe to prevent script crash and restore socket connection
+[33md9ad0ae[m Strango: Fix frontend socket connection to Render server, restore online counter and matching
+[33me9dbe19[m Fix stranger matching and socket connection stability
+[33mb3ff4b6[m Fix auto matching system, prevent self messaging, improve socket pairing logic and stabilize stranger connection
+[33m2d710ea[m Fix frontend socket pairing and self messaging bug
+[33m2372ec4[m Fix socket matching, online counter, and self messaging
+[33m8394b97[m Fix socket matching and prevent self messaging
+[33m9976ff1[m Fix socket matching and prevent self messaging
+[33m05de130[m Mobile fullscreen layout fix, keyboard safe chat UI, auto stranger connect improvement, unread message notification, SEO content enhancement, FAQ update
+[33me766c9c[m ✨ Strango Update — Mobile Fullscreen Chat + Connection Fix + SEO
+[33m26e4df5[m Mobile fullscreen layout fix, keyboard safe chat UI, auto stranger connect improvement, unread message notification, SEO content enhancement, FAQ update
+[33m45c31fe[m ui: lift chat panel for full visibility + restore SEO section + open legal pages in new tab
+[33m57bb3b9[m fix: online counter sync + footer layout gap resolved
+[33m632bc37[m feat(ui+seo): fix chat panel position, add rich SEO content, FAQ section, unread message tab notification, and maintain stable stranger matching without affecting status
+[33m52c5fae[m UI update: remove Premium label, fix chat layout height, add SEO FAQ section, improve notification handling and keep chat stable
+[33mfd04f3b[m ui: lift chat panel for full visibility + restore SEO section + open legal pages in new tab
+[33m13cae11[m feat: add unread counter + browser push notification + remove premium label from FAQ
+[33ma4ef6c4[m ui: lift chat panel for full visibility + restore SEO section + open legal pages in new tab
+[33ma39fd8f[m ui: raise chat border to subtitle line and remove header gap (layout only)
+[33mb4fe17e[m ui: raise chat layout to touch subtitle line without changing chat behaviour
+[33m349a216[m ui: align chat panel directly under subtitle and remove top gap without changing chat logic
+[33m8dc6b22[m fix(ui): keep chat panel fully visible on screen without affecting socket or SEO
+[33m906f22a[m feat(seo): add premium rich FAQ section below chat without modifying chat functionality
+[33m38e230c[m style(layout): center header text and add premium bordered layout without changing chat functionality
+[33md9cdbe5[m feat(seo): add 10 rich FAQ explanations below chat without affecting real-time chat logic or layout
+[33m3683df6[m fix(chat): keep chat panel fully visible, prevent self-messaging, correct typing indicator logic, preserve SEO section and existing Strango status system
+[33macfe810[m feat: keep chat full screen, move SEO content below chat, fix self-message issue, preserve connection status and typing system
+[33me6d1d55[m Added Ultra SEO content + FAQ schema, preserved full-screen chat and socket logic
+[33m02f3c65[m Fix full-screen chat layout, keep panel visible without scrolling
+[33mde1b969[m Fix self-chat issue, add safe send lock, improve full-screen chat UI without backend changes
+[33m519b909[m UI: Full-screen left chat layout, removed extra content block, no logic changes
+[33mf93234a[m Restore SEO header above chat and align messages left while preserving fullscreen chat layout
+[33ma0d37ee[m Fix fullscreen chat layout so chat stays visible without scrolling and maintain existing Strango functionality
+[33m4095625[m Switch to fullscreen chat layout and remove utilities panel without affecting core functionality
+[33m96d4a4e[m git add . git commit -m "Add Indian + UN compliant rich legal pages for Strango SEO" git push
+[33m0e7dcd3[m Upgrade UI with premium SEO content, typing indicator, enter send, and background message notifications without affecting chat logic
+[33mde2da22[m Add background tab notifications and unseen message counter without altering chat flow
+[33meafd560[m Add stranger typing indicator with safe UI integration
+[33m5a4c9b4[m Fix chat input enter-send + message color separation (UI safe)
+[33me0082bc[m git add . git commit -m "Add Indian + UN compliant rich legal pages for Strango SEO" git push
+[33ma45f484[m git add . git commit -m "Add Indian + UN compliant rich legal pages for Strango SEO" git push
+[33mad963fa[m git add . git commit -m "Add SEO-rich privacy and about pages" git push
+[33mff41063[m Update footer navigation to open legal pages in new tabs and preserve active chat session
+[33mf532ff9[m Add legal popup footer links and improve SEO layout without affecting chat functionality
+[33mae30638[m Add premium SEO content, FAQs, and policy sections without affecting chat functionality
+[33m002fb8f[m Fix message sending and receiving by replacing index.html with stable chat implementation
+[33m5ea0227[m Add sendMessage function and enable real-time chat messaging between strangers
+[33mb0a12e5[m Stabilize server matching engine, fix online count, and enable real-time message relay
+[33m64bbe44[m Add message relay between partners and enable real-time chat messaging
+[33m4a73599[m Add strangerConnected status listener and improve present status handling
+[33m9f5c810[m Add chat present status UI and fix script closing brackets
+[33mbd0872e[m Fix script tag issue and remove legal popup code showing on page
+[33m32d4084[m Fix online listener + socket init
+[33mfcefca1[m Fix: add socket.io client init
+[33m6e0bdf9[m Add system message listener for server events
+[33mf5c26bc[m Add Stranger Connected system message
+[33md7b89cf[m Open legal pages in new tab without affecting chat
+[33mebe0a6f[m Hotfix: permanently disable legal modal overlay (no changes to Strango chat)
+[33m727cad2[m Removed legal popup system and added direct page redirects (no impact on Strango chat)
+[33ma975f71[m fix(legal-modal): stable popup system without auto-load, iframe reset added
+[33m9b089fd[m style(ui): improve legal modal clarity with lighter overlay and premium modal background
+[33mf9ad45c[m fix(ui): improve legal popup visibility with premium glass overlay without affecting chat system
+[33m3726c11[m fix(ui): improve legal popup visibility with premium glass overlay without affecting chat system
+[33mab2e464[m feat(ui): improve legal popup clarity with premium glass overlay
+[33m529275e[m feat(legal): add popup legal modal system (privacy, terms, safety, about, contact) without affecting chat connection
+[33m9dd398b[m fix: footer legal navigation links added
+[33m5be0861[m add safety policy page (google trust content)
+[33m799f7e2[m ui: premium industry typography upgrade
+[33m7c18e9f[m feat(seo): expand rich content and enhance FAQ explanations for stronger search visibility
+[33m3db1f4d[m final full index.html replacement for stable chat
+[33m29bde3f[m final fix: restore status event listener
+[33mbaae7b9[m final fix: align server events with frontend listeners
+[33meaf048a[m fix: use existing status css for system messages
+[33m135b0d2[m fix: make status message visible
+[33m60d4753[m fix: clean script reset to restore socket connection
+[33m847ed79[m fix: prevent null button crash blocking socket connection
+[33m85d38d9[m fix: enable websocket transport for render
+[33m51bcb09[m fix: align frontend socket events and add online listener
+[33m18ba351[m fix: final status event alignment
+[33md23a795[m fix: final DOMContentLoaded closure restored
+[33m6a79196[m fix: restore chat socket script
+[33m548dec2[m feat(seo): expand rich content and enhance FAQ explanations for stronger search visibility
+[33m194d2e3[m fix(chat): resolve typing indicator timeout and enable enter key send
+[33maf45c91[m fix(chat): restore socket script and matching system
+[33mff61c89[m feat(legal): add rich Indian law aligned Privacy, Terms, Safety and About content
+[33mca7a110[m style(typography): apply premium Inter font and industry-standard text sizing
+[33m3b2c98d[m feat(seo): expand rich content and enhance FAQ explanations for stronger search visibility
+[33m4d1caba[m style(ui): upgrade typography to premium industry-standard font and spacing
+[33m9562704[m feat(seo): expand rich content and enhance FAQ explanations for stronger search visibility
+[33mf1ebfb2[m feat(legal): enhance Privacy, Terms, Safety and About sections with Indian law aligned content (IT Act 2000, DPDP Act 2023, Intermediary Rules 2021)
+[33m8b71b54[m ui(chat): fix message alignment and add anonymous safety notice bar
+[33m75fecc0[m UI update: edge-to-edge chat layout, improved input alignment, no logic changes
+[33m97e8293[m feat(seo): expand Strango rich content and enhance FAQ descriptions for stronger SEO
+[33ma4d53ea[m feat: added info page with privacy, terms, safety and about content
+[33m59b79d9[m restore: last stable strango version
+[33mff3ca49[m ui(chat): fix message alignment and add anonymous safety notice bar
+[33m9e3772b[m feat(seo): expand Strango rich content and enhance FAQ descriptions for stronger SEO
+[33m75e463f[m feat(chat): add browser tab unread message notification counter
+[33m82999b2[m feat(legal+seo): upgrade Privacy, Terms, Safety and About with rich Indian-law content
+[33m39ea8bf[m feat(socket): add typing and stopTyping event forwarding
+[33m19faf06[m feat(seo): add premium content-rich SEO section with 10 FAQs without affecting chat system
+[33mdd91bde[m feat(legal): add Privacy, Terms, Safety and About modal pages aligned with Indian law
+[33mca38245[m feat(chat): enable Enter key to send messages
+[33md108ba3[m fix(chat): preserve partner history on stranger disconnect and add You/Stranger message labels
+[33mce2047c[m fix(chat): clear chat history when stranger changes or disconnects
+[33m9f2e9d0[m feat(ui): add chocolate next button and real-time stranger typing indicator
+[33mced1b2b[m feat(ui): add WhatsApp-style colored chat bubbles for sender and receiver
+[33m7d034e6[m fix(ui): single live status indicator and left-aligned message layout
+[33m6da51ce[m fix(server): restore stranger matching engine, fix online counter, prevent self messaging
+[33mdf104af[m fix(chat-logic): add connection state check, restore online counter, block sending messages without stranger
+[33m4e3c1b0[m fix(ui): resolve hidden chat panel, restore stranger status events, improve layout & SEO card
+[33md5b171c[m FINAL UI FIX: visible chat panel, professional SEO section, scrolling fix, responsive 65/35 layout
+[33m45f086b[m Add sticky chat panel and premium SEO card layout
+[33mb4eb4d1[m Left-align chat layout and add smooth transition between chat and utilities
+[33m4d747f7[m Fix message bubble width, add typing indicator and restore SEO section
+[33m8137199[m Add realtime stranger typing indicator
+[33m31a9137[m Add strong SEO section with FAQ schema and optimized content
+[33m89413bb[m UI update — added live status bar and WhatsApp-style chat bubbles
+[33m72bc015[m Improve status system — show only current connection state + SEO FAQs
+[33m550e6a4[m Clean UI messages + strong SEO section with 10 FAQs
+[33ma7b2c92[m Clean realtime matching engine — fixed deploy crash
+[33mb23d74c[m Replace old matching engine with real-time pairing system
+[33m3d1e681[m Restore real socket connection — stranger matching + online count fixed
+[33md42a379[m Final layout update — 68/32 layout, FAQ added, stranger connection logic fixed
+[33md756805[m Refactor index.html: fixed chat UI overlap, enabled scroll, improved mobile layout, moved SEO below chat
+[33mab2f8d1[m layout fix 68-32 chat utilities
+[33m0ac46bf[m layout fixed + side panel added
+[33m2e66ec4[m git add . git commit -m "typing animation added" git push
+[33mdffdca3[m git add . git commit -m "fixed next clearing logic" git push
+[33mac506bb[m git add . git commit -m "final match logic fix" git push
+[33m61fe8fd[m git add . git commit -m "auto queue reconnect system" git push
+[33mc683d86[m git add . git commit -m "final seo + enter + typing + left layout" git push
+[33mc7a953f[m git add . git commit -m "final alignment + typing fix" git push
+[33m0b1e94b[m git add . git commit -m "final real pairing system" git push
+[33m8da376a[m git add . git commit -m "final ui fix typing + online + bubble" git push
+[33mca17027[m git add . git commit -m "favicon fix" git push
+[33md9c0a27[m final working stranger connect fix
+[33m9426c76[m seo overlay fix
+[33m693d6d4[m scroll fix + chat activate
+[33m4bae97d[m typing + notification update
+[33mf800255[m mobile layout fix
+[33m064474b[m fix seo hide css
+[33m2d07134[m update chat UI and fixes
+[33m525e529[m Add mobile toast notification
+[33m008c290[m Add Inter premium font
+[33me8b1a61[m Add Strango SEO content section
+[33m87dba62[m Fix landing header scroll position
+[33m873cd56[m Add Strango landing header scroll fix
+[33m8a26eab[m Add SEO meta tags and updates
+[33mea84519[m Enhance UI and functionality: improve layout, add message formatting, and streamline chat interactions
+[33ma601c50[m Fix pairing bug, send/enter issue, premium UI
+[33mfd9f7f5[m Add stranger typing indicator
+[33m6f2b776[m Add safety & moderation system
+[33m2292127[m Skip without reload (Omegle style
+[33me7c334c[m Professional chocolate theme UI
+[33m51b19d3[m Add enter key, online count, typing indicator
+[33m027dc9f[m Final working stranger chat
+[33m1ed176f[m Fix root route to load UI
+[33md6ba5d3[m Update package.json
+[33m83cb14b[m Add Next button and fix matchmaking
+[33md2a6f19[m Strango ready for deploy
+[33mcfa63bf[m Force rupee icon using embedded image
+[33ma948786[m Final fix: SVG rupee icon for EMI button
+[33m01147aa[m Final EMI button rupee symbol and higher position
+[33m5b61990[m Force EMI button higher with rupee symbol
+[33mba8c20f[m UI polish: move EMI button higher and fix rupee symbol
+[33mb239cc5[m Fix: EMI page was duplicating Strango UI
+[33mc36b010[m Final fix: hide EMI iframe correctly
+[33m3277fb5[m Final rupee symbol fix for EMI button
+[33m48eb4b1[m Fix rupee symbol using HTML entity
+[33m6345c07[m Fix server crash on Render
+[33md6ed8b3[m Fix EMI iframe src
+[33m9540d91[m FIX: serve public index with EMI button
+[33md772d80[m FINAL working Strango + EMI button
+[33ma18ffd5[m FINAL FIX: static serving + routes
+[33m7897e60[m FINAL GUARANTEE FIX: enable static serving
+[33m0f49b8b[m FINAL FIX: static + emi route
+[33mefe0791[m Fix static serving for EMI page
+[33mad55f35[m Fix EMI routing and static serving
+[33m3255492[m Fix EMI route correctly
+[33mbe38add[m Express 5 safe routing fix
+[33ma7f51f9[m Final fix: force serve emi calculator
+[33mb3a5497[m Fix route for emi calculator page
+[33m84448c9[m Fix: serve public folder
+[33mdeff8f3[m Add EMI calculator
+[33m5b0cb45[m Deploy-ready server.js
+[33mad314e5[m first save
