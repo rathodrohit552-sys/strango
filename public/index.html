@@ -302,7 +302,9 @@ font-weight:500;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:8px 0;
+flex-wrap:wrap;
+gap:8px;
+padding:8px 12px;
 border-top:1px solid #111;
 background:#000;
 }
@@ -311,7 +313,7 @@ background:#000;
 text-decoration:none;
 background:#111;
 color:#00ff88;
-padding:6px 14px;
+padding:7px 14px;
 border-radius:8px;
 font-size:13px;
 border:1px solid rgba(255,255,255,0.1);
@@ -319,6 +321,8 @@ display:flex;
 align-items:center;
 gap:6px;
 transition:.2s;
+white-space:nowrap;
+line-height:1;
 }
 
 .utility-btn:hover{
@@ -330,6 +334,85 @@ color:#000;
 color:#FFD700;
 font-weight:bold;
 font-size:15px;
+}
+
+.calculator-modal{
+position:fixed;
+inset:0;
+z-index:120;
+display:none;
+align-items:center;
+justify-content:center;
+padding:18px;
+background:rgba(0,0,0,.72);
+}
+
+.calculator-modal.active{
+display:flex;
+}
+
+.calculator-panel{
+width:min(560px, calc(100vw - 32px));
+height:min(720px, calc(100dvh - 64px));
+display:flex;
+flex-direction:column;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.12);
+border-radius:10px;
+background:#0a0a0a;
+box-shadow:0 24px 80px rgba(0,0,0,.55);
+}
+
+.calculator-header{
+display:flex;
+align-items:center;
+gap:10px;
+min-height:50px;
+padding:0 12px 0 16px;
+border-bottom:1px solid rgba(255,255,255,.1);
+background:#050505;
+}
+
+.calculator-title{
+flex:1;
+min-width:0;
+overflow:hidden;
+color:#fff;
+font-size:14px;
+font-weight:700;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+.calculator-open,
+.calculator-close{
+height:34px;
+border:1px solid rgba(255,255,255,.12);
+border-radius:8px;
+background:#111;
+color:#00ff88;
+cursor:pointer;
+font-size:13px;
+font-weight:700;
+}
+
+.calculator-open{
+display:inline-flex;
+align-items:center;
+padding:0 12px;
+text-decoration:none;
+}
+
+.calculator-close{
+width:34px;
+padding:0;
+}
+
+.calculator-frame{
+flex:1;
+width:100%;
+border:0;
+background:#fff;
 }
 
 /* ===== STRANGO SAFE COLLAPSIBLE SEO (CLASS VERSION) ===== */
@@ -511,16 +594,37 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
 <div class="chat-container" style="height:calc(100vh - 260px);">
   <div class="messages" id="messages"></div>
 </div>
-<!-- ⭐ EMI UTILITY BUTTON -->
+<!-- ⭐ UTILITY BUTTONS -->
 <div class="utility-bar">
   <a href="/tools/emi-calculator.html"
-   class="utility-btn"
-   target="_blank"
-   rel="noopener"
-   onclick="trackEvent('emi_calculator_click')">
-   <span class="rupee">₹</span> EMI Calculator
-</a>
+     class="utility-btn"
+     data-calculator-title="⚡ EMI Calculator"
+     data-calculator-event="emi_calculator_click">
+     ⚡ EMI Calculator
+  </a>
+  <a href="/tools/sip-calculator.html"
+     class="utility-btn"
+     data-calculator-title="📈 SIP Calculator"
+     data-calculator-event="sip_calculator_click">
+     📈 SIP Calculator
+  </a>
+  <a href="/tools/gst-calculator.html"
+     class="utility-btn"
+     data-calculator-title="🧾 GST Calculator"
+     data-calculator-event="gst_calculator_click">
+     🧾 GST Calculator
+  </a>
+</div>
 
+<div class="calculator-modal" id="calculatorModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="calculator-panel">
+    <div class="calculator-header">
+      <div class="calculator-title" id="calculatorTitle">Calculator</div>
+      <a class="calculator-open" id="calculatorOpenLink" href="/tools/emi-calculator.html" target="_blank" rel="noopener">Open</a>
+      <button class="calculator-close" id="calculatorCloseBtn" type="button" aria-label="Close calculator">×</button>
+    </div>
+    <iframe class="calculator-frame" id="calculatorFrame" title="Calculator"></iframe>
+  </div>
 </div>
 
 <div class="input-bar">
@@ -637,6 +741,47 @@ const input=document.getElementById("messageInput");
 const status=document.getElementById("status");
 const online=document.getElementById("online");
 const typing=document.getElementById("typing");
+const calculatorModal=document.getElementById("calculatorModal");
+const calculatorFrame=document.getElementById("calculatorFrame");
+const calculatorTitle=document.getElementById("calculatorTitle");
+const calculatorOpenLink=document.getElementById("calculatorOpenLink");
+const calculatorCloseBtn=document.getElementById("calculatorCloseBtn");
+
+function openCalculatorModal(link){
+const href=link.getAttribute("href");
+const title=link.dataset.calculatorTitle || link.textContent.trim();
+calculatorTitle.textContent=title;
+calculatorFrame.src=href;
+calculatorOpenLink.href=href;
+calculatorModal.classList.add("active");
+calculatorModal.setAttribute("aria-hidden","false");
+trackEvent(link.dataset.calculatorEvent || "calculator_click");
+}
+
+function closeCalculatorModal(){
+calculatorModal.classList.remove("active");
+calculatorModal.setAttribute("aria-hidden","true");
+calculatorFrame.src="";
+}
+
+document.querySelectorAll(".utility-btn").forEach((link)=>{
+link.addEventListener("click",(e)=>{
+e.preventDefault();
+openCalculatorModal(link);
+});
+});
+
+calculatorCloseBtn.addEventListener("click",closeCalculatorModal);
+calculatorModal.addEventListener("click",(e)=>{
+if(e.target === calculatorModal){
+  closeCalculatorModal();
+}
+});
+document.addEventListener("keydown",(e)=>{
+if(e.key === "Escape" && calculatorModal.classList.contains("active")){
+  closeCalculatorModal();
+}
+});
 
 function addMessage(text,type){
 const div=document.createElement("div");
@@ -1005,7 +1150,7 @@ input.addEventListener("focus", () => {
 @media (min-width:769px){
   :root{
     --desktop-input-height:74px;
-    --desktop-utility-height:44px;
+    --desktop-utility-height:52px;
     --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
   }
 
@@ -1091,10 +1236,14 @@ input.addEventListener("focus", () => {
     left:0;
     z-index:44;
     height:var(--desktop-utility-height);
-    padding:0;
+    padding:8px 16px;
     background:#050505;
     border-top:1px solid #111;
     border-bottom:1px solid #111;
+  }
+
+  .utility-btn{
+    min-height:32px;
   }
 
   .input-bar{
@@ -1131,7 +1280,9 @@ input.addEventListener("focus", () => {
     --mobile-header-height:58px;
     --mobile-status-height:30px;
     --mobile-input-height:62px;
+    --mobile-utility-height:74px;
     --mobile-input-total-height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height));
     --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
   }
 
@@ -1168,7 +1319,6 @@ input.addEventListener("focus", () => {
   }
 
   .mobile-hide,
-  .utility-bar,
   .seo-wrapper,
   .seo-section,
   .seo-footer-links,
@@ -1274,7 +1424,7 @@ input.addEventListener("focus", () => {
     position:absolute;
     top:var(--mobile-top-offset);
     right:0;
-    bottom:var(--mobile-input-total-height);
+    bottom:var(--mobile-bottom-panel-height);
     left:0;
     z-index:10;
     display:flex;
@@ -1340,7 +1490,7 @@ input.addEventListener("focus", () => {
     position:absolute;
     left:10px;
     right:10px;
-    bottom:var(--mobile-input-total-height);
+    bottom:var(--mobile-bottom-panel-height);
     z-index:20;
     height:16px;
     margin:0;
@@ -1365,6 +1515,37 @@ input.addEventListener("focus", () => {
     box-shadow:none;
     backdrop-filter:none;
     overflow:hidden;
+  }
+
+  .utility-bar{
+    position:absolute;
+    right:0;
+    bottom:var(--mobile-input-total-height);
+    left:0;
+    z-index:44;
+    min-height:var(--mobile-utility-height);
+    padding:7px 8px;
+    border-top:1px solid #d6d1c8;
+    border-bottom:1px solid #d6d1c8;
+    background:#f0f2f5;
+  }
+
+  .utility-btn{
+    flex:0 1 auto;
+    min-height:28px;
+    padding:6px 9px;
+    border-radius:14px;
+    font-size:11px;
+  }
+
+  .calculator-modal{
+    padding:8px;
+  }
+
+  .calculator-panel{
+    width:calc(100vw - 16px);
+    height:calc(var(--mobile-vvh) - 16px);
+    border-radius:10px;
   }
 
   .input-bar input{
