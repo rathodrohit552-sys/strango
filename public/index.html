@@ -628,6 +628,8 @@ function trackEvent(name){
 }
 
 let connected = false;   // ⭐ connection state guard
+let waitingForManualNext = false;
+let seekingAfterNext = false;
 
 
 const messages=document.getElementById("messages");
@@ -651,21 +653,33 @@ if(isNearBottom){
 }
 
 socket.on("status",(msg)=>{
+const m = msg.toLowerCase();
+const isDisconnected = m.includes("disconnected");
+const isConnected = m.includes("connected") && !isDisconnected;
+const isWaiting = m.includes("waiting");
+
+if(waitingForManualNext && !seekingAfterNext && (isWaiting || isConnected)){
+  return;
+}
+
 status.textContent="⚡ "+msg;
 typing.textContent="";
 status.classList.remove("waiting","connected","disconnected");
 
-const m = msg.toLowerCase();
-// ⭐ Clear old chat when status changes
-if(m.includes("connected") || m.includes("waiting") || m.includes("disconnected")){
-  messages.innerHTML = "";
+if(isDisconnected){
+  status.classList.add("disconnected");
+  connected = false;
+  waitingForManualNext = true;
+  seekingAfterNext = false;
 }
-if(m.includes("connected")){
+else if(isConnected){
   status.classList.add("connected");
   connected = true;            // ⭐ allow sending
+  waitingForManualNext = false;
+  seekingAfterNext = false;
   trackEvent('stranger_connected');
 }
-else if(m.includes("waiting")){
+else if(isWaiting){
   status.classList.add("waiting");
   connected = false;           // ⭐ block sending
 }
@@ -712,6 +726,10 @@ document.addEventListener("visibilitychange",()=>{
 
 
 socket.on("typing",(state)=>{
+if(!connected){
+  typing.textContent = "";
+  return;
+}
 typing.textContent = state ? "Stranger is typing..." : "";
 });
 
@@ -740,6 +758,11 @@ document.getElementById("nextBtn").onclick=()=>{
 messages.innerHTML="";
 typing.textContent="";
 connected = false;     // ⭐ RESET STATE
+waitingForManualNext = false;
+seekingAfterNext = true;
+status.textContent = "⚡ Waiting for stranger...";
+status.classList.remove("connected","disconnected");
+status.classList.add("waiting");
 socket.emit("next");
 };
 
@@ -980,6 +1003,16 @@ input.addEventListener("focus", () => {
 
 /* ===== DESKTOP ONLINE COUNT HEADER PLACEMENT ===== */
 @media (min-width:769px){
+  :root{
+    --desktop-input-height:74px;
+    --desktop-utility-height:44px;
+    --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
+  }
+
+  body{
+    padding-bottom:calc(var(--desktop-bottom-panel-height) + 24px);
+  }
+
   #online{
     position:absolute;
     top:22px;
@@ -1033,6 +1066,58 @@ input.addEventListener("focus", () => {
     font-size:13px;
     line-height:1.2;
     box-shadow:0 4px 18px rgba(0,0,0,.18);
+  }
+
+  .chat-container{
+    width:min(920px, calc(100% - 48px));
+    height:calc(100vh - var(--desktop-bottom-panel-height) - 190px) !important;
+    min-height:310px;
+    max-height:620px;
+    margin:0 auto calc(var(--desktop-bottom-panel-height) + 22px);
+    border-right:1px solid #111;
+    border-left:1px solid #111;
+    border-radius:10px;
+  }
+
+  .messages{
+    padding:16px 20px calc(var(--desktop-bottom-panel-height) + 28px);
+    scroll-padding-bottom:calc(var(--desktop-bottom-panel-height) + 28px);
+  }
+
+  .utility-bar{
+    position:fixed;
+    right:0;
+    bottom:var(--desktop-input-height);
+    left:0;
+    z-index:44;
+    height:var(--desktop-utility-height);
+    padding:0;
+    background:#050505;
+    border-top:1px solid #111;
+    border-bottom:1px solid #111;
+  }
+
+  .input-bar{
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:45;
+    min-height:var(--desktop-input-height);
+    padding:12px clamp(24px, 6vw, 96px);
+    background:#000;
+    border-top:1px solid #111;
+  }
+
+  .input-bar input{
+    height:48px;
+    border-radius:10px;
+  }
+
+  .typing{
+    width:min(920px, calc(100% - 48px));
+    margin-right:auto;
+    margin-left:auto;
   }
 }
 
@@ -1221,7 +1306,8 @@ input.addEventListener("focus", () => {
 
   .messages::before{
     content:"";
-    flex:1 0 auto;
+    flex:1 1 auto;
+    min-height:0;
   }
 
   .msg{
