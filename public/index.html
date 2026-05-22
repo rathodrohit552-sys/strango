@@ -3,7 +3,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 
 <title>Strango — Free Anonymous Stranger Chat India</title>
 
@@ -23,7 +23,7 @@
 
     document.documentElement.style.setProperty("--mobile-vvh", height + "px");
     document.documentElement.style.setProperty("--mobile-vvo", offsetTop + "px");
-    document.documentElement.style.setProperty("--mobile-keyboard-inset", keyboardInset + "px");
+    document.documentElement.style.setProperty("--mobile-keyboard-inset", "0px");
 
     if(document.body){
       document.body.classList.toggle("keyboard-open", keyboardInset > 80);
@@ -766,7 +766,7 @@ function adjustChatHeight(){
 
   root.style.setProperty("--mobile-vvh", height + "px");
   root.style.setProperty("--mobile-vvo", offsetTop + "px");
-  root.style.setProperty("--mobile-keyboard-inset", keyboardInset + "px");
+  root.style.setProperty("--mobile-keyboard-inset", "0px");
 
   if(document.body){
     document.body.classList.toggle("keyboard-open", keyboardInset > 80);
@@ -1042,7 +1042,7 @@ input.addEventListener("focus", () => {
   :root{
     --mobile-vvh:100svh;
     --mobile-vvo:0px;
-    --mobile-keyboard-inset:env(keyboard-inset-height, 0px);
+    --mobile-keyboard-inset:0px;
     --mobile-header-height:58px;
     --mobile-status-height:30px;
     --mobile-input-height:62px;
@@ -1055,9 +1055,11 @@ input.addEventListener("focus", () => {
     width:100%;
     height:-webkit-fill-available;
     height:100svh;
+    height:100dvh;
     height:var(--mobile-vvh);
     min-height:-webkit-fill-available;
     min-height:100svh;
+    min-height:100dvh;
     min-height:var(--mobile-vvh);
     overflow:hidden !important;
     background:#ece5dd !important;
@@ -1066,10 +1068,14 @@ input.addEventListener("focus", () => {
 
   body{
     position:fixed;
-    inset:0;
+    top:var(--mobile-vvo);
+    right:0;
+    bottom:auto;
+    left:0;
     width:100%;
     height:-webkit-fill-available;
     height:100svh;
+    height:100dvh;
     height:var(--mobile-vvh);
     display:block;
     overscroll-behavior:none;
@@ -1086,8 +1092,8 @@ input.addEventListener("focus", () => {
   }
 
   .header{
-    position:fixed;
-    top:var(--mobile-vvo);
+    position:absolute;
+    top:0;
     left:0;
     right:0;
     height:var(--mobile-header-height);
@@ -1132,8 +1138,8 @@ input.addEventListener("focus", () => {
 
   #status,
   #online{
-    position:fixed;
-    top:calc(var(--mobile-vvo) + var(--mobile-header-height));
+    position:absolute;
+    top:var(--mobile-header-height);
     z-index:39;
     height:var(--mobile-status-height);
     display:flex;
@@ -1180,10 +1186,10 @@ input.addEventListener("focus", () => {
   }
 
   .chat-container{
-    position:fixed;
-    top:calc(var(--mobile-vvo) + var(--mobile-top-offset));
+    position:absolute;
+    top:var(--mobile-top-offset);
     right:0;
-    bottom:calc(var(--mobile-input-total-height) + var(--mobile-keyboard-inset));
+    bottom:var(--mobile-input-total-height);
     left:0;
     z-index:10;
     display:flex;
@@ -1213,6 +1219,11 @@ input.addEventListener("focus", () => {
     overscroll-behavior:contain;
   }
 
+  .messages::before{
+    content:"";
+    flex:1 0 auto;
+  }
+
   .msg{
     max-width:82%;
     width:fit-content;
@@ -1240,10 +1251,10 @@ input.addEventListener("focus", () => {
   }
 
   .typing{
-    position:fixed;
+    position:absolute;
     left:10px;
     right:10px;
-    bottom:calc(var(--mobile-input-total-height) + var(--mobile-keyboard-inset));
+    bottom:var(--mobile-input-total-height);
     z-index:20;
     height:16px;
     margin:0;
@@ -1253,9 +1264,9 @@ input.addEventListener("focus", () => {
   }
 
   .input-bar{
-    position:fixed;
+    position:absolute;
     right:0;
-    bottom:var(--mobile-keyboard-inset);
+    bottom:0;
     left:0;
     z-index:45;
     display:flex;
