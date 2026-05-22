@@ -643,8 +643,14 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
     About Strango <span class="seo-arrow">▼</span>
   </div>
 
-  <div class="seo-content">
+<div class="seo-content">
 
+
+<h2 style="color:#00ff88;">About Strango</h2>
+<p>
+Strango is built for quick anonymous conversations with strangers online. The experience is designed to stay simple:
+open the chat, wait for a match, talk privately, and press Next when you want a new conversation.
+</p>
 
 <h2 style="color:#00ff88;">Modern Random Chat Platform</h2>
 <p>
@@ -677,6 +683,23 @@ anonymous chatting space while encouraging respectful communication.
 <p>
 Strango offers a free random chat experience where users can chat with strangers easily. The lightweight design ensures
 fast loading speeds, improving performance while delivering a smooth online social chat experience.
+</p>
+
+<h2 style="color:#00ff88;">Privacy Policy</h2>
+<p>
+Strango is designed as a no-login anonymous chat experience. Users should avoid sharing personal information, financial
+details, passwords, addresses, or private contact details during conversations with strangers.
+</p>
+
+<h2 style="color:#00ff88;">Safety and Community Guidelines</h2>
+<p>
+Use Strango respectfully. Do not harass, threaten, impersonate, spam, or pressure other users. If a conversation feels
+uncomfortable, press Next and leave the chat immediately.
+</p>
+
+<h2 style="color:#00ff88;">Contact</h2>
+<p>
+For questions, feedback, safety concerns, or policy-related requests, use the Contact link in the footer.
 </p>
 
 <h2 style="color:#00ff88;">Frequently Asked Questions</h2>
@@ -1167,13 +1190,14 @@ input.addEventListener("focus", () => {
   html,
   body{
     width:100%;
-    height:100dvh;
-    overflow:hidden !important;
+    min-height:100dvh;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
   }
 
   body{
     display:block;
-    padding-bottom:0;
+    padding-bottom:calc(var(--desktop-bottom-panel-height) + 28px);
     background:#000;
   }
 
@@ -1181,7 +1205,39 @@ input.addEventListener("focus", () => {
   .seo-section,
   .seo-footer-links,
   .footer{
+    position:relative;
+    z-index:70;
+    display:block !important;
+  }
+
+  .seo-wrapper{
+    margin-top:100dvh;
+    margin-bottom:28px;
+    background:#0f172a;
+  }
+
+  .seo-content{
+    max-height:none !important;
+    padding:16px;
+  }
+
+  .seo-toggle{
+    cursor:default;
+  }
+
+  .seo-arrow{
     display:none !important;
+  }
+
+  .footer{
+    margin-bottom:18px;
+    background:#000;
+  }
+
+  .seo-footer-links{
+    margin:0 auto calc(var(--desktop-bottom-panel-height) + 34px);
+    padding:0 16px;
+    background:#000;
   }
 
   .header{
@@ -1294,7 +1350,7 @@ input.addEventListener("focus", () => {
     right:0;
     bottom:var(--desktop-input-height);
     left:0;
-    z-index:44;
+    z-index:90;
     height:var(--desktop-utility-height);
     padding:8px 16px;
     box-sizing:border-box;
@@ -1312,7 +1368,7 @@ input.addEventListener("focus", () => {
     right:0;
     bottom:0;
     left:0;
-    z-index:45;
+    z-index:91;
     height:var(--desktop-input-height);
     min-height:var(--desktop-input-height);
     padding:12px clamp(24px, 6vw, 96px);
@@ -1330,7 +1386,7 @@ input.addEventListener("focus", () => {
     position:fixed;
     bottom:calc(var(--desktop-bottom-panel-height) + 4px);
     left:50%;
-    z-index:30;
+    z-index:80;
     transform:translateX(-50%);
     width:min(920px, calc(100% - 48px));
     margin:0;
