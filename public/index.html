@@ -9,6 +9,42 @@
 
 <meta name="description" content="Strango is a modern random chat online platform for anonymous chat and stranger chat in India. Talk instantly with no login using a fast and secure anonymous chat experience.">
 
+<script>
+(function(){
+  function syncMobileViewport(){
+    if(window.innerWidth > 768) return;
+
+    var viewport = window.visualViewport;
+    var height = viewport ? viewport.height : window.innerHeight;
+    var offsetTop = viewport ? viewport.offsetTop : 0;
+    var keyboardInset = viewport
+      ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+      : 0;
+
+    document.documentElement.style.setProperty("--mobile-vvh", height + "px");
+    document.documentElement.style.setProperty("--mobile-vvo", offsetTop + "px");
+    document.documentElement.style.setProperty("--mobile-keyboard-inset", keyboardInset + "px");
+
+    if(document.body){
+      document.body.classList.toggle("keyboard-open", keyboardInset > 80);
+    }
+  }
+
+  window.strangoSyncMobileViewport = syncMobileViewport;
+  syncMobileViewport();
+  window.addEventListener("resize", syncMobileViewport, { passive:true });
+  window.addEventListener("orientationchange", function(){
+    setTimeout(syncMobileViewport, 250);
+  }, { passive:true });
+  document.addEventListener("focusin", syncMobileViewport, true);
+
+  if(window.visualViewport){
+    window.visualViewport.addEventListener("resize", syncMobileViewport, { passive:true });
+    window.visualViewport.addEventListener("scroll", syncMobileViewport, { passive:true });
+  }
+})();
+</script>
+
 <!-- Google Analytics for Strango -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSNDFMC00W"></script>
 <script>
@@ -718,20 +754,40 @@ document.getElementById("sendBtn").click();
 /* ============================= */
 
 function adjustChatHeight(){
-  const chat = document.querySelector(".chat-container");
+  if(window.innerWidth > 768) return;
 
-  if(!window.visualViewport || window.innerWidth > 768) return;
+  const root = document.documentElement;
+  const viewport = window.visualViewport;
+  const height = viewport ? viewport.height : window.innerHeight;
+  const offsetTop = viewport ? viewport.offsetTop : 0;
+  const keyboardInset = viewport
+    ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+    : 0;
 
-  const vh = window.visualViewport.height;
+  root.style.setProperty("--mobile-vvh", height + "px");
+  root.style.setProperty("--mobile-vvo", offsetTop + "px");
+  root.style.setProperty("--mobile-keyboard-inset", keyboardInset + "px");
 
-  // ⭐ safer mobile height
-  chat.style.height = vh + "px";
+  if(document.body){
+    document.body.classList.toggle("keyboard-open", keyboardInset > 80);
+  }
+
+  requestAnimationFrame(()=>{
+    messages.scrollTop = messages.scrollHeight;
+  });
 }
 
 /* Detect keyboard open/close */
 if(window.visualViewport){
   window.visualViewport.addEventListener("resize",adjustChatHeight);
+  window.visualViewport.addEventListener("scroll",adjustChatHeight);
 }
+
+window.addEventListener("resize",adjustChatHeight);
+window.addEventListener("orientationchange",()=>{
+  setTimeout(adjustChatHeight,250);
+});
+adjustChatHeight();
 
 /* iOS + Android focus fix */
 input.addEventListener("focus",()=>{
@@ -984,17 +1040,25 @@ input.addEventListener("focus", () => {
 @media (max-width:768px){
 
   :root{
+    --mobile-vvh:100svh;
+    --mobile-vvo:0px;
+    --mobile-keyboard-inset:env(keyboard-inset-height, 0px);
     --mobile-header-height:58px;
     --mobile-status-height:30px;
     --mobile-input-height:62px;
+    --mobile-input-total-height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
     --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
   }
 
   html,
   body{
     width:100%;
-    height:100dvh;
-    min-height:100dvh;
+    height:-webkit-fill-available;
+    height:100svh;
+    height:var(--mobile-vvh);
+    min-height:-webkit-fill-available;
+    min-height:100svh;
+    min-height:var(--mobile-vvh);
     overflow:hidden !important;
     background:#ece5dd !important;
     color:#111;
@@ -1004,7 +1068,9 @@ input.addEventListener("focus", () => {
     position:fixed;
     inset:0;
     width:100%;
-    height:100dvh;
+    height:-webkit-fill-available;
+    height:100svh;
+    height:var(--mobile-vvh);
     display:block;
     overscroll-behavior:none;
     touch-action:auto;
@@ -1021,7 +1087,7 @@ input.addEventListener("focus", () => {
 
   .header{
     position:fixed;
-    top:0;
+    top:var(--mobile-vvo);
     left:0;
     right:0;
     height:var(--mobile-header-height);
@@ -1067,7 +1133,7 @@ input.addEventListener("focus", () => {
   #status,
   #online{
     position:fixed;
-    top:var(--mobile-header-height);
+    top:calc(var(--mobile-vvo) + var(--mobile-header-height));
     z-index:39;
     height:var(--mobile-status-height);
     display:flex;
@@ -1115,9 +1181,9 @@ input.addEventListener("focus", () => {
 
   .chat-container{
     position:fixed;
-    top:var(--mobile-top-offset);
+    top:calc(var(--mobile-vvo) + var(--mobile-top-offset));
     right:0;
-    bottom:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    bottom:calc(var(--mobile-input-total-height) + var(--mobile-keyboard-inset));
     left:0;
     z-index:10;
     display:flex;
@@ -1177,7 +1243,7 @@ input.addEventListener("focus", () => {
     position:fixed;
     left:10px;
     right:10px;
-    bottom:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    bottom:calc(var(--mobile-input-total-height) + var(--mobile-keyboard-inset));
     z-index:20;
     height:16px;
     margin:0;
@@ -1189,13 +1255,13 @@ input.addEventListener("focus", () => {
   .input-bar{
     position:fixed;
     right:0;
-    bottom:0;
+    bottom:var(--mobile-keyboard-inset);
     left:0;
     z-index:45;
     display:flex;
     align-items:center;
     gap:7px;
-    height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    height:var(--mobile-input-total-height);
     padding:8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
     border-top:1px solid #d6d1c8;
     background:#f0f2f5;
