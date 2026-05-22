@@ -787,14 +787,23 @@ function addMessage(text,type){
 const div=document.createElement("div");
 div.className="msg "+type;
 div.textContent=text;
-const isNearBottom =
-  messages.scrollHeight - messages.scrollTop - messages.clientHeight < 120;
 
 messages.appendChild(div);
-
-if(isNearBottom){
-  messages.scrollTop = messages.scrollHeight;
+scrollToLatestMessage(true);
 }
+
+function scrollToLatestMessage(smooth=false){
+requestAnimationFrame(()=>{
+  const top = messages.scrollHeight;
+  if(typeof messages.scrollTo === "function"){
+    messages.scrollTo({
+      top,
+      behavior:smooth ? "smooth" : "auto"
+    });
+  }else{
+    messages.scrollTop = top;
+  }
+});
 }
 
 socket.on("status",(msg)=>{
@@ -941,7 +950,7 @@ function adjustChatHeight(){
   }
 
   requestAnimationFrame(()=>{
-    messages.scrollTop = messages.scrollHeight;
+    scrollToLatestMessage(false);
   });
 }
 
@@ -1149,17 +1158,40 @@ input.addEventListener("focus", () => {
 /* ===== DESKTOP ONLINE COUNT HEADER PLACEMENT ===== */
 @media (min-width:769px){
   :root{
+    --desktop-header-height:148px;
     --desktop-input-height:74px;
     --desktop-utility-height:52px;
     --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
   }
 
+  html,
   body{
-    padding-bottom:calc(var(--desktop-bottom-panel-height) + 24px);
+    width:100%;
+    height:100dvh;
+    overflow:hidden !important;
+  }
+
+  body{
+    display:block;
+    padding-bottom:0;
+    background:#000;
+  }
+
+  .header{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index:12;
+    height:var(--desktop-header-height);
+    padding:20px 220px 12px;
+    overflow:hidden;
+    background:#000;
+    border-bottom:1px solid #111;
   }
 
   #online{
-    position:absolute;
+    position:fixed;
     top:22px;
     left:24px;
     z-index:20;
@@ -1196,7 +1228,7 @@ input.addEventListener("focus", () => {
   }
 
   #status{
-    position:absolute;
+    position:fixed;
     top:64px;
     left:24px;
     z-index:20;
@@ -1214,19 +1246,38 @@ input.addEventListener("focus", () => {
   }
 
   .chat-container{
+    position:fixed;
+    top:var(--desktop-header-height);
+    right:auto;
+    bottom:var(--desktop-bottom-panel-height);
+    left:50%;
+    transform:translateX(-50%);
     width:min(920px, calc(100% - 48px));
-    height:calc(100vh - var(--desktop-bottom-panel-height) - 190px) !important;
-    min-height:310px;
-    max-height:620px;
-    margin:0 auto calc(var(--desktop-bottom-panel-height) + 22px);
+    height:auto !important;
+    min-height:0;
+    max-height:none;
+    margin:0;
     border-right:1px solid #111;
     border-left:1px solid #111;
     border-radius:10px;
+    overflow:hidden !important;
   }
 
   .messages{
-    padding:16px 20px calc(var(--desktop-bottom-panel-height) + 28px);
-    scroll-padding-bottom:calc(var(--desktop-bottom-panel-height) + 28px);
+    flex:1 1 auto;
+    min-height:0;
+    height:100%;
+    overflow-y:auto !important;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    padding:18px 20px 20px;
+    scroll-padding-bottom:20px;
+  }
+
+  .messages::before{
+    content:"";
+    flex:1 1 auto;
+    min-height:0;
   }
 
   .utility-bar{
@@ -1237,6 +1288,7 @@ input.addEventListener("focus", () => {
     z-index:44;
     height:var(--desktop-utility-height);
     padding:8px 16px;
+    box-sizing:border-box;
     background:#050505;
     border-top:1px solid #111;
     border-bottom:1px solid #111;
@@ -1252,8 +1304,10 @@ input.addEventListener("focus", () => {
     bottom:0;
     left:0;
     z-index:45;
+    height:var(--desktop-input-height);
     min-height:var(--desktop-input-height);
     padding:12px clamp(24px, 6vw, 96px);
+    box-sizing:border-box;
     background:#000;
     border-top:1px solid #111;
   }
@@ -1264,9 +1318,13 @@ input.addEventListener("focus", () => {
   }
 
   .typing{
+    position:fixed;
+    bottom:calc(var(--desktop-bottom-panel-height) + 4px);
+    left:50%;
+    z-index:30;
+    transform:translateX(-50%);
     width:min(920px, calc(100% - 48px));
-    margin-right:auto;
-    margin-left:auto;
+    margin:0;
   }
 }
 
@@ -1280,7 +1338,7 @@ input.addEventListener("focus", () => {
     --mobile-header-height:58px;
     --mobile-status-height:30px;
     --mobile-input-height:62px;
-    --mobile-utility-height:74px;
+    --mobile-utility-height:46px;
     --mobile-input-total-height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
     --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height));
     --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
@@ -1524,7 +1582,8 @@ input.addEventListener("focus", () => {
     left:0;
     z-index:44;
     min-height:var(--mobile-utility-height);
-    padding:7px 8px;
+    gap:5px;
+    padding:7px 6px;
     border-top:1px solid #d6d1c8;
     border-bottom:1px solid #d6d1c8;
     background:#f0f2f5;
@@ -1533,9 +1592,9 @@ input.addEventListener("focus", () => {
   .utility-btn{
     flex:0 1 auto;
     min-height:28px;
-    padding:6px 9px;
+    padding:6px 7px;
     border-radius:14px;
-    font-size:11px;
+    font-size:10.5px;
   }
 
   .calculator-modal{
@@ -1586,6 +1645,12 @@ input.addEventListener("focus", () => {
     min-width:58px;
     background:#25D366;
     color:#fff;
+  }
+}
+
+@media (max-width:340px){
+  :root{
+    --mobile-utility-height:74px;
   }
 }
 </style>
