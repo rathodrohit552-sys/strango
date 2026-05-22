@@ -1158,7 +1158,7 @@ input.addEventListener("focus", () => {
 /* ===== DESKTOP ONLINE COUNT HEADER PLACEMENT ===== */
 @media (min-width:769px){
   :root{
-    --desktop-header-height:148px;
+    --desktop-header-height:140px;
     --desktop-input-height:74px;
     --desktop-utility-height:52px;
     --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
@@ -1177,6 +1177,13 @@ input.addEventListener("focus", () => {
     background:#000;
   }
 
+  .seo-wrapper,
+  .seo-section,
+  .seo-footer-links,
+  .footer{
+    display:none !important;
+  }
+
   .header{
     position:fixed;
     top:0;
@@ -1184,10 +1191,10 @@ input.addEventListener("focus", () => {
     left:0;
     z-index:12;
     height:var(--desktop-header-height);
-    padding:20px 220px 12px;
+    padding:18px 220px 12px;
     overflow:hidden;
     background:#000;
-    border-bottom:1px solid #111;
+    border-bottom:0;
   }
 
   #online{
@@ -1248,18 +1255,18 @@ input.addEventListener("focus", () => {
   .chat-container{
     position:fixed;
     top:var(--desktop-header-height);
-    right:auto;
+    right:0;
     bottom:var(--desktop-bottom-panel-height);
-    left:50%;
-    transform:translateX(-50%);
-    width:min(920px, calc(100% - 48px));
+    left:0;
+    transform:none;
+    width:100%;
     height:auto !important;
     min-height:0;
     max-height:none;
     margin:0;
-    border-right:1px solid #111;
-    border-left:1px solid #111;
-    border-radius:10px;
+    border:0;
+    border-radius:0;
+    background:#050505;
     overflow:hidden !important;
   }
 
@@ -1270,6 +1277,8 @@ input.addEventListener("focus", () => {
     overflow-y:auto !important;
     overflow-x:hidden;
     overscroll-behavior:contain;
+    width:min(920px, calc(100% - 48px));
+    margin:0 auto;
     padding:18px 20px 20px;
     scroll-padding-bottom:20px;
   }
