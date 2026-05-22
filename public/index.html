@@ -919,6 +919,331 @@ input.addEventListener("focus", () => {
     height:80vh !important;
   }
 }
+
+}
+
+/* ===== DESKTOP ONLINE COUNT HEADER PLACEMENT ===== */
+@media (min-width:769px){
+  #online{
+    position:absolute;
+    top:22px;
+    left:24px;
+    z-index:20;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    min-height:34px;
+    padding:7px 12px;
+    border:1px solid #171717;
+    border-radius:999px;
+    background:#0a0a0a;
+    color:#eef8f2;
+    font-size:13px;
+    font-weight:600;
+    line-height:1;
+    box-shadow:0 4px 18px rgba(0,0,0,.22);
+  }
+
+  #online::before{
+    content:"";
+    width:8px;
+    height:8px;
+    flex:0 0 auto;
+    margin:0;
+    border-radius:50%;
+    background:#00ff88;
+  }
+
+  #online::after{
+    content:"online";
+    color:#9fb5aa;
+    font-size:12px;
+    font-weight:500;
+  }
+
+  #status{
+    position:absolute;
+    top:64px;
+    left:24px;
+    z-index:20;
+    max-width:230px;
+    min-height:32px;
+    display:inline-flex;
+    align-items:center;
+    padding:7px 12px;
+    border:1px solid #171717;
+    border-radius:999px;
+    background:#0a0a0a;
+    font-size:13px;
+    line-height:1.2;
+    box-shadow:0 4px 18px rgba(0,0,0,.18);
+  }
+}
+
+/* ===== MOBILE WHATSAPP-STYLE CHAT OVERRIDE ===== */
+@media (max-width:768px){
+
+  :root{
+    --mobile-header-height:58px;
+    --mobile-status-height:30px;
+    --mobile-input-height:62px;
+    --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
+  }
+
+  html,
+  body{
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+    overflow:hidden !important;
+    background:#ece5dd !important;
+    color:#111;
+  }
+
+  body{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100dvh;
+    display:block;
+    overscroll-behavior:none;
+    touch-action:auto;
+  }
+
+  .mobile-hide,
+  .utility-bar,
+  .seo-wrapper,
+  .seo-section,
+  .seo-footer-links,
+  .footer{
+    display:none !important;
+  }
+
+  .header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:var(--mobile-header-height);
+    z-index:40;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:1px;
+    padding:7px 14px 6px;
+    text-align:left;
+    background:#075E54;
+    color:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.18);
+    overflow:hidden;
+  }
+
+  .header h1{
+    max-width:100%;
+    overflow:hidden;
+    font-size:18px;
+    line-height:1.15;
+    font-weight:700;
+    color:#fff;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .header .subtitle{
+    max-width:100%;
+    overflow:hidden;
+    color:rgba(255,255,255,.82);
+    font-size:11px;
+    line-height:1.2;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .header p{
+    display:none !important;
+  }
+
+  #status,
+  #online{
+    position:fixed;
+    top:var(--mobile-header-height);
+    z-index:39;
+    height:var(--mobile-status-height);
+    display:flex;
+    align-items:center;
+    border:0;
+    border-radius:0;
+    background:#075E54;
+    color:rgba(255,255,255,.9);
+    font-size:12px;
+    box-shadow:0 1px 2px rgba(0,0,0,.12);
+  }
+
+  #status{
+    left:0;
+    right:74px;
+    min-width:0;
+    overflow:hidden;
+    padding:0 14px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  #online{
+    right:0;
+    width:74px;
+    justify-content:flex-end;
+    padding:0 12px 0 4px;
+    font-weight:600;
+  }
+
+  .online::before{
+    content:"";
+    width:8px;
+    height:8px;
+    margin-right:6px;
+    border-radius:50%;
+    background:#25D366;
+  }
+
+  .status.waiting,
+  .status.connected,
+  .status.disconnected{
+    color:rgba(255,255,255,.9);
+  }
+
+  .chat-container{
+    position:fixed;
+    top:var(--mobile-top-offset);
+    right:0;
+    bottom:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    left:0;
+    z-index:10;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:auto !important;
+    min-height:0;
+    border:0;
+    border-radius:0;
+    background:#ece5dd;
+    overflow:hidden !important;
+    overscroll-behavior:contain;
+  }
+
+  .messages{
+    flex:1 1 auto;
+    min-height:0;
+    height:100%;
+    overflow-y:auto !important;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    padding:10px 9px 12px;
+    background:#ece5dd;
+    overscroll-behavior:contain;
+  }
+
+  .msg{
+    max-width:82%;
+    width:fit-content;
+    padding:7px 10px;
+    border-radius:8px;
+    color:#111;
+    font-size:14px;
+    line-height:1.32;
+    overflow-wrap:anywhere;
+    box-shadow:0 1px 1px rgba(0,0,0,.08);
+  }
+
+  .you{
+    align-self:flex-end !important;
+    background:#dcf8c6;
+    border-top-right-radius:2px;
+    color:#111;
+  }
+
+  .stranger{
+    align-self:flex-start !important;
+    background:#fff;
+    border-top-left-radius:2px;
+    color:#111;
+  }
+
+  .typing{
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    z-index:20;
+    height:16px;
+    margin:0;
+    color:#667781;
+    font-size:11px;
+    pointer-events:none;
+  }
+
+  .input-bar{
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:45;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
+    padding:8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    border-top:1px solid #d6d1c8;
+    background:#f0f2f5;
+    box-shadow:none;
+    backdrop-filter:none;
+    overflow:hidden;
+  }
+
+  .input-bar input{
+    min-width:0;
+    height:42px;
+    flex:1 1 auto;
+    padding:0 14px;
+    border:0;
+    border-radius:21px;
+    outline:none;
+    background:#fff;
+    color:#111;
+    font-size:15px;
+  }
+
+  .input-bar input::placeholder{
+    color:#667781;
+  }
+
+  .btn{
+    flex:0 0 auto;
+    height:42px;
+    min-width:auto;
+    padding:0 12px;
+    border:0;
+    border-radius:21px;
+    font-size:12px;
+    font-weight:700;
+  }
+
+  .next{
+    min-width:54px;
+    background:transparent;
+    color:#075E54;
+  }
+
+  .send{
+    min-width:58px;
+    background:#25D366;
+    color:#fff;
+  }
+}
 </style>
 </body>
 </html>
