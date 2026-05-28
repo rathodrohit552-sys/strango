@@ -489,6 +489,316 @@ font-weight:bold;
 font-size:15px;
 }
 
+/* ===== STRANGO PHASE 1 GAMIFICATION ===== */
+.game-profile,
+.game-board,
+.game-activity,
+.level-popup,
+.achievement-toast{
+font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+.game-profile{
+position:absolute;
+top:16px;
+left:18px;
+z-index:46;
+width:222px;
+padding:12px;
+border:1px solid rgba(0,255,136,.2);
+border-radius:18px;
+background:linear-gradient(180deg,rgba(10,16,14,.86),rgba(3,5,4,.78));
+box-shadow:0 18px 54px rgba(0,0,0,.38),0 0 30px rgba(0,255,136,.08);
+backdrop-filter:blur(18px);
+color:#f0fff7;
+overflow:hidden;
+}
+
+.game-profile::before{
+content:"";
+position:absolute;
+inset:-40%;
+background:radial-gradient(circle,rgba(0,255,136,.18),transparent 34%);
+opacity:.55;
+animation:gameGlow 7s ease-in-out infinite alternate;
+pointer-events:none;
+}
+
+.game-row{
+position:relative;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.level-badge{
+width:42px;
+height:42px;
+display:grid;
+place-items:center;
+border-radius:14px;
+background:linear-gradient(135deg,#8b5a2b,#f3b56d);
+color:#120903;
+font-weight:900;
+box-shadow:0 0 24px rgba(243,181,109,.28);
+}
+
+.level-badge.silver{background:linear-gradient(135deg,#95a3b8,#f8fafc);}
+.level-badge.gold{background:linear-gradient(135deg,#f59e0b,#fde68a);}
+.level-badge.neon{background:linear-gradient(135deg,#00ff88,#38bdf8);}
+.level-badge.diamond{background:linear-gradient(135deg,#a5f3fc,#f5d0fe);}
+
+.game-name{
+font-size:13px;
+font-weight:900;
+line-height:1.1;
+}
+
+.game-sub{
+color:#9fb5aa;
+font-size:11px;
+font-weight:700;
+}
+
+.xp-track{
+position:relative;
+height:8px;
+margin:11px 0 8px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+overflow:hidden;
+}
+
+.xp-fill{
+height:100%;
+width:0;
+border-radius:999px;
+background:linear-gradient(90deg,#00ff88,#38bdf8);
+box-shadow:0 0 18px rgba(0,255,136,.45);
+transition:width .55s cubic-bezier(.2,.8,.2,1);
+}
+
+.game-stats{
+position:relative;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:6px;
+}
+
+.game-stat{
+padding:7px 6px;
+border-radius:10px;
+background:rgba(255,255,255,.045);
+border:1px solid rgba(255,255,255,.06);
+font-size:10px;
+color:#9fb5aa;
+}
+
+.game-stat strong{
+display:block;
+margin-top:2px;
+color:#fff;
+font-size:12px;
+}
+
+.streak-live{
+position:relative;
+display:flex;
+align-items:center;
+gap:6px;
+margin-top:8px;
+color:#ffc36b;
+font-size:11px;
+font-weight:900;
+}
+
+.flame-dot{
+width:9px;
+height:12px;
+border-radius:999px 999px 999px 0;
+background:linear-gradient(180deg,#facc15,#f97316);
+transform:rotate(-35deg);
+box-shadow:0 0 16px rgba(249,115,22,.55);
+animation:pulseFire 1.6s ease-in-out infinite;
+}
+
+.game-board{
+position:absolute;
+top:16px;
+right:18px;
+z-index:36;
+width:260px;
+display:grid;
+gap:10px;
+}
+
+.game-panel{
+padding:13px;
+border:1px solid rgba(56,189,248,.16);
+border-radius:18px;
+background:linear-gradient(180deg,rgba(8,12,20,.82),rgba(3,5,10,.76));
+box-shadow:0 18px 54px rgba(0,0,0,.34);
+backdrop-filter:blur(18px);
+}
+
+.game-panel h3{
+margin:0 0 8px;
+color:#fff;
+font-size:13px;
+font-weight:900;
+}
+
+.leader-list,
+.achievement-grid{
+display:grid;
+gap:7px;
+}
+
+.leader-item,
+.achievement-chip{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+padding:8px;
+border-radius:12px;
+background:rgba(255,255,255,.045);
+color:#cbd5e1;
+font-size:11px;
+}
+
+.leader-item strong,
+.achievement-chip strong{
+color:#fff;
+font-size:11px;
+}
+
+.achievement-chip.unlocked{
+border:1px solid rgba(0,255,136,.18);
+box-shadow:inset 0 0 16px rgba(0,255,136,.05);
+}
+
+.achievement-chip.locked{
+opacity:.56;
+}
+
+.game-activity{
+position:absolute;
+left:50%;
+top:106px;
+z-index:35;
+transform:translateX(-50%);
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 12px;
+border:1px solid rgba(0,255,136,.16);
+border-radius:999px;
+background:rgba(3,8,6,.72);
+backdrop-filter:blur(14px);
+color:#c9f8da;
+font-size:12px;
+font-weight:800;
+box-shadow:0 12px 34px rgba(0,0,0,.24);
+}
+
+.online-pulse{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#00ff88;
+box-shadow:0 0 0 0 rgba(0,255,136,.45);
+animation:onlinePulse 1.7s infinite;
+}
+
+.reward-float,
+.coin-float{
+position:absolute;
+z-index:120;
+left:28px;
+top:96px;
+padding:7px 10px;
+border-radius:999px;
+background:rgba(0,255,136,.12);
+border:1px solid rgba(0,255,136,.28);
+color:#d9ffe9;
+font-weight:900;
+font-size:12px;
+pointer-events:none;
+animation:floatReward 1.5s ease forwards;
+}
+
+.coin-float{
+background:rgba(250,204,21,.13);
+border-color:rgba(250,204,21,.32);
+color:#fff3b0;
+}
+
+.level-popup,
+.achievement-toast{
+position:absolute;
+left:50%;
+top:48%;
+z-index:130;
+transform:translate(-50%,-50%) scale(.92);
+padding:18px 22px;
+border-radius:20px;
+background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(56,189,248,.16)),rgba(4,7,6,.92);
+border:1px solid rgba(0,255,136,.28);
+box-shadow:0 26px 80px rgba(0,0,0,.52),0 0 48px rgba(0,255,136,.16);
+color:#fff;
+font-weight:950;
+letter-spacing:0;
+opacity:0;
+pointer-events:none;
+}
+
+.level-popup.show,
+.achievement-toast.show{
+animation:popReward 2.2s ease forwards;
+}
+
+.achievement-toast{
+top:22%;
+font-size:13px;
+}
+
+.retention-nudge{
+margin-top:8px;
+padding:8px;
+border-radius:12px;
+background:rgba(56,189,248,.07);
+color:#bfeeff;
+font-size:11px;
+font-weight:800;
+}
+
+@keyframes onlinePulse{
+70%{box-shadow:0 0 0 10px rgba(0,255,136,0);}
+100%{box-shadow:0 0 0 0 rgba(0,255,136,0);}
+}
+
+@keyframes pulseFire{
+50%{filter:brightness(1.25);transform:rotate(-35deg) scale(1.08);}
+}
+
+@keyframes gameGlow{
+from{transform:translate(-6%,0);}
+to{transform:translate(8%,4%);}
+}
+
+@keyframes floatReward{
+0%{opacity:0;transform:translateY(8px) scale(.95);}
+18%{opacity:1;}
+100%{opacity:0;transform:translateY(-54px) scale(1.05);}
+}
+
+@keyframes popReward{
+0%{opacity:0;transform:translate(-50%,-50%) scale(.88);}
+14%,78%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+100%{opacity:0;transform:translate(-50%,-58%) scale(.96);}
+}
+
 /* ===== STRANGO SAFE COLLAPSIBLE SEO (CLASS VERSION) ===== */
 
 .seo-wrapper{
@@ -647,6 +957,40 @@ font-size:15px;
 <body>
 
 <section class="chat-app-shell" aria-label="Strango live chat">
+<div class="game-profile" aria-label="Strango XP profile">
+  <div class="game-row">
+    <div class="level-badge" id="levelBadge">1</div>
+    <div>
+      <div class="game-name" id="playerName">NeonGuest</div>
+      <div class="game-sub">Level <span id="levelText">1</span> • <span id="xpText">0 XP</span></div>
+    </div>
+  </div>
+  <div class="xp-track" aria-label="XP progress"><div class="xp-fill" id="xpFill"></div></div>
+  <div class="game-stats">
+    <div class="game-stat">Timer<strong id="sessionTimer">00:00</strong></div>
+    <div class="game-stat">Coins<strong id="coinText">0</strong></div>
+    <div class="game-stat">Streak<strong id="streakText">1d</strong></div>
+  </div>
+  <div class="streak-live"><span class="flame-dot" aria-hidden="true"></span><span id="streakStatus">Daily streak active</span></div>
+  <div class="retention-nudge" id="retentionNudge">Stay 5 more minutes for bonus XP.</div>
+</div>
+
+<div class="game-activity"><span class="online-pulse" aria-hidden="true"></span><span id="liveSocialText">Someone joined from USA</span></div>
+
+<div class="game-board" aria-label="Strango leaderboard and achievements">
+  <div class="game-panel">
+    <h3>Live Leaderboard</h3>
+    <div class="leader-list" id="leaderList"></div>
+  </div>
+  <div class="game-panel">
+    <h3>Achievements</h3>
+    <div class="achievement-grid" id="achievementGrid"></div>
+  </div>
+</div>
+
+<div class="level-popup" id="levelPopup">LEVEL UP</div>
+<div class="achievement-toast" id="achievementToast">Achievement unlocked</div>
+
 <div class="header">
 <h1>Strango</h1>
 <div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
@@ -843,6 +1187,229 @@ const status=document.getElementById("status");
 const online=document.getElementById("online");
 const typing=document.getElementById("typing");
 
+const game = (() => {
+  const key = "strangoPhase1Game";
+  const playerName = document.getElementById("playerName");
+  const levelText = document.getElementById("levelText");
+  const xpText = document.getElementById("xpText");
+  const xpFill = document.getElementById("xpFill");
+  const coinText = document.getElementById("coinText");
+  const streakText = document.getElementById("streakText");
+  const streakStatus = document.getElementById("streakStatus");
+  const levelBadge = document.getElementById("levelBadge");
+  const sessionTimer = document.getElementById("sessionTimer");
+  const retentionNudge = document.getElementById("retentionNudge");
+  const levelPopup = document.getElementById("levelPopup");
+  const achievementToast = document.getElementById("achievementToast");
+  const achievementGrid = document.getElementById("achievementGrid");
+  const leaderList = document.getElementById("leaderList");
+  const liveSocialText = document.getElementById("liveSocialText");
+  const names = ["ShadowWolf","NeonPixel","CyberFox","NovaRider","ByteGhost","OrbitAce","LunarVibe","EchoDrift"];
+  const levels = [0,100,250,500,900,1400,2200,3400,5200,7800];
+  const achievements = [
+    ["firstMatch","First Match"],
+    ["tenConvos","10 Conversations"],
+    ["nightOwl","Night Owl"],
+    ["socialExplorer","Social Explorer"],
+    ["oneHour","1 Hour Active"],
+    ["fastReplier","Fast Replier"],
+    ["streak7","7-Day Streak"],
+    ["streak30","Elite Streak"]
+  ];
+  const today = new Date().toLocaleDateString("en-CA");
+  const yesterday = new Date(Date.now() - 86400000).toLocaleDateString("en-CA");
+  const saved = JSON.parse(localStorage.getItem(key) || "{}");
+  const state = {
+    name: saved.name || names[Math.floor(Math.random()*names.length)] + Math.floor(100 + Math.random()*900),
+    xp: saved.xp || 0,
+    coins: saved.coins || 0,
+    streak: saved.streak || 0,
+    lastActive: saved.lastActive || "",
+    achievements: saved.achievements || {},
+    matches: saved.matches || 0,
+    conversations: saved.conversations || 0,
+    activeSeconds: saved.activeSeconds || 0,
+    firstMessageBonus: !!saved.firstMessageBonus,
+    tenMinuteBonus: !!saved.tenMinuteBonus,
+    lastStrangerAt: 0,
+    joinedAt: Date.now(),
+    coinMinutes: saved.coinMinutes || 0
+  };
+
+  if(state.lastActive !== today){
+    state.streak = state.lastActive === yesterday ? state.streak + 1 : 1;
+    state.lastActive = today;
+    state.dailyRewardPending = true;
+  }
+
+  function level(){
+    let lvl = 1;
+    for(let i=1;i<levels.length;i++){
+      if(state.xp >= levels[i]) lvl = i + 1;
+    }
+    return lvl;
+  }
+
+  function levelClass(lvl){
+    if(lvl >= 9) return "diamond";
+    if(lvl >= 7) return "neon";
+    if(lvl >= 5) return "gold";
+    if(lvl >= 3) return "silver";
+    return "";
+  }
+
+  function save(){
+    localStorage.setItem(key, JSON.stringify({
+      name:state.name,xp:state.xp,coins:state.coins,streak:state.streak,lastActive:state.lastActive,
+      achievements:state.achievements,matches:state.matches,conversations:state.conversations,
+      activeSeconds:state.activeSeconds,firstMessageBonus:state.firstMessageBonus,
+      tenMinuteBonus:state.tenMinuteBonus,coinMinutes:state.coinMinutes
+    }));
+  }
+
+  function render(){
+    const lvl = level();
+    const next = levels[lvl] || levels[levels.length-1] + (lvl-levels.length+1)*3000;
+    const prev = levels[lvl-1] || 0;
+    const pct = Math.max(0, Math.min(100, ((state.xp - prev) / (next - prev)) * 100));
+    playerName.textContent = state.name;
+    levelText.textContent = lvl;
+    xpText.textContent = state.xp.toLocaleString("en-IN") + " XP";
+    xpFill.style.width = pct + "%";
+    coinText.textContent = state.coins.toLocaleString("en-IN");
+    streakText.textContent = state.streak + "d";
+    streakStatus.textContent = state.streak >= 7 ? "7-day streak badge active" : "Daily streak active";
+    levelBadge.textContent = lvl;
+    levelBadge.className = "level-badge " + levelClass(lvl);
+    const mins = Math.floor((Date.now() - state.joinedAt) / 60000);
+    const secs = Math.floor((Date.now() - state.joinedAt) / 1000) % 60;
+    sessionTimer.textContent = String(mins).padStart(2,"0") + ":" + String(secs).padStart(2,"0");
+    retentionNudge.textContent = mins < 5 ? "Stay " + (5 - mins) + " more minutes for bonus XP." : "Next reward: active chat minutes convert into coins.";
+    renderAchievements();
+  }
+
+  function floatReward(text, coin){
+    const el = document.createElement("div");
+    el.className = coin ? "coin-float" : "reward-float";
+    el.textContent = text;
+    document.querySelector(".chat-app-shell").appendChild(el);
+    setTimeout(()=>el.remove(),1600);
+  }
+
+  function addXP(amount, reason){
+    const before = level();
+    state.xp += amount;
+    floatReward("+" + amount + " XP");
+    if(level() > before){
+      levelPopup.textContent = "LEVEL UP • " + level();
+      levelPopup.classList.remove("show");
+      void levelPopup.offsetWidth;
+      levelPopup.classList.add("show");
+    }
+    save();
+    render();
+  }
+
+  function addCoin(){
+    state.coins += 1;
+    floatReward("+1 Strango Coin", true);
+    save();
+    render();
+  }
+
+  function unlock(id){
+    if(state.achievements[id]) return;
+    state.achievements[id] = true;
+    const found = achievements.find(a=>a[0] === id);
+    achievementToast.textContent = "Achievement unlocked: " + (found ? found[1] : id);
+    achievementToast.classList.remove("show");
+    void achievementToast.offsetWidth;
+    achievementToast.classList.add("show");
+    addXP(25, "Achievement");
+    save();
+  }
+
+  function renderAchievements(){
+    achievementGrid.innerHTML = achievements.map(([id,label]) =>
+      '<div class="achievement-chip '+(state.achievements[id]?'unlocked':'locked')+'"><strong>'+label+'</strong><span>'+(state.achievements[id]?'Unlocked':'Locked')+'</span></div>'
+    ).join("");
+  }
+
+  function renderLeaderboard(){
+    const rows = [
+      '<div class="leader-item"><strong>'+names[0]+'</strong><span>Active today • '+(42 + Math.floor(Math.random()*18))+'m</span></div>',
+      '<div class="leader-item"><strong>'+names[1]+'</strong><span>Highest level • Lv '+Math.max(6, level()+5)+'</span></div>',
+      '<div class="leader-item"><strong>'+names[2]+'</strong><span>Longest streak • '+Math.max(7,state.streak+9)+'d</span></div>',
+      '<div class="leader-item"><strong>'+names[3]+'</strong><span>Fast replies • '+(80 + Math.floor(Math.random()*19))+'%</span></div>',
+      '<div class="leader-item"><strong>'+state.name+'</strong><span>You • Lv '+level()+'</span></div>'
+    ];
+    leaderList.innerHTML = rows.join("");
+  }
+
+  function socialPulse(){
+    const places = ["USA","Canada","UK","Germany","Australia","California","New York","Texas"];
+    liveSocialText.textContent = "Someone joined from " + places[Math.floor(Math.random()*places.length)];
+  }
+
+  function onMatch(){
+    state.matches += 1;
+    addXP(20, "Successful match");
+    unlock("firstMatch");
+    if(state.matches >= 5) unlock("socialExplorer");
+    save();
+  }
+
+  function onSendMessage(){
+    if(!state.firstMessageBonus){
+      state.firstMessageBonus = true;
+      addXP(15, "First message");
+    }
+    state.conversations += 1;
+    if(state.conversations >= 10) unlock("tenConvos");
+    const hour = new Date().getHours();
+    if(hour >= 22 || hour < 5) unlock("nightOwl");
+    if(Date.now() - state.lastStrangerAt < 10000) unlock("fastReplier");
+    save();
+  }
+
+  function onStrangerMessage(){
+    state.lastStrangerAt = Date.now();
+  }
+
+  setInterval(()=>{
+    render();
+    if(connected){
+      state.activeSeconds += 1;
+      if(state.activeSeconds % 60 === 0) addXP(6, "Active minute");
+      if(state.activeSeconds >= 600 && !state.tenMinuteBonus){
+        state.tenMinuteBonus = true;
+        addXP(40, "10-minute session");
+      }
+      if(state.activeSeconds >= 3600) unlock("oneHour");
+      const activeMinutes = Math.floor(state.activeSeconds / 60);
+      if(activeMinutes >= state.coinMinutes + 10){
+        state.coinMinutes = activeMinutes;
+        addCoin();
+      }
+      save();
+    }
+  },1000);
+
+  setInterval(renderLeaderboard,7000);
+  setInterval(socialPulse,9000);
+
+  renderLeaderboard();
+  render();
+  if(state.dailyRewardPending){
+    addXP(state.streak >= 7 ? 35 : 12, "Daily return");
+    state.dailyRewardPending = false;
+  }
+  if(state.streak >= 7) unlock("streak7");
+  if(state.streak >= 30) unlock("streak30");
+
+  return { addXP, onMatch, onSendMessage, onStrangerMessage, unlock };
+})();
+
 document.querySelectorAll(".utility-btn").forEach((link)=>{
 link.addEventListener("click",(e)=>{
 trackEvent(link.dataset.calculatorEvent || "calculator_click");
@@ -898,6 +1465,7 @@ else if(isConnected){
   waitingForManualNext = false;
   seekingAfterNext = false;
   trackEvent('stranger_connected');
+  game.onMatch();
 }
 else if(isWaiting){
   status.classList.add("waiting");
@@ -925,6 +1493,7 @@ socket.on("message",(msg)=>{
   if(!connected) return;   // ⭐ BLOCK OLD ROOM MESSAGES
 
   typing.textContent="";
+  game.onStrangerMessage();
   addMessage("Stranger: "+msg,"stranger");
 
   // ⭐ If tab not active → show notification
@@ -960,6 +1529,7 @@ if(input.value.trim()){
 addMessage("You: "+input.value,"you");
 socket.emit("message",input.value);
 socket.emit("typing",false);
+game.onSendMessage();
 input.value="";
 }
 };
@@ -1306,7 +1876,7 @@ input.addEventListener("focus", () => {
   #online{
     position:absolute;
     top:22px;
-    left:24px;
+    left:260px;
     z-index:20;
     display:inline-flex;
     align-items:center;
@@ -1343,7 +1913,7 @@ input.addEventListener("focus", () => {
   #status{
     position:absolute;
     top:64px;
-    left:24px;
+    left:260px;
     z-index:20;
     max-width:230px;
     min-height:32px;
@@ -1495,6 +2065,58 @@ input.addEventListener("focus", () => {
     height:var(--mobile-vvh);
     min-height:var(--mobile-vvh);
     overflow:hidden;
+  }
+
+  .game-board,
+  .game-activity{
+    display:none;
+  }
+
+  .game-profile{
+    top:6px;
+    right:8px;
+    left:auto;
+    width:128px;
+    min-height:46px;
+    padding:6px 7px;
+    border-radius:14px;
+    z-index:48;
+  }
+
+  .game-row{
+    gap:6px;
+  }
+
+  .level-badge{
+    width:28px;
+    height:28px;
+    border-radius:10px;
+    font-size:12px;
+  }
+
+  .game-name,
+  .streak-live,
+  .retention-nudge{
+    display:none;
+  }
+
+  .game-sub{
+    font-size:10px;
+  }
+
+  .xp-track{
+    height:5px;
+    margin:5px 0 0;
+  }
+
+  .game-stats{
+    display:none;
+  }
+
+  .reward-float,
+  .coin-float{
+    top:92px;
+    left:14px;
   }
 
   .mobile-hide,
