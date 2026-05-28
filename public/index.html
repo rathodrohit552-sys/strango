@@ -317,12 +317,14 @@ gap:14px;
 padding:14px 16px;
 border-top:1px solid #111;
 background:linear-gradient(180deg,#050705,#000);
+overflow:visible;
 }
 
 .utility-btn{
 --calc-accent:#00ff88;
 --calc-soft:rgba(0,255,136,.14);
 position:relative;
+overflow:visible;
 text-decoration:none;
 background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
 color:#effff6;
@@ -397,6 +399,7 @@ position:absolute;
 left:50%;
 bottom:calc(100% + 14px);
 width:230px;
+display:block;
 padding:14px;
 border:1px solid color-mix(in srgb, var(--calc-accent) 36%, transparent);
 border-radius:16px;
@@ -426,7 +429,7 @@ border-bottom:1px solid color-mix(in srgb, var(--calc-accent) 30%, transparent);
 .utility-btn:hover .utility-preview,
 .utility-btn:focus-visible .utility-preview{
 opacity:1;
-transform:translate(-50%,0) scale(1);
+transform:translate(-50%,-4px) scale(1);
 }
 
 .preview-top{
