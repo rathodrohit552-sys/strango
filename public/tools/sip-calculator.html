@@ -10,24 +10,23 @@
 body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6}
 .site-header{padding:22px 18px 18px;text-align:center;border-bottom:1px solid #102015;background:#000}
 .brand{font-size:30px;font-weight:800;color:#fff}.tagline{color:#9fb5aa;font-size:14px}
-.back-chat{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:999px;background:#00c853;color:#001b0c;text-decoration:none;font-weight:800;box-shadow:0 14px 32px rgba(0,200,83,.28)}
+.back-chat{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:999px;background:#38bdf8;color:#02131f;text-decoration:none;font-weight:800;box-shadow:0 14px 32px rgba(56,189,248,.28)}
 .page{width:min(1120px,calc(100% - 32px));margin:30px auto 0}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
-.intro{padding:26px 0}.eyebrow{color:#00ff88;font-weight:800;font-size:13px;text-transform:uppercase}
+.intro{padding:26px 0}.eyebrow{color:#38bdf8;font-weight:800;font-size:13px;text-transform:uppercase}
 h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}.intro p{max-width:640px;color:#b9c8bf}
-.panel,.result,.seo,.faq,.ad-banner{border:1px solid rgba(255,255,255,.09);border-radius:16px;background:linear-gradient(180deg,#0b120d,#050806);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.panel,.result,.seo,.faq{border:1px solid rgba(255,255,255,.09);border-radius:16px;background:linear-gradient(180deg,#07111d,#03070d);box-shadow:0 24px 70px rgba(0,0,0,.42)}
 .calculator{display:grid;grid-template-columns:1fr .9fr;gap:18px;margin-top:22px}.panel{padding:22px}
 .field{margin-bottom:22px}.field-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#dcefe4;font-weight:700}
-.value-input{width:145px;padding:10px 12px;border:1px solid rgba(0,255,136,.2);border-radius:10px;background:#040705;color:#fff;font-size:16px;text-align:right}
-input[type=range]{width:100%;accent-color:#00c853}.range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#73867b;font-size:12px}
+.value-input{width:145px;padding:10px 12px;border:1px solid rgba(56,189,248,.28);border-radius:10px;background:#03070d;color:#fff;font-size:16px;text-align:right}
+input[type=range]{width:100%;accent-color:#38bdf8}.range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#7892a7;font-size:12px}
 .result{padding:22px;display:grid;gap:14px}.metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
-.metric span{display:block;color:#8fa39a;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1}.metric.primary{background:linear-gradient(135deg,rgba(0,200,83,.2),rgba(0,255,136,.05));border-color:rgba(0,255,136,.25)}
+.metric span{display:block;color:#8fa39a;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1}.metric.primary{background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(37,99,235,.08));border-color:rgba(56,189,248,.32)}
 .growth{height:210px;display:flex;align-items:flex-end;gap:8px;padding:14px;border-radius:14px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
-.growth span{flex:1;min-width:7px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#00ff88,#007a3c)}
-.ad-banner{min-height:96px;margin:28px 0;display:flex;align-items:center;justify-content:center;color:#789386;border-style:dashed;background:rgba(0,255,136,.035)}
+.growth span{flex:1;min-width:7px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#38bdf8,#2563eb)}
 .seo,.faq{padding:24px;margin-bottom:24px}.seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}.seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
-.faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#00ff88}
-.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#00ff88;text-decoration:none;margin:0 7px}
+.faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#38bdf8}
+.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#38bdf8;text-decoration:none;margin:0 7px}
 @media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.page{margin-top:18px}.value-input{width:128px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
 </style>
 </head>
@@ -54,7 +53,6 @@ input[type=range]{width:100%;accent-color:#00c853}.range-labels{display:flex;jus
       <div class="growth" id="growth"></div>
     </div>
   </section>
-  <div class="ad-banner">Advertisement</div>
   <section class="seo"><h2>How this SIP calculator works</h2><p>A SIP calculator compounds each monthly investment at the expected monthly rate until the end of the selected period. It is useful for estimating long-term mutual fund investment outcomes.</p><p>Actual mutual fund returns can vary because markets move up and down. Use this estimate for planning, not as a guaranteed return.</p></section>
   <section class="faq"><h2>SIP Calculator FAQ</h2><div class="faq-item"><strong>What is SIP?</strong><p>SIP means systematic investment plan. It lets you invest a fixed amount regularly, often monthly.</p></div><div class="faq-item"><strong>What is maturity value?</strong><p>Maturity value is the estimated final amount, including your invested amount and expected returns.</p></div><div class="faq-item"><strong>Are SIP returns guaranteed?</strong><p>No. SIP returns depend on market performance and can be higher or lower than the estimate.</p></div></section>
 </main>

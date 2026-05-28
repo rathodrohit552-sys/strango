@@ -77,6 +77,16 @@ touch-action: manipulation;
 -webkit-text-size-adjust:100%;
 }
 
+.chat-app-shell{
+position:relative;
+isolation:isolate;
+min-height:100vh;
+background:#000;
+border-bottom:1px solid rgba(0,255,136,.16);
+box-shadow:0 18px 60px rgba(0,0,0,.35);
+overflow:hidden;
+}
+
 .header{text-align:center;padding:22px 10px 12px;}
 h1{font-weight:600;color:#fff;}
 .subtitle{font-size:14px;opacity:.75;}
@@ -340,30 +350,6 @@ font-weight:bold;
 font-size:15px;
 }
 
-.ad-slot{
-display:flex;
-align-items:center;
-justify-content:center;
-min-height:58px;
-padding:10px 16px;
-border-top:1px solid #111;
-background:#030503;
-color:#789386;
-font-size:12px;
-letter-spacing:0;
-}
-
-.ad-slot-inner{
-width:min(728px,100%);
-height:38px;
-display:flex;
-align-items:center;
-justify-content:center;
-border:1px dashed rgba(0,255,136,.22);
-border-radius:10px;
-background:rgba(0,255,136,.035);
-}
-
 /* ===== STRANGO SAFE COLLAPSIBLE SEO (CLASS VERSION) ===== */
 
 .seo-wrapper{
@@ -521,6 +507,7 @@ background:rgba(0,255,136,.035);
 
 <body>
 
+<section class="chat-app-shell" aria-label="Strango live chat">
 <div class="header">
 <h1>Strango</h1>
 <div class="subtitle">Random Anonymous Chat • No Login • Fast Stranger Matching India</div>
@@ -536,7 +523,6 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
 <div class="top-bar mobile-hide"></div>
 <div id="status" class="status waiting">⚡ Waiting for stranger...</div>
 <div id="online" class="online"><span id="onlineCount">0</span></div>
-</div>
 
 <div id="typing" class="typing"></div>
 
@@ -568,18 +554,12 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
   </a>
 </div>
 
-<div class="ad-slot" aria-label="Advertisement space">
-  <div class="ad-slot-inner">Advertisement</div>
-</div>
-
 <div class="input-bar">
 <button class="btn next" id="nextBtn">NEXT</button>
 <input id="messageInput" placeholder="Type a message..." />
 <button class="btn send" id="sendBtn">SEND</button>
 </div>
-</div>
-
-</div>
+</section>
 
 <!-- ⭐ COLLAPSIBLE SEO BLOCK -->
 <div class="seo-wrapper">
@@ -681,10 +661,6 @@ Use a stable internet connection, keep conversations respectful, and avoid shari
 
 </div>   <!-- close seo-content -->
 </div>   <!-- close seo-wrapper -->
-
-<div class="seo-ad-banner" aria-label="Advertisement space">
-  <div>Advertisement</div>
-</div>
 
 <div class="footer">
 <a href="/about.html" target="_blank" rel="noopener">About</a> •
@@ -1059,19 +1035,6 @@ input.addEventListener("focus", () => {
   text-decoration:underline;
 }
 
-.seo-ad-banner{
-  width:min(900px, calc(100% - 28px));
-  min-height:96px;
-  margin:24px auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px dashed rgba(0,255,136,.22);
-  border-radius:12px;
-  background:rgba(0,255,136,.035);
-  color:#789386;
-  font-size:13px;
-}
 /* ===== STRANGO MOBILE PREVIEW FIX ===== */
 
 @media (max-width:768px){
@@ -1111,8 +1074,7 @@ input.addEventListener("focus", () => {
     --desktop-header-height:140px;
     --desktop-input-height:74px;
     --desktop-utility-height:62px;
-    --desktop-ad-height:58px;
-    --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height) + var(--desktop-ad-height));
+    --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
   }
 
   html,
@@ -1125,13 +1087,18 @@ input.addEventListener("focus", () => {
 
   body{
     display:block;
-    padding-bottom:calc(var(--desktop-bottom-panel-height) + 28px);
+    padding-bottom:0;
     background:#000;
+  }
+
+  .chat-app-shell{
+    min-height:100dvh;
+    height:100dvh;
+    overflow:hidden;
   }
 
   .seo-wrapper,
   .seo-section,
-  .seo-ad-banner,
   .seo-footer-links,
   .footer{
     position:relative;
@@ -1140,7 +1107,7 @@ input.addEventListener("focus", () => {
   }
 
   .seo-wrapper{
-    margin-top:100dvh;
+    margin-top:34px;
     margin-bottom:28px;
     background:#0f172a;
   }
@@ -1170,7 +1137,7 @@ input.addEventListener("focus", () => {
   }
 
   .header{
-    position:fixed;
+    position:absolute;
     top:0;
     right:0;
     left:0;
@@ -1183,7 +1150,7 @@ input.addEventListener("focus", () => {
   }
 
   #online{
-    position:fixed;
+    position:absolute;
     top:22px;
     left:24px;
     z-index:20;
@@ -1220,7 +1187,7 @@ input.addEventListener("focus", () => {
   }
 
   #status{
-    position:fixed;
+    position:absolute;
     top:64px;
     left:24px;
     z-index:20;
@@ -1238,7 +1205,7 @@ input.addEventListener("focus", () => {
   }
 
   .chat-container{
-    position:fixed;
+    position:absolute;
     top:var(--desktop-header-height);
     right:0;
     bottom:var(--desktop-bottom-panel-height);
@@ -1275,9 +1242,9 @@ input.addEventListener("focus", () => {
   }
 
   .utility-bar{
-    position:fixed;
+    position:absolute;
     right:0;
-    bottom:calc(var(--desktop-input-height) + var(--desktop-ad-height));
+    bottom:var(--desktop-input-height);
     left:0;
     z-index:90;
     height:var(--desktop-utility-height);
@@ -1292,19 +1259,8 @@ input.addEventListener("focus", () => {
     min-height:40px;
   }
 
-  .ad-slot{
-    position:fixed;
-    right:0;
-    bottom:var(--desktop-input-height);
-    left:0;
-    z-index:89;
-    height:var(--desktop-ad-height);
-    min-height:var(--desktop-ad-height);
-    padding:9px 16px;
-  }
-
   .input-bar{
-    position:fixed;
+    position:absolute;
     right:0;
     bottom:0;
     left:0;
@@ -1323,7 +1279,7 @@ input.addEventListener("focus", () => {
   }
 
   .typing{
-    position:fixed;
+    position:absolute;
     bottom:calc(var(--desktop-bottom-panel-height) + 4px);
     left:50%;
     z-index:80;
@@ -1344,9 +1300,8 @@ input.addEventListener("focus", () => {
     --mobile-status-height:30px;
     --mobile-input-height:62px;
     --mobile-utility-height:48px;
-    --mobile-ad-height:50px;
     --mobile-input-total-height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
-    --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height) + var(--mobile-ad-height));
+    --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height));
     --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
   }
 
@@ -1380,6 +1335,12 @@ input.addEventListener("focus", () => {
     display:block;
     overscroll-behavior:none;
     touch-action:auto;
+  }
+
+  .chat-app-shell{
+    height:var(--mobile-vvh);
+    min-height:var(--mobile-vvh);
+    overflow:hidden;
   }
 
   .mobile-hide,
@@ -1584,7 +1545,7 @@ input.addEventListener("focus", () => {
   .utility-bar{
     position:absolute;
     right:0;
-    bottom:calc(var(--mobile-input-total-height) + var(--mobile-ad-height));
+    bottom:var(--mobile-input-total-height);
     left:0;
     z-index:44;
     min-height:var(--mobile-utility-height);
@@ -1611,28 +1572,6 @@ input.addEventListener("focus", () => {
     transform:none;
     background:#fff;
     color:#075E54;
-  }
-
-  .ad-slot{
-    position:absolute;
-    right:0;
-    bottom:var(--mobile-input-total-height);
-    left:0;
-    z-index:43;
-    height:var(--mobile-ad-height);
-    min-height:var(--mobile-ad-height);
-    padding:7px 8px;
-    border-top:1px solid #d6d1c8;
-    border-bottom:1px solid #d6d1c8;
-    background:#f0f2f5;
-    color:#667781;
-  }
-
-  .ad-slot-inner{
-    height:34px;
-    border-radius:9px;
-    border-color:rgba(7,94,84,.18);
-    background:rgba(255,255,255,.68);
   }
 
   .input-bar input{
