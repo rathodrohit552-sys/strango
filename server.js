@@ -1,16 +1,30 @@
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
+const publicDir = path.join(__dirname, "public");
 
 const io = new Server(server,{
   cors:{ origin:"*" },
   transports:["websocket","polling"]
 });
 
-app.use(express.static("public", {
+app.get(/^\/sitemap\.xml\/?$/, (req, res) => {
+  res.type("application/xml");
+  res.setHeader("Cache-Control", "public, max-age=0");
+  res.sendFile(path.join(publicDir, "sitemap.xml"));
+});
+
+app.get(/^\/robots\.txt\/?$/, (req, res) => {
+  res.type("text/plain");
+  res.setHeader("Cache-Control", "public, max-age=0");
+  res.sendFile(path.join(publicDir, "robots.txt"));
+});
+
+app.use(express.static(publicDir, {
   setHeaders: (res, path) => {
     if (path.endsWith("sitemap.xml")) {
       res.setHeader("Content-Type", "application/xml");
