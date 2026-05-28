@@ -303,31 +303,35 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-wrap:wrap;
-gap:8px;
-padding:8px 12px;
+gap:10px;
+padding:10px 12px;
 border-top:1px solid #111;
 background:#000;
 }
 
 .utility-btn{
 text-decoration:none;
-background:#111;
-color:#00ff88;
-padding:7px 14px;
-border-radius:8px;
+background:linear-gradient(180deg,#121812,#080d09);
+color:#effff6;
+padding:10px 16px;
+border-radius:12px;
 font-size:13px;
-border:1px solid rgba(255,255,255,0.1);
+border:1px solid rgba(0,255,136,0.22);
 display:flex;
 align-items:center;
-gap:6px;
-transition:.2s;
+gap:8px;
+transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
 white-space:nowrap;
-line-height:1;
+line-height:1.1;
+box-shadow:0 10px 30px rgba(0,0,0,.22);
+font-weight:700;
 }
 
 .utility-btn:hover{
-background:#00ff88;
-color:#000;
+transform:translateY(-1px);
+border-color:rgba(0,255,136,.55);
+background:linear-gradient(180deg,#12331f,#0b140e);
+box-shadow:0 12px 34px rgba(0,255,136,.12);
 }
 
 .rupee{
@@ -336,83 +340,28 @@ font-weight:bold;
 font-size:15px;
 }
 
-.calculator-modal{
-position:fixed;
-inset:0;
-z-index:120;
-display:none;
+.ad-slot{
+display:flex;
 align-items:center;
 justify-content:center;
-padding:18px;
-background:rgba(0,0,0,.72);
+min-height:58px;
+padding:10px 16px;
+border-top:1px solid #111;
+background:#030503;
+color:#789386;
+font-size:12px;
+letter-spacing:0;
 }
 
-.calculator-modal.active{
+.ad-slot-inner{
+width:min(728px,100%);
+height:38px;
 display:flex;
-}
-
-.calculator-panel{
-width:min(560px, calc(100vw - 32px));
-height:min(720px, calc(100dvh - 64px));
-display:flex;
-flex-direction:column;
-overflow:hidden;
-border:1px solid rgba(255,255,255,.12);
+align-items:center;
+justify-content:center;
+border:1px dashed rgba(0,255,136,.22);
 border-radius:10px;
-background:#0a0a0a;
-box-shadow:0 24px 80px rgba(0,0,0,.55);
-}
-
-.calculator-header{
-display:flex;
-align-items:center;
-gap:10px;
-min-height:50px;
-padding:0 12px 0 16px;
-border-bottom:1px solid rgba(255,255,255,.1);
-background:#050505;
-}
-
-.calculator-title{
-flex:1;
-min-width:0;
-overflow:hidden;
-color:#fff;
-font-size:14px;
-font-weight:700;
-text-overflow:ellipsis;
-white-space:nowrap;
-}
-
-.calculator-open,
-.calculator-close{
-height:34px;
-border:1px solid rgba(255,255,255,.12);
-border-radius:8px;
-background:#111;
-color:#00ff88;
-cursor:pointer;
-font-size:13px;
-font-weight:700;
-}
-
-.calculator-open{
-display:inline-flex;
-align-items:center;
-padding:0 12px;
-text-decoration:none;
-}
-
-.calculator-close{
-width:34px;
-padding:0;
-}
-
-.calculator-frame{
-flex:1;
-width:100%;
-border:0;
-background:#fff;
+background:rgba(0,255,136,.035);
 }
 
 /* ===== STRANGO SAFE COLLAPSIBLE SEO (CLASS VERSION) ===== */
@@ -596,35 +545,31 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
 </div>
 <!-- ⭐ UTILITY BUTTONS -->
 <div class="utility-bar">
-  <a href="/tools/emi-calculator.html"
+  <a href="/emi-calculator"
      class="utility-btn"
-     data-calculator-title="⚡ EMI Calculator"
+     target="_blank"
+     rel="noopener"
      data-calculator-event="emi_calculator_click">
-     ⚡ EMI Calculator
+     EMI Calculator
   </a>
-  <a href="/tools/sip-calculator.html"
+  <a href="/sip-calculator"
      class="utility-btn"
-     data-calculator-title="📈 SIP Calculator"
+     target="_blank"
+     rel="noopener"
      data-calculator-event="sip_calculator_click">
-     📈 SIP Calculator
+     SIP Calculator
   </a>
-  <a href="/tools/gst-calculator.html"
+  <a href="/gst-calculator"
      class="utility-btn"
-     data-calculator-title="🧾 GST Calculator"
+     target="_blank"
+     rel="noopener"
      data-calculator-event="gst_calculator_click">
-     🧾 GST Calculator
+     GST Calculator
   </a>
 </div>
 
-<div class="calculator-modal" id="calculatorModal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="calculator-panel">
-    <div class="calculator-header">
-      <div class="calculator-title" id="calculatorTitle">Calculator</div>
-      <a class="calculator-open" id="calculatorOpenLink" href="/tools/emi-calculator.html" target="_blank" rel="noopener">Open</a>
-      <button class="calculator-close" id="calculatorCloseBtn" type="button" aria-label="Close calculator">×</button>
-    </div>
-    <iframe class="calculator-frame" id="calculatorFrame" title="Calculator"></iframe>
-  </div>
+<div class="ad-slot" aria-label="Advertisement space">
+  <div class="ad-slot-inner">Advertisement</div>
 </div>
 
 <div class="input-bar">
@@ -737,6 +682,9 @@ Use a stable internet connection, keep conversations respectful, and avoid shari
 </div>   <!-- close seo-content -->
 </div>   <!-- close seo-wrapper -->
 
+<div class="seo-ad-banner" aria-label="Advertisement space">
+  <div>Advertisement</div>
+</div>
 
 <div class="footer">
 <a href="/about.html" target="_blank" rel="noopener">About</a> •
@@ -764,46 +712,11 @@ const input=document.getElementById("messageInput");
 const status=document.getElementById("status");
 const online=document.getElementById("online");
 const typing=document.getElementById("typing");
-const calculatorModal=document.getElementById("calculatorModal");
-const calculatorFrame=document.getElementById("calculatorFrame");
-const calculatorTitle=document.getElementById("calculatorTitle");
-const calculatorOpenLink=document.getElementById("calculatorOpenLink");
-const calculatorCloseBtn=document.getElementById("calculatorCloseBtn");
-
-function openCalculatorModal(link){
-const href=link.getAttribute("href");
-const title=link.dataset.calculatorTitle || link.textContent.trim();
-calculatorTitle.textContent=title;
-calculatorFrame.src=href;
-calculatorOpenLink.href=href;
-calculatorModal.classList.add("active");
-calculatorModal.setAttribute("aria-hidden","false");
-trackEvent(link.dataset.calculatorEvent || "calculator_click");
-}
-
-function closeCalculatorModal(){
-calculatorModal.classList.remove("active");
-calculatorModal.setAttribute("aria-hidden","true");
-calculatorFrame.src="";
-}
 
 document.querySelectorAll(".utility-btn").forEach((link)=>{
 link.addEventListener("click",(e)=>{
-e.preventDefault();
-openCalculatorModal(link);
+trackEvent(link.dataset.calculatorEvent || "calculator_click");
 });
-});
-
-calculatorCloseBtn.addEventListener("click",closeCalculatorModal);
-calculatorModal.addEventListener("click",(e)=>{
-if(e.target === calculatorModal){
-  closeCalculatorModal();
-}
-});
-document.addEventListener("keydown",(e)=>{
-if(e.key === "Escape" && calculatorModal.classList.contains("active")){
-  closeCalculatorModal();
-}
 });
 
 function addMessage(text,type){
@@ -1145,6 +1058,20 @@ input.addEventListener("focus", () => {
 .seo-footer-links a:hover{
   text-decoration:underline;
 }
+
+.seo-ad-banner{
+  width:min(900px, calc(100% - 28px));
+  min-height:96px;
+  margin:24px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed rgba(0,255,136,.22);
+  border-radius:12px;
+  background:rgba(0,255,136,.035);
+  color:#789386;
+  font-size:13px;
+}
 /* ===== STRANGO MOBILE PREVIEW FIX ===== */
 
 @media (max-width:768px){
@@ -1183,8 +1110,9 @@ input.addEventListener("focus", () => {
   :root{
     --desktop-header-height:140px;
     --desktop-input-height:74px;
-    --desktop-utility-height:52px;
-    --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height));
+    --desktop-utility-height:62px;
+    --desktop-ad-height:58px;
+    --desktop-bottom-panel-height:calc(var(--desktop-input-height) + var(--desktop-utility-height) + var(--desktop-ad-height));
   }
 
   html,
@@ -1203,6 +1131,7 @@ input.addEventListener("focus", () => {
 
   .seo-wrapper,
   .seo-section,
+  .seo-ad-banner,
   .seo-footer-links,
   .footer{
     position:relative;
@@ -1348,7 +1277,7 @@ input.addEventListener("focus", () => {
   .utility-bar{
     position:fixed;
     right:0;
-    bottom:var(--desktop-input-height);
+    bottom:calc(var(--desktop-input-height) + var(--desktop-ad-height));
     left:0;
     z-index:90;
     height:var(--desktop-utility-height);
@@ -1360,7 +1289,18 @@ input.addEventListener("focus", () => {
   }
 
   .utility-btn{
-    min-height:32px;
+    min-height:40px;
+  }
+
+  .ad-slot{
+    position:fixed;
+    right:0;
+    bottom:var(--desktop-input-height);
+    left:0;
+    z-index:89;
+    height:var(--desktop-ad-height);
+    min-height:var(--desktop-ad-height);
+    padding:9px 16px;
   }
 
   .input-bar{
@@ -1403,9 +1343,10 @@ input.addEventListener("focus", () => {
     --mobile-header-height:58px;
     --mobile-status-height:30px;
     --mobile-input-height:62px;
-    --mobile-utility-height:46px;
+    --mobile-utility-height:48px;
+    --mobile-ad-height:50px;
     --mobile-input-total-height:calc(var(--mobile-input-height) + env(safe-area-inset-bottom, 0px));
-    --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height));
+    --mobile-bottom-panel-height:calc(var(--mobile-input-total-height) + var(--mobile-utility-height) + var(--mobile-ad-height));
     --mobile-top-offset:calc(var(--mobile-header-height) + var(--mobile-status-height));
   }
 
@@ -1643,7 +1584,7 @@ input.addEventListener("focus", () => {
   .utility-bar{
     position:absolute;
     right:0;
-    bottom:var(--mobile-input-total-height);
+    bottom:calc(var(--mobile-input-total-height) + var(--mobile-ad-height));
     left:0;
     z-index:44;
     min-height:var(--mobile-utility-height);
@@ -1656,20 +1597,42 @@ input.addEventListener("focus", () => {
 
   .utility-btn{
     flex:0 1 auto;
-    min-height:28px;
-    padding:6px 7px;
-    border-radius:14px;
-    font-size:10.5px;
+    min-height:31px;
+    padding:6px 9px;
+    border-radius:16px;
+    font-size:11px;
+    background:#fff;
+    color:#075E54;
+    border-color:rgba(7,94,84,.18);
+    box-shadow:0 1px 2px rgba(0,0,0,.08);
   }
 
-  .calculator-modal{
-    padding:8px;
+  .utility-btn:hover{
+    transform:none;
+    background:#fff;
+    color:#075E54;
   }
 
-  .calculator-panel{
-    width:calc(100vw - 16px);
-    height:calc(var(--mobile-vvh) - 16px);
-    border-radius:10px;
+  .ad-slot{
+    position:absolute;
+    right:0;
+    bottom:var(--mobile-input-total-height);
+    left:0;
+    z-index:43;
+    height:var(--mobile-ad-height);
+    min-height:var(--mobile-ad-height);
+    padding:7px 8px;
+    border-top:1px solid #d6d1c8;
+    border-bottom:1px solid #d6d1c8;
+    background:#f0f2f5;
+    color:#667781;
+  }
+
+  .ad-slot-inner{
+    height:34px;
+    border-radius:9px;
+    border-color:rgba(7,94,84,.18);
+    background:rgba(255,255,255,.68);
   }
 
   .input-bar input{
@@ -1715,7 +1678,7 @@ input.addEventListener("focus", () => {
 
 @media (max-width:340px){
   :root{
-    --mobile-utility-height:74px;
+    --mobile-utility-height:78px;
   }
 }
 </style>

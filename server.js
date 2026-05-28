@@ -24,6 +24,18 @@ app.get(/^\/robots\.txt\/?$/, (req, res) => {
   res.sendFile(path.join(publicDir, "robots.txt"));
 });
 
+app.get(/^\/emi-calculator\/?$/, (req, res) => {
+  res.sendFile(path.join(publicDir, "tools", "emi-calculator.html"));
+});
+
+app.get(/^\/sip-calculator\/?$/, (req, res) => {
+  res.sendFile(path.join(publicDir, "tools", "sip-calculator.html"));
+});
+
+app.get(/^\/gst-calculator\/?$/, (req, res) => {
+  res.sendFile(path.join(publicDir, "tools", "gst-calculator.html"));
+});
+
 app.use(express.static(publicDir, {
   setHeaders: (res, path) => {
     if (path.endsWith("sitemap.xml")) {

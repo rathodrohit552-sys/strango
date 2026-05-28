@@ -2,239 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SIP Calculator — Premium Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SIP Calculator - Strango</title>
+<meta name="description" content="Use Strango's free SIP calculator to estimate invested amount, returns, and maturity value for monthly mutual fund SIP investments.">
 <style>
-
-/* ===== GLOBAL ===== */
-body{
-    margin:0;
-    background:#020817;
-    font-family:Arial, Helvetica, sans-serif;
-    color:#fff;
-    height:100vh;
-    overflow:hidden; /* 🚀 NO PAGE SCROLL */
-}
-
-/* ===== MAIN DASHBOARD GRID ===== */
-.wrapper{
-    width:95%;
-    margin:auto;
-    height:100vh;
-
-    display:grid;
-    grid-template-columns:35% 65%;
-    grid-template-rows:48% 52%;
-    gap:18px;
-    padding:18px 0;
-}
-
-/* ===== CARD STYLE ===== */
-.card{
-    background:#071028;
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 0 20px rgba(0,0,0,0.4);
-    overflow:hidden;
-}
-
-h3{
-    margin-top:0;
-    margin-bottom:12px;
-}
-
-/* ===== GRID POSITIONS ===== */
-.calculator{ grid-column:1; grid-row:1; }
-.yearly{ grid-column:2; grid-row:1; }
-.graph{ grid-column:1 / span 2; grid-row:2; }
-
-/* ===== INPUTS ===== */
-label{
-    font-size:13px;
-    color:#94a3b8;
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin:6px 0 12px;
-    border-radius:6px;
-    border:1px solid #1a2445;
-    background:#020817;
-    color:#fff;
-}
-
-button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    background:#22c55e;
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* ===== TABLE ===== */
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-}
-
-th,td{
-    padding:8px;
-    border-bottom:1px solid #1a2445;
-}
-
-th{
-    color:#94a3b8;
-    text-align:left;
-}
-
-/* TABLE INTERNAL SCROLL (NOT PAGE SCROLL) */
-.yearly{
-    overflow:auto;
-}
-
-/* ===== GRAPH ===== */
-.graph canvas{
-    height:100% !important;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6}
+.site-header{padding:22px 18px 18px;text-align:center;border-bottom:1px solid #102015;background:#000}
+.brand{font-size:30px;font-weight:800;color:#fff}.tagline{color:#9fb5aa;font-size:14px}
+.back-chat{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:999px;background:#00c853;color:#001b0c;text-decoration:none;font-weight:800;box-shadow:0 14px 32px rgba(0,200,83,.28)}
+.page{width:min(1120px,calc(100% - 32px));margin:30px auto 0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.intro{padding:26px 0}.eyebrow{color:#00ff88;font-weight:800;font-size:13px;text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}.intro p{max-width:640px;color:#b9c8bf}
+.panel,.result,.seo,.faq,.ad-banner{border:1px solid rgba(255,255,255,.09);border-radius:16px;background:linear-gradient(180deg,#0b120d,#050806);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.calculator{display:grid;grid-template-columns:1fr .9fr;gap:18px;margin-top:22px}.panel{padding:22px}
+.field{margin-bottom:22px}.field-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#dcefe4;font-weight:700}
+.value-input{width:145px;padding:10px 12px;border:1px solid rgba(0,255,136,.2);border-radius:10px;background:#040705;color:#fff;font-size:16px;text-align:right}
+input[type=range]{width:100%;accent-color:#00c853}.range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#73867b;font-size:12px}
+.result{padding:22px;display:grid;gap:14px}.metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
+.metric span{display:block;color:#8fa39a;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1}.metric.primary{background:linear-gradient(135deg,rgba(0,200,83,.2),rgba(0,255,136,.05));border-color:rgba(0,255,136,.25)}
+.growth{height:210px;display:flex;align-items:flex-end;gap:8px;padding:14px;border-radius:14px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
+.growth span{flex:1;min-width:7px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#00ff88,#007a3c)}
+.ad-banner{min-height:96px;margin:28px 0;display:flex;align-items:center;justify-content:center;color:#789386;border-style:dashed;background:rgba(0,255,136,.035)}
+.seo,.faq{padding:24px;margin-bottom:24px}.seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}.seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
+.faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#00ff88}
+.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#00ff88;text-decoration:none;margin:0 7px}
+@media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.page{margin-top:18px}.value-input{width:128px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
 </style>
 </head>
-
 <body>
-
-<div class="wrapper">
-
-<!-- ===== CALCULATOR ===== -->
-<div class="card calculator">
-<h3>SIP Calculator</h3>
-
-<label>Monthly Investment (₹)</label>
-<input type="number" id="monthly" value="5000">
-
-<label>Duration (Years)</label>
-<input type="number" id="years" value="15">
-
-<label>Expected Return (%)</label>
-<input type="number" id="rate" value="12">
-
-<button onclick="calculateSIP()">Calculate SIP</button>
-
-</div>
-
-<!-- ===== YEAR TABLE ===== -->
-<div class="card yearly">
-<h3>Yearly Growth</h3>
-<table>
-<thead>
-<tr>
-<th>Year</th>
-<th>Amount (₹)</th>
-</tr>
-</thead>
-<tbody id="yearTable"></tbody>
-</table>
-</div>
-
-<!-- ===== GRAPH ===== -->
-<div class="card graph">
-<h3>Investment Growth</h3>
-<canvas id="sipChart"></canvas>
-</div>
-
-</div>
-
+<header class="site-header"><div class="brand">Strango</div><div class="tagline">Free anonymous chat and useful finance tools</div></header>
+<a class="back-chat" href="/">Back to Chat</a>
+<main class="page">
+  <section class="hero">
+    <div class="intro"><div class="eyebrow">Wealth planning</div><h1>SIP Calculator</h1><p>Estimate the future value of a monthly SIP with an expected annual return. See invested amount, estimated returns, and maturity value instantly as you adjust the sliders.</p></div>
+    <div class="result">
+      <div class="metric primary"><span>Maturity value</span><strong id="maturity">Rs. 0</strong></div>
+      <div class="metric"><span>Invested amount</span><strong id="invested">Rs. 0</strong></div>
+      <div class="metric"><span>Estimated returns</span><strong id="returns">Rs. 0</strong></div>
+    </div>
+  </section>
+  <section class="calculator">
+    <div class="panel">
+      <div class="field"><div class="field-head"><label for="monthly">Monthly investment</label><input class="value-input" id="monthlyText" value="5000"></div><input id="monthly" type="range" min="500" max="200000" step="500" value="5000"><div class="range-labels"><span>Rs. 500</span><span>Rs. 2L</span></div></div>
+      <div class="field"><div class="field-head"><label for="rate">Expected return (p.a.)</label><input class="value-input" id="rateText" value="12"></div><input id="rate" type="range" min="1" max="30" step="0.1" value="12"><div class="range-labels"><span>1%</span><span>30%</span></div></div>
+      <div class="field"><div class="field-head"><label for="years">Investment period</label><input class="value-input" id="yearsText" value="15"></div><input id="years" type="range" min="1" max="40" step="1" value="15"><div class="range-labels"><span>1 year</span><span>40 years</span></div></div>
+    </div>
+    <div class="panel">
+      <h2 style="font-size:20px;margin-bottom:12px">Yearly growth</h2>
+      <div class="growth" id="growth"></div>
+    </div>
+  </section>
+  <div class="ad-banner">Advertisement</div>
+  <section class="seo"><h2>How this SIP calculator works</h2><p>A SIP calculator compounds each monthly investment at the expected monthly rate until the end of the selected period. It is useful for estimating long-term mutual fund investment outcomes.</p><p>Actual mutual fund returns can vary because markets move up and down. Use this estimate for planning, not as a guaranteed return.</p></section>
+  <section class="faq"><h2>SIP Calculator FAQ</h2><div class="faq-item"><strong>What is SIP?</strong><p>SIP means systematic investment plan. It lets you invest a fixed amount regularly, often monthly.</p></div><div class="faq-item"><strong>What is maturity value?</strong><p>Maturity value is the estimated final amount, including your invested amount and expected returns.</p></div><div class="faq-item"><strong>Are SIP returns guaranteed?</strong><p>No. SIP returns depend on market performance and can be higher or lower than the estimate.</p></div></section>
+</main>
+<footer class="footer"><a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></footer>
 <script>
-
-let chart;
-
-/* ===== SIP CALCULATION FUNCTION ===== */
-function calculateSIP(){
-
-let monthly = parseFloat(document.getElementById("monthly").value);
-let years = parseFloat(document.getElementById("years").value);
-let rate = parseFloat(document.getElementById("rate").value)/100/12;
-
-let tableHTML="";
-let investedData=[];
-let totalData=[];
-let labels=[];
-
-let futureValue=0;
-
-for(let y=1;y<=years;y++){
-
-let months=y*12;
-
-futureValue = monthly *
-((Math.pow(1+rate,months)-1)/rate)*(1+rate);
-
-labels.push("Year "+y);
-totalData.push(Math.round(futureValue));
-investedData.push(monthly*months);
-
-tableHTML += `
-<tr>
-<td>${y}</td>
-<td>₹ ${Math.round(futureValue).toLocaleString()}</td>
-</tr>
-`;
-}
-
-document.getElementById("yearTable").innerHTML = tableHTML;
-
-/* ===== GRAPH ===== */
-
-if(chart) chart.destroy();
-
-chart = new Chart(document.getElementById("sipChart"),{
-type:"line",
-data:{
-labels:labels,
-datasets:[
-{
-label:"Total Value",
-data:totalData,
-borderColor:"#22c55e",
-backgroundColor:"rgba(34,197,94,0.15)",
-fill:true,
-tension:0.4
-},
-{
-label:"Invested Amount",
-data:investedData,
-borderColor:"#6366f1",
-tension:0.4
-}
-]
-},
-options:{
-responsive:true,
-maintainAspectRatio:false,
-plugins:{
-legend:{labels:{color:"#fff"}}
-},
-scales:{
-x:{ticks:{color:"#94a3b8"}},
-y:{ticks:{color:"#94a3b8"}}
-}
-}
-});
-
-}
-
-/* AUTO LOAD DEFAULT */
-calculateSIP();
-
+const fmt=(n)=>"Rs. "+Math.round(n).toLocaleString("en-IN");
+const ids=["monthly","rate","years"];
+function sync(fromText,id){const range=document.getElementById(id),text=document.getElementById(id+"Text");if(fromText){range.value=Math.min(range.max,Math.max(range.min,Number(text.value)||range.min));}else{text.value=range.value;}calculate();}
+ids.forEach(id=>{document.getElementById(id).addEventListener("input",()=>sync(false,id));document.getElementById(id+"Text").addEventListener("input",()=>sync(true,id));});
+function calculate(){const m=Number(monthly.value),months=Number(years.value)*12,r=Number(rate.value)/12/100;const fv=r?m*((Math.pow(1+r,months)-1)/r)*(1+r):m*months;const inv=m*months;invested.textContent=fmt(inv);returns.textContent=fmt(fv-inv);maturity.textContent=fmt(fv);let bars="",max=0,vals=[];for(let y=1;y<=Number(years.value);y++){const mo=y*12,v=r?m*((Math.pow(1+r,mo)-1)/r)*(1+r):m*mo;vals.push(v);max=Math.max(max,v);}vals.slice(-18).forEach(v=>{bars+='<span style="height:'+Math.max(8,v/max*100)+'%"></span>';});growth.innerHTML=bars;}
+calculate();
 </script>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is SIP?","acceptedAnswer":{"@type":"Answer","text":"SIP means systematic investment plan. It lets you invest a fixed amount regularly, often monthly."}},{"@type":"Question","name":"Are SIP returns guaranteed?","acceptedAnswer":{"@type":"Answer","text":"No. SIP returns depend on market performance and can be higher or lower than the estimate."}}]}</script>
 </body>
 </html>
