@@ -7,26 +7,35 @@
 <meta name="description" content="Use Strango's free GST calculator for inclusive and exclusive GST calculations with instant final amount, base amount, and GST value.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
+body::before{content:"₹  $  %  GST  ╱╲  %  ₹  $  ||";position:fixed;inset:-20%;z-index:-2;color:rgba(251,146,60,.065);font-size:clamp(54px,9vw,120px);font-weight:900;line-height:1.8;letter-spacing:22px;transform:rotate(-14deg);white-space:pre-wrap;pointer-events:none}
+body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 18% 12%,rgba(249,115,22,.18),transparent 28%),radial-gradient(circle at 84% 16%,rgba(250,204,21,.1),transparent 30%),linear-gradient(180deg,rgba(0,0,0,.08),#020302 82%);pointer-events:none}
 .site-header{padding:22px 18px 18px;text-align:center;border-bottom:1px solid #102015;background:#000}
 .brand{font-size:30px;font-weight:800;color:#fff}.tagline{color:#9fb5aa;font-size:14px}
 .back-chat{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:999px;background:#f97316;color:#1f0c02;text-decoration:none;font-weight:800;box-shadow:0 14px 32px rgba(249,115,22,.28)}
-.page{width:min(1080px,calc(100% - 32px));margin:30px auto 0}
+.page{width:min(1080px,calc(100% - 32px));margin:30px auto 0;animation:riseIn .55s ease both}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}.intro{padding:26px 0}
 .eyebrow{color:#fb923c;font-weight:800;font-size:13px;text-transform:uppercase}h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}.intro p{max-width:620px;color:#cdbfaf}
-.panel,.result,.seo,.faq{border:1px solid rgba(255,255,255,.09);border-radius:16px;background:linear-gradient(180deg,#160d05,#080402);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.panel,.result,.seo,.faq,.trust{border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(22,13,5,.8),rgba(8,4,2,.88));box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(18px)}
 .calculator{display:grid;grid-template-columns:1fr .95fr;gap:18px;margin-top:22px}.panel{padding:22px}.field{margin-bottom:20px}
 label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{width:100%;padding:14px;border:1px solid rgba(249,115,22,.28);border-radius:12px;background:#080402;color:#fff;font-size:18px}
 .mode{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode button,.rate button{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#050a07;color:#dcefe4;padding:12px;font-weight:800;cursor:pointer;transition:.18s}
 .mode button.active,.rate button.active,.mode button:hover,.rate button:hover{border-color:rgba(249,115,22,.55);background:rgba(249,115,22,.14);color:#fb923c}
 .rate{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.result{padding:22px;display:grid;gap:14px}.metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
-.metric span{display:block;color:#b4a496;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1}.metric.primary{background:linear-gradient(135deg,rgba(249,115,22,.22),rgba(251,146,60,.07));border-color:rgba(249,115,22,.32)}
+.metric span{display:block;color:#b4a496;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1;transition:color .2s,transform .2s}.metric strong.flash{color:#fb923c;transform:translateY(-1px)}.metric.primary{background:linear-gradient(135deg,rgba(249,115,22,.22),rgba(251,146,60,.07));border-color:rgba(249,115,22,.32)}
 .split{height:14px;border-radius:999px;overflow:hidden;background:#21150d;display:flex}.base{background:#f97316}.tax{background:#facc15}
 .legend{display:flex;gap:14px;flex-wrap:wrap;color:#9fb5aa;font-size:13px}.dot{width:9px;height:9px;display:inline-block;border-radius:50%;margin-right:6px}
+.invoice{margin-top:14px;padding:16px;border-radius:15px;background:rgba(255,255,255,.045);border:1px solid rgba(251,146,60,.16)}
+.invoice-head{display:flex;justify-content:space-between;gap:12px;color:#fb923c;font-weight:900;margin-bottom:10px}
+.invoice-row{display:flex;justify-content:space-between;padding:8px 0;border-top:1px dashed rgba(255,255,255,.12);color:#f4e8de}
+.invoice-row.total{font-weight:900;color:#fff}
+.trust{padding:24px;margin-bottom:24px}.trust h2{font-size:24px;margin-bottom:14px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trust-card{padding:15px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.trust-card strong{display:block;color:#fb923c;margin-bottom:4px}
 .seo,.faq{padding:24px;margin-bottom:24px}.seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}.seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
 .faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#fb923c}
 .footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#fb923c;text-decoration:none;margin:0 7px}
 @media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.rate{grid-template-columns:repeat(3,1fr)}.page{margin-top:18px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
+@media(max-width:640px){.trust-grid{grid-template-columns:1fr}}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -41,6 +50,12 @@ label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{widt
       <div class="metric"><span>GST amount</span><strong id="gstAmount">Rs. 0</strong></div>
       <div class="split"><div id="baseBar" class="base"></div><div id="taxBar" class="tax"></div></div>
       <div class="legend"><span><i class="dot base"></i>Actual amount</span><span><i class="dot tax"></i>GST</span></div>
+      <div class="invoice">
+        <div class="invoice-head"><span>Invoice summary</span><span id="invoiceMode">Exclusive</span></div>
+        <div class="invoice-row"><span>Taxable value</span><strong id="invoiceBase">Rs. 0</strong></div>
+        <div class="invoice-row"><span>GST</span><strong id="invoiceTax">Rs. 0</strong></div>
+        <div class="invoice-row total"><span>Payable total</span><strong id="invoiceTotal">Rs. 0</strong></div>
+      </div>
     </div>
   </section>
   <section class="calculator">
@@ -51,6 +66,7 @@ label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{widt
     </div>
     <div class="seo"><h2>How this GST calculator works</h2><p>In exclusive mode, GST is added to the entered amount. In inclusive mode, the entered amount already includes GST, so the calculator separates the actual value and tax amount.</p><p>This helps businesses, freelancers, and shoppers quickly understand tax-inclusive and tax-exclusive pricing.</p></div>
   </section>
+  <section class="trust"><h2>Popular in India</h2><div class="trust-grid"><div class="trust-card"><strong>Small businesses</strong><span>Split tax-inclusive and tax-exclusive quotes fast.</span></div><div class="trust-card"><strong>Freelancers</strong><span>Prepare clean GST estimates before invoicing.</span></div><div class="trust-card"><strong>Online sellers</strong><span>Compare GST slab impact on final selling price.</span></div></div></section>
   <section class="faq"><h2>GST Calculator FAQ</h2><div class="faq-item"><strong>What is GST exclusive?</strong><p>GST exclusive means tax is added on top of the entered base price.</p></div><div class="faq-item"><strong>What is GST inclusive?</strong><p>GST inclusive means the entered price already contains GST, so the tax is extracted from the total.</p></div><div class="faq-item"><strong>Which GST slabs are included?</strong><p>This calculator includes common slabs such as 0%, 5%, 12%, 18%, and 40%.</p></div></section>
 </main>
 <footer class="footer"><a href="/about.html">About</a> <a href="/privacy.html">Privacy</a> <a href="/terms.html">Terms</a> <a href="/contact.html">Contact</a></footer>
@@ -60,7 +76,8 @@ let mode="exclusive",rate=18;
 document.querySelectorAll(".mode button").forEach(btn=>btn.addEventListener("click",()=>{mode=btn.dataset.mode;document.querySelectorAll(".mode button").forEach(b=>b.classList.toggle("active",b===btn));calculate();}));
 document.querySelectorAll(".rate button").forEach(btn=>btn.addEventListener("click",()=>{rate=Number(btn.dataset.rate);document.querySelectorAll(".rate button").forEach(b=>b.classList.toggle("active",b===btn));calculate();}));
 amount.addEventListener("input",calculate);
-function calculate(){const amt=Math.max(0,Number(amount.value)||0);let base,tax,total;if(mode==="exclusive"){base=amt;tax=amt*rate/100;total=base+tax;}else{total=amt;base=rate?amt/(1+rate/100):amt;tax=total-base;}finalAmount.textContent=fmt(total);baseAmount.textContent=fmt(base);gstAmount.textContent=fmt(tax);const taxPct=total?Math.min(85,Math.max(0,tax/total*100)):0;taxBar.style.width=taxPct+"%";baseBar.style.width=(100-taxPct)+"%";}
+function pulse(el){el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}
+function calculate(){const amt=Math.max(0,Number(amount.value)||0);let base,tax,total;if(mode==="exclusive"){base=amt;tax=amt*rate/100;total=base+tax;}else{total=amt;base=rate?amt/(1+rate/100):amt;tax=total-base;}finalAmount.textContent=fmt(total);baseAmount.textContent=fmt(base);gstAmount.textContent=fmt(tax);[finalAmount,baseAmount,gstAmount].forEach(pulse);invoiceMode.textContent=mode==="exclusive"?"Exclusive":"Inclusive";invoiceBase.textContent=fmt(base);invoiceTax.textContent=fmt(tax);invoiceTotal.textContent=fmt(total);const taxPct=total?Math.min(85,Math.max(0,tax/total*100)):0;taxBar.style.width=taxPct+"%";baseBar.style.width=(100-taxPct)+"%";}
 calculate();
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is GST exclusive?","acceptedAnswer":{"@type":"Answer","text":"GST exclusive means tax is added on top of the entered base price."}},{"@type":"Question","name":"What is GST inclusive?","acceptedAnswer":{"@type":"Answer","text":"GST inclusive means the entered price already contains GST, so the tax is extracted from the total."}}]}</script>

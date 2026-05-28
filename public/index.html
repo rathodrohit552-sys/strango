@@ -313,35 +313,171 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-wrap:wrap;
-gap:10px;
-padding:10px 12px;
+gap:14px;
+padding:14px 16px;
 border-top:1px solid #111;
-background:#000;
+background:linear-gradient(180deg,#050705,#000);
 }
 
 .utility-btn{
+--calc-accent:#00ff88;
+--calc-soft:rgba(0,255,136,.14);
+position:relative;
 text-decoration:none;
-background:linear-gradient(180deg,#121812,#080d09);
+background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
 color:#effff6;
-padding:10px 16px;
-border-radius:12px;
-font-size:13px;
-border:1px solid rgba(0,255,136,0.22);
+padding:13px 18px;
+border-radius:16px;
+font-size:14px;
+border:1px solid color-mix(in srgb, var(--calc-accent) 42%, transparent);
 display:flex;
 align-items:center;
-gap:8px;
-transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+gap:10px;
+transition:transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
 white-space:nowrap;
 line-height:1.1;
-box-shadow:0 10px 30px rgba(0,0,0,.22);
+box-shadow:0 12px 32px rgba(0,0,0,.32),0 0 24px var(--calc-soft);
+font-weight:800;
+animation:calcFloat 4.8s ease-in-out infinite;
+isolation:isolate;
+}
+
+.utility-btn:nth-child(2){animation-delay:.25s;}
+.utility-btn:nth-child(3){animation-delay:.5s;}
+.utility-btn.emi-link{--calc-accent:#00ff88;--calc-soft:rgba(0,255,136,.15);}
+.utility-btn.sip-link{--calc-accent:#38bdf8;--calc-soft:rgba(56,189,248,.16);}
+.utility-btn.gst-link{--calc-accent:#fb923c;--calc-soft:rgba(251,146,60,.17);}
+
+.utility-icon{
+width:28px;
+height:28px;
+display:grid;
+place-items:center;
+border-radius:10px;
+background:var(--calc-soft);
+color:var(--calc-accent);
+box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--calc-accent) 34%, transparent);
+}
+
+.utility-icon svg{
+width:17px;
+height:17px;
+display:block;
+stroke:currentColor;
+}
+
+.utility-text{
+display:flex;
+flex-direction:column;
+gap:2px;
+align-items:flex-start;
+}
+
+.utility-text strong{
+font-size:14px;
+line-height:1;
+}
+
+.utility-text span{
+color:#9fb5aa;
+font-size:10px;
 font-weight:700;
+line-height:1;
 }
 
 .utility-btn:hover{
-transform:translateY(-1px);
-border-color:rgba(0,255,136,.55);
-background:linear-gradient(180deg,#12331f,#0b140e);
-box-shadow:0 12px 34px rgba(0,255,136,.12);
+transform:translateY(-4px) scale(1.02);
+border-color:var(--calc-accent);
+background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+box-shadow:0 20px 44px rgba(0,0,0,.42),0 0 34px var(--calc-soft);
+}
+
+.utility-preview{
+position:absolute;
+left:50%;
+bottom:calc(100% + 14px);
+width:230px;
+padding:14px;
+border:1px solid color-mix(in srgb, var(--calc-accent) 36%, transparent);
+border-radius:16px;
+background:linear-gradient(180deg,rgba(10,14,12,.92),rgba(3,5,4,.94));
+box-shadow:0 22px 60px rgba(0,0,0,.48),0 0 34px var(--calc-soft);
+backdrop-filter:blur(18px);
+opacity:0;
+pointer-events:none;
+transform:translate(-50%,10px) scale(.96);
+transition:opacity .2s ease, transform .2s ease;
+z-index:30;
+}
+
+.utility-preview::after{
+content:"";
+position:absolute;
+left:50%;
+bottom:-7px;
+width:12px;
+height:12px;
+transform:translateX(-50%) rotate(45deg);
+background:rgba(3,5,4,.94);
+border-right:1px solid color-mix(in srgb, var(--calc-accent) 30%, transparent);
+border-bottom:1px solid color-mix(in srgb, var(--calc-accent) 30%, transparent);
+}
+
+.utility-btn:hover .utility-preview,
+.utility-btn:focus-visible .utility-preview{
+opacity:1;
+transform:translate(-50%,0) scale(1);
+}
+
+.preview-top{
+display:flex;
+gap:10px;
+align-items:center;
+margin-bottom:10px;
+}
+
+.preview-mark{
+width:34px;
+height:34px;
+display:grid;
+place-items:center;
+border-radius:12px;
+background:var(--calc-soft);
+color:var(--calc-accent);
+font-weight:900;
+}
+
+.preview-title{
+font-size:13px;
+font-weight:900;
+color:#fff;
+}
+
+.preview-copy{
+color:#b9c8bf;
+font-size:12px;
+line-height:1.45;
+}
+
+.preview-stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.preview-stats span{
+padding:8px;
+border-radius:10px;
+background:rgba(255,255,255,.045);
+color:#eafff3;
+font-size:11px;
+font-weight:800;
+}
+
+@keyframes calcFloat{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-2px);}
 }
 
 .rupee{
@@ -532,25 +668,40 @@ Enjoy anonymous chat online with fast matching, private conversations, and a cle
 <!-- ⭐ UTILITY BUTTONS -->
 <div class="utility-bar">
   <a href="/emi-calculator"
-     class="utility-btn"
+     class="utility-btn emi-link"
      target="_blank"
      rel="noopener"
      data-calculator-event="emi_calculator_click">
-     EMI Calculator
+     <span class="utility-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 4-4 3 3 5-7"/></svg></span>
+     <span class="utility-text"><strong>EMI Calculator</strong><span>Plan loans</span></span>
+     <span class="utility-preview" aria-hidden="true">
+       <span class="preview-top"><span class="preview-mark">₹</span><span><span class="preview-title">Smart EMI planning</span><span class="preview-copy">Check monthly EMI, total interest, and savings instantly.</span></span></span>
+       <span class="preview-stats"><span>EMI result</span><span>Saving insight</span></span>
+     </span>
   </a>
   <a href="/sip-calculator"
-     class="utility-btn"
+     class="utility-btn sip-link"
      target="_blank"
      rel="noopener"
      data-calculator-event="sip_calculator_click">
-     SIP Calculator
+     <span class="utility-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 19V5"/><path d="M8 17V9"/><path d="M13 17V6"/><path d="M18 17v-4"/></svg></span>
+     <span class="utility-text"><strong>SIP Calculator</strong><span>Grow wealth</span></span>
+     <span class="utility-preview" aria-hidden="true">
+       <span class="preview-top"><span class="preview-mark">%</span><span><span class="preview-title">Future wealth preview</span><span class="preview-copy">Estimate maturity value, returns, and milestones.</span></span></span>
+       <span class="preview-stats"><span>Growth bars</span><span>Badges</span></span>
+     </span>
   </a>
   <a href="/gst-calculator"
-     class="utility-btn"
+     class="utility-btn gst-link"
      target="_blank"
      rel="noopener"
      data-calculator-event="gst_calculator_click">
-     GST Calculator
+     <span class="utility-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 3h10l3 3v15H4V3h3z"/><path d="M8 10h8"/><path d="M8 14h5"/><path d="M8 18h8"/></svg></span>
+     <span class="utility-text"><strong>GST Calculator</strong><span>Tax split</span></span>
+     <span class="utility-preview" aria-hidden="true">
+       <span class="preview-top"><span class="preview-mark">%</span><span><span class="preview-title">Business tax summary</span><span class="preview-copy">Split base amount, GST, and final invoice total.</span></span></span>
+       <span class="preview-stats"><span>GST slabs</span><span>Invoice view</span></span>
+     </span>
   </a>
 </div>
 
@@ -1558,14 +1709,35 @@ input.addEventListener("focus", () => {
 
   .utility-btn{
     flex:0 1 auto;
-    min-height:31px;
-    padding:6px 9px;
-    border-radius:16px;
+    min-height:38px;
+    padding:7px 10px;
+    border-radius:18px;
     font-size:11px;
     background:#fff;
     color:#075E54;
     border-color:rgba(7,94,84,.18);
     box-shadow:0 1px 2px rgba(0,0,0,.08);
+    animation:none;
+  }
+
+  .utility-icon{
+    width:23px;
+    height:23px;
+    border-radius:8px;
+  }
+
+  .utility-icon svg{
+    width:14px;
+    height:14px;
+  }
+
+  .utility-text strong{
+    font-size:11px;
+  }
+
+  .utility-text span,
+  .utility-preview{
+    display:none;
   }
 
   .utility-btn:hover{

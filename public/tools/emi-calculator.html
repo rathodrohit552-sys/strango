@@ -7,35 +7,49 @@
 <meta name="description" content="Use Strango's free EMI calculator to estimate monthly EMI, total interest, and total payment for a loan with instant sliders.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
+body::before{content:"₹  $  %  ┃  ╱╲  ₹  %  $  ╲╱";position:fixed;inset:-20%;z-index:-2;color:rgba(0,255,136,.055);font-size:clamp(54px,9vw,120px);font-weight:900;line-height:1.8;letter-spacing:22px;transform:rotate(-14deg);white-space:pre-wrap;pointer-events:none}
+body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 18% 12%,rgba(0,255,136,.16),transparent 28%),radial-gradient(circle at 84% 16%,rgba(125,211,252,.08),transparent 30%),linear-gradient(180deg,rgba(0,0,0,.08),#020302 82%);pointer-events:none}
 a{color:inherit}
 .site-header{padding:22px 18px 18px;text-align:center;border-bottom:1px solid #102015;background:#000}
 .brand{font-size:30px;font-weight:800;color:#fff;letter-spacing:0}
 .tagline{color:#9fb5aa;font-size:14px}
 .back-chat{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:999px;background:#00c853;color:#001b0c;text-decoration:none;font-weight:800;box-shadow:0 14px 32px rgba(0,200,83,.28)}
-.page{width:min(1120px,calc(100% - 32px));margin:30px auto 0}
+.page{width:min(1120px,calc(100% - 32px));margin:30px auto 0;animation:riseIn .55s ease both}
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:stretch}
 .intro{padding:26px 0}
 .eyebrow{color:#00ff88;font-weight:800;font-size:13px;text-transform:uppercase}
 h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}
 .intro p{max-width:640px;color:#b9c8bf}
 .calculator{display:grid;grid-template-columns:1fr .9fr;gap:18px;margin-top:22px}
-.panel,.result,.seo,.faq{border:1px solid rgba(255,255,255,.09);border-radius:16px;background:linear-gradient(180deg,#0b120d,#050806);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+.panel,.result,.seo,.faq,.trust{border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(15,28,18,.78),rgba(5,8,6,.86));box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(18px)}
 .panel{padding:22px}
 .field{margin-bottom:22px}
 .field-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#dcefe4;font-weight:700}
-.value-input{width:145px;padding:10px 12px;border:1px solid rgba(0,255,136,.2);border-radius:10px;background:#040705;color:#fff;font-size:16px;text-align:right}
-input[type=range]{width:100%;accent-color:#00c853}
+.value-input{width:145px;padding:10px 12px;border:1px solid rgba(0,255,136,.26);border-radius:10px;background:#040705;color:#fff;font-size:16px;text-align:right;transition:border-color .18s,box-shadow .18s}
+.value-input:focus{outline:none;border-color:#00ff88;box-shadow:0 0 0 4px rgba(0,255,136,.09)}
+input[type=range]{width:100%;accent-color:#00c853;cursor:pointer}
 .range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#73867b;font-size:12px}
 .result{padding:22px;display:flex;flex-direction:column;gap:14px}
 .metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
 .metric span{display:block;color:#8fa39a;font-size:13px}
-.metric strong{display:block;margin-top:4px;color:#fff;font-size:26px;line-height:1.1}
+.metric strong{display:block;margin-top:4px;color:#fff;font-size:26px;line-height:1.1;transition:color .2s,transform .2s}
+.metric strong.flash{color:#00ff88;transform:translateY(-1px)}
 .metric.primary{background:linear-gradient(135deg,rgba(0,200,83,.2),rgba(0,255,136,.05));border-color:rgba(0,255,136,.25)}
 .bar{height:12px;border-radius:999px;overflow:hidden;background:#172019;display:flex}
 .principal{background:#00c853}.interest{background:#7dd3fc}
 .legend{display:flex;gap:14px;flex-wrap:wrap;color:#9fb5aa;font-size:13px}
 .dot{width:9px;height:9px;display:inline-block;border-radius:50%;margin-right:6px}
+.premium-grid{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
+.progress-ring{--progress:68;position:relative;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#00ff88 calc(var(--progress)*1%),rgba(255,255,255,.08) 0);box-shadow:0 0 34px rgba(0,255,136,.12)}
+.progress-ring::before{content:"";position:absolute;width:96px;height:96px;border-radius:50%;background:#07100a}
+.progress-ring strong{position:relative;color:#fff;font-size:22px}
+.insight{padding:14px;border-radius:14px;background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.18);color:#c9f8da;font-weight:700}
+.trust{padding:24px;margin-bottom:24px}
+.trust h2{font-size:24px;margin-bottom:14px}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.trust-card{padding:15px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+.trust-card strong{display:block;color:#00ff88;margin-bottom:4px}
 .seo,.faq{padding:24px;margin-bottom:24px}
 .seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}
 .seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
@@ -44,6 +58,8 @@ input[type=range]{width:100%;accent-color:#00c853}
 .footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}
 .footer a{color:#00ff88;text-decoration:none;margin:0 7px}
 @media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.page{margin-top:18px}.panel,.result,.seo,.faq{border-radius:14px}.value-input{width:128px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
+@media(max-width:640px){.premium-grid,.trust-grid{grid-template-columns:1fr}.progress-ring{margin:auto}}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -65,6 +81,10 @@ input[type=range]{width:100%;accent-color:#00c853}
       <div class="metric"><span>Total interest</span><strong id="interest">Rs. 0</strong></div>
       <div class="bar"><div id="principalBar" class="principal"></div><div id="interestBar" class="interest"></div></div>
       <div class="legend"><span><i class="dot principal"></i>Principal</span><span><i class="dot interest"></i>Interest</span></div>
+      <div class="premium-grid">
+        <div class="progress-ring" id="repaymentRing"><strong id="repaymentScore">0%</strong></div>
+        <div class="insight" id="saveInsight">Lower the rate to see your possible interest saving.</div>
+      </div>
     </div>
   </section>
   <section class="calculator">
@@ -77,6 +97,14 @@ input[type=range]{width:100%;accent-color:#00c853}
       <h2>How this EMI calculator works</h2>
       <p>EMI is calculated from the loan principal, monthly interest rate, and number of monthly instalments. The result helps you compare affordability before applying for a home loan, personal loan, education loan, or vehicle loan.</p>
       <p>Use the total interest and total payment values to understand the full cost of borrowing, not just the monthly instalment.</p>
+    </div>
+  </section>
+  <section class="trust">
+    <h2>Popular in India</h2>
+    <div class="trust-grid">
+      <div class="trust-card"><strong>Home loans</strong><span>Estimate long tenure repayments before applying.</span></div>
+      <div class="trust-card"><strong>Personal loans</strong><span>Compare EMI comfort against monthly cash flow.</span></div>
+      <div class="trust-card"><strong>Car loans</strong><span>Plan total interest before choosing a loan offer.</span></div>
     </div>
   </section>
   <section class="faq">
@@ -92,7 +120,9 @@ const fmt=(n)=>"Rs. "+Math.round(n).toLocaleString("en-IN");
 const ids=["loan","rate","years"];
 function sync(fromText,id){const range=document.getElementById(id),text=document.getElementById(id+"Text");if(fromText){range.value=Math.min(range.max,Math.max(range.min,Number(text.value)||range.min));}else{text.value=range.value;}calculate();}
 ids.forEach(id=>{document.getElementById(id).addEventListener("input",()=>sync(false,id));document.getElementById(id+"Text").addEventListener("input",()=>sync(true,id));});
-function calculate(){const p=Number(loan.value),annual=Number(rate.value),months=Number(years.value)*12,r=annual/12/100;let emiValue=r?p*r*Math.pow(1+r,months)/(Math.pow(1+r,months)-1):p/months;const pay=emiValue*months,int=pay-p;emi.textContent=fmt(emiValue);total.textContent=fmt(pay);interest.textContent=fmt(int);const intPct=Math.min(85,Math.max(5,int/pay*100));interestBar.style.width=intPct+"%";principalBar.style.width=(100-intPct)+"%";}
+function pulse(el){el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}
+function emiFor(p,annual,months){const r=annual/12/100;return r?p*r*Math.pow(1+r,months)/(Math.pow(1+r,months)-1):p/months;}
+function calculate(){const p=Number(loan.value),annual=Number(rate.value),months=Number(years.value)*12;let emiValue=emiFor(p,annual,months);const pay=emiValue*months,int=pay-p;emi.textContent=fmt(emiValue);total.textContent=fmt(pay);interest.textContent=fmt(int);[emi,total,interest].forEach(pulse);const intPct=Math.min(85,Math.max(5,int/pay*100));interestBar.style.width=intPct+"%";principalBar.style.width=(100-intPct)+"%";const principalPct=Math.round((p/pay)*100);repaymentRing.style.setProperty("--progress",principalPct);repaymentScore.textContent=principalPct+"%";const lowerRate=Math.max(0,annual-1);const saved=Math.max(0,(emiValue-emiFor(p,lowerRate,months))*months);saveInsight.textContent=saved>0?"You save "+fmt(saved)+" total interest with a 1% lower rate.":"A lower rate can reduce your total repayment.";}
 calculate();
 </script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is EMI?","acceptedAnswer":{"@type":"Answer","text":"EMI means equated monthly instalment. It is the fixed monthly amount paid to repay a loan over time."}},{"@type":"Question","name":"Does a higher tenure reduce EMI?","acceptedAnswer":{"@type":"Answer","text":"A higher tenure usually reduces monthly EMI but can increase total interest paid."}}]}</script>
