@@ -11,6 +11,19 @@
   var connected = false;
   var typingTimer;
 
+  function haptic(type){
+    if(!window.navigator || !window.navigator.vibrate) return;
+    if(type === "match") navigator.vibrate([18, 32, 18]);
+    if(type === "send") navigator.vibrate(12);
+    if(type === "join") navigator.vibrate([10, 24, 10]);
+  }
+
+  function syncMobileViewport(){
+    var viewport = window.visualViewport;
+    var height = viewport ? viewport.height : window.innerHeight;
+    document.documentElement.style.setProperty("--mobile-chat-height", height + "px");
+  }
+
   function setStatus(text, state){
     if(!status) return;
     status.textContent = text;
@@ -41,6 +54,7 @@
       if(normalized.toLowerCase().indexOf("connected") !== -1){
         connected = true;
         setStatus("Stranger connected", "connected");
+        haptic("match");
         addMessage("You are now connected. Say hello.", "stranger");
         return;
       }
@@ -75,6 +89,7 @@
       addMessage(value, "you");
       socket.emit("message", value);
       socket.emit("typing", false);
+      haptic("send");
       input.value = "";
     });
   }
@@ -88,6 +103,19 @@
         socket.emit("typing", false);
       }, 700);
     });
+
+    input.addEventListener("focus", function(){
+      document.body.classList.add("chat-input-focused");
+      setTimeout(function(){
+        syncMobileViewport();
+        if(messages) messages.scrollTop = messages.scrollHeight;
+      }, 80);
+    });
+
+    input.addEventListener("blur", function(){
+      document.body.classList.remove("chat-input-focused");
+      setTimeout(syncMobileViewport, 80);
+    });
   }
 
   if(nextBtn && socket){
@@ -98,6 +126,22 @@
       setStatus("Waiting for stranger...", "waiting");
       socket.emit("next");
     });
+  }
+
+  document.querySelectorAll(".community-card").forEach(function(card){
+    card.addEventListener("click", function(){
+      haptic("join");
+    });
+  });
+
+  syncMobileViewport();
+  window.addEventListener("resize", syncMobileViewport, { passive:true });
+  window.addEventListener("orientationchange", function(){
+    setTimeout(syncMobileViewport, 200);
+  }, { passive:true });
+  if(window.visualViewport){
+    window.visualViewport.addEventListener("resize", syncMobileViewport, { passive:true });
+    window.visualViewport.addEventListener("scroll", syncMobileViewport, { passive:true });
   }
 
   var banner = document.getElementById("cookieBanner");

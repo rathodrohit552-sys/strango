@@ -116,7 +116,13 @@
       </div>
       <div class="chat-shell">
         <div class="chat-status-row">
-          <span id="status" class="status waiting">Waiting for stranger...</span>
+          <div class="chat-person">
+            <span class="chat-avatar" aria-hidden="true">S</span>
+            <div class="chat-person-copy">
+              <strong>Stranger</strong>
+              <span id="status" class="status waiting">Waiting for stranger...</span>
+            </div>
+          </div>
           <span id="online" class="online">0 online</span>
         </div>
         <div id="messages" class="messages" aria-live="polite"></div>
