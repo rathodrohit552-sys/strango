@@ -8,8 +8,15 @@
   var input = document.getElementById("messageInput");
   var form = document.getElementById("chatForm");
   var nextBtn = document.getElementById("nextBtn");
+  var chatSection = document.getElementById("chat");
+  var strangerName = document.getElementById("strangerName");
   var connected = false;
   var typingTimer;
+  var strangerId = Math.floor(1000 + Math.random() * 9000);
+
+  if(strangerName){
+    strangerName.textContent = "Stranger #" + strangerId;
+  }
 
   function haptic(type){
     if(!window.navigator || !window.navigator.vibrate) return;
@@ -21,7 +28,27 @@
   function syncMobileViewport(){
     var viewport = window.visualViewport;
     var height = viewport ? viewport.height : window.innerHeight;
+    var offsetTop = viewport ? viewport.offsetTop : 0;
     document.documentElement.style.setProperty("--mobile-chat-height", height + "px");
+    document.documentElement.style.setProperty("--mobile-chat-offset", offsetTop + "px");
+  }
+
+  function enterChatMode(pushHash){
+    document.body.classList.add("chat-mode");
+    if(chatSection) chatSection.setAttribute("aria-modal", "true");
+    syncMobileViewport();
+    if(pushHash && window.location.hash !== "#chat"){
+      history.pushState(null, "", "#chat");
+    }
+    setTimeout(function(){
+      if(input) input.focus({ preventScroll:true });
+      if(messages) messages.scrollTop = messages.scrollHeight;
+    }, 260);
+  }
+
+  function leaveChatMode(){
+    document.body.classList.remove("chat-mode","chat-input-focused");
+    if(chatSection) chatSection.removeAttribute("aria-modal");
   }
 
   function setStatus(text, state){
@@ -133,6 +160,35 @@
       haptic("join");
     });
   });
+
+  document.querySelectorAll("[data-start-chat], a[href='#chat']").forEach(function(link){
+    link.addEventListener("click", function(event){
+      event.preventDefault();
+      enterChatMode(true);
+    });
+  });
+
+  window.addEventListener("hashchange", function(){
+    if(window.location.hash === "#chat"){
+      enterChatMode(false);
+    }else{
+      leaveChatMode();
+    }
+  });
+
+  window.addEventListener("popstate", function(){
+    if(window.location.hash === "#chat"){
+      enterChatMode(false);
+    }else{
+      leaveChatMode();
+    }
+  });
+
+  if(window.location.hash === "#chat"){
+    setTimeout(function(){
+      enterChatMode(false);
+    }, 80);
+  }
 
   syncMobileViewport();
   window.addEventListener("resize", syncMobileViewport, { passive:true });
