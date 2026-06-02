@@ -1,16 +1,38 @@
 :root{
-  --bg:#f6f7f4;
+  color-scheme:light;
+  --bg:#f2f3f5;
   --surface:#ffffff;
-  --surface-2:#eef1ec;
+  --surface-2:#e9ecef;
   --ink:#111412;
-  --muted:#636b66;
-  --line:#dce1dc;
+  --muted:#5f6863;
+  --line:#d7dce0;
+  --header-bg:rgba(242,243,245,.88);
   --green:#176f4d;
   --green-dark:#0f4f37;
   --blue:#244c8f;
   --gold:#a46d12;
-  --shadow:0 24px 70px rgba(20,31,26,.12);
+  --shadow:0 18px 46px rgba(17,24,39,.09);
+  --card-shadow:0 10px 28px rgba(17,24,39,.075);
+  --card-shadow-hover:0 16px 40px rgba(17,24,39,.11);
   --radius:8px;
+}
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111315;
+  --surface:#191c1f;
+  --surface-2:#22262a;
+  --ink:#f4f5f3;
+  --muted:#a6adb4;
+  --line:#30363c;
+  --header-bg:rgba(17,19,21,.86);
+  --green:#79d7a7;
+  --green-dark:#9be3bd;
+  --blue:#8fb3ff;
+  --gold:#e4b85d;
+  --shadow:0 20px 54px rgba(0,0,0,.34);
+  --card-shadow:0 12px 34px rgba(0,0,0,.26);
+  --card-shadow-hover:0 18px 46px rgba(0,0,0,.34);
 }
 
 *{box-sizing:border-box}
@@ -26,6 +48,7 @@ body{
   color:var(--ink);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   letter-spacing:0;
+  transition:background-color .22s ease,color .22s ease;
 }
 
 a{color:inherit}
@@ -39,8 +62,8 @@ a{color:inherit}
   justify-content:space-between;
   gap:24px;
   padding:18px clamp(20px,4vw,64px);
-  background:rgba(246,247,244,.88);
-  border-bottom:1px solid rgba(220,225,220,.8);
+  background:var(--header-bg);
+  border-bottom:1px solid color-mix(in srgb,var(--line) 82%,transparent);
   backdrop-filter:blur(18px);
 }
 
@@ -60,16 +83,37 @@ a{color:inherit}
   place-items:center;
   border-radius:8px;
   background:var(--ink);
-  color:#fff;
+  color:var(--bg);
 }
 
 .nav-links{
   display:flex;
   align-items:center;
-  gap:24px;
+  gap:20px;
   color:var(--muted);
   font-size:14px;
   font-weight:600;
+}
+
+.theme-toggle{
+  min-width:42px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:color-mix(in srgb,var(--surface) 86%,transparent);
+  color:var(--ink);
+  font:inherit;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(17,24,39,.055);
+}
+
+.theme-toggle:hover{
+  border-color:color-mix(in srgb,var(--green) 44%,var(--line));
 }
 
 .nav-links a,.footer a,.seo-links a{
@@ -86,7 +130,7 @@ a{color:inherit}
   grid-template-columns:minmax(0,1.05fr) minmax(320px,.7fr);
   align-items:center;
   gap:48px;
-  padding:72px clamp(20px,6vw,96px) 56px;
+  padding:60px clamp(20px,6vw,96px) 46px;
 }
 
 .hero-copy{
@@ -156,7 +200,7 @@ h3{
 }
 
 .button.secondary{
-  background:#fff;
+  background:var(--surface);
   color:var(--ink);
 }
 
@@ -169,7 +213,7 @@ h3{
   padding:18px;
   border:1px solid var(--line);
   border-radius:8px;
-  background:linear-gradient(180deg,#ffffff,#eef3ef);
+  background:linear-gradient(180deg,var(--surface),var(--surface-2));
   box-shadow:var(--shadow);
 }
 
@@ -194,7 +238,7 @@ h3{
   max-width:82%;
   padding:12px 14px;
   border-radius:8px;
-  background:#fff;
+  background:var(--surface);
   border:1px solid var(--line);
   color:#2d332f;
   line-height:1.4;
@@ -206,12 +250,21 @@ h3{
   border-color:#c7ead6;
 }
 
+html[data-theme="dark"] .preview-bubble{
+  color:var(--ink);
+}
+
+html[data-theme="dark"] .preview-bubble.self{
+  background:#173826;
+  border-color:#28523b;
+}
+
 .preview-bubble.muted{
   color:var(--muted);
 }
 
 .section{
-  padding:72px clamp(20px,6vw,96px);
+  padding:58px clamp(20px,6vw,96px);
 }
 
 .section-heading{
@@ -241,7 +294,13 @@ h3{
   border:1px solid var(--line);
   border-radius:8px;
   background:var(--surface);
-  box-shadow:0 12px 36px rgba(20,31,26,.06);
+  box-shadow:var(--card-shadow);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+
+.trust-card:hover,.feature-card:hover,.community-card:hover,.help-card:hover,.content-card:hover{
+  border-color:color-mix(in srgb,var(--line) 72%,var(--green));
+  box-shadow:var(--card-shadow-hover);
 }
 
 .trust-card,.feature-card,.help-card{
@@ -415,7 +474,7 @@ h3{
 }
 
 .communities-section{
-  background:#fff;
+  background:var(--surface);
 }
 
 .community-grid{
@@ -450,7 +509,7 @@ h3{
   padding:10px 14px;
   border:1px solid var(--line);
   border-radius:8px;
-  background:#fff;
+  background:var(--surface);
   color:var(--muted);
   font-weight:700;
 }
@@ -479,7 +538,7 @@ h3{
   padding:14px;
   border:1px solid var(--line);
   border-radius:8px;
-  background:#fff;
+  background:var(--surface);
   box-shadow:var(--shadow);
 }
 
@@ -548,6 +607,13 @@ h3{
     align-items:flex-start;
     flex-direction:column;
     gap:14px;
+    padding-right:72px;
+  }
+
+  .theme-toggle{
+    position:absolute;
+    top:18px;
+    right:18px;
   }
 
   .nav-links{
