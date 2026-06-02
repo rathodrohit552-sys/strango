@@ -7,6 +7,10 @@ const app = express();
 const server = http.createServer(app);
 const publicDir = path.join(__dirname, "public");
 
+function sendPublicPage(res, fileName) {
+  res.sendFile(path.join(publicDir, fileName));
+}
+
 const io = new Server(server,{
   cors:{ origin:"*" },
   transports:["websocket","polling"]
@@ -34,6 +38,29 @@ app.get(/^\/sip-calculator\/?$/, (req, res) => {
 
 app.get(/^\/gst-calculator\/?$/, (req, res) => {
   res.sendFile(path.join(publicDir, "tools", "gst-calculator.html"));
+});
+
+const pageRoutes = {
+  "/about": "about-page.html",
+  "/contact": "contact-page.html",
+  "/privacy-policy": "privacy-policy.html",
+  "/terms-of-service": "terms-of-service.html",
+  "/community-guidelines": "community-guidelines.html",
+  "/talk-to-strangers": "talk-to-strangers.html",
+  "/free-online-chat": "free-online-chat.html",
+  "/anonymous-chat": "anonymous-chat.html",
+  "/omegle-alternative": "omegle-alternative.html",
+  "/help": path.join("help", "index.html"),
+  "/help/chat": path.join("help", "chat.html"),
+  "/help/getting-started": path.join("help", "getting-started.html"),
+  "/help/safety": path.join("help", "safety.html"),
+  "/help/privacy": path.join("help", "privacy.html")
+};
+
+Object.entries(pageRoutes).forEach(([route, fileName]) => {
+  app.get(new RegExp("^" + route + "\\/?$"), (req, res) => {
+    sendPublicPage(res, fileName);
+  });
 });
 
 app.use(express.static(publicDir, {

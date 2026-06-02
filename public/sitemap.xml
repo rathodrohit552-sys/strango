@@ -1,67 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
-    <loc>https://strango.xyz/</loc>
+    <loc>https://strango.chat/</loc>
+    <priority>1.0</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/privacy.html</loc>
+    <loc>https://strango.chat/talk-to-strangers</loc>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/terms.html</loc>
+    <loc>https://strango.chat/free-online-chat</loc>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/safety.html</loc>
+    <loc>https://strango.chat/anonymous-chat</loc>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/about.html</loc>
+    <loc>https://strango.chat/omegle-alternative</loc>
+    <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/contact.html</loc>
+    <loc>https://strango.chat/about</loc>
+    <priority>0.7</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/emi-calculator</loc>
+    <loc>https://strango.chat/contact</loc>
+    <priority>0.7</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/sip-calculator</loc>
+    <loc>https://strango.chat/privacy-policy</loc>
+    <priority>0.7</priority>
   </url>
-
   <url>
-    <loc>https://strango.xyz/gst-calculator</loc>
+    <loc>https://strango.chat/terms-of-service</loc>
+    <priority>0.7</priority>
   </url>
-
-<url>
-  <loc>https://strango.xyz/seo/omegle-alternative.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/chat-with-strangers.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/anonymous-chat-no-login.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/random-video-chat.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/india-stranger-chat.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/best-omegle-alternatives.html</loc>
-</url>
-
-<url>
-  <loc>https://strango.xyz/seo/strango-vs-omegle.html</loc>
-</url>
+  <url>
+    <loc>https://strango.chat/community-guidelines</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.chat/help</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://strango.chat/help/chat</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.chat/help/getting-started</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.chat/help/safety</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.chat/help/privacy</loc>
+    <priority>0.7</priority>
+  </url>
 </urlset>
