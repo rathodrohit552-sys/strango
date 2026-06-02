@@ -63,19 +63,41 @@
         <h1>Meet someone new in a cleaner, safer stranger chat experience.</h1>
         <p class="hero-text">Strango connects you with people online for fast, private text conversations. No profile, no complicated setup, just a polished space to start a conversation.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#chat" data-start-chat>Start Chatting</a>
+          <button class="button primary" type="button" data-start-chat>Start Chatting</button>
           <a class="button secondary" href="#communities">Explore Communities</a>
         </div>
       </div>
       <aside class="chat-preview" aria-label="Strango chat preview">
-        <div class="preview-topbar">
-          <span></span>
-          <strong>Live anonymous chat</strong>
+        <div class="preview-stage">
+          <div class="preview-topbar">
+            <span></span>
+            <strong>Live anonymous chat</strong>
+          </div>
+          <div class="preview-bubble muted">Waiting for a stranger...</div>
+          <div class="preview-bubble">Matched in seconds.</div>
+          <div class="preview-bubble self">Hi, what are you into?</div>
+          <div class="preview-bubble">Music, games, and late-night ideas.</div>
         </div>
-        <div class="preview-bubble muted">Waiting for a stranger...</div>
-        <div class="preview-bubble">Matched in seconds.</div>
-        <div class="preview-bubble self">Hi, what are you into?</div>
-        <div class="preview-bubble">Music, games, and late-night ideas.</div>
+        <div class="chat-shell" role="dialog" aria-label="Strango chat">
+          <div class="chat-status-row">
+            <button id="chatBackBtn" class="chat-back" type="button" aria-label="Back to homepage">Back</button>
+            <div class="chat-person">
+              <span class="chat-avatar" aria-hidden="true">S</span>
+              <div class="chat-person-copy">
+                <strong id="strangerName">Stranger #0000</strong>
+                <span id="status" class="status waiting">Waiting for stranger...</span>
+              </div>
+            </div>
+            <span id="online" class="online">0 online</span>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+          <div id="typing" class="typing" aria-live="polite"></div>
+          <form id="chatForm" class="input-bar">
+            <button id="nextBtn" class="icon-button next" type="button">Next</button>
+            <input id="messageInput" type="text" autocomplete="off" placeholder="Type a message..." aria-label="Message">
+            <button id="sendBtn" class="icon-button send" type="submit">Send</button>
+          </form>
+        </div>
       </aside>
     </section>
 
@@ -105,33 +127,6 @@
           <h3>Privacy focused</h3>
           <p>Clear safety and privacy pages explain expectations in plain language.</p>
         </article>
-      </div>
-    </section>
-
-    <section id="chat" class="section chat-section" aria-label="Start chatting">
-      <div class="section-heading centered">
-        <p class="eyebrow">Start now</p>
-        <h2>Random chat, refined.</h2>
-        <p>Use the chat below to connect with a stranger. The input stays anchored for comfortable mobile and tablet use.</p>
-      </div>
-      <div class="chat-shell">
-        <div class="chat-status-row">
-          <div class="chat-person">
-            <span class="chat-avatar" aria-hidden="true">S</span>
-            <div class="chat-person-copy">
-              <strong id="strangerName">Stranger #0000</strong>
-              <span id="status" class="status waiting">Waiting for stranger...</span>
-            </div>
-          </div>
-          <span id="online" class="online">0 online</span>
-        </div>
-        <div id="messages" class="messages" aria-live="polite"></div>
-        <div id="typing" class="typing" aria-live="polite"></div>
-        <form id="chatForm" class="input-bar">
-          <button id="nextBtn" class="icon-button next" type="button">Next</button>
-          <input id="messageInput" type="text" autocomplete="off" placeholder="Type a message..." aria-label="Message">
-          <button id="sendBtn" class="icon-button send" type="submit">Send</button>
-        </form>
       </div>
     </section>
 

@@ -8,11 +8,13 @@
   var input = document.getElementById("messageInput");
   var form = document.getElementById("chatForm");
   var nextBtn = document.getElementById("nextBtn");
-  var chatSection = document.getElementById("chat");
+  var chatPanel = document.querySelector(".chat-preview");
+  var chatBackBtn = document.getElementById("chatBackBtn");
   var strangerName = document.getElementById("strangerName");
   var connected = false;
   var typingTimer;
   var strangerId = Math.floor(1000 + Math.random() * 9000);
+  var savedScrollY = 0;
 
   if(strangerName){
     strangerName.textContent = "Stranger #" + strangerId;
@@ -33,22 +35,30 @@
     document.documentElement.style.setProperty("--mobile-chat-offset", offsetTop + "px");
   }
 
-  function enterChatMode(pushHash){
-    document.body.classList.add("chat-mode");
-    if(chatSection) chatSection.setAttribute("aria-modal", "true");
-    syncMobileViewport();
-    if(pushHash && window.location.hash !== "#chat"){
-      history.pushState(null, "", "#chat");
+  function isMobileChat(){
+    return window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
+  }
+
+  function enterChatMode(){
+    if(chatPanel) chatPanel.classList.add("chat-active");
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    if(isMobileChat()){
+      document.documentElement.style.setProperty("--page-scroll-y", savedScrollY + "px");
+      document.body.classList.add("chat-mode");
+      if(chatPanel) chatPanel.setAttribute("aria-modal", "true");
     }
+    syncMobileViewport();
     setTimeout(function(){
       if(input) input.focus({ preventScroll:true });
       if(messages) messages.scrollTop = messages.scrollHeight;
-    }, 260);
+    }, isMobileChat() ? 260 : 80);
   }
 
   function leaveChatMode(){
+    if(chatPanel) chatPanel.classList.remove("chat-active");
     document.body.classList.remove("chat-mode","chat-input-focused");
-    if(chatSection) chatSection.removeAttribute("aria-modal");
+    if(chatPanel) chatPanel.removeAttribute("aria-modal");
+    window.scrollTo(0, savedScrollY);
   }
 
   function setStatus(text, state){
@@ -164,30 +174,14 @@
   document.querySelectorAll("[data-start-chat], a[href='#chat']").forEach(function(link){
     link.addEventListener("click", function(event){
       event.preventDefault();
-      enterChatMode(true);
+      enterChatMode();
     });
   });
 
-  window.addEventListener("hashchange", function(){
-    if(window.location.hash === "#chat"){
-      enterChatMode(false);
-    }else{
+  if(chatBackBtn){
+    chatBackBtn.addEventListener("click", function(){
       leaveChatMode();
-    }
-  });
-
-  window.addEventListener("popstate", function(){
-    if(window.location.hash === "#chat"){
-      enterChatMode(false);
-    }else{
-      leaveChatMode();
-    }
-  });
-
-  if(window.location.hash === "#chat"){
-    setTimeout(function(){
-      enterChatMode(false);
-    }, 80);
+    });
   }
 
   syncMobileViewport();
