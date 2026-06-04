@@ -10,11 +10,13 @@
   var nextBtn = document.getElementById("nextBtn");
   var chatPanel = document.querySelector(".chat-preview");
   var chatBackBtn = document.getElementById("chatBackBtn");
+  var startChatTriggers = document.querySelectorAll("[data-start-chat], a[href='#chat']");
   var strangerName = document.getElementById("strangerName");
   var connected = false;
   var typingTimer;
   var strangerId = Math.floor(1000 + Math.random() * 9000);
   var savedScrollY = 0;
+  var chatOpen = false;
 
   if(strangerName){
     strangerName.textContent = "Stranger #" + strangerId;
@@ -40,13 +42,22 @@
   }
 
   function enterChatMode(){
+    chatOpen = true;
     if(chatPanel) chatPanel.classList.add("chat-active");
     savedScrollY = window.scrollY || window.pageYOffset || 0;
     if(isMobileChat()){
+      document.body.classList.remove("desktop-chat-open");
       document.documentElement.style.setProperty("--page-scroll-y", savedScrollY + "px");
       document.body.classList.add("chat-mode");
       if(chatPanel) chatPanel.setAttribute("aria-modal", "true");
+    }else{
+      document.body.classList.add("desktop-chat-open");
+      document.body.classList.remove("chat-mode");
+      if(chatPanel) chatPanel.removeAttribute("aria-modal");
     }
+    startChatTriggers.forEach(function(trigger){
+      trigger.setAttribute("aria-expanded", "true");
+    });
     syncMobileViewport();
     setTimeout(function(){
       if(input) input.focus({ preventScroll:true });
@@ -55,10 +66,31 @@
   }
 
   function leaveChatMode(){
+    chatOpen = false;
     if(chatPanel) chatPanel.classList.remove("chat-active");
-    document.body.classList.remove("chat-mode","chat-input-focused");
+    document.body.classList.remove("chat-mode","chat-input-focused","desktop-chat-open");
     if(chatPanel) chatPanel.removeAttribute("aria-modal");
-    window.scrollTo(0, savedScrollY);
+    startChatTriggers.forEach(function(trigger){
+      trigger.setAttribute("aria-expanded", "false");
+    });
+    if(savedScrollY){
+      window.scrollTo(0, savedScrollY);
+    }
+  }
+
+  function syncChatModeForViewport(){
+    if(!chatOpen) return;
+    if(isMobileChat()){
+      document.body.classList.remove("desktop-chat-open");
+      document.body.classList.add("chat-mode");
+      document.documentElement.style.setProperty("--page-scroll-y", savedScrollY + "px");
+      if(chatPanel) chatPanel.setAttribute("aria-modal", "true");
+    }else{
+      document.body.classList.remove("chat-mode","chat-input-focused");
+      document.body.classList.add("desktop-chat-open");
+      if(chatPanel) chatPanel.removeAttribute("aria-modal");
+      window.scrollTo(0, savedScrollY);
+    }
   }
 
   function setStatus(text, state){
@@ -171,7 +203,8 @@
     });
   });
 
-  document.querySelectorAll("[data-start-chat], a[href='#chat']").forEach(function(link){
+  startChatTriggers.forEach(function(link){
+    link.setAttribute("aria-expanded", "false");
     link.addEventListener("click", function(event){
       event.preventDefault();
       enterChatMode();
@@ -185,9 +218,13 @@
   }
 
   syncMobileViewport();
-  window.addEventListener("resize", syncMobileViewport, { passive:true });
+  window.addEventListener("resize", function(){
+    syncMobileViewport();
+    syncChatModeForViewport();
+  }, { passive:true });
   window.addEventListener("orientationchange", function(){
     setTimeout(syncMobileViewport, 200);
+    setTimeout(syncChatModeForViewport, 220);
   }, { passive:true });
   if(window.visualViewport){
     window.visualViewport.addEventListener("resize", syncMobileViewport, { passive:true });
