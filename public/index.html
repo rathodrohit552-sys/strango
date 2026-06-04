@@ -102,11 +102,15 @@
           </form>
         </div>
         <button id="chatBubble" class="chat-bubble" type="button" aria-label="Reopen chat">
-          <span class="chat-bubble-mark" aria-hidden="true">S</span>
+          <span class="chat-bubble-mark" aria-hidden="true">
+            <span class="chat-bubble-status"></span>
+            S
+          </span>
           <span class="chat-bubble-copy">
-            <strong>Chat active</strong>
+            <strong>Active Chat</strong>
             <small>Tap to reopen</small>
           </span>
+          <span id="chatUnread" class="chat-unread" aria-live="polite">0</span>
         </button>
       </aside>
     </section>

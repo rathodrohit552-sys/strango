@@ -12,6 +12,7 @@
   var chatBackBtn = document.getElementById("chatBackBtn");
   var chatMinimizeBtn = document.getElementById("chatMinimizeBtn");
   var chatBubble = document.getElementById("chatBubble");
+  var chatUnread = document.getElementById("chatUnread");
   var startChatTriggers = document.querySelectorAll("[data-start-chat], a[href='#chat']");
   var strangerName = document.getElementById("strangerName");
   var connected = false;
@@ -23,6 +24,8 @@
   var savedScrollY = 0;
   var chatOpen = false;
   var chatMinimized = false;
+  var unreadCount = 0;
+  var audioContext = null;
   var searchLabels = ["Searching...", "Finding someone..."];
 
   if(strangerName){
@@ -31,6 +34,7 @@
 
   function haptic(type){
     if(!window.navigator || !window.navigator.vibrate) return;
+    if(chatOpen) return;
     if(type === "match") navigator.vibrate([18, 32, 18]);
     if(type === "send") navigator.vibrate(12);
     if(type === "join") navigator.vibrate([10, 24, 10]);
@@ -48,9 +52,60 @@
     return window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
   }
 
+  function isDesktopViewport(){
+    return !window.matchMedia || window.matchMedia("(min-width: 761px)").matches;
+  }
+
+  function updateUnreadBadge(){
+    if(!chatUnread || !chatBubble) return;
+    if(unreadCount > 0){
+      chatUnread.textContent = unreadCount > 9 ? "9+" : String(unreadCount);
+      chatBubble.classList.add("has-unread");
+      chatBubble.setAttribute("aria-label", unreadCount + " unread message" + (unreadCount === 1 ? "" : "s") + ". Reopen chat");
+      return;
+    }
+    chatUnread.textContent = "0";
+    chatBubble.classList.remove("has-unread");
+    chatBubble.setAttribute("aria-label", "Reopen chat");
+  }
+
+  function playNotificationSound(){
+    if(!isDesktopViewport()) return;
+    try{
+      var AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+      if(!AudioContextConstructor) return;
+      audioContext = audioContext || new AudioContextConstructor();
+      if(audioContext.state === "suspended") audioContext.resume();
+      var oscillator = audioContext.createOscillator();
+      var gain = audioContext.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(720, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(540, audioContext.currentTime + 0.16);
+      gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.045, audioContext.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.18);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.2);
+    }catch(error){}
+  }
+
+  function notifyMinimizedMessage(){
+    if(!chatMinimized) return;
+    unreadCount += 1;
+    updateUnreadBadge();
+    playNotificationSound();
+    if(window.navigator && window.navigator.vibrate){
+      window.navigator.vibrate(200);
+    }
+  }
+
   function enterChatMode(){
     chatOpen = true;
     chatMinimized = false;
+    unreadCount = 0;
+    updateUnreadBadge();
     if(chatPanel) chatPanel.classList.add("chat-active");
     if(chatPanel) chatPanel.classList.remove("chat-minimized");
     document.body.classList.remove("chat-minimized");
@@ -78,6 +133,8 @@
   function leaveChatMode(){
     chatOpen = false;
     chatMinimized = false;
+    unreadCount = 0;
+    updateUnreadBadge();
     if(chatPanel) chatPanel.classList.remove("chat-active");
     if(chatPanel) chatPanel.classList.remove("chat-minimized");
     if(input) input.blur();
@@ -168,7 +225,7 @@
 
     socket.on("status", function(text){
       var normalized = String(text || "");
-      if(normalized.toLowerCase().indexOf("connected") !== -1){
+      if(normalized.toLowerCase().indexOf("connected") !== -1 && normalized.toLowerCase().indexOf("disconnected") === -1){
         stopSearching();
         connected = true;
         setStatus("Connected ✓", "connected");
@@ -190,11 +247,21 @@
       if(!connected) return;
       if(typing) typing.textContent = "";
       addMessage(String(message || ""), "stranger");
+      notifyMinimizedMessage();
     });
 
     socket.on("typing", function(state){
       if(!typing || !connected) return;
       typing.textContent = state ? "typing" : "";
+    });
+  }
+
+  if(socket){
+    socket.on("status", function(text){
+      var normalized = String(text || "");
+      if(normalized.toLowerCase().indexOf("connected") !== -1 && normalized.toLowerCase().indexOf("disconnected") === -1){
+        setStatus("Connected \u2713", "connected");
+      }
     });
   }
 
@@ -277,6 +344,7 @@
     });
   }
 
+  updateUnreadBadge();
   syncMobileViewport();
   window.addEventListener("resize", function(){
     syncMobileViewport();
