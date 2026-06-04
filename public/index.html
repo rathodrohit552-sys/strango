@@ -73,7 +73,7 @@
             <span></span>
             <strong>Live anonymous chat</strong>
           </div>
-          <div class="preview-bubble muted">Waiting for a stranger...</div>
+          <div class="preview-bubble muted">Searching for someone...</div>
           <div class="preview-bubble">Matched in seconds.</div>
           <div class="preview-bubble self">Hi, what are you into?</div>
           <div class="preview-bubble">Music, games, and late-night ideas.</div>
@@ -85,10 +85,13 @@
               <span class="chat-avatar" aria-hidden="true">S</span>
               <div class="chat-person-copy">
                 <strong id="strangerName">Stranger #0000</strong>
-                <span id="status" class="status waiting">Waiting for stranger...</span>
+                <span id="status" class="status waiting">Searching...</span>
               </div>
             </div>
-            <span id="online" class="online">0 online</span>
+            <div class="chat-actions">
+              <span id="online" class="online">0 online</span>
+              <button id="chatMinimizeBtn" class="chat-minimize" type="button" aria-label="Minimize chat">Minimize</button>
+            </div>
           </div>
           <div id="messages" class="messages" aria-live="polite"></div>
           <div id="typing" class="typing" aria-live="polite"></div>
@@ -98,6 +101,13 @@
             <button id="sendBtn" class="icon-button send" type="submit">Send</button>
           </form>
         </div>
+        <button id="chatBubble" class="chat-bubble" type="button" aria-label="Reopen chat">
+          <span class="chat-bubble-mark" aria-hidden="true">S</span>
+          <span class="chat-bubble-copy">
+            <strong>Chat active</strong>
+            <small>Tap to reopen</small>
+          </span>
+        </button>
       </aside>
     </section>
 

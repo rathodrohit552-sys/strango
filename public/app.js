@@ -10,13 +10,20 @@
   var nextBtn = document.getElementById("nextBtn");
   var chatPanel = document.querySelector(".chat-preview");
   var chatBackBtn = document.getElementById("chatBackBtn");
+  var chatMinimizeBtn = document.getElementById("chatMinimizeBtn");
+  var chatBubble = document.getElementById("chatBubble");
   var startChatTriggers = document.querySelectorAll("[data-start-chat], a[href='#chat']");
   var strangerName = document.getElementById("strangerName");
   var connected = false;
   var typingTimer;
+  var statusTimer;
+  var statusShiftTimer;
+  var searchStep = 0;
   var strangerId = Math.floor(1000 + Math.random() * 9000);
   var savedScrollY = 0;
   var chatOpen = false;
+  var chatMinimized = false;
+  var searchLabels = ["Searching...", "Finding someone..."];
 
   if(strangerName){
     strangerName.textContent = "Stranger #" + strangerId;
@@ -43,7 +50,10 @@
 
   function enterChatMode(){
     chatOpen = true;
+    chatMinimized = false;
     if(chatPanel) chatPanel.classList.add("chat-active");
+    if(chatPanel) chatPanel.classList.remove("chat-minimized");
+    document.body.classList.remove("chat-minimized");
     savedScrollY = window.scrollY || window.pageYOffset || 0;
     if(isMobileChat()){
       document.body.classList.remove("desktop-chat-open");
@@ -60,15 +70,18 @@
     });
     syncMobileViewport();
     setTimeout(function(){
-      if(input) input.focus({ preventScroll:true });
+      if(input && !isMobileChat()) input.focus({ preventScroll:true });
       if(messages) messages.scrollTop = messages.scrollHeight;
     }, isMobileChat() ? 260 : 80);
   }
 
   function leaveChatMode(){
     chatOpen = false;
+    chatMinimized = false;
     if(chatPanel) chatPanel.classList.remove("chat-active");
-    document.body.classList.remove("chat-mode","chat-input-focused","desktop-chat-open");
+    if(chatPanel) chatPanel.classList.remove("chat-minimized");
+    if(input) input.blur();
+    document.body.classList.remove("chat-mode","chat-input-focused","desktop-chat-open","chat-minimized");
     if(chatPanel) chatPanel.removeAttribute("aria-modal");
     startChatTriggers.forEach(function(trigger){
       trigger.setAttribute("aria-expanded", "false");
@@ -78,8 +91,22 @@
     }
   }
 
+  function minimizeChat(){
+    if(!chatPanel || !chatOpen) return;
+    chatMinimized = true;
+    chatPanel.classList.add("chat-minimized");
+    if(input) input.blur();
+    document.body.classList.remove("chat-mode","chat-input-focused","desktop-chat-open");
+    document.body.classList.add("chat-minimized");
+    chatPanel.removeAttribute("aria-modal");
+    startChatTriggers.forEach(function(trigger){
+      trigger.setAttribute("aria-expanded", "false");
+    });
+    window.scrollTo(0, savedScrollY);
+  }
+
   function syncChatModeForViewport(){
-    if(!chatOpen) return;
+    if(!chatOpen || chatMinimized) return;
     if(isMobileChat()){
       document.body.classList.remove("desktop-chat-open");
       document.body.classList.add("chat-mode");
@@ -95,9 +122,30 @@
 
   function setStatus(text, state){
     if(!status) return;
-    status.textContent = text;
-    status.classList.remove("waiting","connected","disconnected");
-    status.classList.add(state || "waiting");
+    clearTimeout(statusShiftTimer);
+    status.classList.add("status-shift");
+    statusShiftTimer = setTimeout(function(){
+      status.textContent = text;
+      status.classList.remove("waiting","connected","disconnected");
+      status.classList.add(state || "waiting");
+      status.classList.remove("status-shift");
+    }, 110);
+  }
+
+  function stopSearching(){
+    clearInterval(statusTimer);
+    statusTimer = null;
+  }
+
+  function startSearching(){
+    connected = false;
+    stopSearching();
+    searchStep = 0;
+    setStatus(searchLabels[searchStep], "waiting");
+    statusTimer = setInterval(function(){
+      searchStep = (searchStep + 1) % searchLabels.length;
+      setStatus(searchLabels[searchStep], "waiting");
+    }, 1500);
   }
 
   function addMessage(text, type){
@@ -121,20 +169,21 @@
     socket.on("status", function(text){
       var normalized = String(text || "");
       if(normalized.toLowerCase().indexOf("connected") !== -1){
+        stopSearching();
         connected = true;
-        setStatus("Stranger connected", "connected");
+        setStatus("Connected ✓", "connected");
         haptic("match");
         addMessage("You are now connected. Say hello.", "stranger");
         return;
       }
       if(normalized.toLowerCase().indexOf("disconnected") !== -1){
+        stopSearching();
         connected = false;
         setStatus("Stranger disconnected", "disconnected");
         addMessage("The stranger disconnected. Tap Next to match again.", "stranger");
         return;
       }
-      connected = false;
-      setStatus("Waiting for stranger...", "waiting");
+      startSearching();
     });
 
     socket.on("message", function(message){
@@ -145,7 +194,7 @@
 
     socket.on("typing", function(state){
       if(!typing || !connected) return;
-      typing.textContent = state ? "Stranger is typing..." : "";
+      typing.textContent = state ? "typing" : "";
     });
   }
 
@@ -191,8 +240,7 @@
     nextBtn.addEventListener("click", function(){
       if(messages) messages.innerHTML = "";
       if(typing) typing.textContent = "";
-      connected = false;
-      setStatus("Waiting for stranger...", "waiting");
+      startSearching();
       socket.emit("next");
     });
   }
@@ -214,6 +262,18 @@
   if(chatBackBtn){
     chatBackBtn.addEventListener("click", function(){
       leaveChatMode();
+    });
+  }
+
+  if(chatMinimizeBtn){
+    chatMinimizeBtn.addEventListener("click", function(){
+      minimizeChat();
+    });
+  }
+
+  if(chatBubble){
+    chatBubble.addEventListener("click", function(){
+      enterChatMode();
     });
   }
 
