@@ -1,63 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://strango.chat/</loc>
+    <loc>https://strango.xyz/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://strango.chat/talk-to-strangers</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://strango.chat/free-online-chat</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://strango.chat/anonymous-chat</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://strango.chat/omegle-alternative</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://strango.chat/about</loc>
+    <loc>https://strango.xyz/about</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/contact</loc>
+    <loc>https://strango.xyz/contact</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/privacy-policy</loc>
+    <loc>https://strango.xyz/privacy-policy</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/terms-of-service</loc>
+    <loc>https://strango.xyz/terms-of-service</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/community-guidelines</loc>
+    <loc>https://strango.xyz/community-guidelines</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/help</loc>
+    <loc>https://strango.xyz/help</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://strango.chat/help/chat</loc>
+    <loc>https://strango.xyz/help/chat</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/help/getting-started</loc>
+    <loc>https://strango.xyz/help/getting-started</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/help/safety</loc>
+    <loc>https://strango.xyz/help/safety</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://strango.chat/help/privacy</loc>
+    <loc>https://strango.xyz/help/privacy</loc>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/talk-to-strangers</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/free-online-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/anonymous-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/random-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chat-with-strangers</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chat-online</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/anonymous-chat-room</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/random-chat-room</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/free-chat-room</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/text-chat-with-strangers</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/private-chat-online</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/secure-anonymous-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/online-chat-with-random-people</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/meet-new-people-online</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chat-with-random-people</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/safe-anonymous-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/instant-chat-online</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/no-signup-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chat-without-registration</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/real-time-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/omegle-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/best-omegle-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/free-omegle-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/safe-omegle-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/anonymous-omegle-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/random-chat-alternative</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/omegle-replacement</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/sites-like-omegle</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/omegle-alternatives-for-text-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/omegle-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/emerald-chat-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chatroulette-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/ometv-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chatrandom-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/monkey-app-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chatspin-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/camsurf-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/talkwithstranger-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/tinychat-vs-strango</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/best-random-chat-sites</loc>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/how-strango-works</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/is-strango-safe</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/anonymous-chat-safety</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/how-to-stay-safe-online</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/what-is-anonymous-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/why-use-anonymous-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/safety-center</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/help-center</loc>
+    <priority>0.9</priority>
   </url>
 </urlset>

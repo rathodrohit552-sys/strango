@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const { Server } = require("socket.io");
+const { pageMap, renderSeoPage } = require("./seo-pages");
 
 const app = express();
 const server = http.createServer(app);
@@ -41,22 +42,26 @@ app.get(/^\/gst-calculator\/?$/, (req, res) => {
 });
 
 const pageRoutes = {
-  "/chat": "chat.html",
+  "/chat": "index.html",
   "/about": "about-page.html",
   "/contact": "contact-page.html",
   "/privacy-policy": "privacy-policy.html",
   "/terms-of-service": "terms-of-service.html",
   "/community-guidelines": "community-guidelines.html",
-  "/talk-to-strangers": "talk-to-strangers.html",
-  "/free-online-chat": "free-online-chat.html",
-  "/anonymous-chat": "anonymous-chat.html",
-  "/omegle-alternative": "omegle-alternative.html",
   "/help": path.join("help", "index.html"),
   "/help/chat": path.join("help", "chat.html"),
   "/help/getting-started": path.join("help", "getting-started.html"),
   "/help/safety": path.join("help", "safety.html"),
   "/help/privacy": path.join("help", "privacy.html")
 };
+
+pageMap.forEach((page, route) => {
+  app.get(new RegExp("^" + route + "\\/?$"), (req, res) => {
+    res.type("html");
+    res.setHeader("Cache-Control", "public, max-age=0");
+    res.send(renderSeoPage(page));
+  });
+});
 
 Object.entries(pageRoutes).forEach(([route, fileName]) => {
   app.get(new RegExp("^" + route + "\\/?$"), (req, res) => {
