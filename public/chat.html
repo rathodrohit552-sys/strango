@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Chat on Strango</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/theme.js"></script>
+</head>
+<body class="chat-page">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Strango home">
+      <span class="brand-mark">S</span>
+      <span>Strango</span>
+    </a>
+    <nav class="nav-links" aria-label="Chat navigation">
+      <a href="/">Home</a>
+      <a href="/help/safety">Safety</a>
+      <a href="/community-guidelines">Guidelines</a>
+      <a href="/help">Help</a>
+    </nav>
+  </header>
+
+  <main class="chat-page-main">
+    <section class="chat-experience" aria-label="Strango anonymous chat">
+      <div class="chat-shell">
+        <div class="chat-status-row">
+          <div class="chat-person">
+            <span class="chat-avatar" aria-hidden="true">S</span>
+            <div class="chat-person-copy">
+              <strong id="strangerName">Stranger #0000</strong>
+              <span id="status" class="status waiting">Searching...</span>
+            </div>
+          </div>
+          <a class="chat-home-link" href="/" aria-label="Back to homepage">Home</a>
+        </div>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <div id="typing" class="typing" aria-live="polite"></div>
+        <form id="chatForm" class="input-bar">
+          <button id="nextBtn" class="icon-button next" type="button">Next</button>
+          <input id="messageInput" type="text" autocomplete="off" placeholder="Type a message..." aria-label="Message">
+          <button id="sendBtn" class="icon-button send" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

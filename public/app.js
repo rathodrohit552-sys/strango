@@ -58,13 +58,16 @@
 
   function updateUnreadBadge(){
     if(!chatUnread || !chatBubble) return;
+    var chatBubbleSubcopy = chatBubble.querySelector("small");
     if(unreadCount > 0){
       chatUnread.textContent = unreadCount > 9 ? "9+" : String(unreadCount);
+      if(chatBubbleSubcopy) chatBubbleSubcopy.textContent = unreadCount + " unread";
       chatBubble.classList.add("has-unread");
       chatBubble.setAttribute("aria-label", unreadCount + " unread message" + (unreadCount === 1 ? "" : "s") + ". Reopen chat");
       return;
     }
     chatUnread.textContent = "0";
+    if(chatBubbleSubcopy) chatBubbleSubcopy.textContent = "Connected";
     chatBubble.classList.remove("has-unread");
     chatBubble.setAttribute("aria-label", "Reopen chat");
   }
@@ -321,6 +324,14 @@
   startChatTriggers.forEach(function(link){
     link.setAttribute("aria-expanded", "false");
     link.addEventListener("click", function(event){
+      if(!chatPanel){
+        var target = link.getAttribute("href") || "/chat";
+        if(target === "#chat"){
+          event.preventDefault();
+          window.location.href = "/chat";
+        }
+        return;
+      }
       event.preventDefault();
       enterChatMode();
     });

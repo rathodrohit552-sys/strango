@@ -41,6 +41,7 @@ app.get(/^\/gst-calculator\/?$/, (req, res) => {
 });
 
 const pageRoutes = {
+  "/chat": "chat.html",
   "/about": "about-page.html",
   "/contact": "contact-page.html",
   "/privacy-policy": "privacy-policy.html",

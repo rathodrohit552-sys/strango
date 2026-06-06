@@ -28,7 +28,7 @@
     "description": "Anonymous online stranger chat with fast matching and privacy-first messaging.",
     "potentialAction": {
       "@type": "CommunicateAction",
-      "target": "https://strango.chat/#chat"
+      "target": "https://strango.chat/chat"
     }
   }
   </script>
@@ -63,55 +63,29 @@
         <h1>Meet someone new in a cleaner, safer stranger chat experience.</h1>
         <p class="hero-text">Strango connects you with people online for fast, private text conversations. No profile, no complicated setup, just a polished space to start a conversation.</p>
         <div class="hero-actions">
-          <button class="button primary" type="button" data-start-chat>Start Chatting</button>
+          <a class="button primary" href="/chat">Start Chatting</a>
           <a class="button secondary" href="#communities">Explore Communities</a>
         </div>
+        <div class="hero-trust-row" aria-label="Strango trust highlights">
+          <span>No Signup</span>
+          <span>Anonymous</span>
+          <span>Instant Matching</span>
+          <span>Free</span>
+        </div>
       </div>
-      <aside class="chat-preview" aria-label="Strango chat preview">
+      <aside class="activity-preview" aria-label="Strango live activity preview">
         <div class="preview-stage">
-          <div class="preview-topbar">
-            <span></span>
-            <strong>Live anonymous chat</strong>
-          </div>
-          <div class="preview-bubble muted">Searching for someone...</div>
-          <div class="preview-bubble">Matched in seconds.</div>
-          <div class="preview-bubble self">Hi, what are you into?</div>
-          <div class="preview-bubble">Music, games, and late-night ideas.</div>
-        </div>
-        <div class="chat-shell" role="dialog" aria-label="Strango chat">
-          <div class="chat-status-row">
-            <button id="chatBackBtn" class="chat-back" type="button" aria-label="Back to homepage">Back</button>
-            <div class="chat-person">
-              <span class="chat-avatar" aria-hidden="true">S</span>
-              <div class="chat-person-copy">
-                <strong id="strangerName">Stranger #0000</strong>
-                <span id="status" class="status waiting">Searching...</span>
-              </div>
-            </div>
-            <div class="chat-actions">
-              <span id="online" class="online">0 online</span>
-              <button id="chatMinimizeBtn" class="chat-minimize" type="button" aria-label="Minimize chat">Minimize</button>
+          <div class="activity-card">
+            <span class="activity-pulse" aria-hidden="true"></span>
+            <div class="activity-loop">
+              <span class="activity-line line-1">Searching for someone...</span>
+              <span class="activity-line line-2">Matched in 2 seconds.</span>
+              <span class="activity-line line-3">Conversation started.</span>
+              <span class="activity-line line-4">Typing...</span>
+              <span class="activity-line line-5">New match found.</span>
             </div>
           </div>
-          <div id="messages" class="messages" aria-live="polite"></div>
-          <div id="typing" class="typing" aria-live="polite"></div>
-          <form id="chatForm" class="input-bar">
-            <button id="nextBtn" class="icon-button next" type="button">Next</button>
-            <input id="messageInput" type="text" autocomplete="off" placeholder="Type a message..." aria-label="Message">
-            <button id="sendBtn" class="icon-button send" type="submit">Send</button>
-          </form>
         </div>
-        <button id="chatBubble" class="chat-bubble" type="button" aria-label="Reopen chat">
-          <span class="chat-bubble-mark" aria-hidden="true">
-            <span class="chat-bubble-status"></span>
-            S
-          </span>
-          <span class="chat-bubble-copy">
-            <strong>Active Chat</strong>
-            <small>Tap to reopen</small>
-          </span>
-          <span id="chatUnread" class="chat-unread" aria-live="polite">0</span>
-        </button>
       </aside>
     </section>
 
@@ -122,9 +96,9 @@
       </div>
       <div class="trust-grid">
         <article class="trust-card">
-          <span class="trust-number" id="activeUsers">0</span>
-          <h3>Active users</h3>
-          <p>Live count updates as people connect to Strango.</p>
+          <span class="trust-icon">No Signup</span>
+          <h3>Start without a profile</h3>
+          <p>Open a conversation without account creation, social login, or setup friction.</p>
         </article>
         <article class="trust-card">
           <span class="trust-icon">Lock</span>
@@ -206,7 +180,6 @@
     <button id="acceptCookies" class="button primary" type="button">Accept</button>
   </div>
 
-  <script src="/socket.io/socket.io.js"></script>
   <script src="/app.js" defer></script>
 </body>
 </html>
