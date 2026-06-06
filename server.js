@@ -8,8 +8,31 @@ const app = express();
 const server = http.createServer(app);
 const publicDir = path.join(__dirname, "public");
 
+const crawlerPattern = /(googlebot|bingbot|google-inspectiontool|inspectiontool)/i;
+
 function sendPublicPage(res, fileName) {
   res.sendFile(path.join(publicDir, fileName));
+}
+
+function isCrawlerRequest(req) {
+  return crawlerPattern.test(req.get("user-agent") || "");
+}
+
+function logCrawlerRequest(req, res) {
+  if (!isCrawlerRequest(req)) return;
+  const startedAt = Date.now();
+  res.on("finish", () => {
+    const duration = Date.now() - startedAt;
+    console.log("[crawler]", {
+      method: req.method,
+      path: req.originalUrl,
+      status: res.statusCode,
+      userAgent: req.get("user-agent"),
+      contentType: res.getHeader("Content-Type") || null,
+      cacheControl: res.getHeader("Cache-Control") || null,
+      durationMs: duration
+    });
+  });
 }
 
 const io = new Server(server,{
@@ -17,16 +40,27 @@ const io = new Server(server,{
   transports:["websocket","polling"]
 });
 
+app.use((req, res, next) => {
+  logCrawlerRequest(req, res);
+  next();
+});
+
 app.get(/^\/sitemap\.xml\/?$/, (req, res) => {
-  res.type("application/xml");
+  res.setHeader("Content-Type", "application/xml; charset=utf-8");
   res.setHeader("Cache-Control", "public, max-age=0");
   res.sendFile(path.join(publicDir, "sitemap.xml"));
 });
 
 app.get(/^\/robots\.txt\/?$/, (req, res) => {
-  res.type("text/plain");
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
   res.setHeader("Cache-Control", "public, max-age=0");
   res.sendFile(path.join(publicDir, "robots.txt"));
+});
+
+app.get(/^\/favicon\.ico\/?$/, (req, res) => {
+  res.setHeader("Content-Type", "image/x-icon");
+  res.setHeader("Cache-Control", "public, max-age=86400");
+  res.sendFile(path.join(publicDir, "favicon.ico"));
 });
 
 app.get(/^\/emi-calculator\/?$/, (req, res) => {
@@ -72,7 +106,13 @@ Object.entries(pageRoutes).forEach(([route, fileName]) => {
 app.use(express.static(publicDir, {
   setHeaders: (res, path) => {
     if (path.endsWith("sitemap.xml")) {
-      res.setHeader("Content-Type", "application/xml");
+      res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    }
+    if (path.endsWith("robots.txt")) {
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    }
+    if (path.endsWith("favicon.ico")) {
+      res.setHeader("Content-Type", "image/x-icon");
     }
   }
 }));

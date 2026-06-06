@@ -329,6 +329,7 @@ function renderSeoPage(page) {
   <meta name="description" content="${escapeHtml(page.description)}">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${canonical(page.slug)}">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <meta property="og:title" content="${escapeHtml(page.title)}">
   <meta property="og:description" content="${escapeHtml(page.description)}">
   <meta property="og:type" content="${page.type === "comparison" ? "article" : "website"}">
