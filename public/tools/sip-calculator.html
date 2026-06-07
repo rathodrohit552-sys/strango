@@ -7,7 +7,8 @@
 <meta name="description" content="Use Strango's free SIP calculator to estimate invested amount, returns, and maturity value for monthly mutual fund SIP investments.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
 body::before{content:"₹  $  %  ╱╲  |||  $  ₹  %  ╲╱";position:fixed;inset:-20%;z-index:-2;color:rgba(56,189,248,.06);font-size:clamp(54px,9vw,120px);font-weight:900;line-height:1.8;letter-spacing:22px;transform:rotate(-14deg);white-space:pre-wrap;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 18% 12%,rgba(56,189,248,.18),transparent 28%),radial-gradient(circle at 84% 16%,rgba(37,99,235,.14),transparent 30%),linear-gradient(180deg,rgba(0,0,0,.08),#020302 82%);pointer-events:none}
 .site-header{padding:22px 18px 18px;text-align:center;border-bottom:1px solid #102015;background:#000}
@@ -21,8 +22,8 @@ h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}
 .calculator{display:grid;grid-template-columns:1fr .9fr;gap:18px;margin-top:22px}.panel{padding:22px}
 .field{margin-bottom:22px}.field-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#dcefe4;font-weight:700}
 .value-input{width:145px;padding:10px 12px;border:1px solid rgba(56,189,248,.28);border-radius:10px;background:#03070d;color:#fff;font-size:16px;text-align:right}
-input[type=range]{width:100%;accent-color:#38bdf8;cursor:pointer}.range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#7892a7;font-size:12px}
-.toggle{display:flex;gap:8px;margin:0 0 20px}.toggle button{flex:1;border:1px solid rgba(56,189,248,.22);border-radius:12px;background:rgba(255,255,255,.04);color:#c8eafd;padding:10px;font-weight:900;cursor:pointer;transition:.18s}.toggle button.active,.toggle button:hover{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.5)}
+input[type=range]{width:100%;min-height:44px;accent-color:#38bdf8;cursor:pointer}.range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#7892a7;font-size:12px}
+.toggle{display:flex;gap:8px;margin:0 0 20px}.toggle button{flex:1;min-height:44px;border:1px solid rgba(56,189,248,.22);border-radius:12px;background:rgba(255,255,255,.04);color:#c8eafd;padding:10px;font-weight:900;cursor:pointer;transition:.18s}.toggle button.active,.toggle button:hover{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.5)}
 .result{padding:22px;display:grid;gap:14px}.metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
 .metric span{display:block;color:#8fa39a;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1;transition:color .2s,transform .2s}.metric strong.flash{color:#38bdf8;transform:translateY(-1px)}.metric.primary{background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(37,99,235,.08));border-color:rgba(56,189,248,.32)}
 .growth{height:260px;display:flex;align-items:flex-end;gap:8px;padding:18px 14px 16px;border-radius:14px;background:linear-gradient(180deg,rgba(56,189,248,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.07);overflow:visible}
@@ -37,10 +38,10 @@ input[type=range]{width:100%;accent-color:#38bdf8;cursor:pointer}.range-labels{d
 .trust{padding:24px;margin-bottom:24px}.trust h2{font-size:24px;margin-bottom:14px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trust-card{padding:15px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.trust-card strong{display:block;color:#38bdf8;margin-bottom:4px}
 .seo,.faq{padding:24px;margin-bottom:24px}.seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}.seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
 .faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#38bdf8}
-.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#38bdf8;text-decoration:none;margin:0 7px}
+.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{min-height:44px;display:inline-flex;align-items:center;padding:0 8px;color:#38bdf8;text-decoration:none;margin:0 7px}
 @media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.page{margin-top:18px}.value-input{width:128px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
-@media(max-width:640px){.badges,.trust-grid{grid-template-columns:1fr}}
-@media(max-width:640px){.growth{height:240px;gap:5px;padding-inline:10px}.sip-bar{min-width:20px}.sip-bar b{font-size:9px}.sip-bar small{display:none}}
+@media(max-width:640px){.badges,.trust-grid{grid-template-columns:1fr}.field-head{flex-direction:column;align-items:stretch}.value-input{width:100%;min-height:44px;text-align:left}.back-chat{min-height:44px;display:flex;align-items:center;justify-content:center}}
+@media(max-width:640px){.growth{height:240px;gap:5px;padding-inline:10px;overflow:hidden}.sip-bar{min-width:0}.sip-bar b{font-size:9px}.sip-bar small,.sip-bar::after{display:none}}
 @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes barGrow{from{transform:scaleY(.2);opacity:.45}to{transform:scaleY(1);opacity:1}}
 </style>

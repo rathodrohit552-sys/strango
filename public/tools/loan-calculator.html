@@ -2,16 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Loan Calculator</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:white;display:flex;justify-content:center;align-items:center;min-height:100vh;}
-.container{width:95%;max-width:420px;background:#111827;padding:20px;border-radius:14px;}
-input,button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;}
+*{box-sizing:border-box}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+body{margin:0;font-family:Arial;background:#0f172a;color:white;display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100svh;padding:16px;}
+.container{width:min(100%,420px);background:#111827;padding:20px;border-radius:14px;}
+input,button{width:100%;min-height:44px;padding:12px;margin-top:10px;border:none;border-radius:8px;font:inherit;}
 button{background:#22c55e;font-weight:bold;}
 .result{margin-top:15px;}
+canvas{max-width:100%}
 </style>
 </head>
 

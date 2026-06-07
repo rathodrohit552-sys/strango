@@ -7,7 +7,8 @@
 <meta name="description" content="Use Strango's free EMI calculator to estimate monthly EMI, total interest, and total payment for a loan with instant sliders.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
 body::before{content:"₹  $  %  ┃  ╱╲  ₹  %  $  ╲╱";position:fixed;inset:-20%;z-index:-2;color:rgba(0,255,136,.055);font-size:clamp(54px,9vw,120px);font-weight:900;line-height:1.8;letter-spacing:22px;transform:rotate(-14deg);white-space:pre-wrap;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 18% 12%,rgba(0,255,136,.16),transparent 28%),radial-gradient(circle at 84% 16%,rgba(125,211,252,.08),transparent 30%),linear-gradient(180deg,rgba(0,0,0,.08),#020302 82%);pointer-events:none}
 a{color:inherit}
@@ -28,7 +29,7 @@ h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}
 .field-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;color:#dcefe4;font-weight:700}
 .value-input{width:145px;padding:10px 12px;border:1px solid rgba(0,255,136,.26);border-radius:10px;background:#040705;color:#fff;font-size:16px;text-align:right;transition:border-color .18s,box-shadow .18s}
 .value-input:focus{outline:none;border-color:#00ff88;box-shadow:0 0 0 4px rgba(0,255,136,.09)}
-input[type=range]{width:100%;accent-color:#00c853;cursor:pointer}
+input[type=range]{width:100%;min-height:44px;accent-color:#00c853;cursor:pointer}
 .range-labels{display:flex;justify-content:space-between;margin-top:5px;color:#73867b;font-size:12px}
 .result{padding:22px;display:flex;flex-direction:column;gap:14px}
 .metric{padding:15px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
@@ -56,9 +57,9 @@ input[type=range]{width:100%;accent-color:#00c853;cursor:pointer}
 .faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}
 .faq-item strong{color:#00ff88}
 .footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}
-.footer a{color:#00ff88;text-decoration:none;margin:0 7px}
+.footer a{min-height:44px;display:inline-flex;align-items:center;padding:0 8px;color:#00ff88;text-decoration:none;margin:0 7px}
 @media(max-width:860px){.hero,.calculator{grid-template-columns:1fr}.page{margin-top:18px}.panel,.result,.seo,.faq{border-radius:14px}.value-input{width:128px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
-@media(max-width:640px){.premium-grid,.trust-grid{grid-template-columns:1fr}.progress-ring{margin:auto}}
+@media(max-width:640px){.premium-grid,.trust-grid{grid-template-columns:1fr}.progress-ring{margin:auto}.field-head{flex-direction:column;align-items:stretch}.value-input{width:100%;min-height:44px;text-align:left}.back-chat{min-height:44px;display:flex;align-items:center;justify-content:center}}
 @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>

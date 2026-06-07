@@ -7,7 +7,8 @@
 <meta name="description" content="Use Strango's free GST calculator for inclusive and exclusive GST calculations with instant final amount, base amount, and GST value.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#020302;color:#eef8f2;line-height:1.6;overflow-x:hidden}
 body::before{content:"₹  $  %  GST  ╱╲  %  ₹  $  ||";position:fixed;inset:-20%;z-index:-2;color:rgba(251,146,60,.065);font-size:clamp(54px,9vw,120px);font-weight:900;line-height:1.8;letter-spacing:22px;transform:rotate(-14deg);white-space:pre-wrap;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 18% 12%,rgba(249,115,22,.18),transparent 28%),radial-gradient(circle at 84% 16%,rgba(250,204,21,.1),transparent 30%),linear-gradient(180deg,rgba(0,0,0,.08),#020302 82%);pointer-events:none}
 .site-header{padding:16px 18px 14px;text-align:center;border-bottom:1px solid #102015;background:#000}
@@ -18,8 +19,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradi
 .eyebrow{color:#fb923c;font-weight:800;font-size:13px;text-transform:uppercase}h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:8px 0 14px;color:#fff}.intro p{max-width:620px;color:#cdbfaf}
 .panel,.result,.seo,.faq,.trust{border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(22,13,5,.8),rgba(8,4,2,.88));box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(18px)}
 .calculator{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(420px,1.1fr);gap:16px;margin-top:12px;align-items:start}.panel{padding:18px}.field{margin-bottom:14px}
-label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{width:100%;padding:14px;border:1px solid rgba(249,115,22,.28);border-radius:12px;background:#080402;color:#fff;font-size:18px}
-.mode{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode button,.rate button{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#050a07;color:#dcefe4;padding:12px;font-weight:800;cursor:pointer;transition:.18s}
+label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{width:100%;min-height:44px;padding:14px;border:1px solid rgba(249,115,22,.28);border-radius:12px;background:#080402;color:#fff;font-size:18px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode button,.rate button{min-height:44px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#050a07;color:#dcefe4;padding:12px;font-weight:800;cursor:pointer;transition:.18s}
 .mode button.active,.rate button.active,.mode button:hover,.rate button:hover{border-color:rgba(249,115,22,.55);background:rgba(249,115,22,.14);color:#fb923c}
 .rate{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.result{padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{padding:13px;border-radius:13px;background:#050a07;border:1px solid rgba(255,255,255,.07)}
 .metric span{display:block;color:#b4a496;font-size:13px}.metric strong{display:block;margin-top:4px;color:#fff;font-size:25px;line-height:1.1;transition:color .2s,transform .2s}.metric strong.flash{color:#fb923c;transform:translateY(-1px)}.metric.primary{background:linear-gradient(135deg,rgba(249,115,22,.22),rgba(251,146,60,.07));border-color:rgba(249,115,22,.32)}
@@ -32,9 +33,9 @@ label{display:block;color:#f4e8de;font-weight:700;margin-bottom:8px}.amount{widt
 .trust{padding:24px;margin-bottom:24px}.trust h2{font-size:24px;margin-bottom:14px}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trust-card{padding:15px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.trust-card strong{display:block;color:#fb923c;margin-bottom:4px}
 .seo,.faq{padding:22px;margin-bottom:22px}.seo h2,.faq h2{color:#fff;margin-bottom:12px;font-size:24px}.seo p,.faq p{color:#c5d3cb;margin-bottom:12px}
 .faq-item{padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.faq-item strong{color:#fb923c}
-.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{color:#fb923c;text-decoration:none;margin:0 7px}
+.footer{text-align:center;padding:24px 16px 88px;color:#9fb5aa;border-top:1px solid #102015}.footer a{min-height:44px;display:inline-flex;align-items:center;padding:0 8px;color:#fb923c;text-decoration:none;margin:0 7px}
 @media(max-width:900px){.calculator{grid-template-columns:1fr}.result{grid-template-columns:1fr}.rate{grid-template-columns:repeat(3,1fr)}.page{margin-top:18px}.back-chat{left:12px;right:12px;text-align:center}.footer{padding-bottom:92px}}
-@media(max-width:640px){.trust-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.trust-grid{grid-template-columns:1fr}.back-chat{min-height:44px;display:flex;align-items:center;justify-content:center}.rate{grid-template-columns:repeat(2,1fr)}}
 @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>

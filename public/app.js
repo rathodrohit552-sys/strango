@@ -31,6 +31,7 @@
   var inactiveUnreadCount = 0;
   var originalTitle = document.title || "Strango";
   var audioContext = null;
+  var hasUserInteracted = false;
   var searchLabels = ["Searching...", "Finding someone..."];
 
   if(strangerName){
@@ -174,6 +175,7 @@
 
   function haptic(type){
     if(!window.navigator || !window.navigator.vibrate) return;
+    if(!hasUserInteracted) return;
     if(chatOpen) return;
     if(type === "match") navigator.vibrate([18, 32, 18]);
     if(type === "send") navigator.vibrate(12);
@@ -552,6 +554,11 @@
   initConnectionNetwork();
   updateUnreadBadge();
   syncMobileViewport();
+  ["pointerdown", "touchstart", "keydown"].forEach(function(eventName){
+    window.addEventListener(eventName, function(){
+      hasUserInteracted = true;
+    }, { passive:true, once:true });
+  });
   window.addEventListener("resize", function(){
     syncMobileViewport();
     syncChatModeForViewport();
