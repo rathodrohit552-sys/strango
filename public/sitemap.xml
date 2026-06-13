@@ -25,6 +25,50 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://strango.xyz/communities</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/trending</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/ai</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/gaming</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/finance</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/geopolitics</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/bollywood</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/hollywood</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/self-improvement</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/beauty</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/communities/fifa-2026</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://strango.xyz/help</loc>
     <priority>0.8</priority>
   </url>
@@ -43,6 +87,10 @@
   <url>
     <loc>https://strango.xyz/help/privacy</loc>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/chat-guides</loc>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://strango.xyz/talk-to-strangers</loc>
@@ -122,6 +170,42 @@
   </url>
   <url>
     <loc>https://strango.xyz/real-time-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/random-text-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/online-chat-rooms</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/instant-random-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/talk-to-random-people</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/private-chat-room</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/free-chat-no-signup</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/best-chat-sites</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/anonymous-text-chat</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://strango.xyz/random-chat-site</loc>
     <priority>0.9</priority>
   </url>
   <url>

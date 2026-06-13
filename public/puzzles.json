@@ -1,0 +1,7367 @@
+{
+  "version": 1,
+  "totalPuzzles": 613,
+  "difficulties": [
+    "Easy",
+    "Medium",
+    "Hard"
+  ],
+  "puzzles": [
+    {
+      "difficulty": "Easy",
+      "type": "Riddle",
+      "question": "What has keys but no locks?",
+      "answers": [
+        "Piano",
+        "Map",
+        "Clock"
+      ],
+      "correct": "Piano",
+      "hint": "It plays notes."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Riddle",
+      "question": "What has hands but cannot clap?",
+      "answers": [
+        "Clock",
+        "Chair",
+        "River"
+      ],
+      "correct": "Clock",
+      "hint": "Its hands show time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Word puzzle",
+      "question": "You see me once in June, twice in November, but not in May. What am I?",
+      "answers": [
+        "Letter E",
+        "Letter N",
+        "Letter M"
+      ],
+      "correct": "Letter E",
+      "hint": "Count letters in the month names."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Logic puzzle",
+      "question": "Three switches control one bulb in another room. What clue can identify the right switch?",
+      "answers": [
+        "Heat",
+        "Color",
+        "Sound"
+      ],
+      "correct": "Heat",
+      "hint": "One switch can warm the bulb before you enter."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Lateral thinking",
+      "question": "A person pushes a car to a hotel and loses money. What are they playing?",
+      "answers": [
+        "Monopoly",
+        "Chess",
+        "Cricket"
+      ],
+      "correct": "Monopoly",
+      "hint": "Think of a board game, not a real car."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Lateral thinking",
+      "question": "A room has no doors or windows, but someone says there is a way out. What kind of room is it?",
+      "answers": [
+        "Mushroom",
+        "Bedroom",
+        "Classroom"
+      ],
+      "correct": "Mushroom",
+      "hint": "It is a wordplay puzzle."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Deduction puzzle",
+      "question": "Three boxes are labeled apples, oranges, and mixed, but every label is wrong. Which box should you sample first?",
+      "answers": [
+        "Mixed",
+        "Apples",
+        "Oranges"
+      ],
+      "correct": "Mixed",
+      "hint": "The box labeled mixed cannot be mixed."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Deduction puzzle",
+      "question": "Two guards stand by two doors; one always lies and one always tells the truth. What should you ask?",
+      "answers": [
+        "Ask what the other guard would say",
+        "Ask your favorite color",
+        "Ask the time"
+      ],
+      "correct": "Ask what the other guard would say",
+      "hint": "Use one guard's answer to cancel the uncertainty."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Logic puzzle",
+      "question": "If all bloops are razzies and all razzies are lazzies, are all bloops lazzies?",
+      "answers": [
+        "Yes",
+        "No",
+        "Cannot tell"
+      ],
+      "correct": "Yes",
+      "hint": "Follow the chain of categories."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Lateral thinking",
+      "question": "A person is found safe after jumping from a plane without a parachute. How?",
+      "answers": [
+        "The plane was on the ground",
+        "They landed in water",
+        "They were a pilot"
+      ],
+      "correct": "The plane was on the ground",
+      "hint": "Question the assumption that the plane was flying."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Deduction puzzle",
+      "question": "A code changes CAT to DBU. What does DOG become?",
+      "answers": [
+        "EPH",
+        "CNE",
+        "FQI"
+      ],
+      "correct": "EPH",
+      "hint": "Move each letter one step forward."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Logic puzzle",
+      "question": "You have a 3-liter jug and a 5-liter jug. What target amount is classic to measure exactly?",
+      "answers": [
+        "4 liters",
+        "6 liters",
+        "7 liters"
+      ],
+      "correct": "4 liters",
+      "hint": "Fill, pour, and leave a remainder."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Lateral thinking",
+      "question": "What gets wetter the more it dries?",
+      "answers": [
+        "Towel",
+        "Fire",
+        "Mirror"
+      ],
+      "correct": "Towel",
+      "hint": "It dries other things."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Riddle",
+      "question": "What has a neck but no head?",
+      "answers": [
+        "Bottle",
+        "Shirt",
+        "Road"
+      ],
+      "correct": "Bottle",
+      "hint": "Think of a container."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Riddle",
+      "question": "What can travel around the world while staying in a corner?",
+      "answers": [
+        "Stamp",
+        "Cloud",
+        "Compass"
+      ],
+      "correct": "Stamp",
+      "hint": "It sits on mail."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Word puzzle",
+      "question": "What word is pronounced the same if you remove four of its five letters?",
+      "answers": [
+        "Queue",
+        "Apple",
+        "Train"
+      ],
+      "correct": "Queue",
+      "hint": "Only the first letter sound remains."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 6, 9, 12, ?",
+      "answers": [
+        "15",
+        "18",
+        "12"
+      ],
+      "correct": "15",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 8, 12, 16, ?",
+      "answers": [
+        "16",
+        "20",
+        "24"
+      ],
+      "correct": "20",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 10, 15, 20, ?",
+      "answers": [
+        "25",
+        "20",
+        "30"
+      ],
+      "correct": "25",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 12, 18, 24, ?",
+      "answers": [
+        "24",
+        "30",
+        "36"
+      ],
+      "correct": "30",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 14, 21, 28, ?",
+      "answers": [
+        "42",
+        "28",
+        "35"
+      ],
+      "correct": "35",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 16, 24, 32, ?",
+      "answers": [
+        "40",
+        "48",
+        "32"
+      ],
+      "correct": "40",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 11, 13, 15, ?",
+      "answers": [
+        "17",
+        "19",
+        "15"
+      ],
+      "correct": "17",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 13, 16, 19, ?",
+      "answers": [
+        "19",
+        "22",
+        "25"
+      ],
+      "correct": "22",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 6, 10, 14, ?",
+      "answers": [
+        "18",
+        "14",
+        "22"
+      ],
+      "correct": "18",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 8, 13, 18, ?",
+      "answers": [
+        "18",
+        "23",
+        "28"
+      ],
+      "correct": "23",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 10, 16, 22, ?",
+      "answers": [
+        "28",
+        "22",
+        "34"
+      ],
+      "correct": "28",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 12, 19, 26, ?",
+      "answers": [
+        "40",
+        "26",
+        "33"
+      ],
+      "correct": "33",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 14, 22, 30, ?",
+      "answers": [
+        "46",
+        "38",
+        "30"
+      ],
+      "correct": "38",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 9, 11, 13, ?",
+      "answers": [
+        "15",
+        "17",
+        "13"
+      ],
+      "correct": "15",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 11, 14, 17, ?",
+      "answers": [
+        "17",
+        "20",
+        "23"
+      ],
+      "correct": "20",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 13, 17, 21, ?",
+      "answers": [
+        "25",
+        "29",
+        "21"
+      ],
+      "correct": "25",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 15, 20, 25, ?",
+      "answers": [
+        "25",
+        "30",
+        "35"
+      ],
+      "correct": "30",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 8, 14, 20, ?",
+      "answers": [
+        "26",
+        "20",
+        "32"
+      ],
+      "correct": "26",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 10, 17, 24, ?",
+      "answers": [
+        "24",
+        "31",
+        "38"
+      ],
+      "correct": "31",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 12, 20, 28, ?",
+      "answers": [
+        "44",
+        "28",
+        "36"
+      ],
+      "correct": "36",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 7, 9, 11, ?",
+      "answers": [
+        "13",
+        "15",
+        "11"
+      ],
+      "correct": "13",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 9, 12, 15, ?",
+      "answers": [
+        "18",
+        "15",
+        "21"
+      ],
+      "correct": "18",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 11, 15, 19, ?",
+      "answers": [
+        "19",
+        "23",
+        "27"
+      ],
+      "correct": "23",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 13, 18, 23, ?",
+      "answers": [
+        "28",
+        "23",
+        "33"
+      ],
+      "correct": "28",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 15, 21, 27, ?",
+      "answers": [
+        "27",
+        "33",
+        "39"
+      ],
+      "correct": "33",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 17, 24, 31, ?",
+      "answers": [
+        "45",
+        "38",
+        "31"
+      ],
+      "correct": "38",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 10, 18, 26, ?",
+      "answers": [
+        "42",
+        "26",
+        "34"
+      ],
+      "correct": "34",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 5, 7, 9, ?",
+      "answers": [
+        "11",
+        "13",
+        "9"
+      ],
+      "correct": "11",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 7, 10, 13, ?",
+      "answers": [
+        "16",
+        "19",
+        "13"
+      ],
+      "correct": "16",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 9, 13, 17, ?",
+      "answers": [
+        "17",
+        "21",
+        "25"
+      ],
+      "correct": "21",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 11, 16, 21, ?",
+      "answers": [
+        "26",
+        "21",
+        "31"
+      ],
+      "correct": "26",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 13, 19, 25, ?",
+      "answers": [
+        "25",
+        "31",
+        "37"
+      ],
+      "correct": "31",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 15, 22, 29, ?",
+      "answers": [
+        "43",
+        "29",
+        "36"
+      ],
+      "correct": "36",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 17, 25, 33, ?",
+      "answers": [
+        "41",
+        "49",
+        "33"
+      ],
+      "correct": "41",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 12, 14, 16, ?",
+      "answers": [
+        "18",
+        "16",
+        "20"
+      ],
+      "correct": "18",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 5, 8, 11, ?",
+      "answers": [
+        "14",
+        "17",
+        "11"
+      ],
+      "correct": "14",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 7, 11, 15, ?",
+      "answers": [
+        "19",
+        "15",
+        "23"
+      ],
+      "correct": "19",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 9, 14, 19, ?",
+      "answers": [
+        "19",
+        "24",
+        "29"
+      ],
+      "correct": "24",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 11, 17, 23, ?",
+      "answers": [
+        "29",
+        "23",
+        "35"
+      ],
+      "correct": "29",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 13, 20, 27, ?",
+      "answers": [
+        "41",
+        "27",
+        "34"
+      ],
+      "correct": "34",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 15, 23, 31, ?",
+      "answers": [
+        "47",
+        "39",
+        "31"
+      ],
+      "correct": "39",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 10, 12, 14, ?",
+      "answers": [
+        "16",
+        "18",
+        "14"
+      ],
+      "correct": "16",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 12, 15, 18, ?",
+      "answers": [
+        "18",
+        "21",
+        "24"
+      ],
+      "correct": "21",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 14, 18, 22, ?",
+      "answers": [
+        "26",
+        "22",
+        "30"
+      ],
+      "correct": "26",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 7, 12, 17, ?",
+      "answers": [
+        "17",
+        "22",
+        "27"
+      ],
+      "correct": "22",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 9, 15, 21, ?",
+      "answers": [
+        "27",
+        "21",
+        "33"
+      ],
+      "correct": "27",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 11, 18, 25, ?",
+      "answers": [
+        "25",
+        "32",
+        "39"
+      ],
+      "correct": "32",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 13, 21, 29, ?",
+      "answers": [
+        "45",
+        "29",
+        "37"
+      ],
+      "correct": "37",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 8, 10, 12, ?",
+      "answers": [
+        "14",
+        "16",
+        "12"
+      ],
+      "correct": "14",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 10, 13, 16, ?",
+      "answers": [
+        "19",
+        "16",
+        "22"
+      ],
+      "correct": "19",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 12, 16, 20, ?",
+      "answers": [
+        "24",
+        "28",
+        "20"
+      ],
+      "correct": "24",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 14, 19, 24, ?",
+      "answers": [
+        "29",
+        "24",
+        "34"
+      ],
+      "correct": "29",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 16, 22, 28, ?",
+      "answers": [
+        "40",
+        "28",
+        "34"
+      ],
+      "correct": "34",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 9, 16, 23, ?",
+      "answers": [
+        "23",
+        "30",
+        "37"
+      ],
+      "correct": "30",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "3, 11, 19, 27, ?",
+      "answers": [
+        "43",
+        "27",
+        "35"
+      ],
+      "correct": "35",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "4, 6, 8, 10, ?",
+      "answers": [
+        "12",
+        "14",
+        "10"
+      ],
+      "correct": "12",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "5, 8, 11, 14, ?",
+      "answers": [
+        "17",
+        "14",
+        "20"
+      ],
+      "correct": "17",
+      "hint": "Add 3 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "6, 10, 14, 18, ?",
+      "answers": [
+        "18",
+        "22",
+        "26"
+      ],
+      "correct": "22",
+      "hint": "Add 4 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "7, 12, 17, 22, ?",
+      "answers": [
+        "27",
+        "22",
+        "32"
+      ],
+      "correct": "27",
+      "hint": "Add 5 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "8, 14, 20, 26, ?",
+      "answers": [
+        "26",
+        "32",
+        "38"
+      ],
+      "correct": "32",
+      "hint": "Add 6 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "9, 16, 23, 30, ?",
+      "answers": [
+        "44",
+        "37",
+        "30"
+      ],
+      "correct": "37",
+      "hint": "Add 7 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "10, 18, 26, 34, ?",
+      "answers": [
+        "50",
+        "42",
+        "34"
+      ],
+      "correct": "42",
+      "hint": "Add 8 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Pattern puzzle",
+      "question": "2, 4, 6, 8, ?",
+      "answers": [
+        "10",
+        "12",
+        "8"
+      ],
+      "correct": "10",
+      "hint": "Add 2 each time."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 9 + 4?",
+      "answers": [
+        "13",
+        "12",
+        "15"
+      ],
+      "correct": "13",
+      "hint": "Add 9 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 10 + 5?",
+      "answers": [
+        "15",
+        "14",
+        "17"
+      ],
+      "correct": "15",
+      "hint": "Add 10 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 11 + 6?",
+      "answers": [
+        "17",
+        "16",
+        "19"
+      ],
+      "correct": "17",
+      "hint": "Add 11 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 12 + 7?",
+      "answers": [
+        "19",
+        "18",
+        "21"
+      ],
+      "correct": "19",
+      "hint": "Add 12 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 13 + 8?",
+      "answers": [
+        "21",
+        "20",
+        "23"
+      ],
+      "correct": "21",
+      "hint": "Add 13 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 14 + 9?",
+      "answers": [
+        "23",
+        "22",
+        "25"
+      ],
+      "correct": "23",
+      "hint": "Add 14 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 15 + 10?",
+      "answers": [
+        "25",
+        "24",
+        "27"
+      ],
+      "correct": "25",
+      "hint": "Add 15 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 16 + 11?",
+      "answers": [
+        "27",
+        "26",
+        "29"
+      ],
+      "correct": "27",
+      "hint": "Add 16 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 17 + 12?",
+      "answers": [
+        "29",
+        "28",
+        "31"
+      ],
+      "correct": "29",
+      "hint": "Add 17 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 18 + 13?",
+      "answers": [
+        "31",
+        "30",
+        "33"
+      ],
+      "correct": "31",
+      "hint": "Add 18 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 19 + 14?",
+      "answers": [
+        "33",
+        "32",
+        "35"
+      ],
+      "correct": "33",
+      "hint": "Add 19 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 20 + 15?",
+      "answers": [
+        "35",
+        "34",
+        "37"
+      ],
+      "correct": "35",
+      "hint": "Add 20 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 21 + 3?",
+      "answers": [
+        "24",
+        "23",
+        "26"
+      ],
+      "correct": "24",
+      "hint": "Add 21 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 22 + 4?",
+      "answers": [
+        "26",
+        "25",
+        "28"
+      ],
+      "correct": "26",
+      "hint": "Add 22 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 23 + 5?",
+      "answers": [
+        "28",
+        "27",
+        "30"
+      ],
+      "correct": "28",
+      "hint": "Add 23 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 24 + 6?",
+      "answers": [
+        "29",
+        "30",
+        "32"
+      ],
+      "correct": "30",
+      "hint": "Add 24 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 25 + 7?",
+      "answers": [
+        "32",
+        "31",
+        "34"
+      ],
+      "correct": "32",
+      "hint": "Add 25 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 26 + 8?",
+      "answers": [
+        "34",
+        "33",
+        "36"
+      ],
+      "correct": "34",
+      "hint": "Add 26 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 8 + 9?",
+      "answers": [
+        "17",
+        "16",
+        "19"
+      ],
+      "correct": "17",
+      "hint": "Add 8 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 9 + 10?",
+      "answers": [
+        "19",
+        "18",
+        "21"
+      ],
+      "correct": "19",
+      "hint": "Add 9 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 10 + 11?",
+      "answers": [
+        "21",
+        "20",
+        "23"
+      ],
+      "correct": "21",
+      "hint": "Add 10 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 11 + 12?",
+      "answers": [
+        "23",
+        "22",
+        "25"
+      ],
+      "correct": "23",
+      "hint": "Add 11 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 12 + 13?",
+      "answers": [
+        "25",
+        "24",
+        "27"
+      ],
+      "correct": "25",
+      "hint": "Add 12 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 13 + 14?",
+      "answers": [
+        "27",
+        "26",
+        "29"
+      ],
+      "correct": "27",
+      "hint": "Add 13 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 14 + 15?",
+      "answers": [
+        "29",
+        "28",
+        "31"
+      ],
+      "correct": "29",
+      "hint": "Add 14 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 15 + 3?",
+      "answers": [
+        "18",
+        "17",
+        "20"
+      ],
+      "correct": "18",
+      "hint": "Add 15 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 16 + 4?",
+      "answers": [
+        "19",
+        "20",
+        "22"
+      ],
+      "correct": "20",
+      "hint": "Add 16 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 17 + 5?",
+      "answers": [
+        "22",
+        "21",
+        "24"
+      ],
+      "correct": "22",
+      "hint": "Add 17 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 18 + 6?",
+      "answers": [
+        "24",
+        "23",
+        "26"
+      ],
+      "correct": "24",
+      "hint": "Add 18 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 19 + 7?",
+      "answers": [
+        "26",
+        "25",
+        "28"
+      ],
+      "correct": "26",
+      "hint": "Add 19 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 20 + 8?",
+      "answers": [
+        "28",
+        "27",
+        "30"
+      ],
+      "correct": "28",
+      "hint": "Add 20 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 21 + 9?",
+      "answers": [
+        "29",
+        "30",
+        "32"
+      ],
+      "correct": "30",
+      "hint": "Add 21 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 22 + 10?",
+      "answers": [
+        "32",
+        "31",
+        "34"
+      ],
+      "correct": "32",
+      "hint": "Add 22 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 23 + 11?",
+      "answers": [
+        "34",
+        "33",
+        "36"
+      ],
+      "correct": "34",
+      "hint": "Add 23 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 24 + 12?",
+      "answers": [
+        "36",
+        "35",
+        "38"
+      ],
+      "correct": "36",
+      "hint": "Add 24 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 25 + 13?",
+      "answers": [
+        "40",
+        "38",
+        "37"
+      ],
+      "correct": "38",
+      "hint": "Add 25 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 26 + 14?",
+      "answers": [
+        "40",
+        "42",
+        "39"
+      ],
+      "correct": "40",
+      "hint": "Add 26 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 8 + 15?",
+      "answers": [
+        "23",
+        "22",
+        "25"
+      ],
+      "correct": "23",
+      "hint": "Add 8 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 9 + 3?",
+      "answers": [
+        "12",
+        "11",
+        "14"
+      ],
+      "correct": "12",
+      "hint": "Add 9 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 10 + 4?",
+      "answers": [
+        "14",
+        "13",
+        "16"
+      ],
+      "correct": "14",
+      "hint": "Add 10 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 11 + 5?",
+      "answers": [
+        "16",
+        "15",
+        "18"
+      ],
+      "correct": "16",
+      "hint": "Add 11 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 12 + 6?",
+      "answers": [
+        "18",
+        "17",
+        "20"
+      ],
+      "correct": "18",
+      "hint": "Add 12 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 13 + 7?",
+      "answers": [
+        "19",
+        "20",
+        "22"
+      ],
+      "correct": "20",
+      "hint": "Add 13 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 14 + 8?",
+      "answers": [
+        "22",
+        "21",
+        "24"
+      ],
+      "correct": "22",
+      "hint": "Add 14 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 15 + 9?",
+      "answers": [
+        "24",
+        "23",
+        "26"
+      ],
+      "correct": "24",
+      "hint": "Add 15 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 16 + 10?",
+      "answers": [
+        "26",
+        "25",
+        "28"
+      ],
+      "correct": "26",
+      "hint": "Add 16 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 17 + 11?",
+      "answers": [
+        "28",
+        "27",
+        "30"
+      ],
+      "correct": "28",
+      "hint": "Add 17 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 18 + 12?",
+      "answers": [
+        "29",
+        "30",
+        "32"
+      ],
+      "correct": "30",
+      "hint": "Add 18 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 19 + 13?",
+      "answers": [
+        "32",
+        "31",
+        "34"
+      ],
+      "correct": "32",
+      "hint": "Add 19 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 20 + 14?",
+      "answers": [
+        "34",
+        "33",
+        "36"
+      ],
+      "correct": "34",
+      "hint": "Add 20 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 21 + 15?",
+      "answers": [
+        "36",
+        "35",
+        "38"
+      ],
+      "correct": "36",
+      "hint": "Add 21 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 22 + 3?",
+      "answers": [
+        "25",
+        "24",
+        "27"
+      ],
+      "correct": "25",
+      "hint": "Add 22 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 23 + 4?",
+      "answers": [
+        "27",
+        "26",
+        "29"
+      ],
+      "correct": "27",
+      "hint": "Add 23 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 24 + 5?",
+      "answers": [
+        "29",
+        "28",
+        "31"
+      ],
+      "correct": "29",
+      "hint": "Add 24 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 25 + 6?",
+      "answers": [
+        "31",
+        "30",
+        "33"
+      ],
+      "correct": "31",
+      "hint": "Add 25 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 26 + 7?",
+      "answers": [
+        "33",
+        "32",
+        "35"
+      ],
+      "correct": "33",
+      "hint": "Add 26 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 8 + 8?",
+      "answers": [
+        "16",
+        "15",
+        "18"
+      ],
+      "correct": "16",
+      "hint": "Add 8 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 9 + 9?",
+      "answers": [
+        "18",
+        "17",
+        "20"
+      ],
+      "correct": "18",
+      "hint": "Add 9 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 10 + 10?",
+      "answers": [
+        "19",
+        "20",
+        "22"
+      ],
+      "correct": "20",
+      "hint": "Add 10 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 11 + 11?",
+      "answers": [
+        "22",
+        "21",
+        "24"
+      ],
+      "correct": "22",
+      "hint": "Add 11 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 12 + 12?",
+      "answers": [
+        "24",
+        "23",
+        "26"
+      ],
+      "correct": "24",
+      "hint": "Add 12 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 13 + 13?",
+      "answers": [
+        "26",
+        "25",
+        "28"
+      ],
+      "correct": "26",
+      "hint": "Add 13 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 14 + 14?",
+      "answers": [
+        "28",
+        "27",
+        "30"
+      ],
+      "correct": "28",
+      "hint": "Add 14 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 15 + 15?",
+      "answers": [
+        "29",
+        "30",
+        "32"
+      ],
+      "correct": "30",
+      "hint": "Add 15 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 16 + 3?",
+      "answers": [
+        "19",
+        "18",
+        "21"
+      ],
+      "correct": "19",
+      "hint": "Add 16 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 17 + 4?",
+      "answers": [
+        "21",
+        "20",
+        "23"
+      ],
+      "correct": "21",
+      "hint": "Add 17 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 18 + 5?",
+      "answers": [
+        "23",
+        "22",
+        "25"
+      ],
+      "correct": "23",
+      "hint": "Add 18 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 19 + 6?",
+      "answers": [
+        "25",
+        "24",
+        "27"
+      ],
+      "correct": "25",
+      "hint": "Add 19 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 20 + 7?",
+      "answers": [
+        "27",
+        "26",
+        "29"
+      ],
+      "correct": "27",
+      "hint": "Add 20 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 21 + 8?",
+      "answers": [
+        "29",
+        "28",
+        "31"
+      ],
+      "correct": "29",
+      "hint": "Add 21 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 22 + 9?",
+      "answers": [
+        "31",
+        "30",
+        "33"
+      ],
+      "correct": "31",
+      "hint": "Add 22 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 23 + 10?",
+      "answers": [
+        "33",
+        "32",
+        "35"
+      ],
+      "correct": "33",
+      "hint": "Add 23 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 24 + 11?",
+      "answers": [
+        "35",
+        "34",
+        "37"
+      ],
+      "correct": "35",
+      "hint": "Add 24 and 11."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 25 + 12?",
+      "answers": [
+        "37",
+        "36",
+        "39"
+      ],
+      "correct": "37",
+      "hint": "Add 25 and 12."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 26 + 13?",
+      "answers": [
+        "41",
+        "39",
+        "38"
+      ],
+      "correct": "39",
+      "hint": "Add 26 and 13."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 8 + 14?",
+      "answers": [
+        "22",
+        "21",
+        "24"
+      ],
+      "correct": "22",
+      "hint": "Add 8 and 14."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 9 + 15?",
+      "answers": [
+        "24",
+        "23",
+        "26"
+      ],
+      "correct": "24",
+      "hint": "Add 9 and 15."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 10 + 3?",
+      "answers": [
+        "13",
+        "12",
+        "15"
+      ],
+      "correct": "13",
+      "hint": "Add 10 and 3."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 11 + 4?",
+      "answers": [
+        "15",
+        "14",
+        "17"
+      ],
+      "correct": "15",
+      "hint": "Add 11 and 4."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 12 + 5?",
+      "answers": [
+        "17",
+        "16",
+        "19"
+      ],
+      "correct": "17",
+      "hint": "Add 12 and 5."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 13 + 6?",
+      "answers": [
+        "19",
+        "18",
+        "21"
+      ],
+      "correct": "19",
+      "hint": "Add 13 and 6."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 14 + 7?",
+      "answers": [
+        "21",
+        "20",
+        "23"
+      ],
+      "correct": "21",
+      "hint": "Add 14 and 7."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 15 + 8?",
+      "answers": [
+        "23",
+        "22",
+        "25"
+      ],
+      "correct": "23",
+      "hint": "Add 15 and 8."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 16 + 9?",
+      "answers": [
+        "25",
+        "24",
+        "27"
+      ],
+      "correct": "25",
+      "hint": "Add 16 and 9."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 17 + 10?",
+      "answers": [
+        "27",
+        "26",
+        "29"
+      ],
+      "correct": "27",
+      "hint": "Add 17 and 10."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 36 - 5?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 5 from 36."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 37 - 6?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 6 from 37."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 38 - 7?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 7 from 38."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 39 - 8?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 8 from 39."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 40 - 9?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 9 from 40."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 41 - 10?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 10 from 41."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 42 - 11?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 11 from 42."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 43 - 12?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 12 from 43."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 44 - 13?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 13 from 44."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 45 - 14?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 14 from 45."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 46 - 15?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 15 from 46."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 47 - 16?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 16 from 47."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 48 - 17?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 17 from 48."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 49 - 18?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 18 from 49."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 50 - 19?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 19 from 50."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 51 - 20?",
+      "answers": [
+        "29",
+        "31",
+        "32"
+      ],
+      "correct": "31",
+      "hint": "Subtract 20 from 51."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 52 - 4?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 4 from 52."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 53 - 5?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 5 from 53."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 54 - 6?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 6 from 54."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 55 - 7?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 7 from 55."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 56 - 8?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 8 from 56."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 57 - 9?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 9 from 57."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 58 - 10?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 10 from 58."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 59 - 11?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 11 from 59."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 60 - 12?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 12 from 60."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 61 - 13?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 13 from 61."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 62 - 14?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 14 from 62."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 63 - 15?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 15 from 63."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 64 - 16?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 16 from 64."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 65 - 17?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 17 from 65."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 66 - 18?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 18 from 66."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 67 - 19?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 19 from 67."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 68 - 20?",
+      "answers": [
+        "48",
+        "46",
+        "49"
+      ],
+      "correct": "48",
+      "hint": "Subtract 20 from 68."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 69 - 4?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 4 from 69."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 70 - 5?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 5 from 70."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 71 - 6?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 6 from 71."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 72 - 7?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 7 from 72."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 73 - 8?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 8 from 73."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 74 - 9?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 9 from 74."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 75 - 10?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 10 from 75."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 76 - 11?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 11 from 76."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 77 - 12?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 12 from 77."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 78 - 13?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 13 from 78."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 79 - 14?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 14 from 79."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 80 - 15?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 15 from 80."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 81 - 16?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 16 from 81."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 82 - 17?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 17 from 82."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 83 - 18?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 18 from 83."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 84 - 19?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 19 from 84."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 85 - 20?",
+      "answers": [
+        "65",
+        "63",
+        "66"
+      ],
+      "correct": "65",
+      "hint": "Subtract 20 from 85."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 86 - 4?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 4 from 86."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 87 - 5?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 5 from 87."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 88 - 6?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 6 from 88."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 89 - 7?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 7 from 89."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 90 - 8?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 8 from 90."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 91 - 9?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 9 from 91."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 92 - 10?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 10 from 92."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 93 - 11?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 11 from 93."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 94 - 12?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 12 from 94."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 95 - 13?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 13 from 95."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 96 - 14?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 14 from 96."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 97 - 15?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 15 from 97."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 98 - 16?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 16 from 98."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 99 - 17?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 17 from 99."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 100 - 18?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 18 from 100."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 101 - 19?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 19 from 101."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 102 - 20?",
+      "answers": [
+        "82",
+        "80",
+        "83"
+      ],
+      "correct": "82",
+      "hint": "Subtract 20 from 102."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 103 - 4?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 4 from 103."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 104 - 5?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 5 from 104."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 105 - 6?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 6 from 105."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 106 - 7?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 7 from 106."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 107 - 8?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 8 from 107."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 108 - 9?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 9 from 108."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 109 - 10?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 10 from 109."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 110 - 11?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 11 from 110."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 111 - 12?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 12 from 111."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 112 - 13?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 13 from 112."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 113 - 14?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 14 from 113."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 114 - 15?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 15 from 114."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 115 - 16?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 16 from 115."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 116 - 17?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 17 from 116."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 117 - 18?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 18 from 117."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 118 - 19?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 19 from 118."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 119 - 20?",
+      "answers": [
+        "100",
+        "99",
+        "97"
+      ],
+      "correct": "99",
+      "hint": "Subtract 20 from 119."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 120 - 4?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 4 from 120."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 121 - 5?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 5 from 121."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 122 - 6?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 6 from 122."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 123 - 7?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 7 from 123."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 124 - 8?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 8 from 124."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 125 - 9?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 9 from 125."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 126 - 10?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 10 from 126."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 127 - 11?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 11 from 127."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 128 - 12?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 12 from 128."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 129 - 13?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 13 from 129."
+    },
+    {
+      "difficulty": "Easy",
+      "type": "Mental math",
+      "question": "What is 130 - 14?",
+      "answers": [
+        "116",
+        "114",
+        "117"
+      ],
+      "correct": "116",
+      "hint": "Subtract 14 from 130."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "2, 6, 18, 54, ?",
+      "answers": [
+        "54",
+        "162",
+        "165"
+      ],
+      "correct": "162",
+      "hint": "Multiply by 3 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "3, 12, 48, 192, ?",
+      "answers": [
+        "768",
+        "772",
+        "192"
+      ],
+      "correct": "768",
+      "hint": "Multiply by 4 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "4, 8, 16, 32, ?",
+      "answers": [
+        "64",
+        "66",
+        "32"
+      ],
+      "correct": "64",
+      "hint": "Multiply by 2 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "5, 15, 45, 135, ?",
+      "answers": [
+        "135",
+        "405",
+        "408"
+      ],
+      "correct": "405",
+      "hint": "Multiply by 3 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "6, 24, 96, 384, ?",
+      "answers": [
+        "1536",
+        "1540",
+        "384"
+      ],
+      "correct": "1536",
+      "hint": "Multiply by 4 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Pattern puzzle",
+      "question": "1, 2, 4, 8, ?",
+      "answers": [
+        "16",
+        "18",
+        "8"
+      ],
+      "correct": "16",
+      "hint": "Multiply by 2 each time."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 5 = 17, what is x?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "Subtract 5, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 6 = 26, what is x?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "Subtract 6, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 7 = 37, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Subtract 7, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 8 = 50, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "Subtract 8, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 9 = 65, what is x?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "Subtract 9, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 10 = 82, what is x?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "Subtract 10, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 11 = 101, what is x?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Subtract 11, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 12 = 122, what is x?",
+      "answers": [
+        "11",
+        "12",
+        "10"
+      ],
+      "correct": "11",
+      "hint": "Subtract 12, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 13 = 37, what is x?",
+      "answers": [
+        "12",
+        "13",
+        "11"
+      ],
+      "correct": "12",
+      "hint": "Subtract 13, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 14 = 53, what is x?",
+      "answers": [
+        "13",
+        "14",
+        "12"
+      ],
+      "correct": "13",
+      "hint": "Subtract 14, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 4 = 60, what is x?",
+      "answers": [
+        "14",
+        "15",
+        "13"
+      ],
+      "correct": "14",
+      "hint": "Subtract 4, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 5 = 80, what is x?",
+      "answers": [
+        "15",
+        "16",
+        "14"
+      ],
+      "correct": "15",
+      "hint": "Subtract 5, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 6 = 102, what is x?",
+      "answers": [
+        "16",
+        "17",
+        "15"
+      ],
+      "correct": "16",
+      "hint": "Subtract 6, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 7 = 126, what is x?",
+      "answers": [
+        "17",
+        "18",
+        "16"
+      ],
+      "correct": "17",
+      "hint": "Subtract 7, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 8 = 152, what is x?",
+      "answers": [
+        "18",
+        "19",
+        "17"
+      ],
+      "correct": "18",
+      "hint": "Subtract 8, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 9 = 180, what is x?",
+      "answers": [
+        "19",
+        "18",
+        "20"
+      ],
+      "correct": "19",
+      "hint": "Subtract 9, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 10 = 210, what is x?",
+      "answers": [
+        "19",
+        "20",
+        "21"
+      ],
+      "correct": "20",
+      "hint": "Subtract 10, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 11 = 17, what is x?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "Subtract 11, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 12 = 24, what is x?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "Subtract 12, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 13 = 33, what is x?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "Subtract 13, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 14 = 44, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Subtract 14, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 4 = 46, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "Subtract 4, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 5 = 61, what is x?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "Subtract 5, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 6 = 78, what is x?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "Subtract 6, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 7 = 97, what is x?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Subtract 7, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 8 = 118, what is x?",
+      "answers": [
+        "11",
+        "12",
+        "10"
+      ],
+      "correct": "11",
+      "hint": "Subtract 8, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 9 = 33, what is x?",
+      "answers": [
+        "12",
+        "13",
+        "11"
+      ],
+      "correct": "12",
+      "hint": "Subtract 9, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 10 = 49, what is x?",
+      "answers": [
+        "13",
+        "14",
+        "12"
+      ],
+      "correct": "13",
+      "hint": "Subtract 10, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 11 = 67, what is x?",
+      "answers": [
+        "14",
+        "15",
+        "13"
+      ],
+      "correct": "14",
+      "hint": "Subtract 11, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 12 = 87, what is x?",
+      "answers": [
+        "15",
+        "16",
+        "14"
+      ],
+      "correct": "15",
+      "hint": "Subtract 12, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 13 = 109, what is x?",
+      "answers": [
+        "16",
+        "17",
+        "15"
+      ],
+      "correct": "16",
+      "hint": "Subtract 13, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 14 = 133, what is x?",
+      "answers": [
+        "17",
+        "18",
+        "16"
+      ],
+      "correct": "17",
+      "hint": "Subtract 14, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 4 = 148, what is x?",
+      "answers": [
+        "18",
+        "19",
+        "17"
+      ],
+      "correct": "18",
+      "hint": "Subtract 4, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 5 = 176, what is x?",
+      "answers": [
+        "19",
+        "18",
+        "20"
+      ],
+      "correct": "19",
+      "hint": "Subtract 5, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 6 = 206, what is x?",
+      "answers": [
+        "19",
+        "20",
+        "21"
+      ],
+      "correct": "20",
+      "hint": "Subtract 6, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 7 = 13, what is x?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "Subtract 7, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 8 = 20, what is x?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "Subtract 8, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 9 = 29, what is x?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "Subtract 9, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 10 = 40, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Subtract 10, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 11 = 53, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "Subtract 11, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 12 = 68, what is x?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "Subtract 12, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 13 = 85, what is x?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "Subtract 13, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 14 = 104, what is x?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Subtract 14, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 4 = 114, what is x?",
+      "answers": [
+        "11",
+        "12",
+        "10"
+      ],
+      "correct": "11",
+      "hint": "Subtract 4, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 5 = 29, what is x?",
+      "answers": [
+        "12",
+        "13",
+        "11"
+      ],
+      "correct": "12",
+      "hint": "Subtract 5, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 6 = 45, what is x?",
+      "answers": [
+        "13",
+        "14",
+        "12"
+      ],
+      "correct": "13",
+      "hint": "Subtract 6, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 7 = 63, what is x?",
+      "answers": [
+        "14",
+        "15",
+        "13"
+      ],
+      "correct": "14",
+      "hint": "Subtract 7, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 8 = 83, what is x?",
+      "answers": [
+        "15",
+        "16",
+        "14"
+      ],
+      "correct": "15",
+      "hint": "Subtract 8, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 9 = 105, what is x?",
+      "answers": [
+        "16",
+        "17",
+        "15"
+      ],
+      "correct": "16",
+      "hint": "Subtract 9, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 10 = 129, what is x?",
+      "answers": [
+        "17",
+        "18",
+        "16"
+      ],
+      "correct": "17",
+      "hint": "Subtract 10, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 11 = 155, what is x?",
+      "answers": [
+        "18",
+        "19",
+        "17"
+      ],
+      "correct": "18",
+      "hint": "Subtract 11, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 12 = 183, what is x?",
+      "answers": [
+        "19",
+        "18",
+        "20"
+      ],
+      "correct": "19",
+      "hint": "Subtract 12, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 13 = 213, what is x?",
+      "answers": [
+        "19",
+        "20",
+        "21"
+      ],
+      "correct": "20",
+      "hint": "Subtract 13, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 14 = 20, what is x?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "Subtract 14, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 4 = 16, what is x?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "Subtract 4, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 5 = 25, what is x?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "Subtract 5, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 6 = 36, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Subtract 6, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 7 = 49, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "Subtract 7, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 8 = 64, what is x?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "Subtract 8, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 9 = 81, what is x?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "Subtract 9, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 10 = 100, what is x?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Subtract 10, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 11 = 121, what is x?",
+      "answers": [
+        "11",
+        "12",
+        "10"
+      ],
+      "correct": "11",
+      "hint": "Subtract 11, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 12 = 36, what is x?",
+      "answers": [
+        "12",
+        "13",
+        "11"
+      ],
+      "correct": "12",
+      "hint": "Subtract 12, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 13 = 52, what is x?",
+      "answers": [
+        "13",
+        "14",
+        "12"
+      ],
+      "correct": "13",
+      "hint": "Subtract 13, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 14 = 70, what is x?",
+      "answers": [
+        "14",
+        "15",
+        "13"
+      ],
+      "correct": "14",
+      "hint": "Subtract 14, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 4 = 79, what is x?",
+      "answers": [
+        "15",
+        "16",
+        "14"
+      ],
+      "correct": "15",
+      "hint": "Subtract 4, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 5 = 101, what is x?",
+      "answers": [
+        "16",
+        "17",
+        "15"
+      ],
+      "correct": "16",
+      "hint": "Subtract 5, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 6 = 125, what is x?",
+      "answers": [
+        "17",
+        "18",
+        "16"
+      ],
+      "correct": "17",
+      "hint": "Subtract 6, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 7 = 151, what is x?",
+      "answers": [
+        "18",
+        "19",
+        "17"
+      ],
+      "correct": "18",
+      "hint": "Subtract 7, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 8 = 179, what is x?",
+      "answers": [
+        "19",
+        "18",
+        "20"
+      ],
+      "correct": "19",
+      "hint": "Subtract 8, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 9 = 209, what is x?",
+      "answers": [
+        "19",
+        "20",
+        "21"
+      ],
+      "correct": "20",
+      "hint": "Subtract 9, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 2x + 10 = 16, what is x?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "Subtract 10, then divide by 2."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 3x + 11 = 23, what is x?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "Subtract 11, then divide by 3."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 4x + 12 = 32, what is x?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "Subtract 12, then divide by 4."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 5x + 13 = 43, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Subtract 13, then divide by 5."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 6x + 14 = 56, what is x?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "Subtract 14, then divide by 6."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 7x + 4 = 60, what is x?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "Subtract 4, then divide by 7."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 8x + 5 = 77, what is x?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "Subtract 5, then divide by 8."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 9x + 6 = 96, what is x?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Subtract 6, then divide by 9."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Algebra puzzle",
+      "question": "If 10x + 7 = 117, what is x?",
+      "answers": [
+        "11",
+        "12",
+        "10"
+      ],
+      "correct": "11",
+      "hint": "Subtract 7, then divide by 10."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 44?",
+      "answers": [
+        "4.800000000000001",
+        "12.8",
+        "8.8"
+      ],
+      "correct": "8.8",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 48?",
+      "answers": [
+        "12",
+        "16",
+        "8"
+      ],
+      "correct": "12",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 52?",
+      "answers": [
+        "26",
+        "22",
+        "30"
+      ],
+      "correct": "26",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 56?",
+      "answers": [
+        "5.6",
+        "1.5999999999999996",
+        "9.6"
+      ],
+      "correct": "5.6",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 60?",
+      "answers": [
+        "12",
+        "16",
+        "8"
+      ],
+      "correct": "12",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 64?",
+      "answers": [
+        "16",
+        "12",
+        "20"
+      ],
+      "correct": "16",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 68?",
+      "answers": [
+        "34",
+        "38",
+        "30"
+      ],
+      "correct": "34",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 72?",
+      "answers": [
+        "7.2",
+        "11.2",
+        "3.2"
+      ],
+      "correct": "7.2",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 76?",
+      "answers": [
+        "15.2",
+        "19.2",
+        "11.2"
+      ],
+      "correct": "15.2",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 80?",
+      "answers": [
+        "16",
+        "20",
+        "24"
+      ],
+      "correct": "20",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 84?",
+      "answers": [
+        "42",
+        "46",
+        "38"
+      ],
+      "correct": "42",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 88?",
+      "answers": [
+        "4.800000000000001",
+        "12.8",
+        "8.8"
+      ],
+      "correct": "8.8",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 92?",
+      "answers": [
+        "14.399999999999999",
+        "18.4",
+        "22.4"
+      ],
+      "correct": "18.4",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 96?",
+      "answers": [
+        "24",
+        "28",
+        "20"
+      ],
+      "correct": "24",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 100?",
+      "answers": [
+        "50",
+        "54",
+        "46"
+      ],
+      "correct": "50",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 104?",
+      "answers": [
+        "6.4",
+        "10.4",
+        "14.4"
+      ],
+      "correct": "10.4",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 108?",
+      "answers": [
+        "17.6",
+        "21.6",
+        "25.6"
+      ],
+      "correct": "21.6",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 112?",
+      "answers": [
+        "28",
+        "24",
+        "32"
+      ],
+      "correct": "28",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 116?",
+      "answers": [
+        "62",
+        "58",
+        "54"
+      ],
+      "correct": "58",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 120?",
+      "answers": [
+        "12",
+        "16",
+        "8"
+      ],
+      "correct": "12",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 124?",
+      "answers": [
+        "24.8",
+        "28.8",
+        "20.8"
+      ],
+      "correct": "24.8",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 128?",
+      "answers": [
+        "28",
+        "32",
+        "36"
+      ],
+      "correct": "32",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 132?",
+      "answers": [
+        "66",
+        "62",
+        "70"
+      ],
+      "correct": "66",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 136?",
+      "answers": [
+        "13.6",
+        "17.6",
+        "9.6"
+      ],
+      "correct": "13.6",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 140?",
+      "answers": [
+        "28",
+        "24",
+        "32"
+      ],
+      "correct": "28",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 144?",
+      "answers": [
+        "40",
+        "36",
+        "32"
+      ],
+      "correct": "36",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 148?",
+      "answers": [
+        "74",
+        "78",
+        "70"
+      ],
+      "correct": "74",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 152?",
+      "answers": [
+        "15.2",
+        "19.2",
+        "11.2"
+      ],
+      "correct": "15.2",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 156?",
+      "answers": [
+        "31.2",
+        "35.2",
+        "27.2"
+      ],
+      "correct": "31.2",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 160?",
+      "answers": [
+        "40",
+        "44",
+        "36"
+      ],
+      "correct": "40",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 164?",
+      "answers": [
+        "78",
+        "82",
+        "86"
+      ],
+      "correct": "82",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 168?",
+      "answers": [
+        "16.8",
+        "12.8",
+        "20.8"
+      ],
+      "correct": "16.8",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 172?",
+      "answers": [
+        "34.4",
+        "38.4",
+        "30.4"
+      ],
+      "correct": "34.4",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 176?",
+      "answers": [
+        "44",
+        "48",
+        "40"
+      ],
+      "correct": "44",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 180?",
+      "answers": [
+        "86",
+        "90",
+        "94"
+      ],
+      "correct": "90",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 184?",
+      "answers": [
+        "14.399999999999999",
+        "18.4",
+        "22.4"
+      ],
+      "correct": "18.4",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 188?",
+      "answers": [
+        "41.6",
+        "37.6",
+        "33.6"
+      ],
+      "correct": "37.6",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 192?",
+      "answers": [
+        "52",
+        "48",
+        "44"
+      ],
+      "correct": "48",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 196?",
+      "answers": [
+        "102",
+        "98",
+        "94"
+      ],
+      "correct": "98",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 200?",
+      "answers": [
+        "16",
+        "20",
+        "24"
+      ],
+      "correct": "20",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 204?",
+      "answers": [
+        "40.8",
+        "44.8",
+        "36.8"
+      ],
+      "correct": "40.8",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 208?",
+      "answers": [
+        "52",
+        "56",
+        "48"
+      ],
+      "correct": "52",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 212?",
+      "answers": [
+        "106",
+        "110",
+        "102"
+      ],
+      "correct": "106",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 216?",
+      "answers": [
+        "17.6",
+        "21.6",
+        "25.6"
+      ],
+      "correct": "21.6",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 220?",
+      "answers": [
+        "44",
+        "48",
+        "40"
+      ],
+      "correct": "44",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 224?",
+      "answers": [
+        "60",
+        "56",
+        "52"
+      ],
+      "correct": "56",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 228?",
+      "answers": [
+        "114",
+        "118",
+        "110"
+      ],
+      "correct": "114",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 232?",
+      "answers": [
+        "19.2",
+        "23.2",
+        "27.2"
+      ],
+      "correct": "23.2",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 236?",
+      "answers": [
+        "51.2",
+        "47.2",
+        "43.2"
+      ],
+      "correct": "47.2",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 240?",
+      "answers": [
+        "60",
+        "64",
+        "56"
+      ],
+      "correct": "60",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 244?",
+      "answers": [
+        "122",
+        "126",
+        "118"
+      ],
+      "correct": "122",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 248?",
+      "answers": [
+        "24.8",
+        "28.8",
+        "20.8"
+      ],
+      "correct": "24.8",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 252?",
+      "answers": [
+        "50.4",
+        "54.4",
+        "46.4"
+      ],
+      "correct": "50.4",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 256?",
+      "answers": [
+        "64",
+        "68",
+        "60"
+      ],
+      "correct": "64",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 260?",
+      "answers": [
+        "130",
+        "134",
+        "126"
+      ],
+      "correct": "130",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 264?",
+      "answers": [
+        "30.4",
+        "26.4",
+        "22.4"
+      ],
+      "correct": "26.4",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 268?",
+      "answers": [
+        "53.6",
+        "57.6",
+        "49.6"
+      ],
+      "correct": "53.6",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 272?",
+      "answers": [
+        "68",
+        "64",
+        "72"
+      ],
+      "correct": "68",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 276?",
+      "answers": [
+        "138",
+        "142",
+        "134"
+      ],
+      "correct": "138",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 280?",
+      "answers": [
+        "28",
+        "24",
+        "32"
+      ],
+      "correct": "28",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 284?",
+      "answers": [
+        "56.8",
+        "52.8",
+        "60.8"
+      ],
+      "correct": "56.8",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 288?",
+      "answers": [
+        "68",
+        "72",
+        "76"
+      ],
+      "correct": "72",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 292?",
+      "answers": [
+        "146",
+        "150",
+        "142"
+      ],
+      "correct": "146",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 296?",
+      "answers": [
+        "33.6",
+        "29.6",
+        "25.6"
+      ],
+      "correct": "29.6",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 300?",
+      "answers": [
+        "60",
+        "64",
+        "56"
+      ],
+      "correct": "60",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 304?",
+      "answers": [
+        "76",
+        "72",
+        "80"
+      ],
+      "correct": "76",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 308?",
+      "answers": [
+        "154",
+        "158",
+        "150"
+      ],
+      "correct": "154",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 312?",
+      "answers": [
+        "31.2",
+        "35.2",
+        "27.2"
+      ],
+      "correct": "31.2",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 316?",
+      "answers": [
+        "59.2",
+        "63.2",
+        "67.2"
+      ],
+      "correct": "63.2",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 320?",
+      "answers": [
+        "76",
+        "80",
+        "84"
+      ],
+      "correct": "80",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 324?",
+      "answers": [
+        "162",
+        "166",
+        "158"
+      ],
+      "correct": "162",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 328?",
+      "answers": [
+        "32.8",
+        "36.8",
+        "28.799999999999997"
+      ],
+      "correct": "32.8",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 332?",
+      "answers": [
+        "62.400000000000006",
+        "66.4",
+        "70.4"
+      ],
+      "correct": "66.4",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 336?",
+      "answers": [
+        "84",
+        "88",
+        "80"
+      ],
+      "correct": "84",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 340?",
+      "answers": [
+        "170",
+        "174",
+        "166"
+      ],
+      "correct": "170",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 344?",
+      "answers": [
+        "34.4",
+        "38.4",
+        "30.4"
+      ],
+      "correct": "34.4",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 348?",
+      "answers": [
+        "69.6",
+        "65.6",
+        "73.6"
+      ],
+      "correct": "69.6",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 352?",
+      "answers": [
+        "88",
+        "84",
+        "92"
+      ],
+      "correct": "88",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 356?",
+      "answers": [
+        "178",
+        "182",
+        "174"
+      ],
+      "correct": "178",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 360?",
+      "answers": [
+        "40",
+        "36",
+        "32"
+      ],
+      "correct": "36",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 364?",
+      "answers": [
+        "68.8",
+        "72.8",
+        "76.8"
+      ],
+      "correct": "72.8",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 368?",
+      "answers": [
+        "88",
+        "92",
+        "96"
+      ],
+      "correct": "92",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 372?",
+      "answers": [
+        "186",
+        "190",
+        "182"
+      ],
+      "correct": "186",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 376?",
+      "answers": [
+        "41.6",
+        "37.6",
+        "33.6"
+      ],
+      "correct": "37.6",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 380?",
+      "answers": [
+        "76",
+        "72",
+        "80"
+      ],
+      "correct": "76",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 384?",
+      "answers": [
+        "100",
+        "96",
+        "92"
+      ],
+      "correct": "96",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 50% of 388?",
+      "answers": [
+        "194",
+        "198",
+        "190"
+      ],
+      "correct": "194",
+      "hint": "50% means 50 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 10% of 392?",
+      "answers": [
+        "43.2",
+        "39.2",
+        "35.2"
+      ],
+      "correct": "39.2",
+      "hint": "10% means 10 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 20% of 396?",
+      "answers": [
+        "79.2",
+        "75.2",
+        "83.2"
+      ],
+      "correct": "79.2",
+      "hint": "20% means 20 parts out of 100."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Percentage puzzle",
+      "question": "What is 25% of 400?",
+      "answers": [
+        "100",
+        "104",
+        "96"
+      ],
+      "correct": "100",
+      "hint": "25% means 25 parts out of 100."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "9, 16, 25, 36, ?",
+      "answers": [
+        "52",
+        "49",
+        "46"
+      ],
+      "correct": "49",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "16, 25, 36, 49, ?",
+      "answers": [
+        "64",
+        "68",
+        "60"
+      ],
+      "correct": "64",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "25, 36, 49, 64, ?",
+      "answers": [
+        "76",
+        "81",
+        "86"
+      ],
+      "correct": "81",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "36, 49, 64, 81, ?",
+      "answers": [
+        "100",
+        "106",
+        "94"
+      ],
+      "correct": "100",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "49, 64, 81, 100, ?",
+      "answers": [
+        "121",
+        "128",
+        "114"
+      ],
+      "correct": "121",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "64, 81, 100, 121, ?",
+      "answers": [
+        "144",
+        "152",
+        "136"
+      ],
+      "correct": "144",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "81, 100, 121, 144, ?",
+      "answers": [
+        "169",
+        "178",
+        "160"
+      ],
+      "correct": "169",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "100, 121, 144, 169, ?",
+      "answers": [
+        "196",
+        "186",
+        "206"
+      ],
+      "correct": "196",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "121, 144, 169, 196, ?",
+      "answers": [
+        "225",
+        "236",
+        "214"
+      ],
+      "correct": "225",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "144, 169, 196, 225, ?",
+      "answers": [
+        "256",
+        "268",
+        "244"
+      ],
+      "correct": "256",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "169, 196, 225, 256, ?",
+      "answers": [
+        "289",
+        "276",
+        "302"
+      ],
+      "correct": "289",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "196, 225, 256, 289, ?",
+      "answers": [
+        "324",
+        "338",
+        "310"
+      ],
+      "correct": "324",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "225, 256, 289, 324, ?",
+      "answers": [
+        "361",
+        "376",
+        "346"
+      ],
+      "correct": "361",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "256, 289, 324, 361, ?",
+      "answers": [
+        "400",
+        "416",
+        "384"
+      ],
+      "correct": "400",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "289, 324, 361, 400, ?",
+      "answers": [
+        "441",
+        "458",
+        "424"
+      ],
+      "correct": "441",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "324, 361, 400, 441, ?",
+      "answers": [
+        "502",
+        "484",
+        "466"
+      ],
+      "correct": "484",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "361, 400, 441, 484, ?",
+      "answers": [
+        "529",
+        "548",
+        "510"
+      ],
+      "correct": "529",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "400, 441, 484, 529, ?",
+      "answers": [
+        "576",
+        "596",
+        "556"
+      ],
+      "correct": "576",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "441, 484, 529, 576, ?",
+      "answers": [
+        "625",
+        "646",
+        "604"
+      ],
+      "correct": "625",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "484, 529, 576, 625, ?",
+      "answers": [
+        "676",
+        "698",
+        "654"
+      ],
+      "correct": "676",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "529, 576, 625, 676, ?",
+      "answers": [
+        "729",
+        "752",
+        "706"
+      ],
+      "correct": "729",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "576, 625, 676, 729, ?",
+      "answers": [
+        "784",
+        "760",
+        "808"
+      ],
+      "correct": "784",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "625, 676, 729, 784, ?",
+      "answers": [
+        "841",
+        "866",
+        "816"
+      ],
+      "correct": "841",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "676, 729, 784, 841, ?",
+      "answers": [
+        "874",
+        "900",
+        "926"
+      ],
+      "correct": "900",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "729, 784, 841, 900, ?",
+      "answers": [
+        "961",
+        "988",
+        "934"
+      ],
+      "correct": "961",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "784, 841, 900, 961, ?",
+      "answers": [
+        "1024",
+        "1052",
+        "996"
+      ],
+      "correct": "1024",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "841, 900, 961, 1024, ?",
+      "answers": [
+        "1089",
+        "1118",
+        "1060"
+      ],
+      "correct": "1089",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "900, 961, 1024, 1089, ?",
+      "answers": [
+        "1156",
+        "1186",
+        "1126"
+      ],
+      "correct": "1156",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "961, 1024, 1089, 1156, ?",
+      "answers": [
+        "1225",
+        "1256",
+        "1194"
+      ],
+      "correct": "1225",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1024, 1089, 1156, 1225, ?",
+      "answers": [
+        "1296",
+        "1328",
+        "1264"
+      ],
+      "correct": "1296",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1089, 1156, 1225, 1296, ?",
+      "answers": [
+        "1369",
+        "1402",
+        "1336"
+      ],
+      "correct": "1369",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1156, 1225, 1296, 1369, ?",
+      "answers": [
+        "1444",
+        "1478",
+        "1410"
+      ],
+      "correct": "1444",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1225, 1296, 1369, 1444, ?",
+      "answers": [
+        "1521",
+        "1556",
+        "1486"
+      ],
+      "correct": "1521",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1296, 1369, 1444, 1521, ?",
+      "answers": [
+        "1600",
+        "1636",
+        "1564"
+      ],
+      "correct": "1600",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1369, 1444, 1521, 1600, ?",
+      "answers": [
+        "1681",
+        "1718",
+        "1644"
+      ],
+      "correct": "1681",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1444, 1521, 1600, 1681, ?",
+      "answers": [
+        "1764",
+        "1802",
+        "1726"
+      ],
+      "correct": "1764",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1521, 1600, 1681, 1764, ?",
+      "answers": [
+        "1849",
+        "1888",
+        "1810"
+      ],
+      "correct": "1849",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1600, 1681, 1764, 1849, ?",
+      "answers": [
+        "1936",
+        "1976",
+        "1896"
+      ],
+      "correct": "1936",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1681, 1764, 1849, 1936, ?",
+      "answers": [
+        "1984",
+        "2025",
+        "2066"
+      ],
+      "correct": "2025",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1764, 1849, 1936, 2025, ?",
+      "answers": [
+        "2116",
+        "2158",
+        "2074"
+      ],
+      "correct": "2116",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1849, 1936, 2025, 2116, ?",
+      "answers": [
+        "2209",
+        "2252",
+        "2166"
+      ],
+      "correct": "2209",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1936, 2025, 2116, 2209, ?",
+      "answers": [
+        "2304",
+        "2348",
+        "2260"
+      ],
+      "correct": "2304",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2025, 2116, 2209, 2304, ?",
+      "answers": [
+        "2401",
+        "2446",
+        "2356"
+      ],
+      "correct": "2401",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2116, 2209, 2304, 2401, ?",
+      "answers": [
+        "2500",
+        "2546",
+        "2454"
+      ],
+      "correct": "2500",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2209, 2304, 2401, 2500, ?",
+      "answers": [
+        "2601",
+        "2648",
+        "2554"
+      ],
+      "correct": "2601",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2304, 2401, 2500, 2601, ?",
+      "answers": [
+        "2704",
+        "2752",
+        "2656"
+      ],
+      "correct": "2704",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2401, 2500, 2601, 2704, ?",
+      "answers": [
+        "2809",
+        "2858",
+        "2760"
+      ],
+      "correct": "2809",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2500, 2601, 2704, 2809, ?",
+      "answers": [
+        "2916",
+        "2966",
+        "2866"
+      ],
+      "correct": "2916",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2601, 2704, 2809, 2916, ?",
+      "answers": [
+        "3025",
+        "3076",
+        "2974"
+      ],
+      "correct": "3025",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2704, 2809, 2916, 3025, ?",
+      "answers": [
+        "3136",
+        "3188",
+        "3084"
+      ],
+      "correct": "3136",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2809, 2916, 3025, 3136, ?",
+      "answers": [
+        "3249",
+        "3302",
+        "3196"
+      ],
+      "correct": "3249",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2916, 3025, 3136, 3249, ?",
+      "answers": [
+        "3364",
+        "3418",
+        "3310"
+      ],
+      "correct": "3364",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3025, 3136, 3249, 3364, ?",
+      "answers": [
+        "3481",
+        "3536",
+        "3426"
+      ],
+      "correct": "3481",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3136, 3249, 3364, 3481, ?",
+      "answers": [
+        "3600",
+        "3656",
+        "3544"
+      ],
+      "correct": "3600",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3249, 3364, 3481, 3600, ?",
+      "answers": [
+        "3721",
+        "3778",
+        "3664"
+      ],
+      "correct": "3721",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3364, 3481, 3600, 3721, ?",
+      "answers": [
+        "3844",
+        "3902",
+        "3786"
+      ],
+      "correct": "3844",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3481, 3600, 3721, 3844, ?",
+      "answers": [
+        "4028",
+        "3969",
+        "3910"
+      ],
+      "correct": "3969",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3600, 3721, 3844, 3969, ?",
+      "answers": [
+        "4096",
+        "4156",
+        "4036"
+      ],
+      "correct": "4096",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3721, 3844, 3969, 4096, ?",
+      "answers": [
+        "4225",
+        "4286",
+        "4164"
+      ],
+      "correct": "4225",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3844, 3969, 4096, 4225, ?",
+      "answers": [
+        "4356",
+        "4418",
+        "4294"
+      ],
+      "correct": "4356",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "3969, 4096, 4225, 4356, ?",
+      "answers": [
+        "4489",
+        "4552",
+        "4426"
+      ],
+      "correct": "4489",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4096, 4225, 4356, 4489, ?",
+      "answers": [
+        "4624",
+        "4688",
+        "4560"
+      ],
+      "correct": "4624",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4225, 4356, 4489, 4624, ?",
+      "answers": [
+        "4761",
+        "4826",
+        "4696"
+      ],
+      "correct": "4761",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4356, 4489, 4624, 4761, ?",
+      "answers": [
+        "4900",
+        "4966",
+        "4834"
+      ],
+      "correct": "4900",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4489, 4624, 4761, 4900, ?",
+      "answers": [
+        "5041",
+        "5108",
+        "4974"
+      ],
+      "correct": "5041",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4624, 4761, 4900, 5041, ?",
+      "answers": [
+        "5184",
+        "5252",
+        "5116"
+      ],
+      "correct": "5184",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4761, 4900, 5041, 5184, ?",
+      "answers": [
+        "5329",
+        "5398",
+        "5260"
+      ],
+      "correct": "5329",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "4900, 5041, 5184, 5329, ?",
+      "answers": [
+        "5476",
+        "5546",
+        "5406"
+      ],
+      "correct": "5476",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5041, 5184, 5329, 5476, ?",
+      "answers": [
+        "5625",
+        "5696",
+        "5554"
+      ],
+      "correct": "5625",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5184, 5329, 5476, 5625, ?",
+      "answers": [
+        "5776",
+        "5848",
+        "5704"
+      ],
+      "correct": "5776",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5329, 5476, 5625, 5776, ?",
+      "answers": [
+        "5929",
+        "5856",
+        "6002"
+      ],
+      "correct": "5929",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5476, 5625, 5776, 5929, ?",
+      "answers": [
+        "6084",
+        "6158",
+        "6010"
+      ],
+      "correct": "6084",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5625, 5776, 5929, 6084, ?",
+      "answers": [
+        "6241",
+        "6316",
+        "6166"
+      ],
+      "correct": "6241",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5776, 5929, 6084, 6241, ?",
+      "answers": [
+        "6400",
+        "6476",
+        "6324"
+      ],
+      "correct": "6400",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "5929, 6084, 6241, 6400, ?",
+      "answers": [
+        "6561",
+        "6638",
+        "6484"
+      ],
+      "correct": "6561",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "6084, 6241, 6400, 6561, ?",
+      "answers": [
+        "6724",
+        "6802",
+        "6646"
+      ],
+      "correct": "6724",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "6241, 6400, 6561, 6724, ?",
+      "answers": [
+        "6889",
+        "6968",
+        "6810"
+      ],
+      "correct": "6889",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "6400, 6561, 6724, 6889, ?",
+      "answers": [
+        "6976",
+        "7056",
+        "7136"
+      ],
+      "correct": "7056",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "6561, 6724, 6889, 7056, ?",
+      "answers": [
+        "7225",
+        "7306",
+        "7144"
+      ],
+      "correct": "7225",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "6724, 6889, 7056, 7225, ?",
+      "answers": [
+        "7396",
+        "7478",
+        "7314"
+      ],
+      "correct": "7396",
+      "hint": "These are consecutive square numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "27, 64, 125, 216, ?",
+      "answers": [
+        "343",
+        "352",
+        "334"
+      ],
+      "correct": "343",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "64, 125, 216, 343, ?",
+      "answers": [
+        "512",
+        "528",
+        "496"
+      ],
+      "correct": "512",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "125, 216, 343, 512, ?",
+      "answers": [
+        "729",
+        "754",
+        "704"
+      ],
+      "correct": "729",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "216, 343, 512, 729, ?",
+      "answers": [
+        "1000",
+        "1036",
+        "964"
+      ],
+      "correct": "1000",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "343, 512, 729, 1000, ?",
+      "answers": [
+        "1331",
+        "1380",
+        "1282"
+      ],
+      "correct": "1331",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "512, 729, 1000, 1331, ?",
+      "answers": [
+        "1728",
+        "1792",
+        "1664"
+      ],
+      "correct": "1728",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "729, 1000, 1331, 1728, ?",
+      "answers": [
+        "2197",
+        "2278",
+        "2116"
+      ],
+      "correct": "2197",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1000, 1331, 1728, 2197, ?",
+      "answers": [
+        "2744",
+        "2844",
+        "2644"
+      ],
+      "correct": "2744",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1331, 1728, 2197, 2744, ?",
+      "answers": [
+        "3375",
+        "3496",
+        "3254"
+      ],
+      "correct": "3375",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "1728, 2197, 2744, 3375, ?",
+      "answers": [
+        "4096",
+        "4240",
+        "3952"
+      ],
+      "correct": "4096",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "2197, 2744, 3375, 4096, ?",
+      "answers": [
+        "5082",
+        "4913",
+        "4744"
+      ],
+      "correct": "4913",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Number pattern",
+      "question": "8, 27, 64, 125, ?",
+      "answers": [
+        "216",
+        "220",
+        "212"
+      ],
+      "correct": "216",
+      "hint": "These are consecutive cube numbers."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 128 is divided by 6?",
+      "answers": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": "2",
+      "hint": "128 = 21 x 6 + 2."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 157 is divided by 7?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "157 = 22 x 7 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 188 is divided by 8?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "188 = 23 x 8 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 221 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "221 = 24 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 256 is divided by 10?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "256 = 25 x 10 + 6."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 293 is divided by 11?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "293 = 26 x 11 + 7."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 332 is divided by 12?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "332 = 27 x 12 + 8."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 141 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "141 = 28 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 179 is divided by 6?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "179 = 29 x 6 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 215 is divided by 7?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "215 = 30 x 7 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 253 is divided by 8?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "253 = 31 x 8 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 293 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "293 = 32 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 335 is divided by 10?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "335 = 33 x 10 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 379 is divided by 11?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "379 = 34 x 11 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 425 is divided by 12?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "425 = 35 x 12 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 181 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "181 = 36 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 225 is divided by 6?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "225 = 37 x 6 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 267 is divided by 7?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "267 = 38 x 7 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 318 is divided by 8?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "318 = 39 x 8 + 6."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 365 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "365 = 40 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 414 is divided by 10?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "414 = 41 x 10 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 465 is divided by 11?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "465 = 42 x 11 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 518 is divided by 12?",
+      "answers": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": "2",
+      "hint": "518 = 43 x 12 + 2."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 221 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "221 = 44 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 271 is divided by 6?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "271 = 45 x 6 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 325 is divided by 7?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "325 = 46 x 7 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 383 is divided by 8?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "383 = 47 x 8 + 7."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 437 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "437 = 48 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 493 is divided by 10?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "493 = 49 x 10 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 551 is divided by 11?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "551 = 50 x 11 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 622 is divided by 12?",
+      "answers": [
+        "10",
+        "11",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "622 = 51 x 12 + 10."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 261 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "261 = 52 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 322 is divided by 6?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "322 = 53 x 6 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 383 is divided by 7?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "383 = 54 x 7 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 441 is divided by 8?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "441 = 55 x 8 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 509 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "509 = 56 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 572 is divided by 10?",
+      "answers": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": "2",
+      "hint": "572 = 57 x 10 + 2."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 647 is divided by 11?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "647 = 58 x 11 + 9."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 715 is divided by 12?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "715 = 59 x 12 + 7."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 301 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "301 = 60 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 368 is divided by 6?",
+      "answers": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": "2",
+      "hint": "368 = 61 x 6 + 2."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 435 is divided by 7?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "435 = 62 x 7 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 506 is divided by 8?",
+      "answers": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": "2",
+      "hint": "506 = 63 x 8 + 2."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 581 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "581 = 64 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 651 is divided by 10?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "651 = 65 x 10 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 733 is divided by 11?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "733 = 66 x 11 + 7."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 808 is divided by 12?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "808 = 67 x 12 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 341 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "341 = 68 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 419 is divided by 6?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "419 = 69 x 6 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 493 is divided by 7?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "493 = 70 x 7 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 571 is divided by 8?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "571 = 71 x 8 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 653 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "653 = 72 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 739 is divided by 10?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "739 = 73 x 10 + 9."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 819 is divided by 11?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "819 = 74 x 11 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 901 is divided by 12?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "901 = 75 x 12 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 381 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "381 = 76 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 465 is divided by 6?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "465 = 77 x 6 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 551 is divided by 7?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "551 = 78 x 7 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 636 is divided by 8?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "636 = 79 x 8 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 725 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "725 = 80 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 818 is divided by 10?",
+      "answers": [
+        "7",
+        "8",
+        "9"
+      ],
+      "correct": "8",
+      "hint": "818 = 81 x 10 + 8."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 905 is divided by 11?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "905 = 82 x 11 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 1005 is divided by 12?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "1005 = 83 x 12 + 9."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 421 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "421 = 84 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 511 is divided by 6?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "511 = 85 x 6 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 603 is divided by 7?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "603 = 86 x 7 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 701 is divided by 8?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "701 = 87 x 8 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 797 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "797 = 88 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 897 is divided by 10?",
+      "answers": [
+        "7",
+        "6",
+        "8"
+      ],
+      "correct": "7",
+      "hint": "897 = 89 x 10 + 7."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 991 is divided by 11?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "991 = 90 x 11 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 1098 is divided by 12?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "1098 = 91 x 12 + 6."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 461 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "461 = 92 x 5 + 1."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 562 is divided by 6?",
+      "answers": [
+        "5",
+        "4",
+        "3"
+      ],
+      "correct": "4",
+      "hint": "562 = 93 x 6 + 4."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 661 is divided by 7?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "661 = 94 x 7 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 766 is divided by 8?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "766 = 95 x 8 + 6."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 869 is divided by 9?",
+      "answers": [
+        "6",
+        "5",
+        "4"
+      ],
+      "correct": "5",
+      "hint": "869 = 96 x 9 + 5."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 976 is divided by 10?",
+      "answers": [
+        "7",
+        "6",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "976 = 97 x 10 + 6."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 1087 is divided by 11?",
+      "answers": [
+        "10",
+        "8",
+        "9"
+      ],
+      "correct": "9",
+      "hint": "1087 = 98 x 11 + 9."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 1191 is divided by 12?",
+      "answers": [
+        "2",
+        "4",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "1191 = 99 x 12 + 3."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Modular reasoning",
+      "question": "What is the remainder when 501 is divided by 5?",
+      "answers": [
+        "0",
+        "1",
+        "2"
+      ],
+      "correct": "1",
+      "hint": "501 = 100 x 5 + 1."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Logic puzzle",
+      "question": "4 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "6",
+        "10",
+        "5"
+      ],
+      "correct": "6",
+      "hint": "Use n x (n - 1) / 2 for 4 people."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Logic puzzle",
+      "question": "5 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "10",
+        "15",
+        "9"
+      ],
+      "correct": "10",
+      "hint": "Use n x (n - 1) / 2 for 5 people."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Logic puzzle",
+      "question": "6 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "15",
+        "14",
+        "21"
+      ],
+      "correct": "15",
+      "hint": "Use n x (n - 1) / 2 for 6 people."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Logic puzzle",
+      "question": "7 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "21",
+        "28",
+        "20"
+      ],
+      "correct": "21",
+      "hint": "Use n x (n - 1) / 2 for 7 people."
+    },
+    {
+      "difficulty": "Medium",
+      "type": "Logic puzzle",
+      "question": "8 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "28",
+        "27",
+        "36"
+      ],
+      "correct": "28",
+      "hint": "Use n x (n - 1) / 2 for 8 people."
+    },
+    {
+      "difficulty": "Hard",
+      "type": "Logic puzzle",
+      "question": "3 people each shake hands with every other person once. How many handshakes happen?",
+      "answers": [
+        "6",
+        "2",
+        "3"
+      ],
+      "correct": "3",
+      "hint": "Use n x (n - 1) / 2 for 3 people."
+    }
+  ]
+}

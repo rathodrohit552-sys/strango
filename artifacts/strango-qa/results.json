@@ -1,0 +1,176 @@
+[
+  {
+    "name": "home-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\home-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "darkThemeDefault": true,
+      "lightThemeApplied": true,
+      "lightThemePersisted": true
+    },
+    "title": "Strango - Talk. Discover. Connect.",
+    "h1": "Talk. Discover.Connect.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "communities-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\communities-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "communitySearchWorks": true,
+      "communityFilterWorks": true
+    },
+    "title": "Communities - Strango",
+    "h1": "Find your corner of Strango.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "community-detail-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\community-detail-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "communityMarkVisible": true,
+      "communityStatsVisible": true,
+      "trendingTopicsVisible": true
+    },
+    "title": "AI Community - Strango",
+    "h1": "AI Collective",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "discussions-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\discussions-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "discussionFilterWorks": true,
+      "voteStateWorks": true
+    },
+    "title": "Trending Discussions - Strango",
+    "h1": "Ideas worth adding to.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "discussion-live-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\discussion-live-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "typingIndicatorVisible": true,
+      "realtimeDiscussionMessage": true,
+      "presencePanelVisible": true,
+      "secondClientConsoleErrors": []
+    },
+    "title": "Community Discussion - Strango",
+    "h1": "Will AI replace software engineers?",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "live-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\live-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "liveStageVisible": true
+    },
+    "title": "Live Conversations - Strango",
+    "h1": "Join what is happening now.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "rooms-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\rooms-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "realtimeRoomMessage": true,
+      "roomPresenceVisible": true
+    },
+    "title": "Live Topic Rooms - Strango",
+    "h1": "Walk into a room that feels alive.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "chat-desktop",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\chat-desktop.png",
+    "consoleErrors": [],
+    "checks": {
+      "promptInserted": true,
+      "promptFocused": true
+    },
+    "title": "Anonymous Chat - Strango",
+    "h1": "Start with a better question.",
+    "horizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440
+  },
+  {
+    "name": "communities-mobile",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\communities-mobile.png",
+    "consoleErrors": [],
+    "checks": {},
+    "title": "Communities - Strango",
+    "h1": "Find your corner of Strango.",
+    "horizontalOverflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390
+  },
+  {
+    "name": "discussion-live-mobile",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\discussion-live-mobile.png",
+    "consoleErrors": [],
+    "checks": {},
+    "title": "Community Discussion - Strango",
+    "h1": "Will AI replace software engineers?",
+    "horizontalOverflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390
+  },
+  {
+    "name": "chat-mobile",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\chat-mobile.png",
+    "consoleErrors": [],
+    "checks": {
+      "promptInserted": true,
+      "promptFocused": true
+    },
+    "title": "Anonymous Chat - Strango",
+    "h1": "Start with a better question.",
+    "horizontalOverflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390
+  },
+  {
+    "name": "messages-mobile",
+    "status": 200,
+    "screenshot": "D:\\Backup\\Desktop\\strango\\artifacts\\strango-qa\\messages-mobile.png",
+    "consoleErrors": [],
+    "checks": {},
+    "title": "Messages - Strango",
+    "h1": "Messages",
+    "horizontalOverflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390
+  }
+]

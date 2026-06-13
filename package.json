@@ -3,11 +3,22 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "build": "esbuild src/main.jsx --bundle --outfile=public/platform.js --format=iife --minify --sourcemap --loader:.js=jsx && esbuild src/styles/platform.css --bundle --outfile=public/platform.css --minify",
+    "dev": "npm run build && node server.js",
+    "start": "node server.js",
+    "check": "node --check server.js && node --check database.js && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "esbuild": "^0.25.5",
     "express": "^4.22.1",
+    "mongodb": "^6.17.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
     "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.60.0"
   }
 }

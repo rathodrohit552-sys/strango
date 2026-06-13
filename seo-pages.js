@@ -41,7 +41,16 @@ const seoLandingPages = [
   ["instant-chat-online", "Instant Chat Online", "Instant chat online with Strango means opening the page, starting chat, and matching without unnecessary steps.", "getting from intent to conversation as quickly as possible", "instant messaging with strangers"],
   ["no-signup-chat", "No Signup Chat", "No signup chat lets you start talking without creating a profile, username history, or public account.", "reducing friction for people who want a conversation without a sign-up wall", "no-account chat"],
   ["chat-without-registration", "Chat Without Registration", "Chat without registration on Strango and keep the experience simple, fast, and focused on the conversation.", "avoiding registration forms when a quick anonymous conversation is enough", "registration-free chat"],
-  ["real-time-chat", "Real-Time Chat Online", "Real-time chat on Strango gives you responsive anonymous messaging with a modern product feel.", "keeping conversations immediate, clear, and easy to follow", "real-time anonymous messaging"]
+  ["real-time-chat", "Real-Time Chat Online", "Real-time chat on Strango gives you responsive anonymous messaging with a modern product feel.", "keeping conversations immediate, clear, and easy to follow", "real-time anonymous messaging"],
+  ["random-text-chat", "Random Text Chat Online", "Random text chat on Strango helps you meet new people through fast anonymous typing-first conversations.", "choosing text-first discovery instead of camera-first or profile-first platforms", "typing with random people online"],
+  ["online-chat-rooms", "Online Chat Rooms Without the Clutter", "Strango offers a cleaner alternative to crowded online chat rooms by focusing on simple one-to-one anonymous text chat.", "finding a room-like chat experience without public channel noise", "cleaner online chat rooms"],
+  ["instant-random-chat", "Instant Random Chat", "Instant random chat on Strango is designed for quick anonymous matching, simple controls, and mobile-friendly messaging.", "starting a random conversation without long setup steps", "instant anonymous matching"],
+  ["talk-to-random-people", "Talk to Random People Online", "Talk to random people online with Strango through a private text-first chat experience built for low-friction discovery.", "meeting random people without creating a public social profile", "talking to random people"],
+  ["private-chat-room", "Private Chat Room Online", "A private chat room on Strango means a focused anonymous text conversation rather than a noisy public room.", "using a private-feeling space for temporary online conversation", "private room-style chat"],
+  ["free-chat-no-signup", "Free Chat With No Signup", "Free chat with no signup helps people start a Strango conversation quickly without registration forms or profile setup.", "removing account friction before the first message", "free no-signup chat"],
+  ["best-chat-sites", "Best Chat Sites for Anonymous Text Chat", "The best chat sites make discovery simple, mobile-friendly, and clear about privacy expectations. Strango is built around that idea.", "comparing chat sites by simplicity, privacy, and conversation focus", "choosing better chat sites"],
+  ["anonymous-text-chat", "Anonymous Text Chat", "Anonymous text chat on Strango keeps the experience focused on typed conversation, privacy-aware habits, and fast matching.", "talking through text without attaching every message to a public profile", "anonymous typing-first chat"],
+  ["random-chat-site", "Random Chat Site for Text Conversations", "Strango is a random chat site for people who want anonymous text conversations without crowded feeds or complicated setup.", "using a random chat site that feels modern and restrained", "random chat website"]
 ].map(([slug, h1, description, angle, useCase]) => ({
   slug,
   type: "seo",
@@ -113,7 +122,16 @@ const trustPages = [
   angle
 }));
 
-const pages = [...seoLandingPages, ...omeglePages, ...comparisonTargets, ...trustPages];
+const chatGuidesPage = {
+  slug: "chat-guides",
+  type: "hub",
+  eyebrow: "SEO Hub",
+  h1: "Chat Guides & Resources",
+  title: "Chat Guides & Resources - Strango",
+  description: "Explore Strango chat guides, anonymous chat resources, random chat pages, safety guides, and Omegle alternative comparisons from one central hub."
+};
+
+const pages = [chatGuidesPage, ...seoLandingPages, ...omeglePages, ...comparisonTargets, ...trustPages];
 
 function escapeHtml(value) {
   return String(value)
@@ -128,36 +146,53 @@ function canonical(slug) {
 }
 
 function breadcrumbSchema(page) {
+  const items = [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` }
+  ];
+  if (page.slug !== "chat-guides") {
+    items.push({ "@type": "ListItem", "position": 2, "name": "Chat Guides", "item": canonical("chat-guides") });
+    items.push({ "@type": "ListItem", "position": 3, "name": page.h1, "item": canonical(page.slug) });
+  } else {
+    items.push({ "@type": "ListItem", "position": 2, "name": page.h1, "item": canonical(page.slug) });
+  }
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` },
-      { "@type": "ListItem", "position": 2, "name": page.h1, "item": canonical(page.slug) }
-    ]
+    "itemListElement": items
   };
 }
 
 function faqItems(page) {
+  const common = [
+    ["Is Strango free?", "Yes. Strango is designed around a free, low-friction anonymous text chat experience."],
+    ["Do I need an account?", "No public profile is required to start the main chat flow. The product is built to reduce friction before the first conversation."],
+    ["Is anonymous chat safe?", "Anonymous chat can be useful, but users should avoid sharing personal information, leave uncomfortable conversations, and read Strango safety guidance."],
+    ["Can I use Strango on mobile?", "Yes. Strango is built to work in modern mobile browsers as well as desktop browsers."],
+    ["How does matching work?", "Strango focuses on real-time anonymous text matching so users can move from the homepage into a simple one-to-one conversation."],
+    ["Can I skip a chat?", "Yes. The chat experience includes controls that help users move on when a conversation is not the right fit."],
+    ["Is registration required?", "Registration is not required for the core first chat experience."],
+    ["What makes Strango different?", "Strango focuses on clean design, anonymous text chat, safety resources, and a calmer product experience instead of cluttered public rooms or fake activity."]
+  ];
   if (page.type === "comparison") {
     return [
       [`Is Strango a good alternative to ${page.competitor}?`, `Strango is a good fit if you want anonymous, text-first random chat with a clean interface and clear safety guidance. ${page.competitor} may suit different preferences, so the best choice depends on whether you want text simplicity, video features, public rooms, or account-based discovery.`],
       [`Does Strango require registration?`, "Strango is designed around a low-friction start. You can open the chat flow quickly without building a public profile first."],
-      [`Why choose Strango for random chat?`, "Choose Strango if you want a calmer interface, anonymous matching, mobile-friendly design, and a product experience that keeps attention on the conversation."]
+      [`Why choose Strango for random chat?`, "Choose Strango if you want a calmer interface, anonymous matching, mobile-friendly design, and a product experience that keeps attention on the conversation."],
+      ...common.slice(2, 8)
     ];
   }
   if (page.type === "omegle") {
     return [
       ["Is Strango an Omegle alternative?", "Yes. Strango is positioned as a modern anonymous text chat alternative for people who want random conversations without a heavy profile system."],
       ["Is Strango free to start?", "Yes. The core chat experience is built for quick access and low friction."],
-      ["Does Strango focus on text chat?", "Yes. Strango emphasizes real-time text chat, which can feel calmer and more private than camera-first discovery."]
+      ["Does Strango focus on text chat?", "Yes. Strango emphasizes real-time text chat, which can feel calmer and more private than camera-first discovery."],
+      ...common.slice(1, 8)
     ];
   }
-  return [
+  return common.concat([
     [`What is ${page.h1.toLowerCase()} on Strango?`, `${page.h1} on Strango means a simple anonymous text chat experience built around quick matching, privacy-aware design, and clear conversation controls.`],
-    ["Do I need to create an account?", "No public profile is needed to start the main chat flow. The product is designed to reduce friction before the first conversation."],
     ["How can I chat more safely?", "Avoid sharing personal details, leave conversations that feel uncomfortable, and review Strango safety guidance before using anonymous chat."]
-  ];
+  ]);
 }
 
 function faqSchema(page) {
@@ -206,7 +241,178 @@ function ctaBlock() {
   return `<div class="seo-cta"><h2>Start a conversation on Strango</h2><p>Open the chat experience when you are ready for a simple anonymous text conversation with someone new.</p><a class="button primary" href="/#chat">Start Chatting</a></div>`;
 }
 
+const priorityContent = {
+  "free-online-chat": `
+    <p>Free online chat should be simple: open the page, understand what the product does, and start a conversation without being pushed through a maze of signups, profile prompts, popups, or unrelated feeds. Strango is built around that cleaner idea. It gives people a way to begin anonymous text chat quickly while keeping the interface focused on the conversation itself.</p>
+    <h2>What free online chat means on Strango</h2>
+    <p>On Strango, free online chat means a low-friction text-first experience for meeting someone new. The product does not ask you to build a public profile before the first message, and it does not present the homepage like a crowded room directory. Instead, the main path is direct: learn what Strango offers, start the chat flow, and use the conversation controls when you are ready.</p>
+    <p>This approach matters because many people searching for free chat are not looking for another social network. They may want a short conversation, a different perspective, or a quick way to talk during a break. A focused interface helps them get there without distractions. It also makes the page more understandable for people arriving from search results on mobile devices.</p>
+    <h2>Why no signup matters</h2>
+    <p>Registration can be useful for some products, but it often adds friction to anonymous chat. If your goal is a temporary conversation, creating a profile can feel unnecessary. Strango keeps the first step lighter by letting users start from the homepage experience instead of forcing a public identity system. That makes it a good fit for people comparing <a href="/no-signup-chat">no signup chat</a>, <a href="/chat-without-registration">chat without registration</a>, and <a href="/free-chat-no-signup">free chat with no signup</a>.</p>
+    <p>No signup does not mean users should ignore safety. It means the product reduces account friction while still encouraging careful behavior. Avoid sharing personal information, financial details, addresses, private photos, or anything that could identify you. If the conversation feels wrong, leave it. Anonymous chat works best when boundaries are clear.</p>
+    <h2>How Strango stays focused</h2>
+    <p>Strango is intentionally text-first. Text chat can feel calmer than camera-first discovery because users have more control over what they reveal and how quickly they respond. The product is also designed to feel modern rather than cluttered. The homepage explains the experience, the chat preview demonstrates the layout, and related pages explain privacy, safety, and how matching works.</p>
+    <p>For broader context, read <a href="/anonymous-chat">Anonymous Chat</a>, <a href="/random-chat">Random Chat</a>, and <a href="/chat-with-strangers">Chat With Strangers</a>. Those pages help searchers understand the product from different angles without landing on thin duplicate content.</p>
+    <h2>Using free chat responsibly</h2>
+    <p>The best free chat sessions start with simple expectations. Say hello, ask a lightweight question, and respect the other person if they do not want the same kind of conversation. You do not need a perfect opener. A small prompt about music, daily routines, hobbies, travel, food, or a thought-provoking question can be enough to begin.</p>
+    <p>If a chat becomes uncomfortable, use the controls and move on. Temporary conversations are allowed to be temporary. Strango is designed for low-pressure discovery, not for forcing every match to become meaningful. The value is in making a human exchange possible while keeping the product clean and understandable.</p>
+    <h2>Who free online chat is for</h2>
+    <p>This page is useful for people who want a fast, mobile-friendly chat experience without paying, registering, or joining a large public community. It is also useful for people researching safer alternatives to older random chat pages. Strango does not promise that every conversation will be perfect, but it does provide a cleaner product foundation for starting one.</p>
+    <p>When real analytics become available, Strango can show backend-supported platform numbers. Until then, the site avoids fake traffic claims and focuses on honest product signals: privacy by design, no signup required, real-time matching, and a roadmap toward future communities.</p>
+    <h2>Next pages to explore</h2>
+    <p>If you want to compare the main search intents, continue with <a href="/talk-to-strangers">Talk to Strangers</a>, <a href="/anonymous-text-chat">Anonymous Text Chat</a>, <a href="/instant-random-chat">Instant Random Chat</a>, and <a href="/safe-anonymous-chat">Safe Anonymous Chat</a>. Together, those pages describe how Strango works, who it is for, and how to use it with better expectations.</p>`,
+  "talk-to-strangers": `
+    <p>Talking to strangers online can be useful when the experience is simple, temporary, and respectful. Strango is designed for that kind of conversation. It gives users a text-first way to meet someone new without turning the moment into a profile-driven network, public room, or content feed.</p>
+    <h2>A calmer way to meet someone new</h2>
+    <p>Many people search for ways to talk to strangers because they want a fresh perspective. They might be bored, curious, practicing conversation, or looking for a low-pressure exchange outside their usual circle. Strango supports that intent with a direct chat flow and a homepage that explains the product before asking users to start.</p>
+    <p>The product is not built around endless scrolling. It is built around one conversation at a time. That distinction matters. A focused text chat experience lets people pay attention to the other person instead of navigating rooms, profiles, rankings, or unrelated widgets. It also helps new visitors understand what the site offers immediately.</p>
+    <h2>How matching works</h2>
+    <p>Strango uses a real-time chat flow. You start from the homepage, open the chat experience, and enter a simple anonymous conversation interface. The goal is to reduce the steps between curiosity and conversation while still keeping safety guidance and related help pages available. For more detail, read <a href="/how-strango-works">How Strango Works</a> and <a href="/real-time-chat">Real-Time Chat</a>.</p>
+    <p>Matching should feel quick, but users still control how they participate. You can decide what to say, what not to share, and when to move on. A better stranger chat product gives users that control instead of trapping them inside a complicated flow.</p>
+    <h2>Good conversation starters</h2>
+    <p>A simple opener often works better than a dramatic one. Ask what someone is listening to, what made their day unusual, what food they would recommend, or what topic they could talk about for an hour. The goal is not to impress everyone. The goal is to make the first message easy enough for the other person to answer.</p>
+    <p>Strango also includes educational facts and puzzle prompts on the homepage to give users something to think about while they wait. Those prompts can become conversation starters after matching. A random fact, a short puzzle, or a thoughtful question can make the first exchange less awkward.</p>
+    <h2>Safety while talking to strangers</h2>
+    <p>Anonymous chat requires personal judgment. Do not share personal information, exact location, financial details, private accounts, or anything that could identify you. If someone pressures you to move too quickly, leave the conversation. Strango links to resources such as the <a href="/safety-center">Safety Center</a> and <a href="/anonymous-chat-safety">Anonymous Chat Safety</a> so users can understand boundaries before chatting.</p>
+    <p>Respect matters too. The person on the other side is also choosing a temporary conversation. Keep messages appropriate, avoid harassment, and treat the chat as voluntary. A stranger chat platform is better when users can leave easily and when expectations are clear.</p>
+    <h2>Why Strango is different</h2>
+    <p>Strango is being built with a cleaner product mindset. The interface is modern, the chat preview is not filled with fake conversations, and the site avoids fake traffic claims. Instead of pretending to be a massive community before the backend data exists, Strango focuses on honest signals: anonymous design, no signup for the first chat flow, mobile-friendly layout, and internal safety resources.</p>
+    <p>For related pages, visit <a href="/chat-with-strangers">Chat With Strangers</a>, <a href="/talk-to-random-people">Talk to Random People</a>, <a href="/meet-new-people-online">Meet New People Online</a>, and <a href="/random-text-chat">Random Text Chat</a>. These pages reinforce the same product from different search intents while staying useful for readers.</p>
+    <h2>When to use this page</h2>
+    <p>Use this page if you want to understand the experience before starting. It explains the value of stranger chat, the safety mindset, and the reason Strango focuses on text. When you are ready, return to the homepage and start a conversation with clear expectations.</p>`,
+  "anonymous-chat": `
+    <p>Anonymous chat is useful when people want to talk without attaching every message to a public profile. Strango is built around that idea, but with an important distinction: anonymity should be paired with clarity, safety guidance, and a clean interface. It should not be an excuse for confusion or careless behavior.</p>
+    <h2>What anonymous chat means</h2>
+    <p>On Strango, anonymous chat means you can start a real-time text conversation without creating a public identity first. The product is designed for temporary one-to-one conversation rather than profile browsing or permanent social history. That makes it useful for people who want low-pressure discovery, a fresh perspective, or a quick human exchange.</p>
+    <p>Anonymity is not the same as invisibility or immunity from good judgment. Users should still protect personal information, avoid sharing sensitive details, and leave conversations that feel uncomfortable. Strango's content structure links directly to <a href="/safe-anonymous-chat">Safe Anonymous Chat</a>, <a href="/anonymous-chat-safety">Anonymous Chat Safety</a>, and <a href="/privacy-policy">Privacy Policy</a> pages so visitors can understand the boundaries.</p>
+    <h2>Why text-first anonymity helps</h2>
+    <p>Text chat gives users more control than camera-first discovery. You can pause, think, and decide what to reveal. You do not need to appear on video or build a profile before the first message. This makes anonymous text chat a strong fit for people who want conversation without the pressure of full identity exposure.</p>
+    <p>Strango keeps the chat preview clean and product-focused. It does not simulate fake messages or fake typing activity on the homepage. That matters for trust. A visitor should understand the layout without feeling like the site is pretending to have conversations that are not real.</p>
+    <h2>How to use anonymous chat well</h2>
+    <p>Start with a simple topic. You can ask about a hobby, a favorite film, a place someone wants to visit, or a question from the facts and puzzles section on the homepage. Keep the tone respectful and avoid pushing for personal information. If the other person does not respond well, move on.</p>
+    <p>Anonymous chat works best when people accept that not every match will become a long conversation. Some chats are short. Some are awkward. Some are unexpectedly interesting. A good platform makes it easy to continue when the match feels right and easy to leave when it does not.</p>
+    <h2>Privacy and safety expectations</h2>
+    <p>Do not share your full name, phone number, address, exact school or workplace, financial information, private photos, or account credentials. If someone asks for those details, treat it as a warning sign. Anonymous chat should stay lightweight unless you have a strong reason to trust the situation, and even then caution matters.</p>
+    <p>Strango is designed around reduced friction, but users remain responsible for their choices. Review <a href="/how-to-stay-safe-online">How to Stay Safe Online</a> and <a href="/community-guidelines">Community Guidelines</a> before using any anonymous chat product.</p>
+    <h2>How anonymous chat differs from social media</h2>
+    <p>Social media often rewards public identity, followers, posting history, and engagement loops. Anonymous chat is different. It is about a temporary exchange with another person. That makes it useful for low-pressure conversation, but it also means users should not expect permanent context or verified identity from the other side.</p>
+    <p>Strango's roadmap includes future communities, but the current product remains focused on random chat. That lets the site serve people searching for <a href="/anonymous-text-chat">Anonymous Text Chat</a>, <a href="/private-chat-room">Private Chat Room</a>, and <a href="/random-chat-site">Random Chat Site</a> without overstating what Phase 1 includes.</p>
+    <h2>Next steps</h2>
+    <p>If you are exploring anonymous chat for the first time, read <a href="/what-is-anonymous-chat">What Is Anonymous Chat?</a> and <a href="/why-use-anonymous-chat">Why Use Anonymous Chat?</a>. If you are ready to try the product, use the Start Chatting button on the homepage and keep your boundaries clear from the first message.</p>`,
+  "omegle-alternative": `
+    <p>People search for an Omegle alternative when they want the spontaneity of random chat but prefer a cleaner, more modern, or more text-focused experience. Strango is built for users who want anonymous conversation without the clutter of older random chat pages or the pressure of camera-first discovery.</p>
+    <h2>A modern alternative for text chat</h2>
+    <p>Strango focuses on anonymous text chat. That is different from trying to recreate every feature of older platforms. The goal is to make the first conversation easier to start, easier to understand, and easier to leave when needed. The homepage introduces the experience, the chat preview shows the product layout, and related SEO pages explain safety, privacy, and matching.</p>
+    <p>For many users, text is the better starting point. It gives more control over pacing and disclosure. You can choose what to say, avoid being on camera, and keep the conversation lightweight. That makes Strango a useful option for people comparing <a href="/random-chat">Random Chat</a>, <a href="/chat-with-strangers">Chat With Strangers</a>, and <a href="/random-text-chat">Random Text Chat</a>.</p>
+    <h2>What makes Strango different</h2>
+    <p>Strango is intentionally less noisy. It avoids fake chat content on the homepage, does not rely on fake community statistics, and keeps the product promise clear. Phase 1 is about anonymous real-time text chat, trust pages, SEO-ready content, mobile-friendly layout, and a clean user experience. Future communities are clearly labeled as future work instead of being presented as active today.</p>
+    <p>This honesty matters for search visitors. A good alternative should not just target keywords. It should explain what the product does now, what users should expect, and how to use it safely. Strango's internal pages connect those ideas through FAQ schema, related links, and crawlable navigation.</p>
+    <h2>Omegle-style discovery without old clutter</h2>
+    <p>The appeal of Omegle-style products was simple: meet someone unexpected. The problem was that many random chat experiences became cluttered, inconsistent, or difficult to trust. Strango keeps the useful part, spontaneous matching, while presenting it inside a calmer text-first interface.</p>
+    <p>The product is best for users who want temporary conversation, not a permanent profile system. You can start quickly, keep personal details private, and move on when the chat is not right. That simplicity makes the experience easier to use on mobile and easier to understand for first-time visitors.</p>
+    <h2>Safety and boundaries</h2>
+    <p>No alternative can remove every risk from anonymous chat. Users should avoid sharing personal information, exact location, financial details, private accounts, or anything that could identify them. If someone pressures you, leave. Strango supports that mindset through pages like <a href="/safety-center">Safety Center</a>, <a href="/safe-anonymous-chat">Safe Anonymous Chat</a>, and <a href="/anonymous-chat-safety">Anonymous Chat Safety</a>.</p>
+    <p>Text-first chat can make boundaries easier because you are not immediately exposing your face, voice, or surroundings. Still, personal judgment matters. Treat random chats as temporary and voluntary.</p>
+    <h2>Who should try Strango</h2>
+    <p>Try Strango if you want a modern random chat site focused on text, privacy-aware behavior, and low-friction conversation. It is especially useful if you prefer simple matching over public rooms, profile browsing, or video-first discovery. It is also useful if you want a product that feels more like a polished messaging experience than a legacy widget.</p>
+    <p>For more comparison paths, read <a href="/best-random-chat-sites">Best Random Chat Sites</a>, <a href="/sites-like-omegle">Sites Like Omegle</a>, <a href="/free-omegle-alternative">Free Omegle Alternative</a>, and <a href="/omegle-vs-strango">Omegle vs Strango</a>. These internal links help users and crawlers understand how Strango fits into the broader random chat category.</p>
+    <h2>Final takeaway</h2>
+    <p>Strango is not trying to copy every part of older chat platforms. It is trying to preserve the useful idea of spontaneous conversation while making the experience cleaner, safer to understand, and easier to start. If that is the kind of Omegle alternative you want, start from the homepage and enter the chat when you are ready.</p>`
+};
+
+function priorityContentFor(page) {
+  return priorityContent[page.slug] || null;
+}
+
+function relatedLinksFor(page) {
+  const map = {
+    "chat-guides": ["/free-online-chat", "/talk-to-strangers", "/anonymous-chat", "/random-chat", "/omegle-alternative", "/safety-center"],
+    "free-online-chat": ["/anonymous-chat", "/talk-to-strangers", "/chat-with-strangers", "/random-chat", "/free-chat-no-signup", "/no-signup-chat"],
+    "talk-to-strangers": ["/free-online-chat", "/chat-with-strangers", "/talk-to-random-people", "/meet-new-people-online", "/random-text-chat", "/safe-anonymous-chat"],
+    "anonymous-chat": ["/safe-anonymous-chat", "/anonymous-text-chat", "/anonymous-chat-safety", "/chat-without-registration", "/private-chat-room", "/why-use-anonymous-chat"],
+    "omegle-alternative": ["/free-online-chat", "/anonymous-chat", "/safe-anonymous-chat", "/best-random-chat-sites", "/sites-like-omegle", "/random-chat-alternative"],
+    "random-chat": ["/random-text-chat", "/instant-random-chat", "/random-chat-site", "/chat-with-strangers", "/talk-to-random-people"],
+    "chat-with-strangers": ["/talk-to-strangers", "/free-online-chat", "/random-chat", "/anonymous-chat", "/safe-anonymous-chat"],
+    "best-random-chat-sites": ["/omegle-alternative", "/best-chat-sites", "/random-chat-site", "/safe-anonymous-chat", "/free-online-chat"],
+    "safety-center": ["/safe-anonymous-chat", "/anonymous-chat-safety", "/how-to-stay-safe-online", "/community-guidelines", "/is-strango-safe"],
+    "help-center": ["/how-strango-works", "/safety-center", "/privacy-policy", "/talk-to-strangers", "/free-online-chat"]
+  };
+  const fallbackByType = {
+    seo: ["/free-online-chat", "/anonymous-chat", "/random-chat", "/chat-with-strangers", "/no-signup-chat"],
+    omegle: ["/omegle-alternative", "/free-online-chat", "/anonymous-chat", "/safe-anonymous-chat", "/best-random-chat-sites"],
+    comparison: ["/omegle-alternative", "/best-random-chat-sites", "/random-chat", "/safe-anonymous-chat", "/how-strango-works"],
+    trust: ["/safety-center", "/anonymous-chat-safety", "/how-strango-works", "/free-online-chat", "/talk-to-strangers"]
+  };
+  const hrefs = map[page.slug] || fallbackByType[page.type] || coreLinks.map((link) => link.href);
+  return hrefs
+    .filter((href) => href !== `/${page.slug}`)
+    .slice(0, 6)
+    .map((href) => {
+      const matched = pages.find((item) => `/${item.slug}` === href);
+      const core = coreLinks.find((item) => item.href === href);
+      return { href, label: matched ? matched.h1 : core ? core.label : titleCase(href.replace(/^\//, "")) };
+    });
+}
+
+function hubLinkCard(page) {
+  return `<section><h3><a href="/${page.slug}">${escapeHtml(page.h1)}</a></h3><p>${escapeHtml(page.description)}</p><a href="/${page.slug}">Read guide</a></section>`;
+}
+
+function chatGuidesContent() {
+  const categoryGroups = [
+    {
+      title: "Anonymous Chat",
+      slugs: ["anonymous-chat", "anonymous-text-chat", "safe-anonymous-chat", "secure-anonymous-chat", "anonymous-chat-room", "what-is-anonymous-chat", "why-use-anonymous-chat", "anonymous-chat-safety"]
+    },
+    {
+      title: "Random Chat",
+      slugs: ["random-chat", "random-text-chat", "instant-random-chat", "random-chat-site", "chat-with-strangers", "talk-to-random-people", "chat-with-random-people", "online-chat-with-random-people", "meet-new-people-online"]
+    },
+    {
+      title: "Free Chat",
+      slugs: ["free-online-chat", "free-chat-no-signup", "no-signup-chat", "chat-without-registration", "free-chat-room", "chat-online", "instant-chat-online", "real-time-chat"]
+    },
+    {
+      title: "Omegle Alternatives",
+      slugs: ["omegle-alternative", "best-omegle-alternative", "free-omegle-alternative", "safe-omegle-alternative", "anonymous-omegle-alternative", "sites-like-omegle", "omegle-alternatives-for-text-chat", "omegle-vs-strango", "best-random-chat-sites"]
+    },
+    {
+      title: "Chat Safety",
+      slugs: ["safety-center", "is-strango-safe", "anonymous-chat-safety", "how-to-stay-safe-online", "safe-anonymous-chat", "community-guidelines", "help-center", "how-strango-works"]
+    },
+    {
+      title: "Online Chat Guides",
+      slugs: ["online-chat-rooms", "private-chat-room", "private-chat-online", "text-chat-with-strangers", "best-chat-sites", "random-chat-room", "how-strango-works", "help-center"]
+    }
+  ];
+  const lookup = new Map(pages.map((page) => [page.slug, page]));
+  const used = new Set(["chat-guides"]);
+  const sections = categoryGroups.map((group) => {
+    const cards = group.slugs
+      .map((slug) => lookup.get(slug))
+      .filter(Boolean)
+      .map((page) => {
+        used.add(page.slug);
+        return hubLinkCard(page);
+      })
+      .join("");
+    return `<h2>${escapeHtml(group.title)}</h2><div class="seo-grid">${cards}</div>`;
+  }).join("");
+  const remaining = pages
+    .filter((page) => !used.has(page.slug))
+    .map(hubLinkCard)
+    .join("");
+  return `
+    <p>The Chat Guides hub is the central crawlable directory for Strango resources. It links to anonymous chat guides, random chat pages, free chat pages, Omegle alternative comparisons, safety resources, and online chat explainers so users and search engines can discover the full site without relying only on the sitemap.</p>
+    <p>Use these guides to understand what Strango offers, how anonymous text chat works, how to use random chat more safely, and which related pages explain each search intent in more detail.</p>
+    ${sections}
+    <h2>All Other Chat Resources</h2>
+    <div class="seo-grid">${remaining}</div>`;
+}
+
 function coreContent(page) {
+  const priority = priorityContentFor(page);
+  if (priority) return priority;
   return `
     <p>${page.description} This page is written for people who want ${page.angle}. Strango keeps the experience focused on real-time text conversation, clear controls, and a calmer product feel than crowded public chat rooms.</p>
     <h2>Why ${escapeHtml(page.h1)} matters</h2>
@@ -297,6 +503,7 @@ function trustContent(page) {
 }
 
 function bodyContent(page) {
+  if (page.type === "hub") return chatGuidesContent();
   if (page.type === "comparison") return comparisonContent(page);
   if (page.type === "omegle") return omegleContent(page);
   if (page.type === "trust") return trustContent(page);
@@ -318,8 +525,10 @@ function faqHtml(page) {
 }
 
 function renderSeoPage(page) {
-  const allLinks = page.type === "comparison" ? [...coreLinks, ...startLinks] : coreLinks;
-  const uniqueLinks = allLinks.filter((link, index, arr) => arr.findIndex((item) => item.href === link.href) === index);
+  const uniqueLinks = relatedLinksFor(page);
+  const breadcrumbHtml = page.slug === "chat-guides"
+    ? `<nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>${escapeHtml(page.h1)}</span></nav>`
+    : `<nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><a href="/chat-guides">Chat Guides</a><span>${escapeHtml(page.h1)}</span></nav>`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -347,7 +556,7 @@ function renderSeoPage(page) {
 <body>
   ${navHtml()}
   <main class="page-main seo-page">
-    <nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>${escapeHtml(page.h1)}</span></nav>
+    ${breadcrumbHtml}
     <section class="page-hero">
       <p class="eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1>${escapeHtml(page.h1)}</h1>
@@ -358,11 +567,11 @@ function renderSeoPage(page) {
       ${bodyContent(page)}
       ${nextStepContent(page)}
       ${ctaBlock()}
-      <section class="seo-links"><h2>Related Strango pages</h2>${linkList(uniqueLinks)}</section>
+      <section class="seo-links"><h2>Related Pages</h2>${linkList(uniqueLinks)}</section>
       ${faqHtml(page)}
     </article>
   </main>
-  <footer class="footer">${linkList(coreLinks)}<a href="/privacy-policy">Privacy Policy</a><a href="/terms-of-service">Terms</a></footer>
+  <footer class="footer">${linkList(coreLinks)}<a href="/chat-guides">Chat Guides</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms-of-service">Terms</a></footer>
 </body>
 </html>`;
 }
@@ -375,6 +584,26 @@ function renderSitemap() {
     ["privacy-policy", "0.7"],
     ["terms-of-service", "0.7"],
     ["community-guidelines", "0.7"],
+    ["communities", "0.8"],
+    ["discussions", "0.8"],
+    ["live", "0.8"],
+    ["rooms", "0.8"],
+    ["faq", "0.7"],
+    ["support", "0.7"],
+    ["emi-calculator", "0.8"],
+    ["sip-calculator", "0.8"],
+    ["gst-calculator", "0.8"],
+    ["communities/ai", "0.7"],
+    ["communities/gaming", "0.7"],
+    ["communities/finance", "0.7"],
+    ["communities/technology", "0.7"],
+    ["communities/students", "0.7"],
+    ["communities/geopolitics", "0.7"],
+    ["communities/bollywood", "0.7"],
+    ["communities/hollywood", "0.7"],
+    ["communities/self-improvement", "0.7"],
+    ["communities/beauty", "0.7"],
+    ["communities/fifa-2026", "0.7"],
     ["help", "0.8"],
     ["help/chat", "0.7"],
     ["help/getting-started", "0.7"],

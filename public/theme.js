@@ -7,10 +7,17 @@
       var saved = localStorage.getItem(storageKey);
       if(saved === "dark" || saved === "light") return saved;
     }catch(error){}
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return "dark";
   }
 
   function applyTheme(theme){
+    clearTimeout(applyTheme.transitionTimer);
+    if(document.body){
+      document.body.classList.add("theme-transitioning");
+      applyTheme.transitionTimer = setTimeout(function(){
+        document.body.classList.remove("theme-transitioning");
+      }, 520);
+    }
     root.setAttribute("data-theme", theme);
     var button = document.querySelector("[data-theme-toggle]");
     if(button){

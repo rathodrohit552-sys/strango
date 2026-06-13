@@ -1,32 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Strango - Free Anonymous Stranger Chat</title>
-  <meta name="description" content="Strango is a premium anonymous chat platform for fast, secure, real-time conversations with strangers online. Start chatting instantly with no profile required.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Strango - Talk. Discover. Connect.</title>
+  <meta name="description" content="Join communities, discussions and conversations that matter. Strango brings anonymous chat, live rooms, direct messages and reputation into one modern social platform.">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#075e54">
   <link rel="canonical" href="https://strango.xyz/">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <meta property="og:title" content="Strango - Free Anonymous Stranger Chat">
-  <meta property="og:description" content="Meet strangers instantly through private, anonymous, real-time text chat built around speed, safety, and trust.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/platform.css">
+  <meta property="og:title" content="Strango - Talk. Discover. Connect.">
+  <meta property="og:description" content="A modern social platform for communities, discussions, anonymous chat and live rooms.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://strango.xyz/">
-  <meta property="og:site_name" content="Strango">
-  <meta property="og:image" content="https://strango.xyz/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/theme.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Strango",
     "url": "https://strango.xyz/",
-    "description": "Anonymous online stranger chat with fast matching and privacy-first messaging.",
+    "description": "A modern social platform for communities, discussions, live rooms and anonymous conversation.",
     "potentialAction": {
-      "@type": "CommunicateAction",
-      "target": "https://strango.xyz/chat"
+      "@type": "SearchAction",
+      "target": "https://strango.xyz/discussions?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
   }
   </script>
@@ -36,239 +34,29 @@
     "@type": "Organization",
     "name": "Strango",
     "url": "https://strango.xyz/",
-    "sameAs": []
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is Strango?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Strango is an anonymous real-time text chat platform for meeting strangers online without creating a public profile."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need to sign up to start chatting?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Strango is designed for fast anonymous chat without a public signup flow before the first conversation."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is Strango focused on text chat?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Strango focuses on anonymous real-time text conversations with a clean, privacy-aware interface."
-        }
-      }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://strango.xyz/"
-      }
-    ]
+    "slogan": "Observe. Talk. Connect."
   }
   </script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Strango home">
-      <span class="brand-mark">S</span>
-      <span>Strango</span>
-    </a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <a href="#trust">Trust</a>
-      <a href="#features">Features</a>
-      <a href="#communities">Communities</a>
-      <a href="/help">Help</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero" id="chat">
-      <div class="hero-copy">
-        <p class="eyebrow">Anonymous real-time chat</p>
-        <h1>Meet someone new in a cleaner, safer stranger chat experience.</h1>
-        <p class="hero-text">Strango connects you with people online for fast, private text conversations. No profile, no complicated setup, just a polished space to start a conversation.</p>
-        <div class="hero-actions">
-          <button class="button primary" type="button" data-start-chat>Start Chatting</button>
-          <a class="button secondary" href="#communities">Explore Communities</a>
-        </div>
-        <div class="hero-trust-row" aria-label="Strango trust highlights">
-          <span>No Signup</span>
-          <span>Anonymous</span>
-          <span>Instant Matching</span>
-          <span>Free</span>
-        </div>
-      </div>
-      <aside class="activity-preview chat-preview" aria-label="Strango live activity preview">
-        <div class="preview-stage">
-          <div class="connection-network">
-            <canvas id="connectionNetwork" class="network-canvas" aria-hidden="true"></canvas>
-            <div class="network-status">
-              <span class="network-kicker">Live Network</span>
-              <div class="activity-loop" aria-hidden="true">
-                <span class="activity-line line-1">Searching...</span>
-                <span class="activity-line line-2">Matching...</span>
-                <span class="activity-line line-3">Connected...</span>
-                <span class="activity-line line-4">Active...</span>
-                <span class="activity-line line-5">Searching...</span>
-              </div>
-            </div>
-            <div class="sr-only">
-              <span class="activity-line line-1">Searching for someone...</span>
-              <span class="activity-line line-2">Matched in 2 seconds.</span>
-              <span class="activity-line line-3">Conversation started.</span>
-              <span class="activity-line line-4">Typing...</span>
-              <span class="activity-line line-5">New match found.</span>
-            </div>
-          </div>
-        </div>
-        <div class="chat-shell" role="dialog" aria-label="Strango chat">
-          <div class="chat-status-row">
-            <button id="chatBackBtn" class="chat-back" type="button" aria-label="Back to network preview">Back</button>
-            <div class="chat-person">
-              <span class="chat-avatar" aria-hidden="true">S</span>
-              <div class="chat-person-copy">
-                <strong id="strangerName">Stranger #0000</strong>
-                <span id="status" class="status waiting">Searching...</span>
-              </div>
-            </div>
-            <div class="chat-actions">
-              <span id="online" class="online">0 online</span>
-              <button id="chatMinimizeBtn" class="chat-minimize" type="button" aria-label="Minimize chat">Minimize</button>
-            </div>
-          </div>
-          <div id="messages" class="messages" aria-live="polite"></div>
-          <div id="typing" class="typing" aria-live="polite"></div>
-          <form id="chatForm" class="input-bar">
-            <button id="nextBtn" class="icon-button next" type="button">Next</button>
-            <input id="messageInput" type="text" autocomplete="off" placeholder="Type a message..." aria-label="Message">
-            <button id="sendBtn" class="icon-button send" type="submit">Send</button>
-          </form>
-        </div>
-        <button id="chatBubble" class="chat-bubble" type="button" aria-label="Reopen chat">
-          <span class="chat-bubble-mark" aria-hidden="true">
-            <span class="chat-bubble-status"></span>
-            S
-          </span>
-          <span class="chat-bubble-copy">
-            <strong>Active Chat</strong>
-            <small>Connected</small>
-          </span>
-          <span id="chatUnread" class="chat-unread" aria-live="polite">0</span>
-        </button>
-      </aside>
-    </section>
-
-    <section id="trust" class="section trust-section">
-      <div class="section-heading">
-        <p class="eyebrow">Built for confidence</p>
-        <h2>Trust signals before the first message.</h2>
-      </div>
-      <div class="trust-grid">
-        <article class="trust-card">
-          <span class="trust-icon">No Signup</span>
-          <h3>Start without a profile</h3>
-          <p>Open a conversation without account creation, social login, or setup friction.</p>
-        </article>
-        <article class="trust-card">
-          <span class="trust-icon">Lock</span>
-          <h3>Secure and anonymous</h3>
-          <p>Chat without creating a public profile or exposing personal identity by default.</p>
-        </article>
-        <article class="trust-card">
-          <span class="trust-icon">Fast</span>
-          <h3>Fast matching</h3>
-          <p>Real-time pairing helps you move from waiting to chatting quickly.</p>
-        </article>
-        <article class="trust-card">
-          <span class="trust-icon">Private</span>
-          <h3>Privacy focused</h3>
-          <p>Clear safety and privacy pages explain expectations in plain language.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="features" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">Core experience</p>
-        <h2>Everything this phase needs. Nothing extra.</h2>
-      </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <h3>Random Chat</h3>
-          <p>Meet people online through instant one-to-one text chat.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Anonymous Chat</h3>
-          <p>Start a conversation without creating a profile or sharing personal details.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Interest-Based Matching</h3>
-          <p>A foundation for future matching improvements, presented now without active filters.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Safe Community Experience</h3>
-          <p>Clear expectations, safety guidance, and respectful behavior standards.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="communities" class="section communities-section">
-      <div class="section-heading centered">
-        <p class="eyebrow">Preview</p>
-        <h2>Future communities are coming.</h2>
-        <p>These cards are placeholders for Phase 2. They do not open discussions or profiles yet.</p>
-      </div>
-      <div class="community-grid" aria-label="Future community preview">
-        <article class="community-card">AI</article>
-        <article class="community-card">Gaming</article>
-        <article class="community-card">Anime</article>
-        <article class="community-card">Finance</article>
-        <article class="community-card">Fitness</article>
-      </div>
-    </section>
-
-    <section class="section seo-links">
-      <a href="/talk-to-strangers">Talk to Strangers</a>
-      <a href="/free-online-chat">Free Online Chat</a>
-      <a href="/anonymous-chat">Anonymous Chat</a>
-      <a href="/omegle-alternative">Omegle Alternative</a>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
-    <a href="/privacy-policy">Privacy Policy</a>
-    <a href="/terms-of-service">Terms of Service</a>
-    <a href="/community-guidelines">Community Guidelines</a>
-    <a href="/help">Help Center</a>
-  </footer>
-
-  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie notice">
-    <p>Strango uses essential cookies and local storage to keep the experience reliable and remember basic preferences.</p>
-    <button id="acceptCookies" class="button primary" type="button">Accept</button>
+  <div id="root">
+    <main style="max-width:900px;margin:80px auto;padding:24px;font-family:system-ui,sans-serif">
+      <p>Observe. Talk. Connect.</p>
+      <h1>Talk. Discover. Connect.</h1>
+      <p>Join communities, discussions and conversations that matter.</p>
+      <p><a href="/chat">Start chatting</a> · <a href="/communities">Explore communities</a></p>
+      <section>
+        <h2>Featured communities</h2>
+        <p>Discover Finance, Technology, Gaming, Student and self-improvement communities.</p>
+      </section>
+      <section>
+        <h2>Trending discussions and live conversations</h2>
+        <p>Vote, reply, share, or join a live room instantly. Ghost Mode lets you browse before creating an account.</p>
+      </section>
+    </main>
   </div>
-
+  <noscript>Strango requires JavaScript for live social features. SEO guides and finance calculators remain available without it.</noscript>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/app.js" defer></script>
+  <script src="/platform.js" defer></script>
 </body>
 </html>

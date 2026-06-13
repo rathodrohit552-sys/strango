@@ -1,0 +1,5656 @@
+{
+  "version": 3,
+  "totalFacts": 1402,
+  "categories": [
+    "Science",
+    "Space",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Technology",
+    "AI",
+    "Engineering",
+    "Mathematics",
+    "Psychology",
+    "Human Body",
+    "Animals",
+    "Oceans",
+    "Geography",
+    "Countries",
+    "India",
+    "Karnataka",
+    "Indian Culture",
+    "History",
+    "Ancient Civilizations",
+    "Sports",
+    "Olympics",
+    "Cricket",
+    "Football",
+    "Famous Personalities",
+    "Inventors",
+    "Billionaires",
+    "Business",
+    "Money",
+    "World Records",
+    "Strange Facts",
+    "Nature",
+    "Environment",
+    "Climate",
+    "Astronomy",
+    "Numbers",
+    "Years & Events",
+    "Language Facts",
+    "Food Facts",
+    "Mystery Facts"
+  ],
+  "facts": [
+    {
+      "category": "Space",
+      "text": "Mercury has no moons."
+    },
+    {
+      "category": "Space",
+      "text": "Venus rotates backward compared with most planets."
+    },
+    {
+      "category": "Space",
+      "text": "Mars has the largest known volcano in the solar system."
+    },
+    {
+      "category": "Space",
+      "text": "Jupiter is more massive than all other planets combined."
+    },
+    {
+      "category": "Space",
+      "text": "Saturn's rings are mostly ice and rock."
+    },
+    {
+      "category": "Space",
+      "text": "Uranus rotates almost on its side."
+    },
+    {
+      "category": "Space",
+      "text": "Neptune has winds faster than many jet aircraft."
+    },
+    {
+      "category": "Space",
+      "text": "The Moon slowly moves away from Earth."
+    },
+    {
+      "category": "Space",
+      "text": "Sunlight takes about eight minutes to reach Earth."
+    },
+    {
+      "category": "Space",
+      "text": "The International Space Station circles Earth about every 90 minutes."
+    },
+    {
+      "category": "Space",
+      "text": "Neutron stars are incredibly dense."
+    },
+    {
+      "category": "Space",
+      "text": "The Milky Way is a barred spiral galaxy."
+    },
+    {
+      "category": "Space",
+      "text": "Black holes bend light around them."
+    },
+    {
+      "category": "Space",
+      "text": "Comets contain ice, dust, and rock."
+    },
+    {
+      "category": "Space",
+      "text": "Asteroids are leftovers from early planet formation."
+    },
+    {
+      "category": "Space",
+      "text": "The Sun contains most of the solar system's mass."
+    },
+    {
+      "category": "Space",
+      "text": "Jupiter's Great Red Spot is a long-running storm."
+    },
+    {
+      "category": "Space",
+      "text": "Earth is the densest planet in the solar system."
+    },
+    {
+      "category": "Space",
+      "text": "A light-year measures distance."
+    },
+    {
+      "category": "Space",
+      "text": "The observable universe is expanding."
+    },
+    {
+      "category": "Space",
+      "text": "The Moon helps stabilize Earth's axial tilt."
+    },
+    {
+      "category": "Space",
+      "text": "Auroras come from charged solar particles."
+    },
+    {
+      "category": "Space",
+      "text": "Meteor showers happen when Earth crosses comet debris."
+    },
+    {
+      "category": "Space",
+      "text": "Galaxies can collide and merge."
+    },
+    {
+      "category": "Space",
+      "text": "Space is not completely empty."
+    },
+    {
+      "category": "Space",
+      "text": "Astronaut footprints can last on the Moon for ages."
+    },
+    {
+      "category": "Space",
+      "text": "Mars has seasons because of its tilt."
+    },
+    {
+      "category": "Space",
+      "text": "Supernovae create many heavy elements."
+    },
+    {
+      "category": "Space",
+      "text": "Alpha Centauri is the closest star system to the Sun."
+    },
+    {
+      "category": "Space",
+      "text": "Titan has lakes of methane and ethane."
+    },
+    {
+      "category": "Space",
+      "text": "Europa may hide an ocean under ice."
+    },
+    {
+      "category": "Space",
+      "text": "The Kuiper Belt lies beyond Neptune."
+    },
+    {
+      "category": "Space",
+      "text": "The Oort Cloud may surround the solar system."
+    },
+    {
+      "category": "Space",
+      "text": "Solar eclipses happen when the Moon blocks the Sun."
+    },
+    {
+      "category": "Space",
+      "text": "Lunar eclipses happen when Earth shadows the Moon."
+    },
+    {
+      "category": "Space",
+      "text": "The Hubble Space Telescope launched in 1990."
+    },
+    {
+      "category": "Space",
+      "text": "The James Webb Space Telescope observes infrared light."
+    },
+    {
+      "category": "Space",
+      "text": "Saturn would float in a large enough ocean."
+    },
+    {
+      "category": "Space",
+      "text": "Pluto has mountains made of water ice."
+    },
+    {
+      "category": "Space",
+      "text": "Some stars are smaller than Earth but much denser."
+    },
+    {
+      "category": "Space",
+      "text": "The vacuum of space does not carry sound."
+    },
+    {
+      "category": "Space",
+      "text": "A day on Venus is longer than its year."
+    },
+    {
+      "category": "Space",
+      "text": "The Sun is a middle-aged star."
+    },
+    {
+      "category": "Space",
+      "text": "Many exoplanets have been found beyond our solar system."
+    },
+    {
+      "category": "Space",
+      "text": "The asteroid belt sits between Mars and Jupiter."
+    },
+    {
+      "category": "Space",
+      "text": "The solar wind streams outward from the Sun."
+    },
+    {
+      "category": "Space",
+      "text": "The Moon has no global magnetic field."
+    },
+    {
+      "category": "Space",
+      "text": "Mars has polar ice caps."
+    },
+    {
+      "category": "Space",
+      "text": "Jupiter has dozens of moons."
+    },
+    {
+      "category": "Space",
+      "text": "The universe is about 13.8 billion years old."
+    },
+    {
+      "category": "Science",
+      "text": "Water expands when it freezes."
+    },
+    {
+      "category": "Science",
+      "text": "DNA carries genetic instructions."
+    },
+    {
+      "category": "Science",
+      "text": "Atoms are mostly empty space."
+    },
+    {
+      "category": "Science",
+      "text": "Sound travels faster in water than in air."
+    },
+    {
+      "category": "Science",
+      "text": "Lightning is hotter than the surface of the Sun."
+    },
+    {
+      "category": "Science",
+      "text": "The periodic table organizes elements by atomic number."
+    },
+    {
+      "category": "Science",
+      "text": "Carbon can form diamond and graphite."
+    },
+    {
+      "category": "Science",
+      "text": "Helium is lighter than air."
+    },
+    {
+      "category": "Science",
+      "text": "Gravity affects every object with mass."
+    },
+    {
+      "category": "Science",
+      "text": "Magnets have north and south poles."
+    },
+    {
+      "category": "Science",
+      "text": "Photosynthesis turns sunlight into chemical energy."
+    },
+    {
+      "category": "Science",
+      "text": "Glass is an amorphous solid."
+    },
+    {
+      "category": "Science",
+      "text": "Catalysts speed up chemical reactions."
+    },
+    {
+      "category": "Science",
+      "text": "Light travels about 300,000 kilometers per second."
+    },
+    {
+      "category": "Science",
+      "text": "Bacteria can live in extreme environments."
+    },
+    {
+      "category": "Science",
+      "text": "Friction converts motion into heat."
+    },
+    {
+      "category": "Science",
+      "text": "Salt lowers water's freezing point."
+    },
+    {
+      "category": "Science",
+      "text": "Rainbows form when light bends through droplets."
+    },
+    {
+      "category": "Science",
+      "text": "Electrons are much smaller than atoms."
+    },
+    {
+      "category": "Science",
+      "text": "Mass and weight are different."
+    },
+    {
+      "category": "Science",
+      "text": "The pH scale measures acidity."
+    },
+    {
+      "category": "Science",
+      "text": "Oxygen makes up about 21 percent of Earth's atmosphere."
+    },
+    {
+      "category": "Science",
+      "text": "The scientific method relies on testable ideas."
+    },
+    {
+      "category": "Science",
+      "text": "Crystals have repeating atomic structures."
+    },
+    {
+      "category": "Science",
+      "text": "Lasers emit coherent light."
+    },
+    {
+      "category": "Science",
+      "text": "A prism can split white light."
+    },
+    {
+      "category": "Science",
+      "text": "Pressure increases with underwater depth."
+    },
+    {
+      "category": "Science",
+      "text": "Vaccines train the immune system."
+    },
+    {
+      "category": "Science",
+      "text": "Earth has a magnetic field."
+    },
+    {
+      "category": "Science",
+      "text": "Plate tectonics moves continents."
+    },
+    {
+      "category": "Science",
+      "text": "Fossils preserve traces of ancient life."
+    },
+    {
+      "category": "Science",
+      "text": "Energy is conserved in closed systems."
+    },
+    {
+      "category": "Science",
+      "text": "Ecosystems include organisms and environment."
+    },
+    {
+      "category": "Science",
+      "text": "Enzymes help reactions in cells."
+    },
+    {
+      "category": "Science",
+      "text": "Water boils at different temperatures under different pressures."
+    },
+    {
+      "category": "Science",
+      "text": "Acids can react with bases."
+    },
+    {
+      "category": "Science",
+      "text": "Microscopes reveal tiny structures."
+    },
+    {
+      "category": "Science",
+      "text": "Telescopes collect distant light."
+    },
+    {
+      "category": "Science",
+      "text": "Radio waves are electromagnetic radiation."
+    },
+    {
+      "category": "Science",
+      "text": "Static electricity can build on surfaces."
+    },
+    {
+      "category": "Science",
+      "text": "The metric system is standard in science."
+    },
+    {
+      "category": "Science",
+      "text": "A molecule is made of bonded atoms."
+    },
+    {
+      "category": "Science",
+      "text": "Evaporation cools surfaces."
+    },
+    {
+      "category": "Science",
+      "text": "Condensation forms clouds and dew."
+    },
+    {
+      "category": "Science",
+      "text": "Diffusion spreads particles from high concentration to low."
+    },
+    {
+      "category": "Science",
+      "text": "Density compares mass and volume."
+    },
+    {
+      "category": "Science",
+      "text": "Osmosis moves water across membranes."
+    },
+    {
+      "category": "Science",
+      "text": "Inertia resists changes in motion."
+    },
+    {
+      "category": "Science",
+      "text": "Refraction bends light through materials."
+    },
+    {
+      "category": "Science",
+      "text": "Electric current is moving charge."
+    },
+    {
+      "category": "Technology",
+      "text": "The internet began as a research network."
+    },
+    {
+      "category": "Technology",
+      "text": "Fiber optic cables transmit data with light."
+    },
+    {
+      "category": "Technology",
+      "text": "GPS uses signals from satellites."
+    },
+    {
+      "category": "Technology",
+      "text": "Bluetooth was named after a Viking king."
+    },
+    {
+      "category": "Technology",
+      "text": "QR codes can store text and links."
+    },
+    {
+      "category": "Technology",
+      "text": "Touchscreens detect electrical changes or pressure."
+    },
+    {
+      "category": "Technology",
+      "text": "Solid-state drives have no spinning disks."
+    },
+    {
+      "category": "Technology",
+      "text": "Open-source software can be inspected and modified."
+    },
+    {
+      "category": "Technology",
+      "text": "The first computer mouse was made of wood."
+    },
+    {
+      "category": "Technology",
+      "text": "Wi-Fi uses radio waves."
+    },
+    {
+      "category": "Technology",
+      "text": "Search engines crawl pages to build indexes."
+    },
+    {
+      "category": "Technology",
+      "text": "Encryption scrambles data for authorized readers."
+    },
+    {
+      "category": "Technology",
+      "text": "Machine learning finds patterns in data."
+    },
+    {
+      "category": "Technology",
+      "text": "A pixel is a screen's smallest addressable picture element."
+    },
+    {
+      "category": "Technology",
+      "text": "Cloud computing uses remote servers."
+    },
+    {
+      "category": "Technology",
+      "text": "Email predates the public web."
+    },
+    {
+      "category": "Technology",
+      "text": "Two-factor authentication adds proof of identity."
+    },
+    {
+      "category": "Technology",
+      "text": "Browsers render HTML, CSS, and JavaScript."
+    },
+    {
+      "category": "Technology",
+      "text": "Responsive design adapts to screen size."
+    },
+    {
+      "category": "Technology",
+      "text": "Servers send data to clients."
+    },
+    {
+      "category": "Technology",
+      "text": "Domain names map to internet addresses."
+    },
+    {
+      "category": "Technology",
+      "text": "Cookies store small pieces of website data."
+    },
+    {
+      "category": "Technology",
+      "text": "Compression reduces file size."
+    },
+    {
+      "category": "Technology",
+      "text": "Caching can make websites load faster."
+    },
+    {
+      "category": "Technology",
+      "text": "Databases store organized information."
+    },
+    {
+      "category": "Technology",
+      "text": "APIs let software systems communicate."
+    },
+    {
+      "category": "Technology",
+      "text": "Robots use sensors and software."
+    },
+    {
+      "category": "Technology",
+      "text": "Drones use onboard stabilization."
+    },
+    {
+      "category": "Technology",
+      "text": "The first text message was sent in 1992."
+    },
+    {
+      "category": "Technology",
+      "text": "USB means Universal Serial Bus."
+    },
+    {
+      "category": "Technology",
+      "text": "Lithium-ion batteries power many phones."
+    },
+    {
+      "category": "Technology",
+      "text": "Neural networks use connected processing units."
+    },
+    {
+      "category": "Technology",
+      "text": "Computer chips contain billions of transistors."
+    },
+    {
+      "category": "Technology",
+      "text": "A transistor acts like a tiny switch."
+    },
+    {
+      "category": "Technology",
+      "text": "Firewalls filter network traffic."
+    },
+    {
+      "category": "Technology",
+      "text": "Latency is delay before data arrives."
+    },
+    {
+      "category": "Technology",
+      "text": "Bandwidth measures data capacity."
+    },
+    {
+      "category": "Technology",
+      "text": "Version control tracks file changes."
+    },
+    {
+      "category": "Technology",
+      "text": "CAPTCHAs try to separate humans from bots."
+    },
+    {
+      "category": "Technology",
+      "text": "Satellites support maps and weather data."
+    },
+    {
+      "category": "Technology",
+      "text": "A kilobyte is roughly one thousand bytes."
+    },
+    {
+      "category": "Technology",
+      "text": "A router directs network traffic."
+    },
+    {
+      "category": "Technology",
+      "text": "A compiler turns source code into executable instructions."
+    },
+    {
+      "category": "Technology",
+      "text": "A sensor converts physical input into data."
+    },
+    {
+      "category": "Technology",
+      "text": "An algorithm is a step-by-step method."
+    },
+    {
+      "category": "Technology",
+      "text": "A data center houses many servers."
+    },
+    {
+      "category": "Technology",
+      "text": "A GPU accelerates graphics and parallel work."
+    },
+    {
+      "category": "Technology",
+      "text": "HTTPS encrypts web traffic."
+    },
+    {
+      "category": "Technology",
+      "text": "A backup protects against data loss."
+    },
+    {
+      "category": "Technology",
+      "text": "Edge computing moves processing closer to users."
+    },
+    {
+      "category": "History",
+      "text": "The Great Pyramid of Giza still stands."
+    },
+    {
+      "category": "History",
+      "text": "The printing press helped books spread widely."
+    },
+    {
+      "category": "History",
+      "text": "Roman roads connected distant provinces."
+    },
+    {
+      "category": "History",
+      "text": "The Silk Road moved goods and ideas."
+    },
+    {
+      "category": "History",
+      "text": "The Rosetta Stone helped decode hieroglyphs."
+    },
+    {
+      "category": "History",
+      "text": "The Library of Alexandria was famous in antiquity."
+    },
+    {
+      "category": "History",
+      "text": "Steam engines powered the Industrial Revolution."
+    },
+    {
+      "category": "History",
+      "text": "The first modern Olympics were held in Athens."
+    },
+    {
+      "category": "History",
+      "text": "The Magna Carta was signed in 1215."
+    },
+    {
+      "category": "History",
+      "text": "Ancient Mesopotamia used cuneiform."
+    },
+    {
+      "category": "History",
+      "text": "The Mayan civilization developed advanced calendars."
+    },
+    {
+      "category": "History",
+      "text": "The Inca built roads through the Andes."
+    },
+    {
+      "category": "History",
+      "text": "Vikings reached North America centuries before Columbus."
+    },
+    {
+      "category": "History",
+      "text": "The Black Death reshaped medieval Europe."
+    },
+    {
+      "category": "History",
+      "text": "The Renaissance renewed art and science."
+    },
+    {
+      "category": "History",
+      "text": "The telegraph transformed long-distance communication."
+    },
+    {
+      "category": "History",
+      "text": "The Wright brothers flew in 1903."
+    },
+    {
+      "category": "History",
+      "text": "World War I began in 1914."
+    },
+    {
+      "category": "History",
+      "text": "World War II ended in 1945."
+    },
+    {
+      "category": "History",
+      "text": "The United Nations was founded in 1945."
+    },
+    {
+      "category": "History",
+      "text": "The first moon landing happened in 1969."
+    },
+    {
+      "category": "History",
+      "text": "The Berlin Wall fell in 1989."
+    },
+    {
+      "category": "History",
+      "text": "The Bronze Age followed the Stone Age in many regions."
+    },
+    {
+      "category": "History",
+      "text": "Ancient Greece influenced philosophy and democracy."
+    },
+    {
+      "category": "History",
+      "text": "The Indus Valley Civilization had planned cities."
+    },
+    {
+      "category": "History",
+      "text": "Paper was invented in ancient China."
+    },
+    {
+      "category": "History",
+      "text": "Gunpowder was developed in China."
+    },
+    {
+      "category": "History",
+      "text": "The compass changed navigation."
+    },
+    {
+      "category": "History",
+      "text": "The Ottoman Empire lasted for centuries."
+    },
+    {
+      "category": "History",
+      "text": "The Taj Mahal was built in the 17th century."
+    },
+    {
+      "category": "History",
+      "text": "Hammurabi's Code is an old legal code."
+    },
+    {
+      "category": "History",
+      "text": "The Suez Canal opened in 1869."
+    },
+    {
+      "category": "History",
+      "text": "The Panama Canal opened in 1914."
+    },
+    {
+      "category": "History",
+      "text": "The first newspapers appeared before radio."
+    },
+    {
+      "category": "History",
+      "text": "The American Declaration of Independence was adopted in 1776."
+    },
+    {
+      "category": "History",
+      "text": "The French Revolution began in 1789."
+    },
+    {
+      "category": "History",
+      "text": "The Great Fire of London occurred in 1666."
+    },
+    {
+      "category": "History",
+      "text": "Ancient Egyptians used papyrus."
+    },
+    {
+      "category": "History",
+      "text": "The Colosseum hosted public events in Rome."
+    },
+    {
+      "category": "History",
+      "text": "The first postage stamp appeared in 1840."
+    },
+    {
+      "category": "History",
+      "text": "The wheel predates many writing systems."
+    },
+    {
+      "category": "History",
+      "text": "The Phoenicians spread an influential alphabet."
+    },
+    {
+      "category": "History",
+      "text": "The Mongol Empire connected huge trade routes."
+    },
+    {
+      "category": "History",
+      "text": "The Song dynasty pioneered many technologies."
+    },
+    {
+      "category": "History",
+      "text": "The Enlightenment shaped modern political thought."
+    },
+    {
+      "category": "History",
+      "text": "The Industrial Revolution changed cities."
+    },
+    {
+      "category": "History",
+      "text": "Railways transformed land travel."
+    },
+    {
+      "category": "History",
+      "text": "Photography changed historical documentation."
+    },
+    {
+      "category": "History",
+      "text": "Radio changed mass communication."
+    },
+    {
+      "category": "History",
+      "text": "The internet changed access to information."
+    },
+    {
+      "category": "Geography",
+      "text": "The Pacific is Earth's largest ocean."
+    },
+    {
+      "category": "Geography",
+      "text": "Mount Everest is the highest mountain above sea level."
+    },
+    {
+      "category": "Geography",
+      "text": "The Nile is among the world's longest rivers."
+    },
+    {
+      "category": "Geography",
+      "text": "The Amazon rainforest spans several countries."
+    },
+    {
+      "category": "Geography",
+      "text": "Antarctica is the coldest continent."
+    },
+    {
+      "category": "Geography",
+      "text": "Australia is both a country and a continent."
+    },
+    {
+      "category": "Geography",
+      "text": "The Sahara is the largest hot desert."
+    },
+    {
+      "category": "Geography",
+      "text": "The Dead Sea is extremely salty."
+    },
+    {
+      "category": "Geography",
+      "text": "Iceland sits on the Mid-Atlantic Ridge."
+    },
+    {
+      "category": "Geography",
+      "text": "The Himalayas are still rising slowly."
+    },
+    {
+      "category": "Geography",
+      "text": "Greenland is the world's largest island."
+    },
+    {
+      "category": "Geography",
+      "text": "Russia spans eleven time zones."
+    },
+    {
+      "category": "Geography",
+      "text": "The equator divides Earth into hemispheres."
+    },
+    {
+      "category": "Geography",
+      "text": "The Andes are the longest continental mountain range."
+    },
+    {
+      "category": "Geography",
+      "text": "The Great Barrier Reef is the largest coral reef system."
+    },
+    {
+      "category": "Geography",
+      "text": "Lake Baikal is the deepest freshwater lake."
+    },
+    {
+      "category": "Geography",
+      "text": "The Mariana Trench is the deepest ocean trench."
+    },
+    {
+      "category": "Geography",
+      "text": "The Mediterranean connects to the Atlantic."
+    },
+    {
+      "category": "Geography",
+      "text": "Japan is an island nation."
+    },
+    {
+      "category": "Geography",
+      "text": "New Zealand has two main islands."
+    },
+    {
+      "category": "Geography",
+      "text": "The Alps cross several European countries."
+    },
+    {
+      "category": "Geography",
+      "text": "The Gobi Desert is in Asia."
+    },
+    {
+      "category": "Geography",
+      "text": "The Arctic is ocean surrounded by land."
+    },
+    {
+      "category": "Geography",
+      "text": "Antarctica is land surrounded by ocean."
+    },
+    {
+      "category": "Geography",
+      "text": "The Prime Meridian passes through Greenwich."
+    },
+    {
+      "category": "Geography",
+      "text": "Latitude measures north and south."
+    },
+    {
+      "category": "Geography",
+      "text": "Longitude measures east and west."
+    },
+    {
+      "category": "Geography",
+      "text": "The Amazon River carries enormous water volume."
+    },
+    {
+      "category": "Geography",
+      "text": "The Caspian Sea is an inland lake."
+    },
+    {
+      "category": "Geography",
+      "text": "Madagascar has many unique species."
+    },
+    {
+      "category": "Geography",
+      "text": "The Mekong flows through multiple countries."
+    },
+    {
+      "category": "Geography",
+      "text": "The Danube crosses or borders many nations."
+    },
+    {
+      "category": "Geography",
+      "text": "The Great Lakes hold much surface freshwater."
+    },
+    {
+      "category": "Geography",
+      "text": "The Atacama is very dry."
+    },
+    {
+      "category": "Geography",
+      "text": "Monaco is one of the smallest countries."
+    },
+    {
+      "category": "Geography",
+      "text": "Indonesia has thousands of islands."
+    },
+    {
+      "category": "Geography",
+      "text": "The Maldives is made of coral islands."
+    },
+    {
+      "category": "Geography",
+      "text": "The Red Sea lies between Africa and Arabia."
+    },
+    {
+      "category": "Geography",
+      "text": "The Baltic Sea is in northern Europe."
+    },
+    {
+      "category": "Geography",
+      "text": "The Rockies stretch across western North America."
+    },
+    {
+      "category": "Geography",
+      "text": "Patagonia lies in southern South America."
+    },
+    {
+      "category": "Geography",
+      "text": "The Kalahari covers parts of southern Africa."
+    },
+    {
+      "category": "Geography",
+      "text": "The Congo Basin is a major rainforest region."
+    },
+    {
+      "category": "Geography",
+      "text": "The Arabian Peninsula contains large deserts."
+    },
+    {
+      "category": "Geography",
+      "text": "The Bosporus links the Black Sea and the Sea of Marmara."
+    },
+    {
+      "category": "Geography",
+      "text": "The Strait of Gibraltar links the Atlantic and Mediterranean."
+    },
+    {
+      "category": "Geography",
+      "text": "The Ring of Fire has many volcanoes."
+    },
+    {
+      "category": "Geography",
+      "text": "The Dead Sea sits below sea level."
+    },
+    {
+      "category": "Geography",
+      "text": "The Tibetan Plateau is called the roof of the world."
+    },
+    {
+      "category": "Geography",
+      "text": "The Amazon basin is Earth's largest drainage basin."
+    },
+    {
+      "category": "Human Body",
+      "text": "The brain uses a large share of body energy."
+    },
+    {
+      "category": "Human Body",
+      "text": "Bones can repair themselves after fractures."
+    },
+    {
+      "category": "Human Body",
+      "text": "Skin is the body's largest organ."
+    },
+    {
+      "category": "Human Body",
+      "text": "The small intestine is longer than the large intestine."
+    },
+    {
+      "category": "Human Body",
+      "text": "Red blood cells carry oxygen."
+    },
+    {
+      "category": "Human Body",
+      "text": "White blood cells fight infection."
+    },
+    {
+      "category": "Human Body",
+      "text": "The liver can regenerate tissue."
+    },
+    {
+      "category": "Human Body",
+      "text": "The heart has four chambers."
+    },
+    {
+      "category": "Human Body",
+      "text": "Lungs exchange oxygen and carbon dioxide."
+    },
+    {
+      "category": "Human Body",
+      "text": "The retina detects light."
+    },
+    {
+      "category": "Human Body",
+      "text": "Taste buds are replaced over time."
+    },
+    {
+      "category": "Human Body",
+      "text": "Fingerprints are unique."
+    },
+    {
+      "category": "Human Body",
+      "text": "The body contains trillions of cells."
+    },
+    {
+      "category": "Human Body",
+      "text": "Muscles work by contracting."
+    },
+    {
+      "category": "Human Body",
+      "text": "The skeleton supports movement."
+    },
+    {
+      "category": "Human Body",
+      "text": "Teeth are covered with enamel."
+    },
+    {
+      "category": "Human Body",
+      "text": "The stomach uses acid to digest food."
+    },
+    {
+      "category": "Human Body",
+      "text": "Kidneys filter blood."
+    },
+    {
+      "category": "Human Body",
+      "text": "The pancreas helps regulate blood sugar."
+    },
+    {
+      "category": "Human Body",
+      "text": "The immune system remembers threats."
+    },
+    {
+      "category": "Human Body",
+      "text": "Hair grows from follicles."
+    },
+    {
+      "category": "Human Body",
+      "text": "Nails are made of keratin."
+    },
+    {
+      "category": "Human Body",
+      "text": "The ear helps hearing and balance."
+    },
+    {
+      "category": "Human Body",
+      "text": "The tongue helps taste and speech."
+    },
+    {
+      "category": "Human Body",
+      "text": "The spinal cord carries signals."
+    },
+    {
+      "category": "Human Body",
+      "text": "Sweat regulates temperature."
+    },
+    {
+      "category": "Human Body",
+      "text": "Blood vessels form a transport network."
+    },
+    {
+      "category": "Human Body",
+      "text": "The diaphragm helps breathing."
+    },
+    {
+      "category": "Human Body",
+      "text": "The cornea helps focus light."
+    },
+    {
+      "category": "Human Body",
+      "text": "Sunlight helps the body make vitamin D."
+    },
+    {
+      "category": "Human Body",
+      "text": "Bone marrow makes blood cells."
+    },
+    {
+      "category": "Human Body",
+      "text": "The nose warms and filters air."
+    },
+    {
+      "category": "Human Body",
+      "text": "The body has more than 600 muscles."
+    },
+    {
+      "category": "Human Body",
+      "text": "Saliva begins digestion."
+    },
+    {
+      "category": "Human Body",
+      "text": "The colon absorbs water."
+    },
+    {
+      "category": "Human Body",
+      "text": "The thyroid helps regulate metabolism."
+    },
+    {
+      "category": "Human Body",
+      "text": "The pituitary influences hormones."
+    },
+    {
+      "category": "Human Body",
+      "text": "Cartilage cushions joints."
+    },
+    {
+      "category": "Human Body",
+      "text": "Ligaments connect bones."
+    },
+    {
+      "category": "Human Body",
+      "text": "Tendons connect muscles to bones."
+    },
+    {
+      "category": "Human Body",
+      "text": "The rib cage protects heart and lungs."
+    },
+    {
+      "category": "Human Body",
+      "text": "The body repairs tiny injuries constantly."
+    },
+    {
+      "category": "Human Body",
+      "text": "Neurons transmit electrical signals."
+    },
+    {
+      "category": "Human Body",
+      "text": "The cerebellum helps coordinate movement."
+    },
+    {
+      "category": "Human Body",
+      "text": "The pupil changes size with light."
+    },
+    {
+      "category": "Human Body",
+      "text": "The heart has its own electrical rhythm."
+    },
+    {
+      "category": "Human Body",
+      "text": "Blood plasma is mostly water."
+    },
+    {
+      "category": "Human Body",
+      "text": "The appendix is part of the immune system."
+    },
+    {
+      "category": "Human Body",
+      "text": "The vocal cords vibrate to make sound."
+    },
+    {
+      "category": "Human Body",
+      "text": "The body maintains a narrow temperature range."
+    },
+    {
+      "category": "Psychology",
+      "text": "Sleep helps consolidate memory."
+    },
+    {
+      "category": "Psychology",
+      "text": "Smells can trigger vivid memories."
+    },
+    {
+      "category": "Psychology",
+      "text": "People mirror body language."
+    },
+    {
+      "category": "Psychology",
+      "text": "Music can influence mood."
+    },
+    {
+      "category": "Psychology",
+      "text": "Clear goals help attention."
+    },
+    {
+      "category": "Psychology",
+      "text": "The brain detects faces quickly."
+    },
+    {
+      "category": "Psychology",
+      "text": "Habits form through repeated cues."
+    },
+    {
+      "category": "Psychology",
+      "text": "Gratitude can improve well-being."
+    },
+    {
+      "category": "Psychology",
+      "text": "Decision fatigue affects choices."
+    },
+    {
+      "category": "Psychology",
+      "text": "Emotional events are remembered strongly."
+    },
+    {
+      "category": "Psychology",
+      "text": "Curiosity improves learning."
+    },
+    {
+      "category": "Psychology",
+      "text": "Social connection supports mental health."
+    },
+    {
+      "category": "Psychology",
+      "text": "The placebo effect shows expectation matters."
+    },
+    {
+      "category": "Psychology",
+      "text": "Color can affect perception."
+    },
+    {
+      "category": "Psychology",
+      "text": "People often prefer familiar things."
+    },
+    {
+      "category": "Psychology",
+      "text": "The brain fills missing visual information."
+    },
+    {
+      "category": "Psychology",
+      "text": "Short breaks restore focus."
+    },
+    {
+      "category": "Psychology",
+      "text": "Stories help memory."
+    },
+    {
+      "category": "Psychology",
+      "text": "First impressions form quickly."
+    },
+    {
+      "category": "Psychology",
+      "text": "Laughter can reduce stress."
+    },
+    {
+      "category": "Psychology",
+      "text": "Mindfulness trains present attention."
+    },
+    {
+      "category": "Psychology",
+      "text": "Small steps make goals easier."
+    },
+    {
+      "category": "Psychology",
+      "text": "Praise can influence motivation."
+    },
+    {
+      "category": "Psychology",
+      "text": "Choice overload makes decisions harder."
+    },
+    {
+      "category": "Psychology",
+      "text": "Feedback improves learning."
+    },
+    {
+      "category": "Psychology",
+      "text": "The Zeigarnik effect favors unfinished tasks."
+    },
+    {
+      "category": "Psychology",
+      "text": "Facial expressions can influence emotion."
+    },
+    {
+      "category": "Psychology",
+      "text": "Group norms shape behavior."
+    },
+    {
+      "category": "Psychology",
+      "text": "People overestimate how much others notice them."
+    },
+    {
+      "category": "Psychology",
+      "text": "Novelty attracts attention."
+    },
+    {
+      "category": "Psychology",
+      "text": "Repetition increases familiarity."
+    },
+    {
+      "category": "Psychology",
+      "text": "Mental imagery helps skill practice."
+    },
+    {
+      "category": "Psychology",
+      "text": "Stress can narrow attention."
+    },
+    {
+      "category": "Psychology",
+      "text": "Confidence and accuracy can differ."
+    },
+    {
+      "category": "Psychology",
+      "text": "People remember beginnings and endings."
+    },
+    {
+      "category": "Psychology",
+      "text": "Empathy helps understand feelings."
+    },
+    {
+      "category": "Psychology",
+      "text": "Awe can increase connection."
+    },
+    {
+      "category": "Psychology",
+      "text": "Motivation often follows first action."
+    },
+    {
+      "category": "Psychology",
+      "text": "Clear feedback reduces uncertainty."
+    },
+    {
+      "category": "Psychology",
+      "text": "Routines reduce cognitive load."
+    },
+    {
+      "category": "Psychology",
+      "text": "The brain predicts what may happen next."
+    },
+    {
+      "category": "Psychology",
+      "text": "Conversation builds trust through small signals."
+    },
+    {
+      "category": "Psychology",
+      "text": "Active listening improves connection."
+    },
+    {
+      "category": "Psychology",
+      "text": "Names are easier to remember when repeated."
+    },
+    {
+      "category": "Psychology",
+      "text": "Silence can make people reflect."
+    },
+    {
+      "category": "Psychology",
+      "text": "Shared laughter can bond strangers."
+    },
+    {
+      "category": "Psychology",
+      "text": "Open questions encourage longer conversations."
+    },
+    {
+      "category": "Psychology",
+      "text": "People like feeling understood."
+    },
+    {
+      "category": "Psychology",
+      "text": "Kindness can spread through groups."
+    },
+    {
+      "category": "Psychology",
+      "text": "Curiosity lowers social friction."
+    },
+    {
+      "category": "Nature",
+      "text": "Trees release chemical stress signals."
+    },
+    {
+      "category": "Nature",
+      "text": "Coral reefs support many species."
+    },
+    {
+      "category": "Nature",
+      "text": "Mushrooms are fruiting bodies of fungi."
+    },
+    {
+      "category": "Nature",
+      "text": "Some plants close leaves when touched."
+    },
+    {
+      "category": "Nature",
+      "text": "Mangroves protect coastlines."
+    },
+    {
+      "category": "Nature",
+      "text": "Peatlands store carbon."
+    },
+    {
+      "category": "Nature",
+      "text": "Rivers shape landscapes."
+    },
+    {
+      "category": "Nature",
+      "text": "Volcanoes can create land."
+    },
+    {
+      "category": "Nature",
+      "text": "Glaciers carve valleys."
+    },
+    {
+      "category": "Nature",
+      "text": "Soil contains many living organisms."
+    },
+    {
+      "category": "Nature",
+      "text": "Lightning can help fix nitrogen."
+    },
+    {
+      "category": "Nature",
+      "text": "Fog can water plants."
+    },
+    {
+      "category": "Nature",
+      "text": "Wildfires renew some ecosystems."
+    },
+    {
+      "category": "Nature",
+      "text": "Seeds can stay dormant for years."
+    },
+    {
+      "category": "Nature",
+      "text": "Pollen helps plants reproduce."
+    },
+    {
+      "category": "Nature",
+      "text": "Lichens are partnerships."
+    },
+    {
+      "category": "Nature",
+      "text": "Rainforests recycle moisture."
+    },
+    {
+      "category": "Nature",
+      "text": "Desert plants conserve water."
+    },
+    {
+      "category": "Nature",
+      "text": "Tides are influenced by Moon and Sun."
+    },
+    {
+      "category": "Nature",
+      "text": "Wetlands filter water naturally."
+    },
+    {
+      "category": "Nature",
+      "text": "Mountains create rain shadows."
+    },
+    {
+      "category": "Nature",
+      "text": "Permafrost stays frozen for years."
+    },
+    {
+      "category": "Nature",
+      "text": "Clouds form from condensed vapor."
+    },
+    {
+      "category": "Nature",
+      "text": "Snowflakes form many shapes."
+    },
+    {
+      "category": "Nature",
+      "text": "The water cycle moves water through Earth systems."
+    },
+    {
+      "category": "Nature",
+      "text": "Some flowers track the Sun."
+    },
+    {
+      "category": "Nature",
+      "text": "Prairies have deep roots."
+    },
+    {
+      "category": "Nature",
+      "text": "Kelp forests grow underwater."
+    },
+    {
+      "category": "Nature",
+      "text": "Algae produce much oxygen."
+    },
+    {
+      "category": "Nature",
+      "text": "Mosses lack true roots."
+    },
+    {
+      "category": "Nature",
+      "text": "Caves can form in limestone."
+    },
+    {
+      "category": "Nature",
+      "text": "Earthquakes release fault energy."
+    },
+    {
+      "category": "Nature",
+      "text": "Tornadoes form from rotating storms."
+    },
+    {
+      "category": "Nature",
+      "text": "Hurricanes feed on warm oceans."
+    },
+    {
+      "category": "Nature",
+      "text": "Erosion wears rock away."
+    },
+    {
+      "category": "Nature",
+      "text": "Sedimentary rocks preserve fossils."
+    },
+    {
+      "category": "Nature",
+      "text": "Crater lakes can form in calderas."
+    },
+    {
+      "category": "Nature",
+      "text": "Salt flats form through evaporation."
+    },
+    {
+      "category": "Nature",
+      "text": "Bioluminescence creates natural light."
+    },
+    {
+      "category": "Nature",
+      "text": "The deep ocean has ecosystems without sunlight."
+    },
+    {
+      "category": "Nature",
+      "text": "Tree rings can record climate patterns."
+    },
+    {
+      "category": "Nature",
+      "text": "Pollinators support many food crops."
+    },
+    {
+      "category": "Nature",
+      "text": "Ferns reproduce with spores."
+    },
+    {
+      "category": "Nature",
+      "text": "Tundra has short growing seasons."
+    },
+    {
+      "category": "Nature",
+      "text": "Savannas mix grassland and scattered trees."
+    },
+    {
+      "category": "Nature",
+      "text": "Coral bleaching happens under stress."
+    },
+    {
+      "category": "Nature",
+      "text": "Deltas form where rivers meet still water."
+    },
+    {
+      "category": "Nature",
+      "text": "Meanders are bends in rivers."
+    },
+    {
+      "category": "Nature",
+      "text": "Estuaries mix fresh and salt water."
+    },
+    {
+      "category": "Nature",
+      "text": "Ecosystems recover at different speeds."
+    },
+    {
+      "category": "Animals",
+      "text": "Elephants can recognize themselves in mirrors."
+    },
+    {
+      "category": "Animals",
+      "text": "Dolphins use complex sounds."
+    },
+    {
+      "category": "Animals",
+      "text": "Bees communicate with dances."
+    },
+    {
+      "category": "Animals",
+      "text": "Penguins cannot fly."
+    },
+    {
+      "category": "Animals",
+      "text": "Crows can use tools."
+    },
+    {
+      "category": "Animals",
+      "text": "Turtles can live for decades."
+    },
+    {
+      "category": "Animals",
+      "text": "Sharks are ancient animals."
+    },
+    {
+      "category": "Animals",
+      "text": "Hummingbirds can hover."
+    },
+    {
+      "category": "Animals",
+      "text": "Bats are mammals that fly."
+    },
+    {
+      "category": "Animals",
+      "text": "Frogs absorb water through skin."
+    },
+    {
+      "category": "Animals",
+      "text": "Chameleons change color for signals and temperature."
+    },
+    {
+      "category": "Animals",
+      "text": "Kangaroos carry young in pouches."
+    },
+    {
+      "category": "Animals",
+      "text": "Ant colonies can be huge."
+    },
+    {
+      "category": "Animals",
+      "text": "Termites build complex nests."
+    },
+    {
+      "category": "Animals",
+      "text": "Whales are mammals."
+    },
+    {
+      "category": "Animals",
+      "text": "Blue whales are the largest known animals."
+    },
+    {
+      "category": "Animals",
+      "text": "Sea otters hold hands while resting."
+    },
+    {
+      "category": "Animals",
+      "text": "Giraffes have seven neck vertebrae."
+    },
+    {
+      "category": "Animals",
+      "text": "Zebra stripe patterns are unique."
+    },
+    {
+      "category": "Animals",
+      "text": "Polar bears have black skin."
+    },
+    {
+      "category": "Animals",
+      "text": "Owls rotate their heads far."
+    },
+    {
+      "category": "Animals",
+      "text": "Salmon return to birthplace streams."
+    },
+    {
+      "category": "Animals",
+      "text": "Butterflies taste with their feet."
+    },
+    {
+      "category": "Animals",
+      "text": "Dragonflies are agile predators."
+    },
+    {
+      "category": "Animals",
+      "text": "Starfish can regenerate arms."
+    },
+    {
+      "category": "Animals",
+      "text": "Jellyfish have no bones."
+    },
+    {
+      "category": "Animals",
+      "text": "Birds migrate long distances."
+    },
+    {
+      "category": "Animals",
+      "text": "Spiders are arachnids."
+    },
+    {
+      "category": "Animals",
+      "text": "Fish groups are called schools."
+    },
+    {
+      "category": "Animals",
+      "text": "Ravens solve complex problems."
+    },
+    {
+      "category": "Animals",
+      "text": "Dogs have powerful smell."
+    },
+    {
+      "category": "Animals",
+      "text": "Cats use whiskers to sense space."
+    },
+    {
+      "category": "Animals",
+      "text": "Horses can sleep standing."
+    },
+    {
+      "category": "Animals",
+      "text": "Cheetahs are fast over short distances."
+    },
+    {
+      "category": "Animals",
+      "text": "Sloths conserve energy."
+    },
+    {
+      "category": "Animals",
+      "text": "Koalas eat eucalyptus."
+    },
+    {
+      "category": "Animals",
+      "text": "Pandas mostly eat bamboo."
+    },
+    {
+      "category": "Animals",
+      "text": "Flamingos get color from food pigments."
+    },
+    {
+      "category": "Animals",
+      "text": "Crocodiles are ancient reptiles."
+    },
+    {
+      "category": "Animals",
+      "text": "Mantis shrimp strike quickly."
+    },
+    {
+      "category": "Animals",
+      "text": "Clownfish live among anemones."
+    },
+    {
+      "category": "Animals",
+      "text": "Leafcutter ants farm fungus."
+    },
+    {
+      "category": "Animals",
+      "text": "Beavers build dams."
+    },
+    {
+      "category": "Animals",
+      "text": "Meerkats use sentries."
+    },
+    {
+      "category": "Animals",
+      "text": "Orcas hunt cooperatively."
+    },
+    {
+      "category": "Animals",
+      "text": "Parrots can mimic sounds."
+    },
+    {
+      "category": "Animals",
+      "text": "Gorillas live in social groups."
+    },
+    {
+      "category": "Animals",
+      "text": "Arctic foxes change coat color."
+    },
+    {
+      "category": "Animals",
+      "text": "Camels store fat in humps."
+    },
+    {
+      "category": "Animals",
+      "text": "Honeybees can recognize patterns."
+    },
+    {
+      "category": "Oceans",
+      "text": "The ocean covers most of Earth's surface."
+    },
+    {
+      "category": "Oceans",
+      "text": "Most ocean water is unexplored by humans."
+    },
+    {
+      "category": "Oceans",
+      "text": "The deep sea is dark and cold."
+    },
+    {
+      "category": "Oceans",
+      "text": "Hydrothermal vents support unusual life."
+    },
+    {
+      "category": "Oceans",
+      "text": "Ocean currents move heat around Earth."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Gulf Stream affects climate."
+    },
+    {
+      "category": "Oceans",
+      "text": "Coral reefs are biodiversity hotspots."
+    },
+    {
+      "category": "Oceans",
+      "text": "Kelp forests shelter marine animals."
+    },
+    {
+      "category": "Oceans",
+      "text": "Phytoplankton produce much oxygen."
+    },
+    {
+      "category": "Oceans",
+      "text": "Tides are driven by gravity."
+    },
+    {
+      "category": "Oceans",
+      "text": "The ocean stores carbon."
+    },
+    {
+      "category": "Oceans",
+      "text": "Waves are energy moving through water."
+    },
+    {
+      "category": "Oceans",
+      "text": "Tsunamis can cross entire oceans."
+    },
+    {
+      "category": "Oceans",
+      "text": "Sea level changes over time."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Mariana Trench is extremely deep."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Sargasso Sea is named for floating seaweed."
+    },
+    {
+      "category": "Oceans",
+      "text": "Mangroves protect coasts."
+    },
+    {
+      "category": "Oceans",
+      "text": "Seagrass meadows store carbon."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Great Barrier Reef is visible from space in some conditions."
+    },
+    {
+      "category": "Oceans",
+      "text": "Ocean salinity varies by region."
+    },
+    {
+      "category": "Oceans",
+      "text": "Whale songs can travel long distances."
+    },
+    {
+      "category": "Oceans",
+      "text": "Some deep-sea fish make their own light."
+    },
+    {
+      "category": "Oceans",
+      "text": "Octopuses are intelligent invertebrates."
+    },
+    {
+      "category": "Oceans",
+      "text": "Squid use jet propulsion."
+    },
+    {
+      "category": "Oceans",
+      "text": "Sea turtles migrate across oceans."
+    },
+    {
+      "category": "Oceans",
+      "text": "Plankton drift with currents."
+    },
+    {
+      "category": "Oceans",
+      "text": "Estuaries are nurseries for many species."
+    },
+    {
+      "category": "Oceans",
+      "text": "Upwelling brings nutrients to the surface."
+    },
+    {
+      "category": "Oceans",
+      "text": "The ocean has underwater mountains."
+    },
+    {
+      "category": "Oceans",
+      "text": "Mid-ocean ridges form new crust."
+    },
+    {
+      "category": "Oceans",
+      "text": "Sea ice reflects sunlight."
+    },
+    {
+      "category": "Oceans",
+      "text": "Polar oceans support krill."
+    },
+    {
+      "category": "Oceans",
+      "text": "Coral bleaching can follow heat stress."
+    },
+    {
+      "category": "Oceans",
+      "text": "Saltwater freezes below zero Celsius."
+    },
+    {
+      "category": "Oceans",
+      "text": "The ocean absorbs sound differently than air."
+    },
+    {
+      "category": "Oceans",
+      "text": "Submarines use sonar."
+    },
+    {
+      "category": "Oceans",
+      "text": "Marine snow feeds deep-sea life."
+    },
+    {
+      "category": "Oceans",
+      "text": "The twilight zone holds many organisms."
+    },
+    {
+      "category": "Oceans",
+      "text": "Some sharks sense electric fields."
+    },
+    {
+      "category": "Oceans",
+      "text": "Tuna are strong ocean swimmers."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Pacific is the largest ocean."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Atlantic separates the Americas from Europe and Africa."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Indian Ocean borders India."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Southern Ocean surrounds Antarctica."
+    },
+    {
+      "category": "Oceans",
+      "text": "The Arctic Ocean is the smallest ocean."
+    },
+    {
+      "category": "Oceans",
+      "text": "Ocean trenches form near subduction zones."
+    },
+    {
+      "category": "Oceans",
+      "text": "Pearls form inside some mollusks."
+    },
+    {
+      "category": "Oceans",
+      "text": "The ocean floor has plains and canyons."
+    },
+    {
+      "category": "Oceans",
+      "text": "Red tides can be harmful algal blooms."
+    },
+    {
+      "category": "Oceans",
+      "text": "The sea surface can mirror atmospheric patterns."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Writing preserved laws and stories."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Agriculture enabled permanent settlements."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Trade routes spread ideas."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Cities often grew near water."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Calendars helped plan seasons."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Libraries preserved knowledge."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Markets enabled exchange."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Roads connected towns."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Coins made trade easier."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Public squares became civic centers."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Architecture reflects culture."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Irrigation helped dry-region farming."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Ships expanded sea trade."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Universities became learning centers."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Museums preserve memory."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Languages change over time."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Laws coordinate society."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Music appears in every known culture."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Festivals mark shared stories."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Maps changed territorial understanding."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Sanitation improved city health."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Public transit shaped modern cities."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Electric lighting changed schedules."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Printing made information cheaper."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Postal systems connected people."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Currency requires shared trust."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Time zones helped train schedules."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Schools transmit skills."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Sports unite communities."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Cuisine reflects geography."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Clothing can signal identity."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Ceramics are ancient crafts."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Glassmaking changed windows and containers."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Metalworking changed tools."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Urban planning shapes movement."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Democracy means rule by people."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Census records help planning."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Bridges connect communities."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Ports became trade gateways."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Storytelling preserves meaning."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Monuments show what societies remember."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Communication networks shape civilization."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Public health changed life expectancy."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Libraries became civic institutions."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Water systems made cities possible."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Writing systems evolved independently."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Shared rituals build community."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Trade standards made commerce easier."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Road signs coordinate strangers."
+    },
+    {
+      "category": "Ancient Civilizations",
+      "text": "Cities are networks of people and trust."
+    },
+    {
+      "category": "Money",
+      "text": "Money works through shared trust."
+    },
+    {
+      "category": "Money",
+      "text": "Inflation means prices rise over time."
+    },
+    {
+      "category": "Money",
+      "text": "Interest is the cost of borrowing."
+    },
+    {
+      "category": "Money",
+      "text": "Compound interest earns interest on interest."
+    },
+    {
+      "category": "Money",
+      "text": "Budgets plan spending."
+    },
+    {
+      "category": "Money",
+      "text": "Savings create resilience."
+    },
+    {
+      "category": "Money",
+      "text": "Diversification spreads risk."
+    },
+    {
+      "category": "Money",
+      "text": "Stocks represent company ownership."
+    },
+    {
+      "category": "Money",
+      "text": "Bonds are loans to issuers."
+    },
+    {
+      "category": "Money",
+      "text": "Central banks influence money supply."
+    },
+    {
+      "category": "Money",
+      "text": "Exchange rates compare currencies."
+    },
+    {
+      "category": "Money",
+      "text": "Gold has served as money."
+    },
+    {
+      "category": "Money",
+      "text": "Credit cards borrow for purchases."
+    },
+    {
+      "category": "Money",
+      "text": "Debit cards spend existing funds."
+    },
+    {
+      "category": "Money",
+      "text": "Taxes fund public services."
+    },
+    {
+      "category": "Money",
+      "text": "Receipts record transactions."
+    },
+    {
+      "category": "Money",
+      "text": "Barter trades without money."
+    },
+    {
+      "category": "Money",
+      "text": "Digital payments move value electronically."
+    },
+    {
+      "category": "Money",
+      "text": "ATMs made cash access easier."
+    },
+    {
+      "category": "Money",
+      "text": "Banks safeguard deposits."
+    },
+    {
+      "category": "Money",
+      "text": "Insurance pools risk."
+    },
+    {
+      "category": "Money",
+      "text": "Mortgages finance property."
+    },
+    {
+      "category": "Money",
+      "text": "Entrepreneurs take business risks."
+    },
+    {
+      "category": "Money",
+      "text": "Prices signal supply and demand."
+    },
+    {
+      "category": "Money",
+      "text": "Scarcity shapes choices."
+    },
+    {
+      "category": "Money",
+      "text": "Markets connect buyers and sellers."
+    },
+    {
+      "category": "Money",
+      "text": "Salaries pay for work."
+    },
+    {
+      "category": "Money",
+      "text": "Net worth compares assets and debts."
+    },
+    {
+      "category": "Money",
+      "text": "Liquidity means easy conversion to cash."
+    },
+    {
+      "category": "Money",
+      "text": "Portfolios collect investments."
+    },
+    {
+      "category": "Money",
+      "text": "Dividends pay some shareholders."
+    },
+    {
+      "category": "Money",
+      "text": "Financial literacy improves decisions."
+    },
+    {
+      "category": "Money",
+      "text": "Emergency funds cover surprises."
+    },
+    {
+      "category": "Money",
+      "text": "Retirement accounts plan for later life."
+    },
+    {
+      "category": "Money",
+      "text": "Fraud prevention protects trust."
+    },
+    {
+      "category": "Money",
+      "text": "Budgeting apps track spending."
+    },
+    {
+      "category": "Money",
+      "text": "Loans require repayment."
+    },
+    {
+      "category": "Money",
+      "text": "Credit scores estimate reliability."
+    },
+    {
+      "category": "Money",
+      "text": "Market prices can move quickly."
+    },
+    {
+      "category": "Money",
+      "text": "Supply chains affect costs."
+    },
+    {
+      "category": "Money",
+      "text": "Subscriptions create recurring payments."
+    },
+    {
+      "category": "Money",
+      "text": "Opportunity cost is the next best choice."
+    },
+    {
+      "category": "Money",
+      "text": "Cash flow tracks money moving in and out."
+    },
+    {
+      "category": "Money",
+      "text": "Assets can produce future value."
+    },
+    {
+      "category": "Money",
+      "text": "Debt can amplify risk."
+    },
+    {
+      "category": "Money",
+      "text": "Savings rates change with policy."
+    },
+    {
+      "category": "Money",
+      "text": "Index funds track market baskets."
+    },
+    {
+      "category": "Money",
+      "text": "Invoices request payment."
+    },
+    {
+      "category": "Money",
+      "text": "Profit is revenue minus costs."
+    },
+    {
+      "category": "Money",
+      "text": "Economic confidence affects spending."
+    },
+    {
+      "category": "Business",
+      "text": "A business model explains how a company creates value."
+    },
+    {
+      "category": "Business",
+      "text": "Customer trust is a business asset."
+    },
+    {
+      "category": "Business",
+      "text": "Retention can matter more than acquisition."
+    },
+    {
+      "category": "Business",
+      "text": "Branding shapes expectations."
+    },
+    {
+      "category": "Business",
+      "text": "Pricing communicates positioning."
+    },
+    {
+      "category": "Business",
+      "text": "Distribution affects growth."
+    },
+    {
+      "category": "Business",
+      "text": "A moat protects a business from competition."
+    },
+    {
+      "category": "Business",
+      "text": "Cash flow can decide survival."
+    },
+    {
+      "category": "Business",
+      "text": "Customer support can create loyalty."
+    },
+    {
+      "category": "Business",
+      "text": "Product-market fit means a product meets real demand."
+    },
+    {
+      "category": "Business",
+      "text": "Recurring revenue can improve predictability."
+    },
+    {
+      "category": "Business",
+      "text": "Network effects grow as more people join."
+    },
+    {
+      "category": "Business",
+      "text": "A marketplace connects buyers and sellers."
+    },
+    {
+      "category": "Business",
+      "text": "Margins show how much revenue remains after costs."
+    },
+    {
+      "category": "Business",
+      "text": "Churn measures customers leaving."
+    },
+    {
+      "category": "Business",
+      "text": "Onboarding shapes first impressions."
+    },
+    {
+      "category": "Business",
+      "text": "A roadmap prioritizes future work."
+    },
+    {
+      "category": "Business",
+      "text": "User research reduces guesswork."
+    },
+    {
+      "category": "Business",
+      "text": "A prototype tests an idea quickly."
+    },
+    {
+      "category": "Business",
+      "text": "A funnel maps customer conversion."
+    },
+    {
+      "category": "Business",
+      "text": "Positioning defines how a product is understood."
+    },
+    {
+      "category": "Business",
+      "text": "Operations keep promises repeatable."
+    },
+    {
+      "category": "Business",
+      "text": "Logistics moves goods through systems."
+    },
+    {
+      "category": "Business",
+      "text": "A balance sheet summarizes assets and liabilities."
+    },
+    {
+      "category": "Business",
+      "text": "Revenue is not the same as profit."
+    },
+    {
+      "category": "Business",
+      "text": "Startups search for repeatable business models."
+    },
+    {
+      "category": "Business",
+      "text": "Enterprise sales can have long cycles."
+    },
+    {
+      "category": "Business",
+      "text": "Consumer products need emotional clarity."
+    },
+    {
+      "category": "Business",
+      "text": "Design quality can increase trust."
+    },
+    {
+      "category": "Business",
+      "text": "Growth loops compound user activity."
+    },
+    {
+      "category": "Business",
+      "text": "A mission statement clarifies purpose."
+    },
+    {
+      "category": "Business",
+      "text": "A pitch deck tells a business story."
+    },
+    {
+      "category": "Business",
+      "text": "Unit economics measure per-customer value."
+    },
+    {
+      "category": "Business",
+      "text": "Customer lifetime value estimates future revenue."
+    },
+    {
+      "category": "Business",
+      "text": "A/B tests compare product variations."
+    },
+    {
+      "category": "Business",
+      "text": "Demand can be seasonal."
+    },
+    {
+      "category": "Business",
+      "text": "Supply constraints can limit growth."
+    },
+    {
+      "category": "Business",
+      "text": "Partnerships can expand reach."
+    },
+    {
+      "category": "Business",
+      "text": "A strong culture guides decisions."
+    },
+    {
+      "category": "Business",
+      "text": "Brand consistency reduces confusion."
+    },
+    {
+      "category": "Business",
+      "text": "Market research studies customer needs."
+    },
+    {
+      "category": "Business",
+      "text": "A value proposition states the benefit."
+    },
+    {
+      "category": "Business",
+      "text": "Customer segmentation groups similar users."
+    },
+    {
+      "category": "Business",
+      "text": "Premium products often reduce friction."
+    },
+    {
+      "category": "Business",
+      "text": "Trust signals reduce perceived risk."
+    },
+    {
+      "category": "Business",
+      "text": "Good UX can lower support costs."
+    },
+    {
+      "category": "Business",
+      "text": "Retention metrics reveal product health."
+    },
+    {
+      "category": "Business",
+      "text": "A launch plan coordinates timing."
+    },
+    {
+      "category": "Business",
+      "text": "Feedback loops improve products."
+    },
+    {
+      "category": "Business",
+      "text": "Scalable systems handle growth."
+    },
+    {
+      "category": "India",
+      "text": "India has the world's largest postal network."
+    },
+    {
+      "category": "India",
+      "text": "India is home to many official languages at state level."
+    },
+    {
+      "category": "India",
+      "text": "The Indian Railways is one of the world's largest rail networks."
+    },
+    {
+      "category": "India",
+      "text": "The Kumbh Mela draws enormous gatherings."
+    },
+    {
+      "category": "India",
+      "text": "India's constitution is one of the longest written constitutions."
+    },
+    {
+      "category": "India",
+      "text": "The zero numeral has deep roots in Indian mathematics."
+    },
+    {
+      "category": "India",
+      "text": "India's space program reached Mars orbit on its first attempt."
+    },
+    {
+      "category": "India",
+      "text": "The Indian Ocean is named after India."
+    },
+    {
+      "category": "India",
+      "text": "India has one of the world's largest film industries."
+    },
+    {
+      "category": "India",
+      "text": "The Taj Mahal is a UNESCO World Heritage Site."
+    },
+    {
+      "category": "India",
+      "text": "India has deserts, rainforests, mountains, and coastlines."
+    },
+    {
+      "category": "India",
+      "text": "The Himalayas shape northern India's climate."
+    },
+    {
+      "category": "India",
+      "text": "The Ganga is one of India's most important rivers."
+    },
+    {
+      "category": "India",
+      "text": "India is one of the world's largest tea producers."
+    },
+    {
+      "category": "India",
+      "text": "India is a major producer of spices."
+    },
+    {
+      "category": "India",
+      "text": "Chess has historical roots in India."
+    },
+    {
+      "category": "India",
+      "text": "Ayurveda developed in ancient India."
+    },
+    {
+      "category": "India",
+      "text": "India has a young and large population."
+    },
+    {
+      "category": "India",
+      "text": "India's UPI changed digital payments at scale."
+    },
+    {
+      "category": "India",
+      "text": "ISRO launched a record number of satellites on a single mission in 2017."
+    },
+    {
+      "category": "India",
+      "text": "India's national emblem comes from the Lion Capital of Ashoka."
+    },
+    {
+      "category": "India",
+      "text": "The Konark Sun Temple is built as a symbolic chariot."
+    },
+    {
+      "category": "India",
+      "text": "Nalanda was an ancient center of learning."
+    },
+    {
+      "category": "India",
+      "text": "India has many classical dance traditions."
+    },
+    {
+      "category": "India",
+      "text": "The Indian rupee symbol was adopted in 2010."
+    },
+    {
+      "category": "India",
+      "text": "India's coastline stretches across multiple states."
+    },
+    {
+      "category": "India",
+      "text": "The Thar Desert lies in western India."
+    },
+    {
+      "category": "India",
+      "text": "The Sundarbans include the world's largest mangrove forest."
+    },
+    {
+      "category": "India",
+      "text": "India has multiple biodiversity hotspots."
+    },
+    {
+      "category": "India",
+      "text": "The Western Ghats are older than the Himalayas."
+    },
+    {
+      "category": "India",
+      "text": "India celebrates festivals across many calendars."
+    },
+    {
+      "category": "India",
+      "text": "The Jaipur foot is a notable low-cost prosthetic innovation."
+    },
+    {
+      "category": "India",
+      "text": "India's white revolution transformed milk production."
+    },
+    {
+      "category": "India",
+      "text": "The Green Revolution changed Indian agriculture."
+    },
+    {
+      "category": "India",
+      "text": "India is one of the largest democracies by population."
+    },
+    {
+      "category": "India",
+      "text": "Indian cuisine varies dramatically by region."
+    },
+    {
+      "category": "India",
+      "text": "The Andaman and Nicobar Islands sit in the Bay of Bengal."
+    },
+    {
+      "category": "India",
+      "text": "Lakshadweep is India's smallest union territory by area."
+    },
+    {
+      "category": "India",
+      "text": "India's national animal is the Bengal tiger."
+    },
+    {
+      "category": "India",
+      "text": "India's national bird is the Indian peacock."
+    },
+    {
+      "category": "India",
+      "text": "The Indian tricolor has saffron, white, and green bands."
+    },
+    {
+      "category": "India",
+      "text": "Sanchi has ancient Buddhist monuments."
+    },
+    {
+      "category": "India",
+      "text": "Varanasi is one of the world's oldest continuously inhabited cities."
+    },
+    {
+      "category": "India",
+      "text": "India's monsoon shapes agriculture and daily life."
+    },
+    {
+      "category": "India",
+      "text": "The Deccan Plateau covers much of peninsular India."
+    },
+    {
+      "category": "India",
+      "text": "India has sent missions to the Moon."
+    },
+    {
+      "category": "India",
+      "text": "The Asiatic lion survives in Gujarat's Gir forest."
+    },
+    {
+      "category": "India",
+      "text": "India's mangroves protect coastal communities."
+    },
+    {
+      "category": "India",
+      "text": "India has many UNESCO World Heritage Sites."
+    },
+    {
+      "category": "India",
+      "text": "India's linguistic diversity is among the richest in the world."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Hampi was a major city of the Vijayanagara Empire."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Gol Gumbaz has one of the world's largest unsupported domes."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Mysore Palace receives millions of visitors every year."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru is known as India's technology capital."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has coastline along the Arabian Sea."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Western Ghats run through Karnataka."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Coorg is famous for coffee plantations."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Jog Falls is one of India's notable waterfalls."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Kannada is Karnataka's official language."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The ruins of Hampi are a UNESCO World Heritage Site."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Pattadakal has important Chalukyan monuments."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Badami is known for rock-cut cave temples."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Aihole is often called a cradle of temple architecture."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Shravanabelagola has a famous monolithic statue of Bahubali."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Mysuru Dasara festival is widely celebrated."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka is a major producer of sandalwood."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru has a large startup ecosystem."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Krishna and Kaveri rivers flow through Karnataka."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Ranganathittu is a well-known bird sanctuary."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bandipur is a major tiger reserve."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Nagarhole National Park is rich in wildlife."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Udupi is known for its cuisine and temple traditions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Mangaluru is an important coastal city."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has several classical music traditions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Yakshagana is a traditional theatre form from coastal Karnataka."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Hoysala temples are known for intricate carvings."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Belur and Halebidu showcase Hoysala architecture."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Vidhana Soudha is a landmark in Bengaluru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Lalbagh Botanical Garden is a historic garden in Bengaluru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Cubbon Park is a major green space in Bengaluru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka hosts many engineering and research institutions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state has important aerospace and defense industries."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Mysuru is known for silk and sandalwood."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's coffee regions are among India's best known."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Tungabhadra River flows near Hampi."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Sharavathi River forms Jog Falls."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has diverse landscapes from coast to plateau."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state is known for Carnatic music contributions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru's climate is moderated by elevation."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has many protected forests."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Kannada literary tradition is more than a thousand years old."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka Rajyotsava is celebrated on November 1."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bidar has historic forts and monuments."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bijapur is now officially called Vijayapura."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Bangalore Palace reflects Tudor-style architecture."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has major public sector technology institutions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Nandi Hills are a popular hill destination near Bengaluru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state grows ragi, rice, sugarcane, and pulses."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has both monsoon forests and dry zones."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state has contributed greatly to Indian science and technology."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Yoga originated in ancient India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Sanskrit influenced many South Asian languages."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Classical Indian music uses ragas."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian classical dance has many regional forms."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Diwali is celebrated as a festival of lights."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Holi is known for colors and spring celebration."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Namaste is a respectful greeting."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Ayurveda is a traditional knowledge system from India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian textiles have long global history."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The sari is worn in many regional styles."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian cuisine uses diverse spices."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Rangoli designs decorate floors during festivals."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The tabla is a prominent percussion instrument."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The sitar is a well-known string instrument."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Bharatanatyam is a classical dance form."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Kathak is a classical dance form from northern India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Odissi comes from Odisha."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Carnatic music is a major South Indian classical tradition."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Hindustani music is a major North Indian classical tradition."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian epics shaped literature and storytelling."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The Ramayana has many regional retellings."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The Mahabharata is one of the world's longest epics."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian temple architecture varies by region."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Madhubani painting comes from Bihar."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Warli art comes from western India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Block printing has deep roots in Indian textiles."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian festivals often follow lunar calendars."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Spiritual traditions in India are highly diverse."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The bindi has cultural and aesthetic meanings."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Henna designs are common at celebrations."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian handloom traditions vary by state."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Classical Sanskrit drama influenced performance traditions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian food traditions include many vegetarian cuisines."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The concept of ahimsa influenced Indian philosophy."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Meditation traditions developed across Indian schools."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian jewelry traditions are regionally diverse."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Folk dances celebrate harvests and seasons."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Panchatantra stories influenced world literature."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian architecture often blends local and imperial styles."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Gurus and teachers hold cultural importance."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian weddings often involve multiple ceremonies."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Spice blends vary widely by family and region."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Traditional Indian calendars include many regional new years."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Kalaripayattu is a historic martial art from India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Chai culture is widespread across India."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian classical arts often combine music, rhythm, and gesture."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Festivals often include food, music, and community gatherings."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Many Indian crafts are tied to specific regions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Storytelling is central to many Indian traditions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian culture is shaped by thousands of communities."
+    },
+    {
+      "category": "World Records",
+      "text": "The cheetah is the fastest land animal over short distances."
+    },
+    {
+      "category": "World Records",
+      "text": "The blue whale is the largest known animal."
+    },
+    {
+      "category": "World Records",
+      "text": "The Mariana Trench is the deepest known ocean trench."
+    },
+    {
+      "category": "World Records",
+      "text": "The Pacific Ocean is the largest ocean."
+    },
+    {
+      "category": "World Records",
+      "text": "The Amazon is the largest rainforest."
+    },
+    {
+      "category": "World Records",
+      "text": "The Nile and Amazon are both contenders for longest river."
+    },
+    {
+      "category": "World Records",
+      "text": "The Burj Khalifa is the tallest building."
+    },
+    {
+      "category": "World Records",
+      "text": "The Great Wall of China is one of the longest structures."
+    },
+    {
+      "category": "World Records",
+      "text": "The ostrich lays the largest bird egg."
+    },
+    {
+      "category": "World Records",
+      "text": "The hummingbird lays among the smallest bird eggs."
+    },
+    {
+      "category": "World Records",
+      "text": "The giant sequoia is among the largest trees."
+    },
+    {
+      "category": "World Records",
+      "text": "The bristlecone pine can live for thousands of years."
+    },
+    {
+      "category": "World Records",
+      "text": "The peregrine falcon dives extremely fast."
+    },
+    {
+      "category": "World Records",
+      "text": "The African elephant is the largest land animal."
+    },
+    {
+      "category": "World Records",
+      "text": "The anaconda is among the heaviest snakes."
+    },
+    {
+      "category": "World Records",
+      "text": "The Komodo dragon is the largest living lizard."
+    },
+    {
+      "category": "World Records",
+      "text": "The whale shark is the largest fish."
+    },
+    {
+      "category": "World Records",
+      "text": "The Atacama is one of the driest deserts."
+    },
+    {
+      "category": "World Records",
+      "text": "Angel Falls is one of the tallest waterfalls."
+    },
+    {
+      "category": "World Records",
+      "text": "Greenland is the largest island."
+    },
+    {
+      "category": "World Records",
+      "text": "Russia is the largest country by area."
+    },
+    {
+      "category": "World Records",
+      "text": "Vatican City is the smallest country by area."
+    },
+    {
+      "category": "World Records",
+      "text": "Tokyo is among the largest metropolitan areas."
+    },
+    {
+      "category": "World Records",
+      "text": "The Caspian Sea is the largest inland body of water."
+    },
+    {
+      "category": "World Records",
+      "text": "The Antarctic ice sheet is the largest ice mass."
+    },
+    {
+      "category": "World Records",
+      "text": "Mauna Loa is among the largest volcanoes by volume."
+    },
+    {
+      "category": "World Records",
+      "text": "The longest recorded lightning flash stretched hundreds of kilometers."
+    },
+    {
+      "category": "World Records",
+      "text": "The loudest animal is often listed as the sperm whale."
+    },
+    {
+      "category": "World Records",
+      "text": "The fastest bird in level flight is often listed as the swift."
+    },
+    {
+      "category": "World Records",
+      "text": "The tallest living animal is the giraffe."
+    },
+    {
+      "category": "World Records",
+      "text": "The largest flower is Rafflesia arnoldii."
+    },
+    {
+      "category": "World Records",
+      "text": "The smallest country has less than one square kilometer."
+    },
+    {
+      "category": "World Records",
+      "text": "The longest railway networks span thousands of kilometers."
+    },
+    {
+      "category": "World Records",
+      "text": "The oldest known living trees are bristlecone pines."
+    },
+    {
+      "category": "World Records",
+      "text": "The deepest cave systems extend for many kilometers."
+    },
+    {
+      "category": "World Records",
+      "text": "The largest stadiums hold more than 100,000 people."
+    },
+    {
+      "category": "World Records",
+      "text": "The longest bridges span many kilometers."
+    },
+    {
+      "category": "World Records",
+      "text": "The largest libraries hold millions of items."
+    },
+    {
+      "category": "World Records",
+      "text": "The fastest trains exceed 300 kilometers per hour."
+    },
+    {
+      "category": "World Records",
+      "text": "The largest airports handle tens of millions of passengers."
+    },
+    {
+      "category": "World Records",
+      "text": "The most translated books include religious and children's works."
+    },
+    {
+      "category": "World Records",
+      "text": "The longest novels can contain millions of words."
+    },
+    {
+      "category": "World Records",
+      "text": "The biggest festivals can attract millions."
+    },
+    {
+      "category": "World Records",
+      "text": "The largest ships are longer than many skyscrapers are tall."
+    },
+    {
+      "category": "World Records",
+      "text": "The deepest mines reach several kilometers underground."
+    },
+    {
+      "category": "World Records",
+      "text": "The hottest recorded temperatures exceed 50 degrees Celsius."
+    },
+    {
+      "category": "Engineering",
+      "text": "Bridges distribute loads through structure."
+    },
+    {
+      "category": "Engineering",
+      "text": "Skyscrapers resist wind as well as gravity."
+    },
+    {
+      "category": "Engineering",
+      "text": "Tunnels require careful ventilation."
+    },
+    {
+      "category": "Engineering",
+      "text": "Dams store water and control flow."
+    },
+    {
+      "category": "Engineering",
+      "text": "Engines convert energy into motion."
+    },
+    {
+      "category": "Engineering",
+      "text": "Gears change speed and torque."
+    },
+    {
+      "category": "Engineering",
+      "text": "Bearings reduce friction."
+    },
+    {
+      "category": "Engineering",
+      "text": "Welding joins materials with heat."
+    },
+    {
+      "category": "Engineering",
+      "text": "Concrete is strong in compression."
+    },
+    {
+      "category": "Engineering",
+      "text": "Steel is strong in tension."
+    },
+    {
+      "category": "Engineering",
+      "text": "Suspension bridges use cables."
+    },
+    {
+      "category": "Engineering",
+      "text": "Trusses use triangles for strength."
+    },
+    {
+      "category": "Engineering",
+      "text": "Hydraulics transmit force through fluids."
+    },
+    {
+      "category": "Engineering",
+      "text": "Pneumatics use compressed gas."
+    },
+    {
+      "category": "Engineering",
+      "text": "CAD software helps design parts."
+    },
+    {
+      "category": "Engineering",
+      "text": "Prototypes reveal design problems."
+    },
+    {
+      "category": "Engineering",
+      "text": "Tolerances define acceptable variation."
+    },
+    {
+      "category": "Engineering",
+      "text": "Quality control catches defects."
+    },
+    {
+      "category": "Engineering",
+      "text": "Redundancy improves reliability."
+    },
+    {
+      "category": "Engineering",
+      "text": "Failure analysis studies what went wrong."
+    },
+    {
+      "category": "Engineering",
+      "text": "Aerospace engineering manages lift and drag."
+    },
+    {
+      "category": "Engineering",
+      "text": "Civil engineering shapes infrastructure."
+    },
+    {
+      "category": "Engineering",
+      "text": "Mechanical engineering studies machines."
+    },
+    {
+      "category": "Engineering",
+      "text": "Electrical engineering handles circuits and power."
+    },
+    {
+      "category": "Engineering",
+      "text": "Chemical engineering scales reactions."
+    },
+    {
+      "category": "Engineering",
+      "text": "Software engineering organizes code systems."
+    },
+    {
+      "category": "Engineering",
+      "text": "Materials engineering studies properties."
+    },
+    {
+      "category": "Engineering",
+      "text": "Industrial engineering improves processes."
+    },
+    {
+      "category": "Engineering",
+      "text": "Control systems manage feedback."
+    },
+    {
+      "category": "Engineering",
+      "text": "Robotics combines mechanics, electronics, and code."
+    },
+    {
+      "category": "Engineering",
+      "text": "Thermodynamics guides engines and refrigeration."
+    },
+    {
+      "category": "Engineering",
+      "text": "Fluid dynamics studies moving liquids and gases."
+    },
+    {
+      "category": "Engineering",
+      "text": "Finite element analysis simulates stress."
+    },
+    {
+      "category": "Engineering",
+      "text": "3D printing builds parts layer by layer."
+    },
+    {
+      "category": "Engineering",
+      "text": "CNC machines cut precise shapes."
+    },
+    {
+      "category": "Engineering",
+      "text": "Lean manufacturing reduces waste."
+    },
+    {
+      "category": "Engineering",
+      "text": "Safety factors account for uncertainty."
+    },
+    {
+      "category": "Engineering",
+      "text": "Standards improve compatibility."
+    },
+    {
+      "category": "Engineering",
+      "text": "Maintenance extends equipment life."
+    },
+    {
+      "category": "Engineering",
+      "text": "Sensors monitor system conditions."
+    },
+    {
+      "category": "Engineering",
+      "text": "Solar panels convert light into electricity."
+    },
+    {
+      "category": "Engineering",
+      "text": "Wind turbines convert wind into power."
+    },
+    {
+      "category": "Engineering",
+      "text": "Batteries store chemical energy."
+    },
+    {
+      "category": "Engineering",
+      "text": "Power grids balance supply and demand."
+    },
+    {
+      "category": "Engineering",
+      "text": "Water treatment protects public health."
+    },
+    {
+      "category": "Engineering",
+      "text": "Elevators use counterweights and motors."
+    },
+    {
+      "category": "Engineering",
+      "text": "Railways require precise alignment."
+    },
+    {
+      "category": "Engineering",
+      "text": "Aircraft wings create lift."
+    },
+    {
+      "category": "Engineering",
+      "text": "Satellites require thermal control."
+    },
+    {
+      "category": "Engineering",
+      "text": "Engineering turns constraints into design."
+    },
+    {
+      "category": "Physics",
+      "text": "Force equals mass times acceleration."
+    },
+    {
+      "category": "Physics",
+      "text": "Energy can change form."
+    },
+    {
+      "category": "Physics",
+      "text": "Momentum is conserved in closed systems."
+    },
+    {
+      "category": "Physics",
+      "text": "Friction opposes motion."
+    },
+    {
+      "category": "Physics",
+      "text": "Gravity attracts masses."
+    },
+    {
+      "category": "Physics",
+      "text": "Light behaves as waves and particles."
+    },
+    {
+      "category": "Physics",
+      "text": "Electric charge can be positive or negative."
+    },
+    {
+      "category": "Physics",
+      "text": "Magnetic fields influence moving charges."
+    },
+    {
+      "category": "Physics",
+      "text": "Heat flows from warmer to cooler objects."
+    },
+    {
+      "category": "Physics",
+      "text": "Entropy tends to increase in isolated systems."
+    },
+    {
+      "category": "Physics",
+      "text": "Acceleration changes velocity."
+    },
+    {
+      "category": "Physics",
+      "text": "Work transfers energy."
+    },
+    {
+      "category": "Physics",
+      "text": "Power is the rate of doing work."
+    },
+    {
+      "category": "Physics",
+      "text": "Pressure is force over area."
+    },
+    {
+      "category": "Physics",
+      "text": "Buoyancy pushes upward in fluids."
+    },
+    {
+      "category": "Physics",
+      "text": "Waves carry energy."
+    },
+    {
+      "category": "Physics",
+      "text": "Frequency measures cycles per second."
+    },
+    {
+      "category": "Physics",
+      "text": "Amplitude measures wave size."
+    },
+    {
+      "category": "Physics",
+      "text": "Resonance amplifies motion at natural frequencies."
+    },
+    {
+      "category": "Physics",
+      "text": "Refraction bends light."
+    },
+    {
+      "category": "Physics",
+      "text": "Reflection bounces waves."
+    },
+    {
+      "category": "Physics",
+      "text": "Diffraction spreads waves around openings."
+    },
+    {
+      "category": "Physics",
+      "text": "Interference combines waves."
+    },
+    {
+      "category": "Physics",
+      "text": "Quantum mechanics studies very small systems."
+    },
+    {
+      "category": "Physics",
+      "text": "Relativity links space and time."
+    },
+    {
+      "category": "Physics",
+      "text": "Mass and energy are related."
+    },
+    {
+      "category": "Physics",
+      "text": "The speed of light is constant in vacuum."
+    },
+    {
+      "category": "Physics",
+      "text": "Electromagnetic waves include radio and X-rays."
+    },
+    {
+      "category": "Physics",
+      "text": "Plasma is ionized gas."
+    },
+    {
+      "category": "Physics",
+      "text": "Superconductors can conduct without resistance at low temperatures."
+    },
+    {
+      "category": "Physics",
+      "text": "A pendulum's period depends on length."
+    },
+    {
+      "category": "Physics",
+      "text": "Centripetal force points toward the center of circular motion."
+    },
+    {
+      "category": "Physics",
+      "text": "Torque causes rotation."
+    },
+    {
+      "category": "Physics",
+      "text": "Simple machines trade force and distance."
+    },
+    {
+      "category": "Physics",
+      "text": "A lever pivots around a fulcrum."
+    },
+    {
+      "category": "Physics",
+      "text": "Springs store elastic energy."
+    },
+    {
+      "category": "Physics",
+      "text": "Viscosity measures fluid resistance."
+    },
+    {
+      "category": "Physics",
+      "text": "Turbulence is complex fluid motion."
+    },
+    {
+      "category": "Physics",
+      "text": "Brownian motion shows random particle movement."
+    },
+    {
+      "category": "Physics",
+      "text": "The Doppler effect shifts observed frequency."
+    },
+    {
+      "category": "Physics",
+      "text": "Static electricity comes from charge imbalance."
+    },
+    {
+      "category": "Physics",
+      "text": "Capacitance stores electric charge."
+    },
+    {
+      "category": "Physics",
+      "text": "Inductance resists changes in current."
+    },
+    {
+      "category": "Physics",
+      "text": "Ohm's law relates voltage, current, and resistance."
+    },
+    {
+      "category": "Physics",
+      "text": "A vacuum has very low pressure."
+    },
+    {
+      "category": "Physics",
+      "text": "Nuclear fusion powers the Sun."
+    },
+    {
+      "category": "Physics",
+      "text": "Nuclear fission splits heavy atoms."
+    },
+    {
+      "category": "Physics",
+      "text": "Photons carry light energy."
+    },
+    {
+      "category": "Physics",
+      "text": "Physics describes patterns in nature."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Astronomy studies objects beyond Earth."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Stars form in clouds of gas and dust."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Planets orbit stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Moons orbit planets."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Galaxies contain stars, gas, dust, and dark matter."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Nebulae can be star-forming regions."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Constellations are patterns seen from Earth."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Telescopes collect more light than human eyes."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Radio astronomy studies radio emissions."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Infrared astronomy sees heat signatures."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Spectroscopy reveals chemical composition."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Redshift can show objects moving away."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Parallax helps measure nearby star distances."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Variable stars change brightness."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Binary stars orbit each other."
+    },
+    {
+      "category": "Astronomy",
+      "text": "White dwarfs are remnants of Sun-like stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Red giants are late-stage stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Pulsars emit regular radiation pulses."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Quasars are powered by active galactic centers."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Dark matter affects galaxy rotation."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Dark energy is linked to cosmic expansion."
+    },
+    {
+      "category": "Astronomy",
+      "text": "The cosmic microwave background is ancient light."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Star clusters group many stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Globular clusters are old dense star groups."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Open clusters contain young stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Exoplanets orbit stars beyond the Sun."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Transit methods detect planet shadows."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Radial velocity detects star wobble."
+    },
+    {
+      "category": "Astronomy",
+      "text": "The habitable zone allows liquid water conditions."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Astrobiology studies life's possibilities beyond Earth."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Meteorites are space rocks that reach Earth."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Meteors are streaks of light in the atmosphere."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Bolides are very bright meteors."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Solar flares release energy from the Sun."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Coronal mass ejections send plasma outward."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Sunspots are cooler magnetic regions."
+    },
+    {
+      "category": "Astronomy",
+      "text": "The solar cycle lasts about eleven years."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Planetary atmospheres vary widely."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Rings exist around several giant planets."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Dwarf planets orbit the Sun but have not cleared their paths."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Astronomical units measure Earth-Sun distance."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Parsecs measure stellar distances."
+    },
+    {
+      "category": "Astronomy",
+      "text": "The ecliptic is the Sun's apparent path."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Precession slowly changes Earth's axis direction."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Observatories are often placed on mountains."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Adaptive optics sharpen telescope images."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Space telescopes avoid atmospheric distortion."
+    },
+    {
+      "category": "Astronomy",
+      "text": "The night sky changes with seasons."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Light pollution hides faint stars."
+    },
+    {
+      "category": "Astronomy",
+      "text": "Astronomy connects observation with physics."
+    },
+    {
+      "category": "Human Body",
+      "text": "Vaccination trains immune defenses."
+    },
+    {
+      "category": "Human Body",
+      "text": "Antibiotics treat bacterial infections."
+    },
+    {
+      "category": "Human Body",
+      "text": "Viruses are not treated by ordinary antibiotics."
+    },
+    {
+      "category": "Human Body",
+      "text": "MRI uses magnetic fields to image the body."
+    },
+    {
+      "category": "Human Body",
+      "text": "X-rays can show bones."
+    },
+    {
+      "category": "Human Body",
+      "text": "Ultrasound uses sound waves for imaging."
+    },
+    {
+      "category": "Human Body",
+      "text": "Anesthesia enables many surgeries."
+    },
+    {
+      "category": "Human Body",
+      "text": "Blood types matter for transfusions."
+    },
+    {
+      "category": "Human Body",
+      "text": "Insulin helps regulate blood sugar."
+    },
+    {
+      "category": "Human Body",
+      "text": "Public sanitation prevents disease."
+    },
+    {
+      "category": "Human Body",
+      "text": "Handwashing reduces infection spread."
+    },
+    {
+      "category": "Human Body",
+      "text": "Sterilization kills microbes on instruments."
+    },
+    {
+      "category": "Human Body",
+      "text": "Epidemiology studies disease patterns."
+    },
+    {
+      "category": "Human Body",
+      "text": "Clinical trials test medical treatments."
+    },
+    {
+      "category": "Human Body",
+      "text": "Placebos can influence symptoms."
+    },
+    {
+      "category": "Human Body",
+      "text": "Stethoscopes help listen to body sounds."
+    },
+    {
+      "category": "Human Body",
+      "text": "Electrocardiograms track heart electrical activity."
+    },
+    {
+      "category": "Human Body",
+      "text": "Blood pressure measures artery force."
+    },
+    {
+      "category": "Human Body",
+      "text": "Cholesterol levels relate to heart risk."
+    },
+    {
+      "category": "Human Body",
+      "text": "Hydration supports body function."
+    },
+    {
+      "category": "Human Body",
+      "text": "Sleep supports immune health."
+    },
+    {
+      "category": "Human Body",
+      "text": "Exercise improves cardiovascular fitness."
+    },
+    {
+      "category": "Human Body",
+      "text": "Balanced nutrition supports metabolism."
+    },
+    {
+      "category": "Human Body",
+      "text": "Mental health is part of health."
+    },
+    {
+      "category": "Human Body",
+      "text": "Surgery requires sterile technique."
+    },
+    {
+      "category": "Human Body",
+      "text": "Organ transplants require immune management."
+    },
+    {
+      "category": "Human Body",
+      "text": "Dialysis filters blood when kidneys fail."
+    },
+    {
+      "category": "Human Body",
+      "text": "Chemotherapy targets rapidly dividing cells."
+    },
+    {
+      "category": "Human Body",
+      "text": "Radiotherapy uses radiation to treat disease."
+    },
+    {
+      "category": "Human Body",
+      "text": "Pain signals protect the body."
+    },
+    {
+      "category": "Human Body",
+      "text": "Fever can be part of immune response."
+    },
+    {
+      "category": "Human Body",
+      "text": "Allergies involve immune overreaction."
+    },
+    {
+      "category": "Human Body",
+      "text": "Asthma affects airways."
+    },
+    {
+      "category": "Human Body",
+      "text": "Diabetes affects blood sugar regulation."
+    },
+    {
+      "category": "Human Body",
+      "text": "Hypertension is high blood pressure."
+    },
+    {
+      "category": "Human Body",
+      "text": "A vaccine schedule protects communities."
+    },
+    {
+      "category": "Human Body",
+      "text": "Medical records track care history."
+    },
+    {
+      "category": "Human Body",
+      "text": "Telemedicine allows remote consultations."
+    },
+    {
+      "category": "Human Body",
+      "text": "Prosthetics restore function."
+    },
+    {
+      "category": "Human Body",
+      "text": "Rehabilitation supports recovery."
+    },
+    {
+      "category": "Human Body",
+      "text": "Doctors use differential diagnosis."
+    },
+    {
+      "category": "Human Body",
+      "text": "Nurses coordinate much patient care."
+    },
+    {
+      "category": "Human Body",
+      "text": "Pharmacology studies medicines."
+    },
+    {
+      "category": "Human Body",
+      "text": "Pathology studies disease processes."
+    },
+    {
+      "category": "Human Body",
+      "text": "Genetic testing can reveal inherited risk."
+    },
+    {
+      "category": "Human Body",
+      "text": "Microbiomes influence health."
+    },
+    {
+      "category": "Human Body",
+      "text": "Antiseptics reduce microbes on skin."
+    },
+    {
+      "category": "Human Body",
+      "text": "First aid stabilizes urgent problems."
+    },
+    {
+      "category": "Human Body",
+      "text": "CPR can maintain blood circulation."
+    },
+    {
+      "category": "Human Body",
+      "text": "Prevention is often easier than treatment."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Bananas are berries botanically."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Strawberries are not true botanical berries."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A group of flamingos is called a flamboyance."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some metals react violently with water."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The Eiffel Tower can grow taller in heat."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Clouds can weigh hundreds of thousands of kilograms."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The dot over a lowercase i is called a tittle."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Wombat droppings are cube-shaped."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some turtles can breathe through their cloaca."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "An immortal jellyfish can revert life stages."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A shrimp's heart is near its head."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The smell of rain is called petrichor."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Hot water can sometimes freeze faster than cold water."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A single spaghetti strand is a spaghetto."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some cats are allergic to humans."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A day on Mercury is longer than its year."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Possible chess games outnumber atoms in the observable universe."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The shortest recorded war lasted less than an hour."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some frogs survive temporary freezing."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Cows can form close friendships."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The first oranges were not necessarily orange."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A jiffy is a real unit in some contexts."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The unicorn is Scotland's national animal."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some planets may rain diamonds."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The stomach lining renews regularly."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Lightning can contain a billion volts."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The word robot comes from Czech."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Bubble wrap was once considered wallpaper."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A group of crows is called a murder."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Ancient vending machines sold holy water."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Sea cucumbers can eject organs as defense."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Mantis shrimp see many color signals."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A blue whale heartbeat can be very loud underwater."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Pineapples take a long time to grow."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some snails sleep for very long periods."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The quietest rooms can feel uncomfortable."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Rubber bands last longer when refrigerated."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some fish can change sex."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some fungi glow in the dark."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A deck of cards has astronomically many possible orders."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A bolt of lightning can strike the same place repeatedly."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The word queue has four silent letters."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some ice is hot to the touch under pressure."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The Moon has moonquakes."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some plants can move quickly for defense."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "A sneeze can travel surprisingly fast."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some clocks use quartz crystals."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "The human nose can detect many odors."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Some insects farm other organisms."
+    },
+    {
+      "category": "Strange Facts",
+      "text": "Nature often makes patterns from simple rules."
+    },
+    {
+      "category": "India",
+      "text": "India's Aadhaar system is one of the world's largest biometric ID programs."
+    },
+    {
+      "category": "India",
+      "text": "India's Mars Orbiter Mission was called Mangalyaan."
+    },
+    {
+      "category": "India",
+      "text": "India's Chandrayaan missions study the Moon."
+    },
+    {
+      "category": "India",
+      "text": "The Lotus Temple in Delhi is known for its flower-like architecture."
+    },
+    {
+      "category": "India",
+      "text": "The Qutub Minar is one of Delhi's most recognizable monuments."
+    },
+    {
+      "category": "India",
+      "text": "India's Sundarbans are shared with Bangladesh."
+    },
+    {
+      "category": "India",
+      "text": "The Andaman Islands contain some of India's most biodiverse forests."
+    },
+    {
+      "category": "India",
+      "text": "India's Western Ghats are a UNESCO World Heritage natural site."
+    },
+    {
+      "category": "India",
+      "text": "The Indian peacock is India's national bird."
+    },
+    {
+      "category": "India",
+      "text": "The Bengal tiger is India's national animal."
+    },
+    {
+      "category": "India",
+      "text": "India has one of the world's largest road networks."
+    },
+    {
+      "category": "India",
+      "text": "India's UPI processes billions of digital transactions."
+    },
+    {
+      "category": "India",
+      "text": "The Indian rupee symbol combines Devanagari and Latin design cues."
+    },
+    {
+      "category": "India",
+      "text": "The Gir forest is home to the Asiatic lion."
+    },
+    {
+      "category": "India",
+      "text": "India's Ladakh region has high-altitude cold desert landscapes."
+    },
+    {
+      "category": "India",
+      "text": "The Rann of Kutch is a large seasonal salt marsh."
+    },
+    {
+      "category": "India",
+      "text": "India has hosted ancient universities such as Nalanda and Takshashila."
+    },
+    {
+      "category": "India",
+      "text": "India's monsoon is one of the world's most important seasonal weather systems."
+    },
+    {
+      "category": "India",
+      "text": "The Indian plate continues to push into Asia, raising the Himalayas."
+    },
+    {
+      "category": "India",
+      "text": "India's national calendar is based on the Saka era."
+    },
+    {
+      "category": "India",
+      "text": "India has several classical language traditions."
+    },
+    {
+      "category": "India",
+      "text": "The Konkan coast is known for beaches, ports, and monsoon landscapes."
+    },
+    {
+      "category": "India",
+      "text": "The Deccan Plateau covers a large part of southern India."
+    },
+    {
+      "category": "India",
+      "text": "The Brahmaputra is one of India's major river systems."
+    },
+    {
+      "category": "India",
+      "text": "India has more than one hundred national parks."
+    },
+    {
+      "category": "India",
+      "text": "India's Chilika Lake is one of Asia's largest brackish lagoons."
+    },
+    {
+      "category": "India",
+      "text": "The Indian subcontinent has supported urban life for thousands of years."
+    },
+    {
+      "category": "India",
+      "text": "India's textile traditions include cotton, silk, wool, and handloom crafts."
+    },
+    {
+      "category": "India",
+      "text": "The Indian Ocean trade connected India with Africa, Arabia, and Southeast Asia."
+    },
+    {
+      "category": "India",
+      "text": "India has multiple official scripts used across states."
+    },
+    {
+      "category": "India",
+      "text": "India's deserts, mountains, islands, forests, and plains create unusual diversity."
+    },
+    {
+      "category": "India",
+      "text": "India's space agency is called ISRO."
+    },
+    {
+      "category": "India",
+      "text": "India's national anthem was written by Rabindranath Tagore."
+    },
+    {
+      "category": "India",
+      "text": "India's national song is Vande Mataram."
+    },
+    {
+      "category": "India",
+      "text": "India's tiger reserves protect habitats across many states."
+    },
+    {
+      "category": "India",
+      "text": "India's Ajanta caves contain ancient Buddhist paintings."
+    },
+    {
+      "category": "India",
+      "text": "The Ellora caves include Buddhist, Hindu, and Jain monuments."
+    },
+    {
+      "category": "India",
+      "text": "India's stepwells combined water storage with architecture."
+    },
+    {
+      "category": "India",
+      "text": "India's railway stations serve millions of passengers daily."
+    },
+    {
+      "category": "India",
+      "text": "India's Himalayas include some of the world's highest mountain landscapes."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru was once known as the Garden City."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Indian Institute of Science is located in Bengaluru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's Chitradurga Fort is known for its massive stone defenses."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Tungabhadra Dam is important for irrigation and power."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's Udupi cuisine influenced restaurants across India."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Tulu-speaking coastal region has distinctive cultural traditions."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's Karwar coast inspired writers and travelers."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Sharavathi valley has rich forest ecosystems."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's Hoysaleswara Temple is famous for detailed sculpture."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Virupaksha Temple at Hampi is still active."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has major silk traditions centered around Mysuru."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru's Kempegowda is remembered as a city founder."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka has both Kannada and several regional language communities."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The Kaveri River is central to southern Karnataka."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's coffee estates helped shape Coorg's economy."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state has important Jain heritage sites."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's coastline includes beaches near Gokarna and Karwar."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Bengaluru is one of India's largest startup hubs."
+    },
+    {
+      "category": "Karnataka",
+      "text": "Karnataka's Deccan plateau creates varied climate zones."
+    },
+    {
+      "category": "Karnataka",
+      "text": "The state has contributed many writers to Kannada literature."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian classical music often uses improvisation within structured ragas."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Many Indian festivals combine food, family, ritual, and public celebration."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The concept of seva means service in several Indian traditions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian temple bells are traditionally rung before worship."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Many Indian homes use rangoli or kolam designs at entrances."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian classical dance uses hand gestures called mudras."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The guru-shishya tradition emphasizes teacher-student learning."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian epics are retold in many languages and performance styles."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Traditional Indian architecture often aligns ritual, climate, and craft."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian food culture includes elaborate regional breakfast traditions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Many Indian wedding rituals vary by region and community."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The veena is a classical string instrument in Indian music."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian miniature painting traditions developed in several courts."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Handwoven Indian textiles often identify specific regions."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "The Indian greeting namaste conveys respect."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Many Indian calendars mark seasons through festivals."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian philosophical schools debated logic, language, and reality."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Traditional Indian medicine included plant-based knowledge systems."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian folk theatre often combines music, costume, and storytelling."
+    },
+    {
+      "category": "Indian Culture",
+      "text": "Indian culture preserves both oral and written storytelling traditions."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Water expands when it freezes, which is why ice floats on liquid water."
+    },
+    {
+      "category": "Chemistry",
+      "text": "The periodic table is arranged mainly by atomic number."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Carbon can form diamond, graphite, and graphene because its atoms bond in different structures."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Helium is so light that Earth's gravity lets some of it escape into space over time."
+    },
+    {
+      "category": "Chemistry",
+      "text": "A catalyst speeds up a chemical reaction without being consumed by the reaction."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Table salt is a compound made from sodium and chlorine ions."
+    },
+    {
+      "category": "Chemistry",
+      "text": "The pH scale measures how acidic or basic a solution is."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Noble gases are unusually unreactive because their outer electron shells are full."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Rust forms when iron reacts with oxygen and water."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Soap molecules have one end that attracts water and another end that attracts oils."
+    },
+    {
+      "category": "Chemistry",
+      "text": "Isotopes are atoms of the same element with different numbers of neutrons."
+    },
+    {
+      "category": "Chemistry",
+      "text": "The element mercury is liquid near room temperature."
+    },
+    {
+      "category": "Biology",
+      "text": "DNA stores genetic instructions using four chemical bases."
+    },
+    {
+      "category": "Biology",
+      "text": "Mitochondria help cells release usable energy from food molecules."
+    },
+    {
+      "category": "Biology",
+      "text": "Plants make sugars through photosynthesis using light, carbon dioxide, and water."
+    },
+    {
+      "category": "Biology",
+      "text": "Yeast is a fungus used in baking and fermentation."
+    },
+    {
+      "category": "Biology",
+      "text": "Bacteria can reproduce by splitting into two cells."
+    },
+    {
+      "category": "Biology",
+      "text": "Red blood cells carry oxygen with the help of hemoglobin."
+    },
+    {
+      "category": "Biology",
+      "text": "Enzymes are proteins that speed up biological reactions."
+    },
+    {
+      "category": "Biology",
+      "text": "Viruses need host cells to reproduce."
+    },
+    {
+      "category": "Biology",
+      "text": "Chlorophyll gives many plants their green color."
+    },
+    {
+      "category": "Biology",
+      "text": "The human genome contains about three billion DNA base pairs."
+    },
+    {
+      "category": "Biology",
+      "text": "Pollination helps many flowering plants reproduce."
+    },
+    {
+      "category": "Biology",
+      "text": "Antibiotics target bacteria, not viruses."
+    },
+    {
+      "category": "AI",
+      "text": "Machine learning systems learn patterns from data rather than being explicitly programmed for every case."
+    },
+    {
+      "category": "AI",
+      "text": "A neural network is inspired by connected layers of simple mathematical units."
+    },
+    {
+      "category": "AI",
+      "text": "Training data quality strongly affects an AI model's output quality."
+    },
+    {
+      "category": "AI",
+      "text": "Computer vision systems analyze images and video using numerical features."
+    },
+    {
+      "category": "AI",
+      "text": "Natural language processing helps computers work with human language."
+    },
+    {
+      "category": "AI",
+      "text": "Recommendation systems often use patterns in past behavior to suggest future choices."
+    },
+    {
+      "category": "AI",
+      "text": "Reinforcement learning trains agents through rewards and penalties."
+    },
+    {
+      "category": "AI",
+      "text": "Large language models predict text using patterns learned from large datasets."
+    },
+    {
+      "category": "AI",
+      "text": "AI bias can appear when training data reflects unequal or incomplete real-world patterns."
+    },
+    {
+      "category": "AI",
+      "text": "Speech recognition converts sound signals into text."
+    },
+    {
+      "category": "AI",
+      "text": "Generative AI can produce text, images, audio, code, and other media."
+    },
+    {
+      "category": "AI",
+      "text": "Model evaluation checks whether an AI system performs well on data it has not seen before."
+    },
+    {
+      "category": "Mathematics",
+      "text": "Zero is the additive identity because adding it does not change a number."
+    },
+    {
+      "category": "Mathematics",
+      "text": "Pi is the ratio of a circle's circumference to its diameter."
+    },
+    {
+      "category": "Mathematics",
+      "text": "Prime numbers have exactly two positive divisors: one and themselves."
+    },
+    {
+      "category": "Mathematics",
+      "text": "A right angle measures 90 degrees."
+    },
+    {
+      "category": "Mathematics",
+      "text": "The Fibonacci sequence starts with 0 and 1, then adds the previous two numbers."
+    },
+    {
+      "category": "Mathematics",
+      "text": "The square root of 144 is 12."
+    },
+    {
+      "category": "Mathematics",
+      "text": "A triangle's interior angles add up to 180 degrees in Euclidean geometry."
+    },
+    {
+      "category": "Mathematics",
+      "text": "The number e appears naturally in growth and decay problems."
+    },
+    {
+      "category": "Mathematics",
+      "text": "Probability values range from 0 to 1."
+    },
+    {
+      "category": "Mathematics",
+      "text": "A billion is one thousand million in the short scale."
+    },
+    {
+      "category": "Mathematics",
+      "text": "The golden ratio is approximately 1.618."
+    },
+    {
+      "category": "Mathematics",
+      "text": "Negative numbers became widely accepted in mathematics after centuries of debate."
+    },
+    {
+      "category": "Countries",
+      "text": "Canada has the longest coastline of any country."
+    },
+    {
+      "category": "Countries",
+      "text": "Brazil is the largest country in South America by area."
+    },
+    {
+      "category": "Countries",
+      "text": "Japan is made up of thousands of islands."
+    },
+    {
+      "category": "Countries",
+      "text": "Egypt is home to the Great Pyramid of Giza."
+    },
+    {
+      "category": "Countries",
+      "text": "Indonesia has more than 17,000 islands."
+    },
+    {
+      "category": "Countries",
+      "text": "South Africa has three capital cities for different branches of government."
+    },
+    {
+      "category": "Countries",
+      "text": "Switzerland has four national languages."
+    },
+    {
+      "category": "Countries",
+      "text": "Chile stretches along a long, narrow part of South America's Pacific coast."
+    },
+    {
+      "category": "Countries",
+      "text": "New Zealand was one of the first countries to give women the right to vote in national elections."
+    },
+    {
+      "category": "Countries",
+      "text": "Monaco is one of the smallest sovereign countries by area."
+    },
+    {
+      "category": "Countries",
+      "text": "Nepal is home to Mount Everest."
+    },
+    {
+      "category": "Sports",
+      "text": "Cricket is among the most watched sports globally."
+    },
+    {
+      "category": "Sports",
+      "text": "A marathon is 42.195 kilometers long."
+    },
+    {
+      "category": "Sports",
+      "text": "Table tennis became an Olympic sport in 1988."
+    },
+    {
+      "category": "Sports",
+      "text": "Basketball was invented by James Naismith in 1891."
+    },
+    {
+      "category": "Sports",
+      "text": "The modern Olympic Games began in Athens in 1896."
+    },
+    {
+      "category": "Sports",
+      "text": "A standard soccer match has two halves of 45 minutes."
+    },
+    {
+      "category": "Sports",
+      "text": "The Tour de France is one of cycling's most famous races."
+    },
+    {
+      "category": "Sports",
+      "text": "Wimbledon is the oldest tennis tournament still played today."
+    },
+    {
+      "category": "Sports",
+      "text": "A baseball game is divided into innings rather than timed halves."
+    },
+    {
+      "category": "Sports",
+      "text": "Badminton shuttlecocks can travel extremely fast in elite play."
+    },
+    {
+      "category": "Sports",
+      "text": "Chess is recognized as a sport by the International Olympic Committee."
+    },
+    {
+      "category": "Sports",
+      "text": "Kabaddi originated in South Asia and is popular in India."
+    },
+    {
+      "category": "Olympics",
+      "text": "Olympic gold medals contain very little actual gold."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Olympic rings represent five inhabited continents."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Summer and Winter Olympics are held on separate four-year cycles."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Olympic flame is lit in Olympia, Greece, before each Games."
+    },
+    {
+      "category": "Olympics",
+      "text": "The first modern Olympics were held in 1896."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Paralympic Games are held for athletes with disabilities."
+    },
+    {
+      "category": "Olympics",
+      "text": "Tokyo hosted the Summer Olympics in 1964 and 2021."
+    },
+    {
+      "category": "Olympics",
+      "text": "The marathon commemorates an ancient Greek messenger legend."
+    },
+    {
+      "category": "Olympics",
+      "text": "Athletes enter the Olympic opening ceremony behind their national flags."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Olympic motto includes the idea of being faster, higher, and stronger."
+    },
+    {
+      "category": "Olympics",
+      "text": "Women first competed in the modern Olympics in 1900."
+    },
+    {
+      "category": "Olympics",
+      "text": "The Olympic Games include both individual and team events."
+    },
+    {
+      "category": "Cricket",
+      "text": "A cricket pitch is 22 yards long."
+    },
+    {
+      "category": "Cricket",
+      "text": "Test cricket can last up to five days."
+    },
+    {
+      "category": "Cricket",
+      "text": "A century in cricket means a batter has scored 100 runs."
+    },
+    {
+      "category": "Cricket",
+      "text": "The Cricket World Cup is played in the one-day international format."
+    },
+    {
+      "category": "Cricket",
+      "text": "A hat-trick in cricket means taking three wickets in three consecutive balls."
+    },
+    {
+      "category": "Cricket",
+      "text": "The Indian Premier League began in 2008."
+    },
+    {
+      "category": "Cricket",
+      "text": "The Ashes is a historic Test cricket series between England and Australia."
+    },
+    {
+      "category": "Cricket",
+      "text": "A yorker is a delivery aimed near the batter's feet."
+    },
+    {
+      "category": "Cricket",
+      "text": "A duck means a batter is out without scoring a run."
+    },
+    {
+      "category": "Cricket",
+      "text": "A wicket can refer to the stumps, the dismissal, or the playing surface."
+    },
+    {
+      "category": "Cricket",
+      "text": "Spin bowlers use rotation to make the ball change direction after bouncing."
+    },
+    {
+      "category": "Cricket",
+      "text": "The third umpire uses video technology to help make decisions."
+    },
+    {
+      "category": "Football",
+      "text": "Association football is often called soccer in several countries."
+    },
+    {
+      "category": "Football",
+      "text": "A football team normally has 11 players on the field."
+    },
+    {
+      "category": "Football",
+      "text": "The FIFA World Cup is held every four years."
+    },
+    {
+      "category": "Football",
+      "text": "A hat-trick in football means one player scores three goals in a match."
+    },
+    {
+      "category": "Football",
+      "text": "The offside rule prevents attackers from waiting near the opponent's goal."
+    },
+    {
+      "category": "Football",
+      "text": "Goalkeepers are the only players allowed to handle the ball in their penalty area."
+    },
+    {
+      "category": "Football",
+      "text": "Penalty kicks are taken from 12 yards away from the goal."
+    },
+    {
+      "category": "Football",
+      "text": "The UEFA Champions League is one of club football's biggest competitions."
+    },
+    {
+      "category": "Football",
+      "text": "Extra time is used in some knockout matches when scores are level."
+    },
+    {
+      "category": "Football",
+      "text": "Yellow and red cards are used to discipline players."
+    },
+    {
+      "category": "Football",
+      "text": "Futsal is a smaller indoor form of football."
+    },
+    {
+      "category": "Football",
+      "text": "The first FIFA World Cup was held in 1930."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Nikola Tesla held over 300 patents across different countries."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "A.P.J. Abdul Kalam helped lead India's missile and space technology programs."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Leonardo da Vinci wrote many notes in mirror script."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Albert Einstein's brain was studied after his death."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Marie Curie won Nobel Prizes in two different scientific fields."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Mahatma Gandhi used nonviolent resistance as a major political strategy."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Ada Lovelace is often described as one of the first computer programmers."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Nelson Mandela became South Africa's first Black president."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Florence Nightingale helped modernize nursing and hospital statistics."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Rabindranath Tagore was the first non-European Nobel laureate in Literature."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Kalpana Chawla was the first woman of Indian origin in space."
+    },
+    {
+      "category": "Famous Personalities",
+      "text": "Stephen Hawking made major contributions to black hole physics."
+    },
+    {
+      "category": "Inventors",
+      "text": "Thomas Edison held more than a thousand U.S. patents."
+    },
+    {
+      "category": "Inventors",
+      "text": "Alexander Graham Bell is widely associated with the development of the telephone."
+    },
+    {
+      "category": "Inventors",
+      "text": "The Wright brothers made the first controlled powered airplane flight in 1903."
+    },
+    {
+      "category": "Inventors",
+      "text": "Hedy Lamarr co-invented frequency-hopping ideas that influenced wireless communication."
+    },
+    {
+      "category": "Inventors",
+      "text": "James Watt improved the steam engine, helping power the Industrial Revolution."
+    },
+    {
+      "category": "Inventors",
+      "text": "Tim Berners-Lee invented the World Wide Web."
+    },
+    {
+      "category": "Inventors",
+      "text": "Johannes Gutenberg's printing press transformed book production in Europe."
+    },
+    {
+      "category": "Inventors",
+      "text": "Grace Hopper helped develop early programming languages and compiler ideas."
+    },
+    {
+      "category": "Inventors",
+      "text": "Garrett Morgan invented an early traffic signal design."
+    },
+    {
+      "category": "Inventors",
+      "text": "Philo Farnsworth was a pioneer of electronic television."
+    },
+    {
+      "category": "Inventors",
+      "text": "George Washington Carver developed many agricultural uses for crops such as peanuts."
+    },
+    {
+      "category": "Inventors",
+      "text": "C. V. Raman discovered the Raman effect in light scattering."
+    },
+    {
+      "category": "Billionaires",
+      "text": "John D. Rockefeller is often regarded as the first billionaire in modern history."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Berkshire Hathaway grew from a textile company into a major investment holding company."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Many billionaires built wealth through ownership stakes rather than salaries."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Public company founders can gain or lose large amounts of wealth as share prices move."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Philanthropy pledges are common among several modern billionaires."
+    },
+    {
+      "category": "Billionaires",
+      "text": "The Forbes billionaires list began tracking global billionaire wealth in the 1980s."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Technology companies have produced many of the world's best-known modern billionaires."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Some billionaire fortunes come from inherited family businesses."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Venture capital can turn early startup stakes into enormous wealth."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Inflation makes historical billionaire comparisons difficult."
+    },
+    {
+      "category": "Billionaires",
+      "text": "Net worth estimates often depend on market prices and private asset valuations."
+    },
+    {
+      "category": "Billionaires",
+      "text": "A billionaire owns assets valued at one billion currency units or more."
+    },
+    {
+      "category": "Environment",
+      "text": "Mangroves protect coastlines and provide habitat for young marine life."
+    },
+    {
+      "category": "Environment",
+      "text": "Wetlands can filter water and store carbon."
+    },
+    {
+      "category": "Environment",
+      "text": "Plastic pollution can persist in ecosystems for many years."
+    },
+    {
+      "category": "Environment",
+      "text": "Recycling aluminum saves significant energy compared with making new aluminum from ore."
+    },
+    {
+      "category": "Environment",
+      "text": "Forests help regulate water cycles and store carbon."
+    },
+    {
+      "category": "Environment",
+      "text": "Composting turns organic waste into nutrient-rich material."
+    },
+    {
+      "category": "Environment",
+      "text": "Biodiversity helps ecosystems recover from stress."
+    },
+    {
+      "category": "Environment",
+      "text": "Coral reefs support a large share of marine species despite covering a small ocean area."
+    },
+    {
+      "category": "Environment",
+      "text": "Air quality can affect heart and lung health."
+    },
+    {
+      "category": "Environment",
+      "text": "Soil erosion can reduce farmland productivity."
+    },
+    {
+      "category": "Environment",
+      "text": "Native plants often support local pollinators better than many imported ornamentals."
+    },
+    {
+      "category": "Environment",
+      "text": "Clean drinking water depends on healthy watersheds."
+    },
+    {
+      "category": "Climate",
+      "text": "Climate describes long-term weather patterns, not a single day's weather."
+    },
+    {
+      "category": "Climate",
+      "text": "Carbon dioxide traps heat in Earth's atmosphere."
+    },
+    {
+      "category": "Climate",
+      "text": "Ice cores preserve clues about ancient climates."
+    },
+    {
+      "category": "Climate",
+      "text": "The greenhouse effect keeps Earth warmer than it would be without an atmosphere."
+    },
+    {
+      "category": "Climate",
+      "text": "Sea levels can rise when land ice melts and ocean water warms."
+    },
+    {
+      "category": "Climate",
+      "text": "El Nino can shift weather patterns across large parts of the world."
+    },
+    {
+      "category": "Climate",
+      "text": "Methane is a powerful greenhouse gas."
+    },
+    {
+      "category": "Climate",
+      "text": "Climate models use physics and data to project future conditions."
+    },
+    {
+      "category": "Climate",
+      "text": "Urban heat islands make cities warmer than nearby rural areas."
+    },
+    {
+      "category": "Climate",
+      "text": "Tree rings can reveal information about past climate conditions."
+    },
+    {
+      "category": "Climate",
+      "text": "A carbon footprint estimates greenhouse gas emissions linked to an activity."
+    },
+    {
+      "category": "Climate",
+      "text": "Renewable energy can reduce emissions from electricity generation."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 0 is the only number that cannot be represented in Roman numerals."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 7 is often chosen when people are asked to pick a random number from 1 to 10."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 1729 is known as Ramanujan's famous taxi number."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 299,792,458 is the speed of light in meters per second in vacuum."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 1,000,000 seconds equals about 11.6 days."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 60 is used for minutes and seconds because ancient counting systems favored base 60."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 2 is the only even prime number."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 365 is the common number of days in a non-leap year."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 24 appears in the number of hours in a day."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 12 appears in months, zodiac signs, and many traditional counting systems."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 100 is a perfect square because 10 times 10 equals 100."
+    },
+    {
+      "category": "Numbers",
+      "text": "Number 1,000,000,000 is one billion in the short scale."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1969: Humans landed on the Moon."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1991: The World Wide Web became publicly available."
+    },
+    {
+      "category": "Years & Events",
+      "text": "2007: The first iPhone launched."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1947: India became independent."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1950: The Constitution of India came into effect."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1912: The Titanic sank in the North Atlantic."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1492: Columbus reached the Americas during a Spanish expedition."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1776: The United States Declaration of Independence was adopted."
+    },
+    {
+      "category": "Years & Events",
+      "text": "1983: India won its first Cricket World Cup."
+    },
+    {
+      "category": "Years & Events",
+      "text": "2011: India won the Cricket World Cup on home soil."
+    },
+    {
+      "category": "Years & Events",
+      "text": "2008: The first Android phone was released."
+    },
+    {
+      "category": "Years & Events",
+      "text": "2020: The Tokyo Olympics were postponed because of the COVID-19 pandemic."
+    },
+    {
+      "category": "Language Facts",
+      "text": "The word alphabet comes from alpha and beta, the first two Greek letters."
+    },
+    {
+      "category": "Language Facts",
+      "text": "English has borrowed words from hundreds of languages."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Sanskrit is one of the world's oldest documented Indo-Aryan languages."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Kannada has a long literary tradition with early inscriptions dating back over a thousand years."
+    },
+    {
+      "category": "Language Facts",
+      "text": "A palindrome reads the same backward and forward."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Morse code represents letters with dots and dashes."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Emoji were first developed in Japan."
+    },
+    {
+      "category": "Language Facts",
+      "text": "The Rosetta Stone helped scholars understand Egyptian hieroglyphs."
+    },
+    {
+      "category": "Language Facts",
+      "text": "A pangram uses every letter of an alphabet at least once."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Hindi is written in the Devanagari script."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Sign languages have grammar and structure just like spoken languages."
+    },
+    {
+      "category": "Language Facts",
+      "text": "Loanwords are words adopted from another language."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Chocolate comes from cacao beans."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Sourdough bread rises with the help of wild yeast and bacteria."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Rice is a staple food for more than half of the world's population."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Saffron is one of the most expensive spices by weight."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Idli batter ferments before steaming."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Tea leaves come from the Camellia sinensis plant."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Capsaicin gives chili peppers their heat."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Bananas are botanically berries, while strawberries are not true berries."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Fermentation is used to make yogurt, kimchi, and many cheeses."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Coffee beans are seeds from coffee cherries."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Turmeric contains the yellow pigment curcumin."
+    },
+    {
+      "category": "Food Facts",
+      "text": "Honey's low moisture helps it resist spoilage."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Voynich manuscript remains undeciphered despite many attempts."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Antikythera mechanism was an ancient Greek geared device used for astronomical calculations."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The identity of Jack the Ripper remains unknown."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The exact purpose of some Stonehenge rituals is still debated."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Nazca Lines are giant geoglyphs in Peru."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The cause of the Tunguska event is widely linked to an airburst from a space object."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Mary Celeste was found abandoned in 1872."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Indus script has not been fully deciphered."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Bermuda Triangle is famous in popular culture, but many incidents have ordinary explanations."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Piri Reis map is often discussed because of its early depiction of coastlines."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "The Dancing Plague of 1518 remains debated by historians."
+    },
+    {
+      "category": "Mystery Facts",
+      "text": "Some deep-sea sounds were mysterious until scientists linked them to natural sources."
+    }
+  ]
+}
