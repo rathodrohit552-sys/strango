@@ -13,6 +13,15 @@ const navItems = [
   ["/messages", "message", "Messages"],
   ["/notifications", "bell", "Notifications"],
   ["/sparks", "spark", "Sparks"],
+  ["/pluto", "spark", "Pluto"],
+  ["/profile", "profile", "Profile"]
+];
+
+const mobileNavItems = [
+  ["/dashboard", "home", "Home"],
+  ["/communities", "users", "Communities"],
+  ["/live", "live", "Live"],
+  ["/chat", "message", "Chat"],
   ["/profile", "profile", "Profile"]
 ];
 
@@ -42,47 +51,40 @@ export function PublicHeader({ onAuth }) {
 }
 
 function RightRail() {
-  const activePeople = [
-    ["MS", "Mira S.", "Viewing AI careers", "purple"],
-    ["AK", "Aarav K.", "Typing in Finance Circle", "green"],
-    ["NP", "Naina P.", "Joined Student Desk", "gold"]
-  ];
+  const [communityItems, setCommunityItems] = useState([]);
+  const [discussionItems, setDiscussionItems] = useState([]);
+  useEffect(() => {
+    api("/api/communities").then((data) => setCommunityItems(data?.communities || []));
+    api("/api/discussions").then((data) => setDiscussionItems(data?.discussions || []));
+  }, []);
+  const onlineTotal = communityItems.reduce((total, item) => total + Number(item.onlineCount || 0), 0);
   return (
     <aside className="right-rail">
       <section className="rail-spotlight">
-        <div className="rail-spotlight-top"><span className="rail-live-dot" /><strong>Platform live</strong><span>Now</span></div>
-        <b>1,284</b>
-        <p>people online across 38 active conversations</p>
-        <div className="rail-avatar-stack">{activePeople.map(([label, name, , tone]) => <Avatar key={name} label={label} small tone={tone} />)}<span>+1.2k</span></div>
+        <div className="rail-spotlight-top">{onlineTotal > 0 && <span className="rail-live-dot" />}<strong>Platform activity</strong><span>Now</span></div>
+        <b>{onlineTotal}</b>
+        <p>{onlineTotal > 0 ? `${onlineTotal} people online across communities` : "No live community activity yet"}</p>
         <Link to="/live">Explore live activity <Icon name="arrow" size={15} /></Link>
       </section>
       <section className="rail-block">
         <div className="rail-title"><h3>Trending communities</h3><Link to="/communities">See all</Link></div>
-        {communities.slice(0, 4).map((community, index) => (
+        {communityItems.slice().sort((a, b) => b.memberCount - a.memberCount).slice(0, 4).map((community, index) => (
           <Link className="rail-community" to={`/communities/${community.slug}`} key={community.slug}>
             <span className="rail-rank">{String(index + 1).padStart(2, "0")}</span>
-            <CommunityMark community={community} size="small" showStatus />
-            <span><strong>{community.name}</strong><small>{community.members} members</small><em><i /> {community.online} online</em></span>
+            <CommunityMark community={{ ...communities.find((item) => item.slug === community.slug), ...community }} size="small" showStatus={community.onlineCount > 0} />
+            <span><strong>{community.name}</strong><small>{community.memberCount || "Be first"} {community.memberCount === 1 ? "member" : community.memberCount ? "members" : ""}</small>{community.onlineCount > 0 && <em><i /> {community.onlineCount} online</em>}</span>
             <Icon name="arrow" size={15} />
           </Link>
         ))}
       </section>
       <section className="rail-block">
         <div className="rail-title"><h3>Live discussions</h3><span className="rail-title-live"><i /> Updating</span></div>
-        {discussions.slice(0, 3).map((item) => {
+        {discussionItems.slice(0, 3).map((item) => {
           const community = communities.find((entry) => entry.slug === item.communitySlug);
-          return <Link className="rail-suggestion" to={`/discussions/${item.id}`} key={item.id}><span style={{ "--suggestion-accent": community?.accent }}>{item.tag}</span><strong>{item.title}</strong><small><Icon name="eye" size={13} /> {item.viewers} viewing <i /> {item.comments} messages</small></Link>;
+          return <Link className="rail-suggestion" to={`/discussions/${item.id}`} key={item.id}><span style={{ "--suggestion-accent": community?.accent }}>{item.community}</span><strong>{item.title}</strong><small>{item.comments} {item.comments === 1 ? "reply" : "replies"}</small></Link>;
         })}
       </section>
-      <section className="rail-block rail-active-block">
-        <div className="rail-title"><h3>Active people</h3><span className="rail-title-live"><i /> Live</span></div>
-        {activePeople.map(([label, name, activity, tone]) => (
-          <Link className="rail-active-person" to="/messages" key={name}>
-            <span className="presence"><Avatar label={label} small tone={tone} /></span>
-            <span><strong>{name}</strong><small>{activity}</small></span>
-          </Link>
-        ))}
-      </section>
+      <section className="rail-block"><div className="rail-title"><h3>STRANGO PLUTO</h3><Link to="/pluto">Coming soon</Link></div><p className="quiet-state">Premium customization without changing the core social experience.</p></section>
       <nav className="rail-footer"><Link to="/about">About</Link><Link to="/privacy-policy">Privacy</Link><Link to="/terms-of-service">Terms</Link><Link to="/contact">Contact</Link></nav>
     </aside>
   );
@@ -121,7 +123,7 @@ export function AppShell({ children, onAuth }) {
     navigate(query ? `/discussions?q=${encodeURIComponent(query)}` : "/discussions");
   }
 
-  const identity = session?.profile?.display_name || (session?.mode === "profile" ? "Strango Member" : "Ghost 148");
+  const identity = session?.profile?.display_name || (session?.mode === "profile" ? "Strango Member" : `Stranger #${session?.strangerNumber || ""}`.trim());
 
   return (
     <div className="platform-shell">
@@ -149,7 +151,7 @@ export function AppShell({ children, onAuth }) {
               </NavLink>
             ))}
           </nav>
-          <button className="button button-primary compose-button" type="button" onClick={() => navigate("/discussions?compose=1")}><Icon name="plus" size={18} /> Create discussion</button>
+          <button className="button button-primary compose-button" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={18} /> Create discussion</button>
           <button className="identity-card" type="button" onClick={onAuth}>
             <Avatar label={identity} small />
             <span><strong>{identity}</strong><small>{session?.mode === "profile" ? "Profile mode" : "Incognito mode"}</small></span>
@@ -169,7 +171,7 @@ export function AppShell({ children, onAuth }) {
         <RightRail />
       </div>
       <nav className="mobile-bottom-nav" aria-label="Primary navigation">
-        {navItems.slice(0, 5).map(([to, icon, label]) => <NavLink to={to} key={to}><Icon name={icon} /><span>{label}</span></NavLink>)}
+        {mobileNavItems.map(([to, icon, label]) => <NavLink to={to} key={to}><Icon name={icon} /><span>{label}</span></NavLink>)}
       </nav>
     </div>
   );
@@ -205,6 +207,12 @@ export function AuthModal({ open, onClose }) {
     else setMessage("Incognito access is unavailable right now.");
   }
 
+  async function useGhost() {
+    const result = await api("/api/auth/anonymous", { method: "POST", body: JSON.stringify({ mode: "ghost" }) });
+    if (result?.ok) window.location.href = "/communities";
+    else setMessage("Ghost Mode is unavailable right now.");
+  }
+
   return (
     <div className="modal-layer" role="dialog" aria-modal="true" aria-labelledby="auth-title">
       <button className="modal-scrim" type="button" aria-label="Close" onClick={onClose} />
@@ -214,6 +222,7 @@ export function AuthModal({ open, onClose }) {
         <p className="eyebrow">Observe. Talk. Connect.</p>
         <h2 id="auth-title">Choose how you show up</h2>
         <p>Participate privately or build a public profile. You stay in control of your identity.</p>
+        <button className="auth-choice" type="button" onClick={useGhost}><span className="choice-icon">O</span><span><strong>Browse in Ghost Mode</strong><small>Explore first. Participation stays locked until you choose an identity.</small></span><Icon name="arrow" /></button>
         <button className="auth-choice" type="button" onClick={useIncognito}><span className="choice-icon">G</span><span><strong>Continue incognito</strong><small>Participate anonymously and keep earning Sparks.</small></span><Icon name="arrow" /></button>
         <a className="auth-choice" href="/auth/google"><span className="choice-icon google-icon">G</span><span><strong>Continue with Google</strong><small>One-click access with a public profile.</small></span><Icon name="arrow" /></a>
         <div className="auth-divider"><span>or use email</span></div>

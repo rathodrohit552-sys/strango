@@ -20,34 +20,20 @@ export function formatCount(value) {
 
 export function mergeCommunities(remote, fallback) {
   if (!Array.isArray(remote) || !remote.length) return fallback;
-  const remoteBySlug = new Map(remote.map((community) => [community.slug, community]));
-  const merged = fallback.map((base) => {
-    const community = remoteBySlug.get(base.slug);
-    if (!community) return base;
-    remoteBySlug.delete(base.slug);
+  const designBySlug = new Map(fallback.map((community) => [community.slug, community]));
+  return remote.map((community, index) => {
+    const design = designBySlug.get(community.slug) || fallback[index % fallback.length] || {};
     return {
-      ...base,
-      name: base.name,
-      icon: base.icon,
-      description: community.description || base.description,
-      category: community.category || base.category,
-      members: community.memberCount > 100 ? formatCount(community.memberCount) : base.members,
-      online: community.onlineCount || base.online
+      ...design,
+      ...community,
+      name: community.name,
+      description: community.description,
+      category: community.category || community.shortName || design.category || "Community",
+      icon: design.icon || community.shortName?.slice(0, 2).toUpperCase() || community.name.slice(0, 1),
+      members: Number(community.memberCount || 0),
+      online: Number(community.onlineCount || 0),
+      topics: Number(community.topicCount || 0),
+      activity: community.topicCount ? `${community.topicCount} ${community.topicCount === 1 ? "discussion" : "discussions"}` : "No activity yet"
     };
   });
-  remoteBySlug.forEach((community, slug) => {
-    const index = merged.length;
-    merged.push({
-      slug,
-      name: community.name,
-      icon: community.shortName?.slice(0, 2).toUpperCase() || community.name.slice(0, 1),
-      description: community.description,
-      category: community.category || community.shortName || "Community",
-      members: community.memberCount ? formatCount(community.memberCount) : "New",
-      online: community.onlineCount || 0,
-      color: fallback[index % fallback.length].color,
-      activity: "Recently active"
-    });
-  });
-  return merged;
 }

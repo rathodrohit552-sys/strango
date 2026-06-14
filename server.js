@@ -110,6 +110,45 @@ function requireParticipant(req, res) {
   return state;
 }
 
+const ownerPermissions = ["edit_community", "delete_community", "manage_moderators", "manage_rules", "approve_content", "remove_post", "mute_user", "ban_user", "view_mod_log"];
+const moderatorPermissions = ["approve_content", "remove_post", "mute_user", "ban_user", "view_mod_log"];
+
+function communityAccess(slug, userId) {
+  const community = database.db.communities.find((item) => item.slug === slug);
+  if (!community) return { community: null, role: null, permissions: [] };
+  const role = database.getCommunityRole(community.id, userId);
+  return { community, role: role?.role || null, permissions: role?.permissions || [] };
+}
+
+function requireCommunityPermission(req, res, permission) {
+  const state = requireParticipant(req, res);
+  if (!state) return null;
+  const access = communityAccess(req.params.slug, state.user.id);
+  if (!access.community) {
+    res.status(404).json({ error: "Community not found." });
+    return null;
+  }
+  if (access.role !== "Owner" && !access.permissions.includes(permission)) {
+    res.status(403).json({ error: "You do not have permission to perform this action.", code: "COMMUNITY_PERMISSION_REQUIRED" });
+    return null;
+  }
+  return { state, ...access };
+}
+
+function publicModerationAction(action) {
+  const actor = database.db.profiles.find((item) => item.user_id === action.actor_id);
+  const target = database.db.profiles.find((item) => item.user_id === action.target_user_id);
+  return {
+    id: action.id,
+    action: action.action,
+    reason: action.reason,
+    postId: action.post_id,
+    actor: actor?.display_name || "Moderator",
+    target: target?.display_name || null,
+    createdAt: action.created_at
+  };
+}
+
 function communityOnlineCount(slug) {
   const ids = new Set();
   socketCommunityState.forEach((state, socketId) => {
@@ -163,7 +202,8 @@ const reactPageRoutes = [
   ["/about", "About Strango", "Learn about Strango's Observe, Talk, Connect philosophy."],
   ["/contact", "Contact Strango", "Contact the Strango team for support, safety, partnerships and product feedback."],
   ["/faq", "Strango FAQ", "Answers about Ghost Mode, Incognito Mode, profiles, Sparks and live conversations."],
-  ["/support", "Strango Support", "Get product, account and safety support for Strango."]
+  ["/support", "Strango Support", "Get product, account and safety support for Strango."],
+  ["/pluto", "Strango Pluto - Coming Soon", "Preview the future premium Strango experience."]
 ];
 
 reactPageRoutes.forEach(([route, title, description]) => {
@@ -203,6 +243,7 @@ app.get("/api/session", (req, res) => {
       email: state.user.email,
       isAnonymous: state.user.is_anonymous,
       mode,
+      strangerNumber: state.user.visitor_number || Number(state.user.id),
       ghostExpiresAt: state.user.ghost_expires_at || null,
       profile: state.profile
     }
@@ -216,6 +257,23 @@ app.post("/api/auth/anonymous", (req, res) => {
   if (state.user.access_mode === "incognito") state.user.ghost_expires_at = null;
   database.saveDb();
   res.json({ ok: true, user: state.user, profile: state.profile });
+});
+
+app.get("/api/pluto", (req, res) => {
+  const state = attachSession(req, res);
+  const interest = database.db.subscriptions.find((item) => item.user_id === state.user.id && item.plan === "pluto");
+  res.json({ name: "STRANGO PLUTO", status: "coming_soon", interested: Boolean(interest) });
+});
+
+app.post("/api/pluto/interest", (req, res) => {
+  const state = attachSession(req, res);
+  let interest = database.db.subscriptions.find((item) => item.user_id === state.user.id && item.plan === "pluto");
+  if (!interest) {
+    interest = { id: database.nextId(database.db, "subscriptions"), user_id: state.user.id, plan: "pluto", status: "interested", created_at: new Date().toISOString() };
+    database.db.subscriptions.push(interest);
+    database.saveDb();
+  }
+  res.status(201).json({ ok: true, status: "coming_soon" });
 });
 
 app.post("/api/auth/email", async (req, res) => {
@@ -372,6 +430,10 @@ app.get("/api/communities/:slug", (req, res) => {
     return;
   }
   const body = database.publicCommunity(community, communityOnlineCount(community.slug));
+  const state = attachSession(req, res);
+  const viewerRole = database.getCommunityRole(community.id, state.user.id);
+  body.viewerRole = viewerRole?.role || null;
+  body.viewerPermissions = viewerRole?.permissions || [];
   body.channels = body.channels.map((channel) => ({
     name: channel,
     slug: database.channelSlug(channel),
@@ -382,11 +444,25 @@ app.get("/api/communities/:slug", (req, res) => {
     .map((member) => {
       const profile = database.db.profiles.find((item) => item.user_id === member.user_id);
       return {
+        id: member.user_id,
         displayName: profile ? profile.display_name : "Anonymous User",
         badge: database.getBadge(member.member_number),
+        role: database.getCommunityRole(community.id, member.user_id)?.role || member.role || "Member",
         joinedAt: member.joined_at
       };
     });
+  body.moderators = database.db.community_roles
+    .filter((role) => role.community_id === community.id && ["Owner", "Moderator"].includes(role.role))
+    .map((role) => {
+      const profile = database.db.profiles.find((item) => item.user_id === role.user_id);
+      return { id: role.user_id, displayName: profile?.display_name || "Anonymous User", role: role.role };
+    });
+  body.moderationLog = body.viewerRole === "Owner" || body.viewerPermissions.includes("view_mod_log")
+    ? database.db.moderation_actions.filter((item) => item.community_id === community.id).slice(-50).reverse().map(publicModerationAction)
+    : [];
+  body.openReports = body.viewerRole === "Owner" || body.viewerPermissions.includes("view_mod_log")
+    ? database.db.community_reports.filter((item) => item.community_id === community.id && item.status === "open").map((item) => ({ id: item.id, postId: item.post_id, userId: item.target_user_id, reason: item.reason, createdAt: item.created_at }))
+    : [];
   res.json({ community: body });
 });
 
@@ -398,6 +474,9 @@ app.post("/api/communities", (req, res) => {
   const description = String(req.body && req.body.description || "").trim();
   const icon = String(req.body && req.body.icon || "spark").trim();
   const category = String(req.body && req.body.category || "General").trim();
+  const rules = Array.isArray(req.body?.rules) ? req.body.rules.map((rule) => String(rule).trim().slice(0, 240)).filter(Boolean).slice(0, 12) : [];
+  const bannerUrl = String(req.body?.bannerUrl || "").trim().slice(0, 500) || null;
+  const logoUrl = String(req.body?.logoUrl || "").trim().slice(0, 500) || null;
   if (!name || !slug || !description) {
     res.status(400).json({ error: "Name, slug, and description are required." });
     return;
@@ -416,6 +495,9 @@ app.post("/api/communities", (req, res) => {
     theme: "Custom",
     rgb: "23,111,77",
     icon,
+    logo_url: logoUrl,
+    banner_url: bannerUrl,
+    rules: rules.length ? rules : ["Be constructive and stay on topic.", "Protect private information.", "Report harmful content instead of escalating."],
     owner_id: state.user.id,
     created_at: new Date().toISOString()
   };
@@ -432,12 +514,120 @@ app.post("/api/communities", (req, res) => {
     community_id: community.id,
     user_id: state.user.id,
     role: "Owner",
-    permissions: ["delete_post", "mute_user", "ban_user"],
+    permissions: ownerPermissions,
     created_at: new Date().toISOString()
   });
-  database.joinCommunity(slug, state.user.id);
+  const ownership = database.joinCommunity(slug, state.user.id);
+  if (ownership?.member) ownership.member.role = "Owner";
   database.saveDb();
   res.status(201).json({ community: database.publicCommunity(community, communityOnlineCount(slug)) });
+});
+
+app.patch("/api/communities/:slug", (req, res) => {
+  const access = requireCommunityPermission(req, res, "edit_community");
+  if (!access) return;
+  const { community } = access;
+  if (req.body.name !== undefined) community.name = String(req.body.name).trim().slice(0, 80) || community.name;
+  if (req.body.description !== undefined) community.description = String(req.body.description).trim().slice(0, 1200);
+  if (req.body.category !== undefined) community.category = String(req.body.category).trim().slice(0, 60);
+  if (req.body.logoUrl !== undefined) community.logo_url = String(req.body.logoUrl || "").trim().slice(0, 500) || null;
+  if (req.body.bannerUrl !== undefined) community.banner_url = String(req.body.bannerUrl || "").trim().slice(0, 500) || null;
+  if (Array.isArray(req.body.rules)) community.rules = req.body.rules.map((rule) => String(rule).trim().slice(0, 240)).filter(Boolean).slice(0, 12);
+  community.updated_at = new Date().toISOString();
+  database.addModerationAction({ communityId: community.id, actorId: access.state.user.id, action: "community_updated", reason: "Community settings updated." });
+  res.json({ community: database.publicCommunity(community, communityOnlineCount(community.slug)) });
+});
+
+app.delete("/api/communities/:slug", (req, res) => {
+  const access = requireCommunityPermission(req, res, "delete_community");
+  if (!access) return;
+  const communityId = access.community.id;
+  ["community_channels", "community_members", "community_messages", "community_roles", "community_events", "moderation_actions", "community_reports"]
+    .forEach((table) => { database.db[table] = database.db[table].filter((item) => item.community_id !== communityId); });
+  database.db.posts = database.db.posts.filter((item) => item.community_id !== communityId);
+  database.db.communities = database.db.communities.filter((item) => item.id !== communityId);
+  database.saveDb();
+  res.json({ ok: true });
+});
+
+app.post("/api/communities/:slug/moderators", (req, res) => {
+  const access = requireCommunityPermission(req, res, "manage_moderators");
+  if (!access) return;
+  const userId = String(req.body?.userId || "");
+  const member = database.db.community_members.find((item) => item.community_id === access.community.id && item.user_id === userId);
+  if (!member) return res.status(404).json({ error: "The user must join the community first." });
+  let role = database.db.community_roles.find((item) => item.community_id === access.community.id && item.user_id === userId);
+  if (!role) {
+    role = { id: database.nextId(database.db, "community_roles"), community_id: access.community.id, user_id: userId, role: "Moderator", permissions: moderatorPermissions, created_at: new Date().toISOString() };
+    database.db.community_roles.push(role);
+  } else {
+    role.role = "Moderator";
+    role.permissions = moderatorPermissions;
+  }
+  member.role = "Moderator";
+  database.addModerationAction({ communityId: access.community.id, actorId: access.state.user.id, targetUserId: userId, action: "moderator_added" });
+  res.status(201).json({ ok: true });
+});
+
+app.delete("/api/communities/:slug/moderators/:userId", (req, res) => {
+  const access = requireCommunityPermission(req, res, "manage_moderators");
+  if (!access) return;
+  database.db.community_roles = database.db.community_roles.filter((item) => !(item.community_id === access.community.id && item.user_id === req.params.userId && item.role === "Moderator"));
+  const member = database.db.community_members.find((item) => item.community_id === access.community.id && item.user_id === req.params.userId);
+  if (member) member.role = "Member";
+  database.addModerationAction({ communityId: access.community.id, actorId: access.state.user.id, targetUserId: req.params.userId, action: "moderator_removed" });
+  res.json({ ok: true });
+});
+
+app.post("/api/communities/:slug/reports", (req, res) => {
+  const state = requireParticipant(req, res);
+  if (!state) return;
+  const community = database.db.communities.find((item) => item.slug === req.params.slug);
+  if (!community) return res.status(404).json({ error: "Community not found." });
+  const report = {
+    id: database.nextId(database.db, "community_reports"),
+    community_id: community.id,
+    reporter_id: state.user.id,
+    post_id: req.body?.postId ? String(req.body.postId) : null,
+    target_user_id: req.body?.userId ? String(req.body.userId) : null,
+    reason: String(req.body?.reason || "Reported for review").trim().slice(0, 500),
+    status: "open",
+    created_at: new Date().toISOString()
+  };
+  database.db.community_reports.push(report);
+  database.saveDb();
+  res.status(201).json({ report: { id: report.id, status: report.status } });
+});
+
+app.post("/api/communities/:slug/moderation", (req, res) => {
+  const action = String(req.body?.action || "");
+  const permission = action === "remove_post" ? "remove_post" : action === "approve_post" ? "approve_content" : action === "mute_user" ? "mute_user" : action === "ban_user" ? "ban_user" : null;
+  if (!permission) return res.status(400).json({ error: "Unsupported moderation action." });
+  const access = requireCommunityPermission(req, res, permission);
+  if (!access) return;
+  const postId = req.body?.postId ? String(req.body.postId) : null;
+  const targetUserId = req.body?.userId ? String(req.body.userId) : null;
+  if (action === "remove_post") {
+    const post = database.db.posts.find((item) => item.id === postId && item.community_id === access.community.id);
+    if (!post) return res.status(404).json({ error: "Post not found." });
+    post.removed_at = new Date().toISOString();
+    post.removed_by = access.state.user.id;
+  }
+  if (action === "approve_post") {
+    const post = database.db.posts.find((item) => item.id === postId && item.community_id === access.community.id);
+    if (!post) return res.status(404).json({ error: "Post not found." });
+    post.approved_at = new Date().toISOString();
+    post.approved_by = access.state.user.id;
+  }
+  database.db.community_reports
+    .filter((item) => item.community_id === access.community.id && item.status === "open" && ((postId && item.post_id === postId) || (targetUserId && item.target_user_id === targetUserId)))
+    .forEach((item) => {
+      item.status = action === "approve_post" ? "dismissed" : "resolved";
+      item.resolved_by = access.state.user.id;
+      item.resolved_at = new Date().toISOString();
+    });
+  const record = database.addModerationAction({ communityId: access.community.id, actorId: access.state.user.id, targetUserId, postId, action, reason: req.body?.reason });
+  res.status(201).json({ action: publicModerationAction(record) });
 });
 
 app.post("/api/communities/:slug/join", (req, res) => {
@@ -468,7 +658,7 @@ app.get("/api/communities/:slug/posts", (req, res) => {
     return;
   }
   const posts = database.db.posts
-    .filter((post) => post.community_id === community.id)
+    .filter((post) => post.community_id === community.id && !post.removed_at)
     .slice()
     .reverse()
     .map((post) => {
@@ -494,6 +684,14 @@ app.post("/api/posts", (req, res) => {
   const content = String(req.body.content || "").trim();
   if (!community || !title || !content) {
     res.status(400).json({ error: "Community, title, and content are required." });
+    return;
+  }
+  if (database.communityRestriction(community.id, state.user.id, "ban_user")) {
+    res.status(403).json({ error: "You are banned from this community." });
+    return;
+  }
+  if (database.communityRestriction(community.id, state.user.id, "mute_user")) {
+    res.status(403).json({ error: "You are muted in this community." });
     return;
   }
   database.joinCommunity(community.slug, state.user.id);
@@ -565,6 +763,7 @@ app.get("/api/notifications", (req, res) => {
 
 app.get("/api/discussions", (req, res) => {
   const discussions = database.db.posts
+    .filter((post) => !post.removed_at)
     .slice()
     .reverse()
     .map((post) => {
@@ -641,15 +840,9 @@ app.get("/api/communities/:slug/summary", (req, res) => {
     .filter((post) => post.community_id === community.id)
     .slice(-8)
     .reverse();
-  const highlights = recentPosts.length
-    ? recentPosts.slice(0, 4).map((post) => post.title)
-    : [
-        `Members are introducing themselves in ${community.name}.`,
-        "The community is collecting its first useful resources.",
-        "Live discussion topics are open for suggestions."
-      ];
+  const highlights = recentPosts.slice(0, 4).map((post) => post.title);
   res.json({
-    title: `Today's ${community.name} summary`,
+    title: highlights.length ? `Today's ${community.name} summary` : "No activity to summarize yet",
     highlights,
     generatedAt: new Date().toISOString(),
     generator: process.env.AI_SUMMARY_PROVIDER || "extractive-v1"
@@ -657,24 +850,27 @@ app.get("/api/communities/:slug/summary", (req, res) => {
 });
 
 app.get("/api/live", (req, res) => {
-  const conversations = [
-    { id: "market-open", title: "Market open: what are you watching?", topic: "Finance", participantCount: 38, tags: ["markets", "investing"] },
-    { id: "build-in-public", title: "Building in public without burning out", topic: "Technology", participantCount: 24, tags: ["startups", "creators"] },
-    { id: "late-night-study", title: "Late night study check-in", topic: "Students", participantCount: 51, tags: ["study", "focus"] },
-    { id: "open-mic", title: "Open mic: stories from this week", topic: "Community", participantCount: 17, tags: ["stories", "casual"] }
-  ];
+  const conversations = Array.from(discussionPresence.entries())
+    .filter(([, participants]) => participants.size > 0)
+    .map(([id, participants]) => {
+      const post = database.db.posts.find((item) => item.id === id || `${normalizeSlug(item.title)}-${item.id}` === id);
+      const community = post ? database.db.communities.find((item) => item.id === post.community_id) : null;
+      return {
+        id,
+        title: post?.title || "Live community discussion",
+        topic: community?.name || "Community",
+        participantCount: participants.size,
+        tags: []
+      };
+    });
   res.json({ conversations });
 });
 
 app.get("/api/rooms", (req, res) => {
-  res.json({
-    rooms: [
-      { id: "study-room", title: "Study Room", participantCount: 86, topic: "Quiet focus sprints with lightweight accountability." },
-      { id: "finance-room", title: "Finance Room", participantCount: 42, topic: "Markets, money decisions, and practical personal finance." },
-      { id: "open-mic", title: "Open Mic", participantCount: 29, topic: "Casual voice-led conversation and community stories." },
-      { id: "technology-room", title: "Technology Room", participantCount: 61, topic: "Products, code, AI, startups, and useful rabbit holes." }
-    ]
-  });
+  const rooms = Array.from(communityPresence.entries())
+    .filter(([, participants]) => participants.size > 0)
+    .map(([id, participants]) => ({ id, title: id.replace(/^community-/, "").replace(/-/g, " "), participantCount: participants.size, topic: "Active community room" }));
+  res.json({ rooms });
 });
 
 app.get("/api/trending", (req, res) => {
@@ -1066,6 +1262,31 @@ function moderateCommunityText(socket, text) {
   return { ok: true };
 }
 
+function translationMetadata(text) {
+  const value = String(text || "").trim();
+  const lower = value.toLowerCase();
+  const phrasebook = new Map([
+    ["hola amigo", ["Spanish", "Hello friend"]],
+    ["bonjour mon ami", ["French", "Hello my friend"]],
+    ["नमस्ते दोस्त", ["Hindi", "Hello friend"]],
+    ["ನಮಸ್ಕಾರ ಸ್ನೇಹಿತ", ["Kannada", "Hello friend"]],
+    ["مرحبا يا صديقي", ["Arabic", "Hello my friend"]],
+    ["こんにちは友達", ["Japanese", "Hello friend"]]
+  ]);
+  if (phrasebook.has(lower)) {
+    const [language, translatedText] = phrasebook.get(lower);
+    return { detectedLanguage: language, translatedText, status: "local_phrasebook" };
+  }
+  let detectedLanguage = null;
+  if (/[\u0600-\u06ff]/.test(value)) detectedLanguage = "Arabic";
+  else if (/[\u3040-\u30ff\u4e00-\u9faf]/.test(value)) detectedLanguage = "Japanese";
+  else if (/[\u0900-\u097f]/.test(value)) detectedLanguage = "Hindi";
+  else if (/[\u0c80-\u0cff]/.test(value)) detectedLanguage = "Kannada";
+  else if (/\b(hola|gracias|amigo|amiga|buenos)\b/i.test(value)) detectedLanguage = "Spanish";
+  else if (/\b(bonjour|merci|salut|ami|amie)\b/i.test(value)) detectedLanguage = "French";
+  return detectedLanguage ? { detectedLanguage, translatedText: null, status: "provider_required" } : null;
+}
+
 function tryMatch(){
   while(waitingQueue.length >= 2){
 
@@ -1082,6 +1303,8 @@ function tryMatch(){
     user1.room = room;
     user2.room = room;
 
+    user1.emit("chatIdentity", { self: user1.strangerNumber, partner: user2.strangerNumber });
+    user2.emit("chatIdentity", { self: user2.strangerNumber, partner: user1.strangerNumber });
     io.to(room).emit("status","Stranger connected");
   }
 }
@@ -1121,6 +1344,7 @@ io.on("connection",(socket)=>{
       author: socket.data.discussionAuthor || "Ghost member",
       avatar: String(payload.avatar || socket.data.discussionAuthor || "GM").slice(0, 2).toUpperCase(),
       message,
+      translation: translationMetadata(message),
       createdAt: new Date().toISOString()
     };
     const history = getDiscussionHistory(discussionId);
@@ -1184,10 +1408,11 @@ io.emit("onlineCount", count);
     cookies[item.slice(0, index).trim()] = decodeURIComponent(item.slice(index + 1).trim());
     return cookies;
   }, {});
-  const socketSession = isCommunitySocket ? database.getOrCreateAnonymousSession(socketCookies.strango_session) : null;
+  const socketSession = database.getOrCreateAnonymousSession(socketCookies.strango_session);
   if(socketSession){
     socket.communityUserId = socketSession.user.id;
     socket.communityUserName = socketSession.profile ? socketSession.profile.display_name : "Anonymous User";
+    socket.strangerNumber = socketSession.user.visitor_number || Number(socketSession.user.id);
   }
 
   if(!isCommunitySocket){
@@ -1205,6 +1430,10 @@ io.emit("onlineCount", count);
     const previous = socketCommunityState.get(socket.id);
     const membership = database.joinCommunity(community, socket.communityUserId);
     if(!membership) return;
+    if (database.communityRestriction(membership.community.id, socket.communityUserId, "ban_user")) {
+      socket.emit("communityModeration", { ok: false, reason: "You are banned from this community." });
+      return;
+    }
 
     if(previous && previous.room === room){
       socket.emit("communityHistory", {
@@ -1237,6 +1466,11 @@ io.emit("onlineCount", count);
     if(!state) return;
     const text = String(payload.text || "").trim().slice(0, 1000);
     if(!text) return;
+    const communityRecord = database.db.communities.find((item) => item.slug === state.community);
+    if (communityRecord && database.communityRestriction(communityRecord.id, socket.communityUserId, "mute_user")) {
+      socket.emit("communityModeration", { ok: false, reason: "You are muted in this community." });
+      return;
+    }
     const moderation = moderateCommunityText(socket, text);
     if(!moderation.ok){
       socket.emit("communityModeration", moderation);
@@ -1246,7 +1480,8 @@ io.emit("onlineCount", count);
       communitySlug:state.community,
       channelName:state.channel,
       userId:socket.communityUserId,
-      message:text
+      message:text,
+      translation:translationMetadata(text)
     });
     if(!saved) return;
     const member = database.db.community_members.find((item) => item.community_id === saved.community.id && item.user_id === socket.communityUserId);
@@ -1258,6 +1493,7 @@ io.emit("onlineCount", count);
       author:communityUserName(socket),
       badge:member ? database.getBadge(member.member_number) : "Member",
       text,
+      translation:saved.record.translation || null,
       time:saved.record.created_at
     });
   });
@@ -1309,7 +1545,9 @@ io.emit("onlineCount", count);
 
   socket.on("message",(msg)=>{
     if(socket.room){
-      socket.to(socket.room).emit("message",msg);
+      const text = String(typeof msg === "object" ? msg.text : msg || "").trim().slice(0, 2000);
+      if (!text) return;
+      socket.to(socket.room).emit("message", { text, translation: translationMetadata(text) });
     }
   });
 

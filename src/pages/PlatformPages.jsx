@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api, mergeCommunities } from "../app/api";
-import { communities as fallbackCommunities, discussions, icebreakers, liveConversations, messages, notifications, rooms } from "../app/data";
+import { communities as fallbackCommunities, communityCategories, discussions, icebreakers, liveConversations, messages, notifications, rooms } from "../app/data";
 import { AdSlot, Avatar, CommunityCard, CommunityMark, DiscussionCard, EmptyState, Icon, LiveCard, Logo, SectionHeading, ThemeToggle } from "../components/UI";
 
 export function PageIntro({ eyebrow, title, copy, action }) {
@@ -39,6 +39,7 @@ function DiscussionComposer({ open, onClose, onCreated, onAuth }) {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   if (!open) return null;
+  return <Navigate to="/discussions/new" replace />;
 
   async function submit(event) {
     event.preventDefault();
@@ -86,18 +87,26 @@ export function DashboardPage({ onAuth }) {
   const navigate = useNavigate();
   const [feed, setFeed] = useState("For you");
   const [interest, setInterest] = useState("All");
-  const visible = discussions.filter((item) => interest === "All" || item.tag === interest || item.community.includes(interest));
+  const [feedItems, setFeedItems] = useState([]);
+  const [liveItems, setLiveItems] = useState([]);
+  const [identity, setIdentity] = useState("Member");
+  useEffect(() => {
+    api("/api/discussions").then((data) => setFeedItems(data?.discussions || []));
+    api("/api/live").then((data) => setLiveItems((data?.conversations || []).map((item) => ({ ...item, people: item.participantCount || 0, accent: "#14b8a6", speakers: [] }))));
+    api("/api/session").then((data) => setIdentity(data?.user?.profile?.display_name || `Stranger #${data?.user?.strangerNumber || ""}`.trim()));
+  }, []);
+  const visible = feedItems.filter((item) => interest === "All" || item.tag === interest || item.community?.includes(interest));
   const ordered = feed === "Newest" ? [...visible].reverse() : feed === "Following" ? visible.filter((_, index) => index % 2 === 0) : visible;
 
   return (
     <div className="app-page">
-      <PageIntro eyebrow="Your feed" title="Good morning, Ghost 148." copy="A thoughtful mix of communities, discussions, and people worth discovering." action={<button className="button button-primary" type="button" onClick={() => navigate("/discussions?compose=1")}><Icon name="plus" size={17} /> Create discussion</button>} />
+      <PageIntro eyebrow="Your feed" title={`Welcome, ${identity}.`} copy="Your feed grows from communities you join and conversations you contribute to." action={<button className="button button-primary" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={17} /> Create discussion</button>} />
       <section className="interest-strip"><span>Explore:</span>{["All", "Finance", "Technology", "Gaming", "Students"].map((item) => <button className={interest === item ? "active" : ""} type="button" key={item} onClick={() => setInterest(item)}>{item}</button>)}</section>
       <div className="feed-tabs">{["For you", "Following", "Newest"].map((item) => <button className={feed === item ? "active" : ""} type="button" key={item} onClick={() => setFeed(item)}>{item}</button>)}</div>
-      <div className="discussion-list feed-list">{ordered.map((item) => <DiscussionCard discussion={item} key={item.id} />)}</div>
+      <div className="discussion-list feed-list">{ordered.length ? ordered.map((item) => <DiscussionCard discussion={item} key={item.id} />) : <EmptyState title="Your feed is ready" copy="Join a community or start the first discussion to shape what appears here." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} />}</div>
       <div className="feed-inline-block">
         <div className="inline-block-head"><h3>Live conversations</h3><Link to="/live">See all</Link></div>
-        <div className="mini-live-grid">{liveConversations.slice(0, 2).map((item) => <LiveCard conversation={item} key={item.id} />)}</div>
+        <div className="mini-live-grid">{liveItems.length ? liveItems.slice(0, 2).map((item) => <LiveCard conversation={item} key={item.id} />) : <p className="quiet-state">No live conversations yet.</p>}</div>
       </div>
       <AdSlot compact />
     </div>
@@ -110,14 +119,14 @@ export function CommunitiesPage({ onAuth }) {
   const [category, setCategory] = useState("All");
   const [joined, setJoined] = useState([]);
   const [createOpen, setCreateOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", category: "Technology" });
+  const [form, setForm] = useState({ name: "", description: "", category: "Technology", rules: "", bannerUrl: "", logoUrl: "" });
   const [createMessage, setCreateMessage] = useState("");
 
   useEffect(() => {
     api("/api/communities").then((data) => setItems(mergeCommunities(data?.communities, fallbackCommunities)));
   }, []);
 
-  const categories = ["All", "AI", "Technology", "Finance", "Gaming", "Students", "Fitness", "Movies", "Startups"];
+  const categories = ["All", ...communityCategories];
   const filtered = useMemo(() => items.filter((item) => {
     const matchesCategory = category === "All" || item.category === category;
     const text = `${item.name} ${item.description} ${item.category}`.toLowerCase();
@@ -140,7 +149,7 @@ export function CommunitiesPage({ onAuth }) {
     const slug = form.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     const result = await api("/api/communities", {
       method: "POST",
-      body: JSON.stringify({ ...form, slug, icon: form.name.slice(0, 2).toUpperCase() })
+      body: JSON.stringify({ ...form, rules: form.rules.split("\n").map((rule) => rule.trim()).filter(Boolean), slug, icon: form.name.slice(0, 2).toUpperCase() })
     });
     if (!result?.community) {
       setCreateMessage("Continue incognito or sign in to create a community.");
@@ -150,7 +159,7 @@ export function CommunitiesPage({ onAuth }) {
     const created = mergeCommunities([result.community], fallbackCommunities)[0];
     setItems((current) => [created, ...current]);
     setCreateOpen(false);
-    setForm({ name: "", description: "", category: "Technology" });
+    setForm({ name: "", description: "", category: "Technology", rules: "", bannerUrl: "", logoUrl: "" });
   }
 
   const renderGrid = (list, variant) => <div className={`community-grid ${variant === "featured" ? "featured-community-grid" : ""}`}>{list.map((community) => <CommunityCard community={community} variant={variant} joined={joined.includes(community.slug)} key={`${variant}-${community.slug}`} onJoin={joinCommunity} />)}</div>;
@@ -169,9 +178,7 @@ export function CommunitiesPage({ onAuth }) {
         </section>
       ) : (
         <div className="community-sections">
-          <section><SectionHeading eyebrow="Editor's picks" title="Featured communities" copy="High-signal spaces with welcoming members and active conversations." />{renderGrid(filtered.filter((item) => item.featured).slice(0, 4).length ? filtered.filter((item) => item.featured).slice(0, 4) : filtered.slice(0, 4), "featured")}</section>
-          <section><SectionHeading eyebrow="Momentum" title="Trending communities" copy="The spaces gaining the most participation right now." />{renderGrid([...filtered].sort((a, b) => Number(b.online) - Number(a.online)).slice(0, 4), "trending")}</section>
-          <section><SectionHeading eyebrow="Fresh activity" title="Recently active" copy="New discussions, events, and rooms worth dropping into." />{renderGrid(filtered.slice().reverse().slice(0, 4), "recent")}</section>
+          <section><SectionHeading eyebrow="Community directory" title="Spaces built around shared interests" copy="Membership and presence values below come directly from Strango activity." />{renderGrid(filtered, "featured")}</section>
         </div>
       )}
       {createOpen && <Modal title="Create a community" copy="Give the community a clear purpose. You can add channels after it is created." onClose={() => setCreateOpen(false)}>
@@ -179,6 +186,9 @@ export function CommunitiesPage({ onAuth }) {
           <label>Name<input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="e.g. Indie Builders" required /></label>
           <label>Category<select value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })}>{categories.slice(1).map((item) => <option key={item}>{item}</option>)}</select></label>
           <label>Description<textarea value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} placeholder="What will people learn, share, or do here?" required /></label>
+          <label>Rules<textarea value={form.rules} onChange={(event) => setForm({ ...form, rules: event.target.value })} placeholder={"One rule per line\nBe constructive and stay on topic."} required /></label>
+          <label>Banner URL<input type="url" value={form.bannerUrl} onChange={(event) => setForm({ ...form, bannerUrl: event.target.value })} placeholder="https://..." /></label>
+          <label>Logo URL<input type="url" value={form.logoUrl} onChange={(event) => setForm({ ...form, logoUrl: event.target.value })} placeholder="https://..." /></label>
           {createMessage && <p className="form-error">{createMessage}</p>}
           <div className="form-actions"><button className="button button-secondary" type="button" onClick={() => setCreateOpen(false)}>Cancel</button><button className="button button-primary" type="submit">Create community</button></div>
         </form>
@@ -189,17 +199,30 @@ export function CommunitiesPage({ onAuth }) {
 
 export function CommunityPage({ onAuth }) {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const base = fallbackCommunities.find((community) => community.slug === slug) || fallbackCommunities[0];
   const [community, setCommunity] = useState(base);
   const [tab, setTab] = useState("Posts");
   const [joined, setJoined] = useState(false);
   const [composerOpen, setComposerOpen] = useState(false);
   const [localPosts, setLocalPosts] = useState([]);
+  const [manageOpen, setManageOpen] = useState(false);
+  const [settings, setSettings] = useState({ name: "", description: "", category: "", rules: "", bannerUrl: "", logoUrl: "" });
+  const [moderatorId, setModeratorId] = useState("");
 
   useEffect(() => {
     api(`/api/communities/${slug}`).then((data) => {
-      if (data?.community) setCommunity(mergeCommunities([data.community], [base])[0]);
+      if (data?.community) {
+        const next = mergeCommunities([data.community], [base])[0];
+        setCommunity(next);
+        setSettings({ name: next.name || "", description: next.description || "", category: next.category || "", rules: (next.rules || []).join("\n"), bannerUrl: next.bannerUrl || "", logoUrl: next.logoUrl || "" });
+      }
     });
+    api(`/api/communities/${slug}/posts`).then((data) => setLocalPosts((data?.posts || []).map((post) => ({
+      id: post.id, community: base.name, communitySlug: slug, author: post.author,
+      time: new Date(post.time).toLocaleDateString(), title: post.title, body: post.preview,
+      votes: post.likes || 0, comments: post.comments || 0, viewers: 0, tag: base.category
+    }))));
   }, [slug]);
 
   async function join() {
@@ -208,35 +231,81 @@ export function CommunityPage({ onAuth }) {
     setJoined(true);
   }
 
+  async function saveSettings(event) {
+    event.preventDefault();
+    const result = await api(`/api/communities/${community.slug}`, { method: "PATCH", body: JSON.stringify({ ...settings, rules: settings.rules.split("\n").map((rule) => rule.trim()).filter(Boolean) }) });
+    if (result?.community) {
+      setCommunity((current) => ({ ...current, ...result.community }));
+      setManageOpen(false);
+    }
+  }
+
+  async function addModerator(event) {
+    event.preventDefault();
+    const result = await api(`/api/communities/${community.slug}/moderators`, { method: "POST", body: JSON.stringify({ userId: moderatorId.trim() }) });
+    if (result?.ok) {
+      setModeratorId("");
+      const data = await api(`/api/communities/${community.slug}`);
+      if (data?.community) setCommunity(mergeCommunities([data.community], [base])[0]);
+    }
+  }
+
+  async function deleteCommunity() {
+    if (!window.confirm(`Delete ${community.name}? This cannot be undone.`)) return;
+    const result = await api(`/api/communities/${community.slug}`, { method: "DELETE" });
+    if (result?.ok) navigate("/communities");
+  }
+
+  async function moderate(action, target) {
+    const reason = window.prompt("Add a short moderation reason:") || "";
+    const result = await api(`/api/communities/${community.slug}/moderation`, {
+      method: "POST",
+      body: JSON.stringify({ action, postId: target.postId, userId: target.userId, reason })
+    });
+    if (result?.action) {
+      const data = await api(`/api/communities/${community.slug}`);
+      if (data?.community) setCommunity(mergeCommunities([data.community], [base])[0]);
+    }
+  }
+
+  const memberCount = Number(community.members || 0);
+  const onlineCount = Number(community.online || 0);
+  const topicCount = Number(community.topics || 0);
+  const canManage = community.viewerRole === "Owner";
+
   return (
     <div className="app-page">
       <section className="community-hero community-identity-hero" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}>
+        {community.bannerUrl && <img className="community-banner" src={community.bannerUrl} alt="" />}
         <div className="community-hero-main">
-          <CommunityMark community={community} size="hero" showStatus />
+          {community.logoUrl ? <img className="community-logo-image" src={community.logoUrl} alt={`${community.name} logo`} /> : <CommunityMark community={community} size="hero" showStatus={onlineCount > 0} />}
           <div className="community-hero-copy">
             <p className="eyebrow">{community.category || "Strango community"} community</p>
             <h1>{community.name}</h1>
             <p>{community.description}</p>
-            <div className="community-trending-topics">{(community.trends || ["Live discussion", "Member stories", "Weekly roundup"]).map((topic) => <span key={topic}><Icon name="hash" size={14} /> {topic}</span>)}</div>
+            <div className="community-trending-topics">{(community.trends || []).map((topic) => <span key={topic}><Icon name="hash" size={14} /> {topic}</span>)}</div>
           </div>
-          <button className={`button ${joined ? "button-secondary" : "button-primary"}`} type="button" onClick={join} disabled={joined}>{joined ? <><Icon name="check" size={17} /> Joined</> : "Join community"}</button>
+          <div className="community-hero-actions">{canManage && <button className="button button-secondary" type="button" onClick={() => setManageOpen(true)}>Manage</button>}<button className={`button ${joined ? "button-secondary" : "button-primary"}`} type="button" onClick={join} disabled={joined}>{joined ? <><Icon name="check" size={17} /> Joined</> : "Join community"}</button></div>
         </div>
         <div className="community-hero-stats">
-          <div><strong>{community.members}</strong><span>Members</span></div>
-          <div><strong>{community.online}</strong><span><i /> Online now</span></div>
-          <div><strong>{community.activity || "Active today"}</strong><span>Community momentum</span></div>
-          <div className="community-hero-people"><span className="avatar-stack"><Avatar label="MS" small tone="purple" /><Avatar label="AK" small tone="green" /><Avatar label="NP" small tone="gold" /><Avatar label="DR" small tone="blue" /></span><span><strong>32 joined this week</strong><small>Members are active right now</small></span></div>
+          <div><strong>{memberCount || "New"}</strong><span>{memberCount === 1 ? "Member" : "Members"}</span></div>
+          <div><strong>{onlineCount || "None"}</strong><span>{onlineCount > 0 && <i />} Online now</span></div>
+          <div><strong>{topicCount || "None"}</strong><span>Discussions</span></div>
+          <div className="community-hero-people"><span><strong>{community.owner?.displayName || "Community-led"}</strong><small>{community.owner ? "Owner" : "No owner assigned"}</small></span></div>
         </div>
       </section>
-      <div className="community-live-strip"><span><i /> Live presence</span><strong>{community.online} members online</strong><em>Mira and 11 others are viewing discussions</em><Link to="/live">Open live rooms <Icon name="arrow" size={15} /></Link></div>
-      <nav className="page-tabs">{["Posts", "Discussions", "Events", "Moderators"].map((item) => <button className={tab === item ? "active" : ""} type="button" key={item} onClick={() => setTab(item)}>{item}</button>)}</nav>
+      <div className="community-live-strip"><span>{onlineCount > 0 ? <><i /> Live presence</> : "No live activity yet"}</span><strong>{onlineCount > 0 ? `${onlineCount} online` : "Start the first conversation"}</strong><Link to="/live">Open live <Icon name="arrow" size={15} /></Link></div>
+      <nav className="page-tabs">{["Posts", "Rules", "Moderators", ...(community.viewerPermissions?.includes("view_mod_log") || canManage ? ["Moderation"] : [])].map((item) => <button className={tab === item ? "active" : ""} type="button" key={item} onClick={() => setTab(item)}>{item}</button>)}</nav>
       {(tab === "Posts" || tab === "Discussions") && <>
-        <button className="composer-card" type="button" onClick={() => setComposerOpen(true)}><Avatar label="GS" small /><span>Start a discussion in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Post</span></button>
-        <div className="discussion-list">{[...localPosts, ...discussions.slice(0, 4)].map((item) => <DiscussionCard key={item.id} discussion={{ ...item, community: community.name }} />)}</div>
+        <button className="composer-card" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}><Avatar label="GS" small /><span>Start a discussion in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Post</span></button>
+        <div className="discussion-list">{localPosts.length ? localPosts.map((item) => <DiscussionCard key={item.id} discussion={{ ...item, community: community.name, communitySlug: community.slug }} />) : <EmptyState title="No discussions yet" copy="This community is ready for its first useful question." action={<button className="button button-primary" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Start discussion</button>} />}</div>
       </>}
       {tab === "Events" && <div className="event-grid">{[["Community welcome room", "Today · 7:30 PM", "Meet regulars and learn where conversations happen."], ["Weekly topic roundtable", "Saturday · 5:00 PM", "A moderated conversation around the week's biggest question."]].map(([title, time, copy]) => <article key={title}><span><Icon name="live" /></span><div><small>{time}</small><h3>{title}</h3><p>{copy}</p></div><Link className="button button-secondary button-small" to="/live">View live</Link></article>)}</div>}
-      {tab === "Moderators" && <div className="member-grid">{["Mira S.", "Aarav K.", "Naina P."].map((name, index) => <article key={name}><Avatar label={name} tone={["green", "blue", "gold"][index]} /><div><strong>{name}</strong><small>{index === 0 ? "Community lead" : "Moderator"}</small></div><Link to="/messages" className="button button-secondary button-small">Message</Link></article>)}</div>}
-      <DiscussionComposer open={composerOpen} onClose={() => setComposerOpen(false)} onCreated={(post) => setLocalPosts((items) => [post, ...items])} onAuth={onAuth} />
+      {tab === "Rules" && <section className="community-rules-panel"><p className="eyebrow">Community rules</p><h2>Clear expectations make better conversations.</h2><ol>{(community.rules || []).map((rule) => <li key={rule}>{rule}</li>)}</ol></section>}
+      {tab === "Moderators" && <div className="member-grid">{community.moderators?.length ? community.moderators.map((person, index) => <article key={person.id}><Avatar label={person.displayName} tone={["green", "blue", "gold"][index % 3]} /><div><strong>{person.displayName}</strong><small>{person.role}</small></div></article>) : <EmptyState title="No moderators yet" copy="The owner can invite trusted members as the community grows." />}</div>}
+      {tab === "Moderation" && <section className="moderation-console"><p className="eyebrow">Moderation center</p><h2>Clear reports and transparent actions</h2>{canManage && <form className="moderator-form" onSubmit={addModerator}><input value={moderatorId} onChange={(event) => setModeratorId(event.target.value)} placeholder="Member user ID" required /><button className="button button-secondary" type="submit">Add moderator</button></form>}<div className="moderation-reports"><h3>Open reports</h3>{community.openReports?.length ? community.openReports.map((report) => <article key={report.id}><strong>{report.reason}</strong><small>{report.postId ? `Post ${report.postId}` : "Member report"} · {new Date(report.createdAt).toLocaleString()}</small><div>{report.postId && <><button type="button" onClick={() => moderate("approve_post", report)}>Approve</button><button type="button" onClick={() => moderate("remove_post", report)}>Remove</button></>}{report.userId && <><button type="button" onClick={() => moderate("mute_user", report)}>Mute</button><button type="button" onClick={() => moderate("ban_user", report)}>Ban</button></>}</div></article>) : <p className="quiet-state">No open reports.</p>}</div><div className="moderation-log"><h3>Action log</h3>{community.moderationLog?.length ? community.moderationLog.map((entry) => <article key={entry.id}><strong>{entry.action.replace(/_/g, " ")}</strong><span>{entry.actor}{entry.target ? ` · ${entry.target}` : ""}</span><small>{entry.reason || new Date(entry.createdAt).toLocaleString()}</small></article>) : <p className="quiet-state">No moderation actions yet.</p>}</div></section>}
+      <DiscussionComposer open={composerOpen} onClose={() => setComposerOpen(false)} onCreated={() => window.location.reload()} onAuth={onAuth} />
+      {manageOpen && <Modal title="Manage community" copy="Update identity and rules. Changes are recorded in the moderation log." onClose={() => setManageOpen(false)}><form className="stacked-form" onSubmit={saveSettings}><label>Name<input value={settings.name} onChange={(event) => setSettings({ ...settings, name: event.target.value })} required /></label><label>Description<textarea value={settings.description} onChange={(event) => setSettings({ ...settings, description: event.target.value })} required /></label><label>Category<input value={settings.category} onChange={(event) => setSettings({ ...settings, category: event.target.value })} /></label><label>Rules<textarea value={settings.rules} onChange={(event) => setSettings({ ...settings, rules: event.target.value })} /></label><label>Banner URL<input type="url" value={settings.bannerUrl} onChange={(event) => setSettings({ ...settings, bannerUrl: event.target.value })} /></label><label>Logo URL<input type="url" value={settings.logoUrl} onChange={(event) => setSettings({ ...settings, logoUrl: event.target.value })} /></label><button className="danger-action" type="button" onClick={deleteCommunity}>Delete community</button><div className="form-actions"><button className="button button-secondary" type="button" onClick={() => setManageOpen(false)}>Cancel</button><button className="button button-primary" type="submit">Save changes</button></div></form></Modal>}
     </div>
   );
 }
@@ -275,25 +344,36 @@ export function DiscussionsPage({ onAuth }) {
 
 export function DiscussionPage({ onAuth }) {
   const { slug } = useParams();
-  const item = discussions.find((discussion) => slug.startsWith(discussion.id)) || discussions[0];
+  const [item, setItem] = useState({ id: slug, community: "Strango", communitySlug: "ai", author: "Member", time: "", title: "Discussion", body: "", votes: 0, comments: 0, viewers: 0, tag: "Community" });
   const community = fallbackCommunities.find((entry) => entry.slug === item.communitySlug) || fallbackCommunities[0];
   const [draft, setDraft] = useState("");
-  const [messagesInThread, setMessagesInThread] = useState([
-    { id: "seed-1", author: item.author, avatar: item.author, message: item.body, createdAt: new Date(Date.now() - 18 * 60 * 1000).toISOString(), role: "Thread starter" },
-    { id: "seed-2", author: "Mira S.", avatar: "MS", message: "The most useful advice I got was to build a process I could repeat during both calm and chaotic markets. Consistency removed a lot of emotional decisions.", createdAt: new Date(Date.now() - 13 * 60 * 1000).toISOString(), role: "Top contributor" },
-    { id: "seed-3", author: "Naina P.", avatar: "NP", message: "I would add: know what would make you change your plan before volatility arrives. Writing those conditions down makes them much harder to rationalize later.", createdAt: new Date(Date.now() - 8 * 60 * 1000).toISOString(), role: "Community regular" },
-    { id: "seed-4", author: "Dev R.", avatar: "DR", message: "This is why I like simple allocation rules. A plan should be understandable on a stressful day, not only when you have time for a spreadsheet.", createdAt: new Date(Date.now() - 3 * 60 * 1000).toISOString(), role: "Recently joined" }
-  ]);
+  const [messagesInThread, setMessagesInThread] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [typingNames, setTypingNames] = useState([]);
+  const [selfName, setSelfName] = useState("You");
   const socket = useRef(null);
   const stream = useRef(null);
   const typingTimer = useRef(null);
 
   useEffect(() => {
+    api("/api/discussions").then((data) => {
+      const match = (data?.discussions || []).find((discussion) => slug === discussion.id || slug === discussion.slug || slug.endsWith(`-${discussion.id}`));
+      if (match) {
+        setItem({ ...match, time: new Date(match.createdAt).toLocaleDateString(), tag: match.community || "Community", viewers: 0 });
+        setMessagesInThread([{ id: `post-${match.id}`, author: match.author, avatar: match.author, message: match.body, createdAt: match.createdAt, role: "Thread starter" }]);
+      }
+    });
+  }, [slug]);
+
+  useEffect(() => {
     if (!window.io) return undefined;
     socket.current = window.io({ transports: ["websocket", "polling"] });
-    socket.current.emit("joinDiscussion", { discussionId: item.id, author: "Ghost 148", avatar: "G1" });
+    api("/api/session").then((data) => {
+      const number = data?.user?.strangerNumber || "";
+      const author = data?.user?.profile?.display_name || `Stranger #${number}`;
+      setSelfName(author);
+      socket.current?.emit("joinDiscussion", { discussionId: item.id, author, avatar: `S${number}` });
+    });
     socket.current.on("discussionHistory", (payload) => {
       if (payload.discussionId !== item.id || !payload.messages?.length) return;
       setMessagesInThread((current) => {
@@ -344,15 +424,8 @@ export function DiscussionPage({ onAuth }) {
     typingTimer.current = window.setTimeout(() => socket.current?.emit("discussionTyping", { discussionId: item.id, isTyping: false }), 1200);
   }
 
-  const baseParticipants = [
-    { author: "Mira S.", avatar: "MS", activity: "Typing recently", tone: "purple" },
-    { author: "Aarav K.", avatar: "AK", activity: "Viewing discussion", tone: "green" },
-    { author: "Naina P.", avatar: "NP", activity: "Online now", tone: "gold" },
-    { author: "Dev R.", avatar: "DR", activity: "Recently joined", tone: "blue" }
-  ];
-  const liveAuthors = new Set(participants.map((participant) => participant.author));
-  const people = [...participants.map((participant, index) => ({ ...participant, activity: "Live in thread", tone: ["green", "blue", "purple", "gold"][index % 4] })), ...baseParticipants.filter((participant) => !liveAuthors.has(participant.author))];
-  const activeCount = Math.max(item.viewers || 24, participants.length);
+  const people = participants.map((participant, index) => ({ ...participant, activity: "Live in thread", tone: ["green", "blue", "purple", "gold"][index % 4] }));
+  const activeCount = participants.length;
 
   return (
     <div className="app-page discussion-live-page" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}>
@@ -378,12 +451,12 @@ export function DiscussionPage({ onAuth }) {
           <div className="group-message-stream" ref={stream}>
             <div className="group-day-divider"><span>Today</span></div>
             <p className="group-system-message"><Icon name="bolt" size={14} /> {item.author} started this live discussion · {activeCount} people are viewing</p>
-            {messagesInThread.map((message) => <LiveDiscussionMessage message={message} key={message.id} own={message.author === "Ghost 148"} />)}
+            {messagesInThread.map((message) => <LiveDiscussionMessage message={message} key={message.id} own={message.author === selfName} />)}
             {typingNames.length > 0 && <div className="group-typing-row"><span className="typing-bubble"><i /><i /><i /></span><small>{typingNames.slice(0, 2).join(" and ")} {typingNames.length > 1 ? "are" : "is"} typing...</small></div>}
           </div>
           <div className="group-composer-status">{typingNames.length ? `${typingNames[0]} is replying` : `${activeCount} people are following this conversation`}</div>
           <form className="group-message-composer" onSubmit={submitReply}>
-            <Avatar label="G1" tone="green" />
+            <Avatar label={selfName} tone="green" />
             <textarea value={draft} onChange={(event) => updateDraft(event.target.value)} placeholder={`Message ${community.name}`} rows="1" required />
             <button type="button" aria-label="Add a prompt" onClick={() => updateDraft("A useful way to think about this is ")}><Icon name="spark" /></button>
             <button type="submit" aria-label="Send message" disabled={!draft.trim()}><Icon name="send" /></button>
@@ -396,16 +469,11 @@ export function DiscussionPage({ onAuth }) {
             <p>People currently reading or contributing to this discussion.</p>
             <div className="discussion-participant-list">{people.slice(0, 6).map((person, index) => <article key={person.id || `${person.author}-${index}`}><span className="presence"><Avatar label={person.avatar} small tone={person.tone} /></span><span><strong>{person.author}</strong><small>{person.activity}</small></span></article>)}</div>
           </section>
-          <section className="recent-join-panel">
-            <p className="eyebrow">Recently joined</p>
-            <div className="recent-join-avatars"><Avatar label="VR" small tone="blue" /><Avatar label="SK" small tone="gold" /><Avatar label="TA" small tone="purple" /><span>+8</span></div>
-            <strong>12 people joined in the last 10 minutes</strong>
-          </section>
           <section className="thread-signal-panel">
             <p className="eyebrow">Thread signals</p>
             <div><span><Icon name="eye" size={17} /> Live viewers</span><strong>{activeCount}</strong></div>
             <div><span><Icon name="message" size={17} /> Messages today</span><strong>{messagesInThread.length + item.comments}</strong></div>
-            <div><span><Icon name="bolt" size={17} /> Response pace</span><strong>Fast</strong></div>
+            <div><span><Icon name="bolt" size={17} /> Typing now</span><strong>{typingNames.length}</strong></div>
           </section>
         </aside>
       </div>
@@ -422,6 +490,7 @@ function LiveDiscussionMessage({ message, own }) {
       <div className="group-message-body">
         <div className="group-message-author"><strong>{message.author}</strong>{message.role && <span>{message.role}</span>}<time>{time}</time></div>
         <p>{message.message}</p>
+        {message.translation && <span className="message-translation"><small>{message.translation.detectedLanguage}</small>{message.translation.translatedText ? <><b>Translated</b>{message.translation.translatedText}</> : <em>Translation provider ready</em>}</span>}
         <div className="group-message-actions"><button className={reaction ? "active" : ""} type="button" onClick={() => setReaction((value) => !value)}>Helpful {reaction ? 1 : ""}</button><button type="button">Reply</button><button type="button"><Icon name="more" size={15} /></button></div>
       </div>
     </article>
@@ -430,12 +499,21 @@ function LiveDiscussionMessage({ message, own }) {
 
 export function LivePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initial = liveConversations.find((item) => item.id === searchParams.get("join")) || null;
-  const [active, setActive] = useState(initial);
+  const [conversations, setConversations] = useState([]);
+  const [active, setActive] = useState(null);
   const [promptIndex, setPromptIndex] = useState(0);
-  const [following, setFollowing] = useState([]);
+
+  useEffect(() => {
+    api("/api/live").then((data) => {
+      const next = (data?.conversations || []).map((item) => ({ ...item, people: item.participantCount || 0, accent: "#14b8a6", speakers: [], duration: null }));
+      setConversations(next);
+      const requested = next.find((item) => item.id === searchParams.get("join"));
+      if (requested) setActive(requested);
+    });
+  }, []);
 
   function join(conversation) {
+    if (!conversation) return;
     setActive(conversation);
     setSearchParams({ join: conversation.id });
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -455,10 +533,9 @@ export function LivePage() {
         <form className="live-chat-bar" onSubmit={(event) => { event.preventDefault(); event.currentTarget.reset(); }}><input id="live-chat-input" placeholder="Add to the live chat" required /><button type="submit"><Icon name="send" /></button></form>
       </section>}
       <div className="live-layout">
-        <section><SectionHeading eyebrow="Conversations" title="Live now" copy="Fresh rooms with active hosts and open participation." /><div className="live-grid app-live-grid">{liveConversations.map((item) => <LiveCard conversation={item} active={active?.id === item.id} onJoin={join} key={item.id} />)}</div></section>
+        <section><SectionHeading eyebrow="Conversations" title="Live now" copy="Only conversations with real active participants appear here." /><div className="live-grid app-live-grid">{conversations.length ? conversations.map((item) => <LiveCard conversation={item} active={active?.id === item.id} onJoin={join} key={item.id} />) : <EmptyState title="No live conversations yet" copy="When a community starts a live conversation, it will appear here immediately." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} />}</div></section>
         <aside className="live-sidebar">
-          <section><p className="eyebrow">Trending topics</p>{["AI careers", "Market outlook", "Study systems", "Founder stories"].map((topic, index) => <button type="button" key={topic} onClick={() => join(liveConversations[index % liveConversations.length])}><span>{index + 1}</span>{topic}<Icon name="arrow" size={15} /></button>)}</section>
-          <section><p className="eyebrow">Active people</p>{["Mira S.", "Aarav K.", "Naina P."].map((name, index) => <div className="active-person" key={name}><Avatar label={name} small tone={["green", "blue", "gold"][index]} /><span><strong>{name}</strong><small>Hosting now</small></span><button type="button" onClick={() => setFollowing((items) => items.includes(name) ? items.filter((item) => item !== name) : [...items, name])}>{following.includes(name) ? "Following" : "Follow"}</button></div>)}</section>
+          <section><p className="eyebrow">Live activity</p><p className="quiet-state">{conversations.length ? `${conversations.reduce((total, item) => total + item.people, 0)} people are participating now.` : "No active participants right now."}</p></section>
         </aside>
       </div>
       <section className="icebreaker-panel"><span><Icon name="spark" /></span><div><p className="eyebrow">AI Icebreaker</p><h2>Not sure how to begin?</h2><p>{icebreakers[promptIndex]}</p></div><button className="button button-secondary" type="button" onClick={() => setPromptIndex((promptIndex + 1) % icebreakers.length)}>Try another</button></section>
@@ -472,6 +549,9 @@ export function AnonymousChatPage() {
   const [draft, setDraft] = useState("");
   const [typing, setTyping] = useState(false);
   const [promptIndex, setPromptIndex] = useState(0);
+  const [icebreakerCollapsed, setIcebreakerCollapsed] = useState(false);
+  const [conversationStarted, setConversationStarted] = useState(false);
+  const [identity, setIdentity] = useState({ self: null, partner: null });
   const socket = useRef(null);
   const scroll = useRef(null);
   const input = useRef(null);
@@ -483,7 +563,13 @@ export function AnonymousChatPage() {
     }
     socket.current = window.io({ transports: ["websocket", "polling"] });
     socket.current.on("status", (nextStatus) => setStatus(String(nextStatus || "Connected")));
-    socket.current.on("message", (message) => setMessagesInChat((items) => [...items, { direction: "incoming", text: String(message), time: new Date() }]));
+    socket.current.on("chatIdentity", (nextIdentity) => setIdentity(nextIdentity || { self: null, partner: null }));
+    socket.current.on("message", (message) => {
+      setConversationStarted(true);
+      setIcebreakerCollapsed(true);
+      const payload = typeof message === "object" ? message : { text: String(message), translation: null };
+      setMessagesInChat((items) => [...items, { direction: "incoming", text: payload.text, translation: payload.translation, time: new Date() }]);
+    });
     socket.current.on("typing", (state) => setTyping(Boolean(state)));
     return () => socket.current?.disconnect();
   }, []);
@@ -496,15 +582,21 @@ export function AnonymousChatPage() {
     event.preventDefault();
     const message = draft.trim();
     if (!message || !socket.current) return;
-    socket.current.emit("message", message);
+    socket.current.emit("message", { text: message });
     setMessagesInChat((items) => [...items, { direction: "outgoing", text: message, time: new Date() }]);
     setDraft("");
+    setConversationStarted(true);
+    setIcebreakerCollapsed(true);
     socket.current.emit("typing", false);
   }
 
   function nextConversation() {
     socket.current?.emit("next");
     setMessagesInChat([]);
+    setDraft("");
+    setTyping(false);
+    setConversationStarted(false);
+    setIcebreakerCollapsed(false);
     setStatus("Finding someone new...");
   }
 
@@ -515,6 +607,9 @@ export function AnonymousChatPage() {
 
   function insertPrompt(prompt) {
     setDraft(prompt);
+    setConversationStarted(true);
+    setIcebreakerCollapsed(true);
+    socket.current?.emit("typing", true);
     window.requestAnimationFrame(() => input.current?.focus());
   }
 
@@ -524,36 +619,38 @@ export function AnonymousChatPage() {
     <div className="anonymous-chat-page">
       <header className="anonymous-chat-header">
         <Logo />
-        <div className="anonymous-chat-person"><span className="presence"><Avatar label="?" small /></span><span><strong>Anonymous conversation</strong><small>{status}</small></span></div>
+        <div className="anonymous-chat-person"><span className="presence"><Avatar label={identity.partner ? `S${identity.partner}` : "?"} small /></span><span><strong>{identity.partner ? `Stranger #${identity.partner}` : "Anonymous conversation"}</strong><small>{identity.self ? `You #${identity.self} · ${status}` : status}</small></span></div>
         <div className="chat-header-actions"><ThemeToggle compact /><button className="button button-secondary button-small" type="button" onClick={nextConversation}>Next person</button></div>
       </header>
       <main className="chat-workspace">
-        <aside className="chat-context-panel">
-          <div className="chat-status-card"><span className={connected ? "is-connected" : ""}><i /></span><div><small>Connection status</small><strong>{status}</strong></div></div>
-          <section>
-            <p className="eyebrow">Conversation guide</p>
-            <h2>Better conversations start with curiosity.</h2>
-            <ul><li>Ask open questions.</li><li>Keep personal details private.</li><li>Use Next whenever you need to leave.</li></ul>
-          </section>
-          <Link className="text-link" to="/community-guidelines">Read community guidelines <Icon name="arrow" size={15} /></Link>
+        <aside className="chat-ad-reserve chat-ad-reserve-left" aria-hidden="true">
+          <span>Reserved</span>
         </aside>
         <section className="chat-conversation">
           <div className="anonymous-chat-scroll" ref={scroll}>
             <div className="chat-date-pill">Today · End-to-end anonymity by default</div>
-            <section className="chat-welcome-card">
+          <section className={`chat-welcome-card${icebreakerCollapsed ? " is-collapsed" : ""}`} aria-hidden={icebreakerCollapsed}>
+            {!icebreakerCollapsed && <>
               <span><Icon name="spark" /></span>
               <div><p className="eyebrow">AI Icebreaker</p><h1>Start with a better question.</h1><p>{icebreakers[promptIndex]}</p></div>
               <button className="button button-secondary" type="button" onClick={usePrompt}>Use prompt</button>
+            </>}
+          </section>
+          <p className="chat-status-bubble"><i /> {status}</p>
+          {conversationStarted && messagesInChat.length === 0 && (
+            <section className="chat-started-state">
+              <span><Icon name="check" /></span>
+              <div><strong>Conversation starter ready</strong><small>Your question is ready below. Edit it or send when it feels right.</small></div>
             </section>
-            <p className="chat-status-bubble"><i /> {status}</p>
-            {messagesInChat.length === 0 && (
-              <section className="chat-empty-guide">
+          )}
+          {messagesInChat.length === 0 && !conversationStarted && (
+            <section className="chat-empty-guide">
                 <div><span><Icon name="discuss" /></span><div><strong>Your conversation starts here</strong><small>Choose a question or write your own when you feel ready.</small></div></div>
                 <div className="chat-quick-prompts">{icebreakers.slice(2, 5).map((prompt) => <button type="button" key={prompt} onClick={() => insertPrompt(prompt)}>{prompt}<Icon name="arrow" size={14} /></button>)}</div>
                 <p><Icon name="check" size={14} /> No profile details are shared with the other person.</p>
               </section>
             )}
-            {messagesInChat.map((message, index) => <p className={`chat-bubble ${message.direction}`} key={`${message.time.getTime()}-${index}`}>{message.text}<small>{message.time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</small></p>)}
+              {messagesInChat.map((message, index) => <div className={`chat-bubble ${message.direction}`} key={`${message.time.getTime()}-${index}`}><p>{message.text}</p>{message.translation && <span className="message-translation"><small>{message.translation.detectedLanguage}</small>{message.translation.translatedText ? <><b>Translated</b>{message.translation.translatedText}</> : <em>Translation provider ready</em>}</span>}<time>{message.time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time></div>)}
             {typing && <p className="chat-bubble incoming typing-bubble"><i /><i /><i /></p>}
           </div>
           <div className={`typing-indicator${typing ? " is-visible" : ""}`}>{typing ? "Stranger is typing..." : "Messages are not saved after this chat ends."}</div>
@@ -563,6 +660,9 @@ export function AnonymousChatPage() {
             <button type="submit" aria-label="Send message" disabled={!draft.trim()}><Icon name="send" /></button>
           </form>
         </section>
+        <aside className="chat-ad-reserve chat-ad-reserve-right" aria-hidden="true">
+          <span>Reserved</span>
+        </aside>
       </main>
     </div>
   );
@@ -603,7 +703,7 @@ export function RoomsPage() {
         <div className="room-message-scroll"><p className="system-message">You joined {activeRoom.title}. Say hello when you are ready.</p>{roomMessages.map((item, index) => <p className="room-message" key={`${item.createdAt}-${index}`}><strong>{item.author}</strong>{item.message}<small>{new Date(item.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</small></p>)}</div>
         <form onSubmit={sendRoomMessage}><input value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={`Message ${activeRoom.title}`} required /><button className="button button-primary" type="submit">Send</button></form>
       </section>}
-      <div className="room-grid">{filteredRooms.map((room) => <article className="room-card" key={room.id} style={{ "--room-color": room.color }}><div className="room-card-head"><div className="room-signal"><i /><i /><i /></div><span>{room.status}</span></div><small>{room.category}</small><h2>{room.title}</h2><p>{room.description}</p><div className="room-card-footer"><strong><Icon name="users" size={16} /> {room.people} participants</strong><button className="button button-primary" type="button" onClick={() => { setRoomMessages([]); setParticipantCount(0); setActiveRoom(room); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{activeRoom?.id === room.id ? "Open room" : "Join room"}</button></div></article>)}</div>
+      <div className="room-grid">{filteredRooms.length ? filteredRooms.map((room) => <article className="room-card" key={room.id} style={{ "--room-color": room.color }}><div className="room-card-head"><div className="room-signal"><i /><i /><i /></div><span>{room.status}</span></div><small>{room.category}</small><h2>{room.title}</h2><p>{room.description}</p><div className="room-card-footer"><strong><Icon name="users" size={16} /> {room.people} participants</strong><button className="button button-primary" type="button" onClick={() => { setRoomMessages([]); setParticipantCount(0); setActiveRoom(room); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{activeRoom?.id === room.id ? "Open room" : "Join room"}</button></div></article>) : <EmptyState title="No active rooms yet" copy="Community rooms appear here once real participants join." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} />}</div>
     </div>
   );
 }
@@ -620,6 +720,10 @@ export function MessagesPage() {
     if (!draft.trim()) return;
     setSent((items) => [...items, draft.trim()]);
     setDraft("");
+  }
+
+  if (!active) {
+    return <div className="app-page"><PageIntro eyebrow="Private messages" title="Your inbox is ready." copy="Direct conversations will appear here after you connect with someone." /><EmptyState title="No messages yet" copy="Join a community or start a chat to meet people first." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} /></div>;
   }
 
   return (
@@ -675,6 +779,25 @@ export function ProfilePage() {
       {tab === "Overview" || tab === "Discussions" ? <section className="profile-overview"><div><h2>Recent discussions</h2>{discussions.slice(0, tab === "Overview" ? 2 : 4).map((item) => <DiscussionCard discussion={item} compact key={item.id} />)}</div><aside><h2>Badges</h2>{["Helpful Voice", "Early Connector", "Finance Regular"].map((badge) => <div className="badge-row" key={badge}><span><Icon name="spark" /></span><strong>{badge}</strong></div>)}</aside></section> : tab === "Communities" ? <div className="community-grid">{fallbackCommunities.slice(0, 4).map((item) => <CommunityCard community={item} joined key={item.slug} />)}</div> : <section className="achievement-grid">{["Helpful Voice", "Conversation Starter", "Community Builder", "Trusted Connector"].map((title, index) => <article className={index < 2 ? "unlocked" : ""} key={title}><span><Icon name="spark" /></span><h3>{title}</h3><p>Progress earned through useful participation.</p><small>{index < 2 ? "Unlocked" : "In progress"}</small></article>)}</section>}
     </div>
   );
+}
+
+export function PlutoPage() {
+  const [interested, setInterested] = useState(false);
+  useEffect(() => { api("/api/pluto").then((data) => setInterested(Boolean(data?.interested))); }, []);
+  async function joinWaitlist() {
+    const result = await api("/api/pluto/interest", { method: "POST", body: "{}" });
+    if (result?.ok) setInterested(true);
+  }
+  const benefits = [
+    ["Custom profiles", "More control over how your identity appears."],
+    ["Premium themes", "A refined set of personal visual modes."],
+    ["Priority matching", "Future matching controls for relevant conversations."],
+    ["Profile customization", "Flexible layouts, details, and presentation."],
+    ["Premium badges", "Optional recognition without pay-to-win influence."],
+    ["Advanced translation", "Expanded multilingual conversation tools."],
+    ["Exclusive communities", "Curated spaces with focused membership."]
+  ];
+  return <div className="app-page pluto-page"><section className="pluto-hero"><p className="eyebrow">Coming soon</p><span className="pluto-orbit"><i /><i /><i /></span><h1>STRANGO PLUTO</h1><p>A future premium layer for people who want deeper customization and more control. Core conversation and community access stays open.</p><button className="button button-primary button-large" type="button" onClick={joinWaitlist} disabled={interested}>{interested ? <><Icon name="check" /> Interest registered</> : "Notify me at launch"}</button><small>No payments are being collected.</small></section><section className="pluto-benefits">{benefits.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h2>{title}</h2><p>{copy}</p></article>)}</section></div>;
 }
 
 export function StaticInfoPage({ type }) {

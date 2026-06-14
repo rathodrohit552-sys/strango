@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../app/theme";
+import { api } from "../app/api";
 import { communities } from "../app/data";
 
 export function Logo({ compact = false }) {
@@ -130,8 +131,8 @@ export function CommunityCard({ community, onJoin, joined = false, variant = "de
         <p>{community.description}</p>
       </Link>
       <div className="community-meta">
-        <span>{community.members} members</span>
-        <span className="online-dot">{community.online} online</span>
+        <span>{community.members > 0 ? `${community.members} ${community.members === 1 ? "member" : "members"}` : "Be first member"}</span>
+        {community.online > 0 ? <span className="online-dot">{community.online} online</span> : <span>No one online yet</span>}
       </div>
       {community.activity && <small className="community-activity">{community.activity}</small>}
       <button className={`join-button${isJoined ? " is-joined" : ""}`} type="button" disabled={busy || isJoined} onClick={joinCommunity}>
@@ -144,6 +145,7 @@ export function CommunityCard({ community, onJoin, joined = false, variant = "de
 export function DiscussionCard({ discussion, compact = false }) {
   const [voted, setVoted] = useState(false);
   const [shared, setShared] = useState(false);
+  const [reported, setReported] = useState(false);
   const community = communities.find((item) => item.slug === discussion.communitySlug || item.name === discussion.community);
 
   async function shareDiscussion() {
@@ -161,6 +163,14 @@ export function DiscussionCard({ discussion, compact = false }) {
     }
   }
 
+  async function reportDiscussion() {
+    if (!discussion.communitySlug || reported) return;
+    const reason = window.prompt("What should the moderators review?");
+    if (!reason) return;
+    const result = await api(`/api/communities/${discussion.communitySlug}/reports`, { method: "POST", body: JSON.stringify({ postId: discussion.id, reason }) });
+    if (result?.report) setReported(true);
+  }
+
   return (
     <article className={`discussion-card${compact ? " is-compact" : ""}`} style={{ "--discussion-accent": community?.accent || "#14b8a6" }}>
       <div className="vote-stack">
@@ -171,7 +181,7 @@ export function DiscussionCard({ discussion, compact = false }) {
         <div className="post-byline">
           <CommunityMark community={community} size="tiny" />
           <span>{discussion.community}</span><i />{discussion.author} · {discussion.time}
-          <b><span className="live-presence-dot" /> {discussion.viewers || 24} viewing</b>
+          {discussion.viewers > 0 && <b><span className="live-presence-dot" /> {discussion.viewers} viewing</b>}
         </div>
         <Link to={`/discussions/${discussion.id}`}><h3>{discussion.title}</h3></Link>
         {!compact && <p>{discussion.body}</p>}
@@ -179,6 +189,7 @@ export function DiscussionCard({ discussion, compact = false }) {
           <Link to={`/discussions/${discussion.id}`}><Icon name="discuss" size={16} /> {discussion.comments} comments</Link>
           <Link to={`/discussions/${discussion.id}`}><Icon name="eye" size={16} /> Live thread</Link>
           <button type="button" onClick={shareDiscussion}><Icon name={shared ? "check" : "share"} size={16} /> {shared ? "Copied" : "Share"}</button>
+          {discussion.communitySlug && <button type="button" onClick={reportDiscussion} disabled={reported}>{reported ? "Reported" : "Report"}</button>}
           <span>{discussion.tag}</span>
         </div>
       </div>
@@ -193,11 +204,11 @@ export function LiveCard({ conversation, onJoin, active = false }) {
       <span className="live-topic">{conversation.topic}</span>
       <h3>{conversation.title}</h3>
       <div className="live-card-stats">
-        <span><Icon name="users" size={15} /> {conversation.people} participants</span>
-        <span><Icon name="clock" size={15} /> {conversation.duration}</span>
+        <span><Icon name="users" size={15} /> {conversation.people > 0 ? `${conversation.people} participants` : "Be first to join"}</span>
+        {conversation.duration && <span><Icon name="clock" size={15} /> {conversation.duration}</span>}
       </div>
       <div className="live-card-footer">
-        <div className="avatar-stack">{conversation.speakers.map((speaker, index) => <Avatar key={speaker} label={speaker} small tone={["green", "blue", "gold"][index % 3]} />)}</div>
+        <div className="avatar-stack">{(conversation.speakers || []).map((speaker, index) => <Avatar key={speaker} label={speaker} small tone={["green", "blue", "gold"][index % 3]} />)}</div>
         {onJoin ? (
           <button className="button button-primary button-small" type="button" onClick={() => onJoin(conversation)}>{active ? "Open" : "Join live"}</button>
         ) : (

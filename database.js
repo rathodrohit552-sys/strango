@@ -46,7 +46,9 @@ function createEmptyDb() {
     event_rsvps: [],
     voice_rooms: [],
     livestreams: [],
-    moderation_actions: []
+    moderation_actions: [],
+    community_reports: [],
+    subscriptions: []
   };
 }
 
@@ -83,6 +85,11 @@ function seedCommunities(db) {
     } else {
       Object.assign(community, { name, short_name: shortName, description, theme, rgb, icon });
     }
+    community.rules = Array.isArray(community.rules) && community.rules.length
+      ? community.rules
+      : ["Be constructive and stay on topic.", "Protect private information.", "Report harmful content instead of escalating."];
+    community.banner_url = community.banner_url || null;
+    community.logo_url = community.logo_url || null;
     channels.forEach((channelName) => {
       const slugValue = channelSlug(channelName);
       if (!db.community_channels.some((channel) => channel.community_id === community.id && channel.slug === slugValue)) {
@@ -115,6 +122,12 @@ function loadDb() {
       db[key] = [];
     }
   });
+  let visitorNumber = Number(db.counters.visitors || 0);
+  db.users.forEach((user) => {
+    if (!user.visitor_number) user.visitor_number = Number(user.id) || ++visitorNumber;
+    visitorNumber = Math.max(visitorNumber, Number(user.visitor_number) || 0);
+  });
+  db.counters.visitors = visitorNumber;
   seedCommunities(db);
   saveDb(db);
   return db;
@@ -185,6 +198,9 @@ async function initializePersistence() {
 
 function publicCommunity(community, onlineCount = 0) {
   const channels = db.community_channels.filter((channel) => channel.community_id === community.id);
+  const ownerProfile = community.owner_id
+    ? db.profiles.find((profile) => profile.user_id === community.owner_id)
+    : null;
   return {
     id: community.id,
     slug: community.slug,
@@ -195,6 +211,10 @@ function publicCommunity(community, onlineCount = 0) {
     theme: community.theme,
     rgb: community.rgb,
     icon: community.icon,
+    logoUrl: community.logo_url || null,
+    bannerUrl: community.banner_url || null,
+    rules: Array.isArray(community.rules) ? community.rules : [],
+    owner: ownerProfile ? { id: community.owner_id, displayName: ownerProfile.display_name } : null,
     channels: channels.map((channel) => channel.name),
     memberCount: db.community_members.filter((member) => member.community_id === community.id).length,
     topicCount: db.posts.filter((post) => post.community_id === community.id).length,
@@ -241,6 +261,7 @@ function createUser({ authProvider, email, googleId, displayName, isAnonymous })
     is_anonymous: Boolean(isAnonymous),
     access_mode: isAnonymous ? "ghost" : "profile",
     ghost_expires_at: isAnonymous ? new Date(Date.now() + 5 * 60 * 1000).toISOString() : null,
+    visitor_number: (db.counters.visitors = (db.counters.visitors || 0) + 1),
     created_at: now()
   };
   db.users.push(user);
@@ -286,6 +307,39 @@ function getOrCreateAnonymousSession(token) {
   return { session, user, profile: db.profiles.find((item) => item.user_id === user.id) };
 }
 
+function getCommunityRole(communityId, userId) {
+  if (!communityId || !userId) return null;
+  const role = db.community_roles.find((item) => item.community_id === communityId && item.user_id === userId);
+  if (role) return role;
+  const member = db.community_members.find((item) => item.community_id === communityId && item.user_id === userId);
+  return member ? { community_id: communityId, user_id: userId, role: member.role || "Member", permissions: [] } : null;
+}
+
+function addModerationAction({ communityId, actorId, targetUserId = null, postId = null, action, reason = "" }) {
+  const record = {
+    id: nextId(db, "moderation_actions"),
+    community_id: communityId,
+    actor_id: actorId,
+    target_user_id: targetUserId,
+    post_id: postId,
+    action,
+    reason: String(reason || "").trim().slice(0, 500),
+    created_at: now()
+  };
+  db.moderation_actions.push(record);
+  saveDb();
+  return record;
+}
+
+function communityRestriction(communityId, userId, action) {
+  const relevant = db.moderation_actions
+    .filter((item) => item.community_id === communityId && item.target_user_id === userId && item.action === action)
+    .slice(-1)[0];
+  if (!relevant) return null;
+  if (relevant.expires_at && new Date(relevant.expires_at).getTime() <= Date.now()) return null;
+  return relevant;
+}
+
 function joinCommunity(communitySlug, userId) {
   const community = db.communities.find((item) => item.slug === communitySlug);
   if (!community || !userId) return null;
@@ -327,7 +381,7 @@ function getChannel(communityId, channelSlugValue) {
   return db.community_channels.find((channel) => channel.community_id === communityId && channel.slug === channelSlugValue);
 }
 
-function saveCommunityMessage({ communitySlug, channelName, userId, message }) {
+function saveCommunityMessage({ communitySlug, channelName, userId, message, translation = null }) {
   const community = db.communities.find((item) => item.slug === communitySlug);
   if (!community) return null;
   const channel = getChannel(community.id, channelSlug(channelName));
@@ -338,6 +392,7 @@ function saveCommunityMessage({ communitySlug, channelName, userId, message }) {
     channel_id: channel.id,
     user_id: userId,
     message: String(message || "").slice(0, 1000),
+    translation,
     created_at: now()
   };
   db.community_messages.push(record);
@@ -365,6 +420,7 @@ function latestCommunityMessages(communitySlug, channelName, limit = 100) {
         author: profile ? profile.display_name : "Anonymous User",
         badge: member ? getBadge(member.member_number) : "Member",
         text: message.message,
+        translation: message.translation || null,
         time: message.created_at
       };
     });
@@ -382,6 +438,9 @@ module.exports = {
   createSession,
   getSession,
   getOrCreateAnonymousSession,
+  getCommunityRole,
+  addModerationAction,
+  communityRestriction,
   joinCommunity,
   saveCommunityMessage,
   latestCommunityMessages,

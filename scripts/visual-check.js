@@ -5,20 +5,21 @@ const { chromium } = require("playwright-core");
 const outputDir = path.join(__dirname, "..", "artifacts", "strango-qa");
 fs.mkdirSync(outputDir, { recursive: true });
 
-const targets = [
+const allTargets = [
   { name: "home-desktop", url: "http://localhost:5000/", viewport: { width: 1440, height: 1000 }, fullPage: true },
   { name: "communities-desktop", url: "http://localhost:5000/communities", viewport: { width: 1440, height: 1000 }, fullPage: true },
   { name: "community-detail-desktop", url: "http://localhost:5000/communities/ai", viewport: { width: 1440, height: 1000 }, fullPage: true },
   { name: "discussions-desktop", url: "http://localhost:5000/discussions", viewport: { width: 1440, height: 1000 }, fullPage: true },
-  { name: "discussion-live-desktop", url: "http://localhost:5000/discussions/ai-replace-engineers", viewport: { width: 1440, height: 1000 }, fullPage: true },
-  { name: "live-desktop", url: "http://localhost:5000/live", viewport: { width: 1440, height: 1000 }, fullPage: true },
-  { name: "rooms-desktop", url: "http://localhost:5000/rooms", viewport: { width: 1440, height: 1000 }, fullPage: true },
+  { name: "discussion-create-desktop", url: "http://localhost:5000/discussions/new", viewport: { width: 1440, height: 1000 }, fullPage: true },
+  { name: "pluto-desktop", url: "http://localhost:5000/pluto", viewport: { width: 1440, height: 1000 }, fullPage: true },
   { name: "chat-desktop", url: "http://localhost:5000/chat", viewport: { width: 1440, height: 1000 }, fullPage: false },
-  { name: "communities-mobile", url: "http://localhost:5000/communities", viewport: { width: 390, height: 844 }, fullPage: true },
-  { name: "discussion-live-mobile", url: "http://localhost:5000/discussions/ai-replace-engineers", viewport: { width: 390, height: 844 }, fullPage: true },
-  { name: "chat-mobile", url: "http://localhost:5000/chat", viewport: { width: 390, height: 844 }, fullPage: false },
-  { name: "messages-mobile", url: "http://localhost:5000/messages", viewport: { width: 390, height: 844 }, fullPage: false }
+  { name: "communities-tablet", url: "http://localhost:5000/communities", viewport: { width: 820, height: 1180 }, fullPage: true },
+  { name: "discussion-create-mobile", url: "http://localhost:5000/discussions/new", viewport: { width: 390, height: 844 }, fullPage: true },
+  { name: "pluto-mobile", url: "http://localhost:5000/pluto", viewport: { width: 390, height: 844 }, fullPage: true },
+  { name: "chat-mobile", url: "http://localhost:5000/chat", viewport: { width: 390, height: 844 }, fullPage: false }
 ];
+const requestedTarget = process.argv[2];
+const targets = requestedTarget ? allTargets.filter((target) => target.name === requestedTarget) : allTargets;
 
 (async () => {
   const browser = await chromium.launch({
@@ -34,8 +35,10 @@ const targets = [
       if (message.type() === "error") consoleErrors.push(message.text());
     });
     page.on("pageerror", (error) => consoleErrors.push(error.message));
-    const response = await page.goto(target.url, { waitUntil: "domcontentloaded", timeout: 20000 });
-    await page.waitForTimeout(900);
+
+    const response = await page.goto(target.url, { waitUntil: "networkidle", timeout: 20000 });
+    await page.waitForTimeout(350);
+
     const metrics = await page.evaluate(() => ({
       title: document.title,
       h1: document.querySelector("h1")?.textContent?.trim() || "",
@@ -44,70 +47,61 @@ const targets = [
       clientWidth: document.documentElement.clientWidth
     }));
     const checks = {};
+
     if (target.name === "home-desktop") {
-      checks.darkThemeDefault = await page.evaluate(() => document.documentElement.dataset.theme === "dark");
-      await page.getByRole("button", { name: "Switch to light mode" }).click();
-      checks.lightThemeApplied = await page.evaluate(() => document.documentElement.dataset.theme === "light");
-      await page.reload({ waitUntil: "domcontentloaded" });
-      checks.lightThemePersisted = await page.evaluate(() => document.documentElement.dataset.theme === "light");
-      await page.getByRole("button", { name: "Switch to dark mode" }).click();
+      checks.constellationVisible = await page.locator(".community-constellation").isVisible();
+      checks.localizedHeadline = (await page.locator(".hero-copy h1").innerText()).trim();
     }
-    if (target.name === "communities-desktop") {
-      await page.getByPlaceholder("Search by topic or community").fill("finance");
-      checks.communitySearchWorks = await page.getByRole("heading", { name: "Finance Circle" }).first().isVisible();
-      await page.getByRole("button", { name: "Finance", exact: true }).click();
-      checks.communityFilterWorks = await page.getByRole("heading", { name: "Finance Circle" }).first().isVisible();
+
+    if (target.name.startsWith("communities-")) {
+      const toolbar = page.locator(".discovery-toolbar");
+      checks.discoveryVisible = await toolbar.isVisible();
+      checks.categoryCount = await page.locator(".discovery-toolbar .category-pills button").count();
+      checks.toolbarPosition = await toolbar.evaluate((element) => getComputedStyle(element).position);
     }
-    if (target.name === "discussions-desktop") {
-      await page.getByRole("button", { name: "AI", exact: true }).click();
-      checks.discussionFilterWorks = await page.getByRole("heading", { name: "Will AI replace software engineers?" }).isVisible();
-      const voteButton = page.getByRole("button", { name: "Upvote" }).first();
-      await voteButton.click();
-      checks.voteStateWorks = await voteButton.getAttribute("class") === "is-voted";
-    }
+
     if (target.name === "community-detail-desktop") {
-      checks.communityMarkVisible = await page.locator(".community-mark-hero").isVisible();
-      checks.communityStatsVisible = await page.locator(".community-hero-stats").isVisible();
-      checks.trendingTopicsVisible = await page.locator(".community-trending-topics").isVisible();
+      checks.compactHeaderVisible = await page.locator(".community-hero").isVisible();
+      checks.headerHeight = Math.round((await page.locator(".community-hero").boundingBox()).height);
     }
-    if (target.name === "discussion-live-desktop") {
-      const secondPage = await browser.newPage({ viewport: target.viewport });
-      const secondErrors = [];
-      secondPage.on("console", (message) => {
-        if (message.type() === "error") secondErrors.push(message.text());
-      });
-      secondPage.on("pageerror", (error) => secondErrors.push(error.message));
-      await secondPage.goto(target.url, { waitUntil: "domcontentloaded", timeout: 20000 });
-      await secondPage.waitForTimeout(700);
-      const secondComposer = secondPage.locator(".group-message-composer textarea");
-      await secondComposer.fill("Realtime QA message");
-      await page.locator(".group-typing-row").waitFor({ timeout: 5000 });
-      checks.typingIndicatorVisible = true;
-      await secondPage.locator(".group-message-composer button[type='submit']").click();
-      await page.getByText("Realtime QA message").last().waitFor({ timeout: 5000 });
-      checks.realtimeDiscussionMessage = true;
-      checks.presencePanelVisible = await page.locator(".discussion-presence-panel").isVisible();
-      checks.secondClientConsoleErrors = secondErrors;
-      await secondPage.close();
+
+    if (target.name === "discussions-desktop") {
+      checks.creationControls = await page.locator("a, button").evaluateAll((elements) => elements
+        .map((element) => ({
+          tag: element.tagName,
+          text: element.textContent.trim(),
+          href: element.getAttribute("href")
+        }))
+        .filter((item) => /discussion/i.test(item.text)));
+      await page.getByRole("button", { name: "New discussion" }).click();
+      await page.waitForURL("**/discussions/new");
+      checks.creationUsesDedicatedPage = page.url().endsWith("/discussions/new");
+      checks.legacyModalAbsent = await page.locator(".form-modal").count() === 0;
     }
-    if (target.name === "live-desktop") {
-      await page.getByRole("button", { name: "Join live" }).first().click();
-      checks.liveStageVisible = await page.locator(".live-stage").isVisible();
+
+    if (target.name.startsWith("discussion-create-")) {
+      checks.dedicatedComposerVisible = await page.locator(".discussion-create-form").isVisible();
+      checks.suggestionCount = await page.locator(".question-suggestion-list button").count();
+      await page.locator(".question-suggestion-list button").first().click();
+      checks.suggestionInserted = (await page.locator(".discussion-create-form input").last().inputValue()).length > 10;
     }
-    if (target.name === "rooms-desktop") {
-      await page.getByRole("button", { name: "Join room" }).first().click();
-      await page.locator(".active-room-panel form input").fill("Visual QA ping");
-      await page.getByRole("button", { name: "Send" }).click();
-      await page.getByText("Visual QA ping").waitFor({ timeout: 5000 });
-      checks.realtimeRoomMessage = true;
-      checks.roomPresenceVisible = await page.locator(".active-room-panel header p").isVisible();
+
+    if (target.name.startsWith("pluto-")) {
+      checks.benefitCount = await page.locator(".pluto-benefit-grid article").count();
+      checks.paymentAbsent = (await page.locator("body").innerText()).toLowerCase().includes("no pricing or payment");
     }
-    if (target.name === "chat-mobile" || target.name === "chat-desktop") {
+
+    if (target.name.startsWith("chat-")) {
+      checks.conversationVisible = await page.locator(".chat-conversation").isVisible();
+      checks.adReserveCount = await page.locator(".chat-ad-reserve").count();
+      checks.visibleAdReserveCount = await page.locator(".chat-ad-reserve:visible").count();
       await page.getByRole("button", { name: "Use prompt" }).click();
       const messageInput = page.getByRole("textbox", { name: "Message" });
       checks.promptInserted = (await messageInput.inputValue()).length > 10;
       checks.promptFocused = await messageInput.evaluate((element) => document.activeElement === element);
+      checks.startedStateVisible = await page.getByText("Conversation starter ready").isVisible();
     }
+
     const screenshot = path.join(outputDir, `${target.name}.png`);
     await page.screenshot({ path: screenshot, fullPage: target.fullPage });
     results.push({
