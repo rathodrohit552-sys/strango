@@ -1309,6 +1309,14 @@ function tryMatch(){
   }
 }
 
+function resetStrangerPeer(socket, status = "Waiting for stranger...") {
+  if (!socket) return;
+  socket.room = null;
+  socket.emit("chatIdentity", { self: socket.strangerNumber || null, partner: null });
+  socket.emit("typing", false);
+  socket.emit("status", status);
+}
+
 io.on("connection",(socket)=>{
   socket.on("joinDiscussion", (payload = {}) => {
     const discussionId = normalizeSlug(payload.discussionId || "");
@@ -1573,21 +1581,22 @@ io.emit("onlineCount", count);
           if(!s) return;
 
           s.leave(room);
-          s.room = null;
 
           if(s.id !== socket.id){
             waitingQueue.push(s);
-            s.emit("status","Waiting for stranger...");
+            resetStrangerPeer(s);
           }
         });
       }
 
+      waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
       waitingQueue.unshift(socket);
-      socket.emit("status","Waiting for stranger...");
+      resetStrangerPeer(socket);
 
     }else{
+      waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
       waitingQueue.unshift(socket);
-      socket.emit("status","Waiting for stranger...");
+      resetStrangerPeer(socket);
     }
 
     tryMatch();
@@ -1619,9 +1628,10 @@ io.emit("onlineCount", count);
           const s = io.sockets.sockets.get(id);
           if(s){
             s.leave(room);
-            s.room = null;
-            waitingQueue.push(s);
-            s.emit("status","Waiting for stranger...");
+            if(s.id !== socket.id){
+              resetStrangerPeer(s);
+              waitingQueue.push(s);
+            }
           }
         });
       }

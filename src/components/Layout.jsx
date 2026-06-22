@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../app/api";
 import { communities, discussions } from "../app/data";
+import { getShellIdentityLabel, rememberIdentityPreference, shouldAutoOpenIdentityPrompt } from "../app/identity";
 import { Avatar, CommunityMark, Icon, Logo, ThemeToggle } from "./UI";
 
 const navItems = [
@@ -108,7 +109,7 @@ export function AppShell({ children, onAuth }) {
         const update = () => {
           const seconds = Math.max(0, Math.ceil((new Date(user.ghostExpiresAt).getTime() - Date.now()) / 1000));
           setRemaining(seconds);
-          if (seconds === 0) onAuth();
+          if (seconds === 0 && shouldAutoOpenIdentityPrompt(user)) onAuth({ auto: true, user });
         };
         update();
         timer = window.setInterval(update, 1000);
@@ -123,7 +124,8 @@ export function AppShell({ children, onAuth }) {
     navigate(query ? `/discussions?q=${encodeURIComponent(query)}` : "/discussions");
   }
 
-  const identity = session?.profile?.display_name || (session?.mode === "profile" ? "Strango Member" : `Stranger #${session?.strangerNumber || ""}`.trim());
+  const identity = getShellIdentityLabel(session);
+  const identityMode = session?.mode === "profile" ? "Profile mode" : session?.mode === "ghost" ? "Ghost Mode" : "Incognito mode";
 
   return (
     <div className="platform-shell">
@@ -154,7 +156,7 @@ export function AppShell({ children, onAuth }) {
           <button className="button button-primary compose-button" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={18} /> Create discussion</button>
           <button className="identity-card" type="button" onClick={onAuth}>
             <Avatar label={identity} small />
-            <span><strong>{identity}</strong><small>{session?.mode === "profile" ? "Profile mode" : "Incognito mode"}</small></span>
+            <span><strong>{identity}</strong><small>{identityMode}</small></span>
             <Icon name="more" />
           </button>
         </aside>
@@ -195,6 +197,7 @@ export function AuthModal({ open, onClose }) {
       setAwaitingCode(true);
       setMessage(result.devCode ? `Development code: ${result.devCode}` : "Check your email for a 6-digit login code.");
     } else if (result?.ok) {
+      rememberIdentityPreference("email");
       window.location.href = "/dashboard";
     } else {
       setMessage(awaitingCode ? "That code is invalid or expired." : "Email access is unavailable right now.");
@@ -203,13 +206,19 @@ export function AuthModal({ open, onClose }) {
 
   async function useIncognito() {
     const result = await api("/api/auth/anonymous", { method: "POST", body: JSON.stringify({ mode: "incognito" }) });
-    if (result?.ok) window.location.href = "/dashboard";
+    if (result?.ok) {
+      rememberIdentityPreference("incognito");
+      window.location.href = "/dashboard";
+    }
     else setMessage("Incognito access is unavailable right now.");
   }
 
   async function useGhost() {
     const result = await api("/api/auth/anonymous", { method: "POST", body: JSON.stringify({ mode: "ghost" }) });
-    if (result?.ok) window.location.href = "/communities";
+    if (result?.ok) {
+      rememberIdentityPreference("ghost");
+      window.location.href = "/communities";
+    }
     else setMessage("Ghost Mode is unavailable right now.");
   }
 
@@ -224,7 +233,7 @@ export function AuthModal({ open, onClose }) {
         <p>Participate privately or build a public profile. You stay in control of your identity.</p>
         <button className="auth-choice" type="button" onClick={useGhost}><span className="choice-icon">O</span><span><strong>Browse in Ghost Mode</strong><small>Explore first. Participation stays locked until you choose an identity.</small></span><Icon name="arrow" /></button>
         <button className="auth-choice" type="button" onClick={useIncognito}><span className="choice-icon">G</span><span><strong>Continue incognito</strong><small>Participate anonymously and keep earning Sparks.</small></span><Icon name="arrow" /></button>
-        <a className="auth-choice" href="/auth/google"><span className="choice-icon google-icon">G</span><span><strong>Continue with Google</strong><small>One-click access with a public profile.</small></span><Icon name="arrow" /></a>
+        <a className="auth-choice" href="/auth/google" onClick={() => rememberIdentityPreference("google")}><span className="choice-icon google-icon">G</span><span><strong>Continue with Google</strong><small>One-click access with a public profile.</small></span><Icon name="arrow" /></a>
         <div className="auth-divider"><span>or use email</span></div>
         <form onSubmit={continueWithEmail}>
           <input

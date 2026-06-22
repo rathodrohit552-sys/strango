@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { api } from "./api";
+import { dismissIdentityPrompt, shouldAutoOpenIdentityPrompt } from "./identity";
 import { AppShell, AuthModal } from "../components/Layout";
 import HomePage from "../pages/HomePage";
 import {
@@ -46,7 +47,14 @@ export default function App() {
   const [authOpen, setAuthOpen] = useState(false);
   const location = useLocation();
   const inApp = appPaths.some((path) => location.pathname === path || location.pathname.startsWith(`${path}/`));
-  const openAuth = () => setAuthOpen(true);
+  const openAuth = useCallback((options = {}) => {
+    if (options?.auto && !shouldAutoOpenIdentityPrompt(options.user)) return;
+    setAuthOpen(true);
+  }, []);
+  const closeAuth = useCallback(() => {
+    dismissIdentityPrompt();
+    setAuthOpen(false);
+  }, []);
 
   const routes = (
     <Routes>
@@ -77,7 +85,7 @@ export default function App() {
   return (
     <>
       {inApp ? <AppShell onAuth={openAuth}>{routes}</AppShell> : routes}
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      <AuthModal open={authOpen} onClose={closeAuth} />
     </>
   );
 }
