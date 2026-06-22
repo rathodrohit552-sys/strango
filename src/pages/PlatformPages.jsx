@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api, mergeCommunities } from "../app/api";
 import { communities as fallbackCommunities, communityCategories, discussions, icebreakers, liveConversations, messages, notifications, rooms } from "../app/data";
@@ -383,6 +383,7 @@ export function CommunityPage({ onAuth }) {
       if (data?.community) {
         const next = mergeCommunities([data.community], [base])[0];
         setCommunity(next);
+        setJoined(Boolean(next.viewerRole));
         setSettings({ name: next.name || "", description: next.description || "", category: next.category || "", rules: (next.rules || []).join("\n"), bannerUrl: next.bannerUrl || "", logoUrl: next.logoUrl || "" });
       }
     });
@@ -397,6 +398,11 @@ export function CommunityPage({ onAuth }) {
     const result = await api(`/api/communities/${community.slug}/join`, { method: "POST", body: "{}" });
     if (!result?.community) return onAuth?.();
     setJoined(true);
+    api(`/api/communities/${community.slug}/posts`).then((data) => setLocalPosts((data?.posts || []).map((post) => ({
+      id: post.id, community: community.name, communitySlug: community.slug, author: post.author,
+      time: new Date(post.time).toLocaleDateString(), title: post.title, body: post.preview,
+      votes: post.likes || 0, comments: post.comments || 0, viewers: 0, tag: community.category
+    }))));
   }
 
   async function saveSettings(event) {
@@ -464,12 +470,17 @@ export function CommunityPage({ onAuth }) {
         </div>
       </section>
       <div className="community-live-strip"><span>{onlineCount > 0 ? <><i /> Live presence</> : "No live activity yet"}</span><strong>{onlineCount > 0 ? `${onlineCount} online` : "Start the first conversation"}</strong><Link to="/live">Open live <Icon name="arrow" size={15} /></Link></div>
+      <section className="community-engagement-panel" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}>
+        <article className="today-prompt-card"><p className="eyebrow">Today's prompt</p><h2>{community.trends?.[0] ? `What is your take on ${community.trends[0]}?` : `What should ${community.name} discuss today?`}</h2><button className="button button-secondary button-small" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Start with this</button></article>
+        <article><p className="eyebrow">Community pulse</p><div className="community-pulse-grid"><span><strong>{onlineCount}</strong><small>active now</small></span><span><strong>{topicCount}</strong><small>discussions</small></span><span><strong>{memberCount}</strong><small>members</small></span></div></article>
+        <article><p className="eyebrow">Hot topics</p><div className="community-hot-topic-row">{(community.trends || [community.category, "Live questions", "Helpful replies"]).slice(0, 4).map((topic) => <span key={topic}><Icon name="hash" size={13} /> {topic}</span>)}</div></article>
+      </section>
       {isFinanceCommunity && <FinanceCalculators />}
       <nav className="page-tabs">{["Posts", "Rules", "Moderators", ...(community.viewerPermissions?.includes("view_mod_log") || canManage ? ["Moderation"] : [])].map((item) => <button className={tab === item ? "active" : ""} type="button" key={item} onClick={() => setTab(item)}>{item}</button>)}</nav>
-      {(tab === "Posts" || tab === "Discussions") && <>
+      {(tab === "Posts" || tab === "Discussions") && (joined ? <>
         <button className="composer-card" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}><Avatar label="GS" small /><span>Start a discussion in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Post</span></button>
         <div className="discussion-list">{localPosts.length ? localPosts.map((item) => <DiscussionCard key={item.id} discussion={{ ...item, community: community.name, communitySlug: community.slug }} />) : <EmptyState title="No discussions yet" copy="This community is ready for its first useful question." action={<button className="button button-primary" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Start discussion</button>} />}</div>
-      </>}
+      </> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only discussions</p><h2>Join {community.name} to view and participate in discussions.</h2><p>Preview stats are visible before joining: {memberCount} members, {onlineCount} online, and {topicCount} discussion topics.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
       {tab === "Events" && <div className="event-grid">{[["Community welcome room", "Today · 7:30 PM", "Meet regulars and learn where conversations happen."], ["Weekly topic roundtable", "Saturday · 5:00 PM", "A moderated conversation around the week's biggest question."]].map(([title, time, copy]) => <article key={title}><span><Icon name="live" /></span><div><small>{time}</small><h3>{title}</h3><p>{copy}</p></div><Link className="button button-secondary button-small" to="/live">View live</Link></article>)}</div>}
       {tab === "Rules" && <section className="community-rules-panel"><p className="eyebrow">Community rules</p><h2>Clear expectations make better conversations.</h2><ol>{(community.rules || []).map((rule) => <li key={rule}>{rule}</li>)}</ol></section>}
       {tab === "Moderators" && <div className="member-grid">{community.moderators?.length ? community.moderators.map((person, index) => <article key={person.id}><Avatar label={person.displayName} tone={["green", "blue", "gold"][index % 3]} /><div><strong>{person.displayName}</strong><small>{person.role}</small></div></article>) : <EmptyState title="No moderators yet" copy="The owner can invite trusted members as the community grows." />}</div>}
@@ -620,19 +631,25 @@ function FeedDiscussionRoom({ room, onClose }) {
 export function DiscussionsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState("Trending");
+  const [feedItems, setFeedItems] = useState([]);
   const [localPosts] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null);
   const composeHandled = useRef(false);
   const query = searchParams.get("q") || "";
   const composeOpen = searchParams.get("compose") === "1";
+
+  useEffect(() => {
+    api("/api/discussions").then((data) => setFeedItems(data?.discussions || []));
+  }, []);
+
   const visible = useMemo(() => {
-    let list = [...localPosts, ...discussions];
+    let list = [...localPosts, ...feedItems];
     if (query) list = list.filter((item) => `${item.title} ${item.body} ${item.community} ${item.tag}`.toLowerCase().includes(query.toLowerCase()));
     if (filter === "Newest") list = list.reverse();
     if (filter === "Unanswered") list = list.filter((item) => item.comments < 50);
     if (!["Trending", "Newest", "Unanswered"].includes(filter)) list = list.filter((item) => item.tag === filter || item.community.includes(filter));
     return list;
-  }, [filter, query, localPosts]);
+  }, [filter, query, localPosts, feedItems]);
 
   function openDiscussionRoom() {
     const next = new URLSearchParams(searchParams);
@@ -678,13 +695,13 @@ export function DiscussionPage({ onAuth }) {
       const match = (data?.discussions || []).find((discussion) => slug === discussion.id || slug === discussion.slug || slug.endsWith(`-${discussion.id}`));
       if (match) {
         setItem({ ...match, time: new Date(match.createdAt).toLocaleDateString(), tag: match.community || "Community", viewers: 0 });
-        setMessagesInThread([{ id: `post-${match.id}`, author: match.author, avatar: match.author, message: match.body, createdAt: match.createdAt, role: "Thread starter" }]);
+        setMessagesInThread(match.locked ? [] : [{ id: `post-${match.id}`, author: match.author, avatar: match.author, message: match.body, createdAt: match.createdAt, role: "Thread starter" }]);
       }
     });
   }, [slug]);
 
   useEffect(() => {
-    if (!window.io) return undefined;
+    if (item.locked || !window.io) return undefined;
     socket.current = window.io({ transports: ["websocket", "polling"] });
     api("/api/session").then((data) => {
       const identity = getDiscussionIdentity(data?.user);
@@ -716,7 +733,7 @@ export function DiscussionPage({ onAuth }) {
       socket.current?.emit("leaveDiscussion");
       socket.current?.disconnect();
     };
-  }, [item.id]);
+  }, [item.id, item.locked]);
 
   useEffect(() => {
     stream.current?.scrollTo({ top: stream.current.scrollHeight, behavior: "smooth" });
@@ -725,7 +742,7 @@ export function DiscussionPage({ onAuth }) {
   function submitReply(event) {
     event.preventDefault();
     const text = draft.trim();
-    if (!text) return;
+    if (!text || item.locked) return;
     if (socket.current) {
       socket.current.emit("discussionMessage", { discussionId: item.id, message: text, avatar: selfAvatar });
       socket.current.emit("discussionTyping", { discussionId: item.id, isTyping: false });
@@ -736,6 +753,7 @@ export function DiscussionPage({ onAuth }) {
   }
 
   function updateDraft(value) {
+    if (item.locked) return;
     setDraft(value);
     socket.current?.emit("discussionTyping", { discussionId: item.id, isTyping: Boolean(value) });
     window.clearTimeout(typingTimer.current);
@@ -745,6 +763,19 @@ export function DiscussionPage({ onAuth }) {
   const people = participants.map((participant, index) => ({ ...participant, activity: "Live in thread", tone: ["green", "blue", "purple", "gold"][index % 4] }));
   const activeCount = participants.length;
   const typingText = typingSummary(typingNames);
+
+  if (item.locked) {
+    return (
+      <div className="app-page discussion-live-page is-locked" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}>
+        <header className="discussion-live-topbar"><Link className="back-link" to="/discussions">All discussions</Link></header>
+        <section className="community-discussion-gate discussion-page-gate">
+          <span><Icon name="users" /></span>
+          <div><p className="eyebrow">Members-only discussion</p><h1>Join {community.name} to view this live discussion.</h1><p>Discussion content is available only after you join the community. Preview stats stay visible in community cards and panels.</p></div>
+          <Link className="button button-primary" to={`/communities/${community.slug}`}>Join community</Link>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="app-page discussion-live-page" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}>

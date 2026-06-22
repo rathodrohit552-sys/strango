@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../app/api";
-import { communities, discussions } from "../app/data";
+import { communities } from "../app/data";
 import { getShellIdentityLabel, rememberIdentityPreference, shouldAutoOpenIdentityPrompt } from "../app/identity";
 import { Avatar, CommunityMark, Icon, Logo, ThemeToggle } from "./UI";
 
@@ -52,45 +52,86 @@ export function PublicHeader({ onAuth }) {
 }
 
 function RightRail() {
-  const [communityItems, setCommunityItems] = useState([]);
+  const [communityItems, setCommunityItems] = useState(communities);
   const [discussionItems, setDiscussionItems] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [paused, setPaused] = useState(false);
+
   useEffect(() => {
-    api("/api/communities").then((data) => setCommunityItems(data?.communities || []));
+    api("/api/communities").then((data) => {
+      const remote = data?.communities?.length ? data.communities : communities;
+      setCommunityItems(remote.map((community, index) => {
+        const design = communities.find((item) => item.slug === community.slug) || communities[index % communities.length] || {};
+        return {
+          ...design,
+          ...community,
+          category: community.category || design.category || community.shortName || "Community",
+          members: Number(community.memberCount || community.members || 0),
+          online: Number(community.onlineCount || community.online || 0),
+          topics: Number(community.topicCount || community.topics || 0)
+        };
+      }));
+    });
     api("/api/discussions").then((data) => setDiscussionItems(data?.discussions || []));
   }, []);
-  const onlineTotal = communityItems.reduce((total, item) => total + Number(item.onlineCount || 0), 0);
+
+  useEffect(() => {
+    if (paused || communityItems.length <= 5) return undefined;
+    const timer = window.setInterval(() => setOffset((value) => (value + 1) % communityItems.length), 5200);
+    return () => window.clearInterval(timer);
+  }, [paused, communityItems.length]);
+
+  const totalMembers = communityItems.reduce((total, item) => total + Number(item.members || item.memberCount || 0), 0);
+  const onlineTotal = communityItems.reduce((total, item) => total + Number(item.online || item.onlineCount || 0), 0);
+  const visibleCommunities = communityItems.length
+    ? Array.from({ length: Math.min(5, communityItems.length) }, (_, index) => communityItems[(offset + index) % communityItems.length])
+    : [];
+
+  function rotate(direction) {
+    if (!communityItems.length) return;
+    setOffset((value) => (value + direction + communityItems.length) % communityItems.length);
+  }
+
   return (
-    <aside className="right-rail">
-      <section className="rail-spotlight">
-        <div className="rail-spotlight-top">{onlineTotal > 0 && <span className="rail-live-dot" />}<strong>Platform activity</strong><span>Now</span></div>
-        <b>{onlineTotal}</b>
-        <p>{onlineTotal > 0 ? `${onlineTotal} people online across communities` : "No live community activity yet"}</p>
-        <Link to="/live">Explore live activity <Icon name="arrow" size={15} /></Link>
+    <aside className="right-rail" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
+      <section className="rail-pulse-card">
+        <div className="rail-spotlight-top"><strong>Community pulse</strong><span>Live</span></div>
+        <div className="rail-pulse-grid">
+          <span><b>{communityItems.length}</b><small>communities</small></span>
+          <span><b>{totalMembers}</b><small>members</small></span>
+          <span><b>{onlineTotal}</b><small>online now</small></span>
+        </div>
+        <p>{onlineTotal > 0 ? "People are active across joined spaces." : "No live community activity yet. Join a space to start the pulse."}</p>
       </section>
-      <section className="rail-block">
-        <div className="rail-title"><h3>Trending communities</h3><Link to="/communities">See all</Link></div>
-        {communityItems.slice().sort((a, b) => b.memberCount - a.memberCount).slice(0, 4).map((community, index) => (
-          <Link className="rail-community" to={`/communities/${community.slug}`} key={community.slug}>
-            <span className="rail-rank">{String(index + 1).padStart(2, "0")}</span>
-            <CommunityMark community={{ ...communities.find((item) => item.slug === community.slug), ...community }} size="small" showStatus={community.onlineCount > 0} />
-            <span><strong>{community.name}</strong><small>{community.memberCount || "Be first"} {community.memberCount === 1 ? "member" : community.memberCount ? "members" : ""}</small>{community.onlineCount > 0 && <em><i /> {community.onlineCount} online</em>}</span>
+      <section className="rail-block rail-community-rotator">
+        <div className="rail-title">
+          <h3>Discover communities</h3>
+          <span className="rail-rotate-controls">
+            <button type="button" aria-label="Previous communities" onClick={() => rotate(-1)}><Icon name="chevron" size={14} /></button>
+            <button type="button" aria-label="Next communities" onClick={() => rotate(1)}><Icon name="chevron" size={14} /></button>
+          </span>
+        </div>
+        {visibleCommunities.map((community, index) => (
+          <Link className="rail-community" to={`/communities/${community.slug}`} key={`${community.slug}-${offset}`}>
+            <span className="rail-rank">{String(((offset + index) % communityItems.length) + 1).padStart(2, "0")}</span>
+            <CommunityMark community={community} size="small" showStatus={community.online > 0} />
+            <span><strong>{community.name}</strong><small>{community.members || "Be first"} {community.members === 1 ? "member" : community.members ? "members" : ""}</small>{community.online > 0 && <em><i /> {community.online} online</em>}</span>
             <Icon name="arrow" size={15} />
           </Link>
         ))}
       </section>
-      <section className="rail-block">
-        <div className="rail-title"><h3>Live discussions</h3><span className="rail-title-live"><i /> Updating</span></div>
-        {discussionItems.slice(0, 3).map((item) => {
+      <section className="rail-block rail-discussion-teaser">
+        <div className="rail-title"><h3>Members-only discussions</h3><Link to="/communities">Join</Link></div>
+        {discussionItems.length ? discussionItems.slice(0, 3).map((item) => {
           const community = communities.find((entry) => entry.slug === item.communitySlug);
-          return <Link className="rail-suggestion" to={`/discussions/${item.id}`} key={item.id}><span style={{ "--suggestion-accent": community?.accent }}>{item.community}</span><strong>{item.title}</strong><small>{item.comments} {item.comments === 1 ? "reply" : "replies"}</small></Link>;
-        })}
+          return <Link className={`rail-suggestion${item.locked ? " is-locked" : ""}`} to={item.locked ? `/communities/${item.communitySlug}` : `/discussions/${item.slug || item.id}`} key={item.id}><span style={{ "--suggestion-accent": community?.accent }}>{item.community}</span><strong>{item.title}</strong><small>{item.locked ? "Join to view" : `${item.comments} ${item.comments === 1 ? "reply" : "replies"}`}</small></Link>;
+        }) : <p className="quiet-state">Join communities to unlock member discussions.</p>}
       </section>
       <section className="rail-block"><div className="rail-title"><h3>STRANGO PLUTO</h3><Link to="/pluto">Coming soon</Link></div><p className="quiet-state">Premium customization without changing the core social experience.</p></section>
       <nav className="rail-footer"><Link to="/about">About</Link><Link to="/privacy-policy">Privacy</Link><Link to="/terms-of-service">Terms</Link><Link to="/contact">Contact</Link></nav>
     </aside>
   );
 }
-
 export function AppShell({ children, onAuth }) {
   const [mobileNav, setMobileNav] = useState(false);
   const [session, setSession] = useState(null);

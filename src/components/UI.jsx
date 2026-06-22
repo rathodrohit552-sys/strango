@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../app/theme";
 import { api } from "../app/api";
@@ -111,6 +111,9 @@ export function SectionHeading({ eyebrow, title, copy, action }) {
 export function CommunityCard({ community, onJoin, joined = false, variant = "default" }) {
   const [busy, setBusy] = useState(false);
   const [isJoined, setIsJoined] = useState(joined);
+  const topics = community.trends || community.tags || [];
+
+  useEffect(() => setIsJoined(joined), [joined]);
 
   async function joinCommunity() {
     if (busy || isJoined) return;
@@ -134,22 +137,31 @@ export function CommunityCard({ community, onJoin, joined = false, variant = "de
         <span>{community.members > 0 ? `${community.members} ${community.members === 1 ? "member" : "members"}` : "Be first member"}</span>
         {community.online > 0 ? <span className="online-dot">{community.online} online</span> : <span>No one online yet</span>}
       </div>
-      {community.activity && <small className="community-activity">{community.activity}</small>}
-      <button className={`join-button${isJoined ? " is-joined" : ""}`} type="button" disabled={busy || isJoined} onClick={joinCommunity}>
-        {busy ? "Joining..." : isJoined ? <><Icon name="check" size={15} /> Joined</> : "Join community"}
-      </button>
+      <div className="community-card-status">
+        <span><Icon name="discuss" size={15} /> {community.topics || 0} discussions</span>
+        <span><Icon name="bolt" size={15} /> {community.activity || "No activity yet"}</span>
+      </div>
+      {topics.length > 0 && <div className="community-card-tags">{topics.slice(0, 3).map((topic) => <span key={topic}>{topic}</span>)}</div>}
+      <div className="community-card-actions">
+        <button className={`join-button${isJoined ? " is-joined" : ""}`} type="button" disabled={busy || isJoined} onClick={joinCommunity}>
+          {busy ? "Joining..." : isJoined ? <><Icon name="check" size={15} /> Joined</> : "Join community"}
+        </button>
+        <Link className="community-open-link" to={`/communities/${community.slug}`}>Open</Link>
+      </div>
     </article>
   );
 }
-
 export function DiscussionCard({ discussion, compact = false }) {
   const [voted, setVoted] = useState(false);
   const [shared, setShared] = useState(false);
   const [reported, setReported] = useState(false);
   const community = communities.find((item) => item.slug === discussion.communitySlug || item.name === discussion.community);
+  const locked = Boolean(discussion.locked);
+  const discussionPath = locked ? `/communities/${discussion.communitySlug || community?.slug || ""}` : `/discussions/${discussion.slug || discussion.id}`;
 
   async function shareDiscussion() {
-    const url = `${window.location.origin}/discussions/${discussion.id}`;
+    if (locked) return;
+    const url = `${window.location.origin}/discussions/${discussion.slug || discussion.id}`;
     try {
       if (navigator.share) {
         await navigator.share({ title: discussion.title, text: discussion.body, url });
@@ -164,7 +176,7 @@ export function DiscussionCard({ discussion, compact = false }) {
   }
 
   async function reportDiscussion() {
-    if (!discussion.communitySlug || reported) return;
+    if (!discussion.communitySlug || reported || locked) return;
     const reason = window.prompt("What should the moderators review?");
     if (!reason) return;
     const result = await api(`/api/communities/${discussion.communitySlug}/reports`, { method: "POST", body: JSON.stringify({ postId: discussion.id, reason }) });
@@ -172,31 +184,37 @@ export function DiscussionCard({ discussion, compact = false }) {
   }
 
   return (
-    <article className={`discussion-card${compact ? " is-compact" : ""}`} style={{ "--discussion-accent": community?.accent || "#14b8a6" }}>
+    <article className={`discussion-card${compact ? " is-compact" : ""}${locked ? " is-locked" : ""}`} style={{ "--discussion-accent": community?.accent || "#14b8a6" }}>
       <div className="vote-stack">
-        <button className={voted ? "is-voted" : ""} type="button" aria-label={voted ? "Remove upvote" : "Upvote"} onClick={() => setVoted((value) => !value)}><Icon name="vote" size={17} /></button>
+        <button className={voted ? "is-voted" : ""} type="button" aria-label={locked ? "Join community to vote" : voted ? "Remove upvote" : "Upvote"} disabled={locked} onClick={() => setVoted((value) => !value)}><Icon name={locked ? "check" : "vote"} size={17} /></button>
         <strong>{discussion.votes + (voted ? 1 : 0)}</strong>
       </div>
       <div className="discussion-copy">
         <div className="post-byline">
           <CommunityMark community={community} size="tiny" />
-          <span>{discussion.community}</span><i />{discussion.author} · {discussion.time}
+          <span>{discussion.community}</span><i />{discussion.author} - {discussion.time}
           {discussion.viewers > 0 && <b><span className="live-presence-dot" /> {discussion.viewers} viewing</b>}
         </div>
-        <Link to={`/discussions/${discussion.id}`}><h3>{discussion.title}</h3></Link>
-        {!compact && <p>{discussion.body}</p>}
+        <Link to={discussionPath}><h3>{discussion.title}</h3></Link>
+        {!compact && !locked && discussion.body && <p>{discussion.body}</p>}
+        {!compact && locked && <p className="locked-discussion-copy">Join {discussion.community || "this community"} to view and participate in member discussions.</p>}
         <div className="post-actions">
-          <Link to={`/discussions/${discussion.id}`}><Icon name="discuss" size={16} /> {discussion.comments} comments</Link>
-          <Link to={`/discussions/${discussion.id}`}><Icon name="eye" size={16} /> Live thread</Link>
-          <button type="button" onClick={shareDiscussion}><Icon name={shared ? "check" : "share"} size={16} /> {shared ? "Copied" : "Share"}</button>
-          {discussion.communitySlug && <button type="button" onClick={reportDiscussion} disabled={reported}>{reported ? "Reported" : "Report"}</button>}
+          {locked ? (
+            <Link to={discussionPath}><Icon name="users" size={16} /> Join community</Link>
+          ) : (
+            <>
+              <Link to={discussionPath}><Icon name="discuss" size={16} /> {discussion.comments} comments</Link>
+              <Link to={discussionPath}><Icon name="eye" size={16} /> Live thread</Link>
+              <button type="button" onClick={shareDiscussion}><Icon name={shared ? "check" : "share"} size={16} /> {shared ? "Copied" : "Share"}</button>
+              {discussion.communitySlug && <button type="button" onClick={reportDiscussion} disabled={reported}>{reported ? "Reported" : "Report"}</button>}
+            </>
+          )}
           <span>{discussion.tag}</span>
         </div>
       </div>
     </article>
   );
 }
-
 export function LiveCard({ conversation, onJoin, active = false }) {
   return (
     <article className={`live-card${active ? " is-active" : ""}`} style={{ "--live-accent": conversation.accent }}>

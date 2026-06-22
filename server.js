@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const http = require("http");
 const path = require("path");
 const crypto = require("crypto");
@@ -657,6 +657,12 @@ app.get("/api/communities/:slug/posts", (req, res) => {
     res.status(404).json({ error: "Community not found." });
     return;
   }
+  const state = attachSession(req, res);
+  const viewerRole = database.getCommunityRole(community.id, state.user.id);
+  if (!viewerRole) {
+    res.json({ posts: [], locked: true });
+    return;
+  }
   const posts = database.db.posts
     .filter((post) => post.community_id === community.id && !post.removed_at)
     .slice()
@@ -673,9 +679,8 @@ app.get("/api/communities/:slug/posts", (req, res) => {
         comments: database.db.comments.filter((comment) => comment.post_id === post.id).length
       };
     });
-  res.json({ posts });
+  res.json({ posts, locked: false });
 });
-
 app.post("/api/posts", (req, res) => {
   const state = requireParticipant(req, res);
   if (!state) return;
@@ -762,6 +767,8 @@ app.get("/api/notifications", (req, res) => {
 });
 
 app.get("/api/discussions", (req, res) => {
+  const state = attachSession(req, res);
+  const joinedCommunityIds = new Set(database.db.community_members.filter((member) => member.user_id === state.user.id).map((member) => member.community_id));
   const discussions = database.db.posts
     .filter((post) => !post.removed_at)
     .slice()
@@ -769,22 +776,25 @@ app.get("/api/discussions", (req, res) => {
     .map((post) => {
       const community = database.db.communities.find((item) => item.id === post.community_id);
       const profile = database.db.profiles.find((item) => item.user_id === post.user_id);
+      const canView = community && joinedCommunityIds.has(community.id);
       return {
         id: post.id,
         slug: `${normalizeSlug(post.title)}-${post.id}`,
-        title: post.title,
-        body: post.content,
+        title: canView ? post.title : `Join ${community ? community.name : "this community"} to view this discussion`,
+        body: canView ? post.content : "",
+        locked: !canView,
         community: community ? community.name : "Strango",
         communitySlug: community ? community.slug : null,
-        author: profile ? profile.display_name : "Anonymous User",
+        author: canView && profile ? profile.display_name : canView ? "Anonymous User" : "Members only",
         votes: database.db.reactions.filter((reaction) => reaction.post_id === post.id).length,
         comments: database.db.comments.filter((comment) => comment.post_id === post.id).length,
-        createdAt: post.created_at
+        createdAt: post.created_at,
+        time: new Date(post.created_at).toLocaleDateString(),
+        tag: community ? community.category || community.short_name || "Community" : "Community"
       };
     });
   res.json({ discussions });
 });
-
 app.get("/api/sparks", (req, res) => {
   const state = attachSession(req, res);
   const sparks = database.db.user_sparks.find((item) => item.user_id === state.user.id) || {
@@ -1408,7 +1418,7 @@ io.on("connection",(socket)=>{
 io.emit("onlineCount", count);
 
 
-  // ✅ AUTO JOIN QUEUE ON CONNECT (THIS WAS MISSING)
+  // ✅ AUTO JOIN QUEUE ON CONNECT
   const isCommunitySocket = socket.handshake.auth && socket.handshake.auth.mode === "community";
   const socketCookies = String(socket.handshake.headers.cookie || "").split(";").reduce((cookies, item) => {
     const index = item.indexOf("=");

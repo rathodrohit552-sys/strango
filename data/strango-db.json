@@ -2,15 +2,15 @@
   "counters": {
     "communities": 9,
     "community_channels": 39,
-    "users": 133,
-    "profiles": 133,
-    "user_sparks": 133,
-    "sessions": 133,
+    "users": 137,
+    "profiles": 137,
+    "user_sparks": 137,
+    "sessions": 137,
     "community_members": 16,
     "notifications": 35,
     "community_messages": 1,
     "posts": 2,
-    "visitors": 133,
+    "visitors": 137,
     "subscriptions": 1
   },
   "users": [
@@ -1460,6 +1460,50 @@
       "ghost_expires_at": "2026-06-20T06:52:58.404Z",
       "visitor_number": 133,
       "created_at": "2026-06-20T06:47:58.404Z"
+    },
+    {
+      "id": "134",
+      "auth_provider": "anonymous",
+      "email": null,
+      "google_id": null,
+      "is_anonymous": true,
+      "access_mode": "ghost",
+      "ghost_expires_at": "2026-06-22T07:04:49.836Z",
+      "visitor_number": 134,
+      "created_at": "2026-06-22T06:59:49.836Z"
+    },
+    {
+      "id": "135",
+      "auth_provider": "anonymous",
+      "email": null,
+      "google_id": null,
+      "is_anonymous": true,
+      "access_mode": "ghost",
+      "ghost_expires_at": "2026-06-22T07:05:22.894Z",
+      "visitor_number": 135,
+      "created_at": "2026-06-22T07:00:22.894Z"
+    },
+    {
+      "id": "136",
+      "auth_provider": "anonymous",
+      "email": null,
+      "google_id": null,
+      "is_anonymous": true,
+      "access_mode": "ghost",
+      "ghost_expires_at": "2026-06-22T07:08:05.258Z",
+      "visitor_number": 136,
+      "created_at": "2026-06-22T07:03:05.258Z"
+    },
+    {
+      "id": "137",
+      "auth_provider": "anonymous",
+      "email": null,
+      "google_id": null,
+      "is_anonymous": true,
+      "access_mode": "ghost",
+      "ghost_expires_at": "2026-06-22T07:08:05.277Z",
+      "visitor_number": 137,
+      "created_at": "2026-06-22T07:03:05.277Z"
     }
   ],
   "profiles": [
@@ -2526,6 +2570,38 @@
       "avatar_url": null,
       "created_at": "2026-06-20T06:47:58.404Z",
       "updated_at": "2026-06-20T06:47:58.404Z"
+    },
+    {
+      "id": "134",
+      "user_id": "134",
+      "display_name": "Anonymous User",
+      "avatar_url": null,
+      "created_at": "2026-06-22T06:59:49.836Z",
+      "updated_at": "2026-06-22T06:59:49.836Z"
+    },
+    {
+      "id": "135",
+      "user_id": "135",
+      "display_name": "Anonymous User",
+      "avatar_url": null,
+      "created_at": "2026-06-22T07:00:22.894Z",
+      "updated_at": "2026-06-22T07:00:22.894Z"
+    },
+    {
+      "id": "136",
+      "user_id": "136",
+      "display_name": "Anonymous User",
+      "avatar_url": null,
+      "created_at": "2026-06-22T07:03:05.258Z",
+      "updated_at": "2026-06-22T07:03:05.258Z"
+    },
+    {
+      "id": "137",
+      "user_id": "137",
+      "display_name": "Anonymous User",
+      "avatar_url": null,
+      "created_at": "2026-06-22T07:03:05.277Z",
+      "updated_at": "2026-06-22T07:03:05.277Z"
     }
   ],
   "sessions": [
@@ -3326,6 +3402,30 @@
       "token": "session-1781938078406-3e22b939f939e8",
       "user_id": "133",
       "created_at": "2026-06-20T06:47:58.406Z"
+    },
+    {
+      "id": "134",
+      "token": "session-1782111589837-b165ee1cd6ed68",
+      "user_id": "134",
+      "created_at": "2026-06-22T06:59:49.838Z"
+    },
+    {
+      "id": "135",
+      "token": "session-1782111622895-53a1a2ba82c778",
+      "user_id": "135",
+      "created_at": "2026-06-22T07:00:22.895Z"
+    },
+    {
+      "id": "136",
+      "token": "session-1782111785271-b02228a5cc2ae8",
+      "user_id": "136",
+      "created_at": "2026-06-22T07:03:05.271Z"
+    },
+    {
+      "id": "137",
+      "token": "session-1782111785329-a2a674824b1ee",
+      "user_id": "137",
+      "created_at": "2026-06-22T07:03:05.329Z"
     }
   ],
   "communities": [
@@ -5274,6 +5374,34 @@
       "points": 0,
       "level": "Explorer",
       "updated_at": "2026-06-20T06:47:58.404Z"
+    },
+    {
+      "id": "134",
+      "user_id": "134",
+      "points": 0,
+      "level": "Explorer",
+      "updated_at": "2026-06-22T06:59:49.836Z"
+    },
+    {
+      "id": "135",
+      "user_id": "135",
+      "points": 0,
+      "level": "Explorer",
+      "updated_at": "2026-06-22T07:00:22.894Z"
+    },
+    {
+      "id": "136",
+      "user_id": "136",
+      "points": 0,
+      "level": "Explorer",
+      "updated_at": "2026-06-22T07:03:05.258Z"
+    },
+    {
+      "id": "137",
+      "user_id": "137",
+      "points": 0,
+      "level": "Explorer",
+      "updated_at": "2026-06-22T07:03:05.277Z"
     }
   ],
   "posts": [
