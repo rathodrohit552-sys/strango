@@ -8,22 +8,20 @@ import { Avatar, CommunityMark, Icon, Logo, ThemeToggle } from "./UI";
 const navItems = [
   ["/dashboard", "home", "Home"],
   ["/communities", "users", "Communities"],
-  ["/discussions", "discuss", "Discussions"],
-  ["/live", "live", "Live"],
-  ["/rooms", "rooms", "Rooms"],
+  ["/discussions/new", "plus", "Create"],
   ["/messages", "message", "Messages"],
-  ["/notifications", "bell", "Notifications"],
-  ["/sparks", "spark", "Sparks"],
-  ["/pluto", "spark", "Pluto"],
   ["/profile", "profile", "Profile"]
 ];
 
-const mobileNavItems = [
-  ["/dashboard", "home", "Home"],
-  ["/communities", "users", "Communities"],
+const mobileNavItems = navItems;
+
+const secondaryNavItems = [
+  ["/discussions", "discuss", "Discussions"],
   ["/live", "live", "Live"],
-  ["/chat", "message", "Chat"],
-  ["/profile", "profile", "Profile"]
+  ["/rooms", "rooms", "Rooms"],
+  ["/notifications", "bell", "Notifications"],
+  ["/sparks", "spark", "Sparks"],
+  ["/pluto", "spark", "Pluto"]
 ];
 
 export function PublicHeader({ onAuth }) {
@@ -190,11 +188,17 @@ export function AppShell({ children, onAuth }) {
           <nav>
             {navItems.map(([to, icon, label]) => (
               <NavLink to={to} key={to} className={({ isActive }) => isActive ? "active" : ""}>
-                <Icon name={icon} /><span>{label}</span>{label === "Notifications" && <b>3</b>}
+                <Icon name={icon} /><span>{label}</span>
               </NavLink>
             ))}
           </nav>
-          <button className="button button-primary compose-button" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={18} /> Create discussion</button>
+          <div className="secondary-nav-group" aria-label="Secondary navigation">
+            {secondaryNavItems.map(([to, icon, label]) => (
+              <NavLink to={to} key={to} className={({ isActive }) => isActive ? "active" : ""}>
+                <Icon name={icon} /><span>{label}</span>{label === "Notifications" && <b>3</b>}
+              </NavLink>
+            ))}
+          </div>
           <button className="identity-card" type="button" onClick={onAuth}>
             <Avatar label={identity} small />
             <span><strong>{identity}</strong><small>{identityMode}</small></span>

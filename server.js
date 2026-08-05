@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const http = require("http");
 const path = require("path");
 const crypto = require("crypto");
@@ -248,6 +248,57 @@ app.get("/api/session", (req, res) => {
       profile: state.profile
     }
   });
+});
+app.get("/api/intents", (req, res) => {
+  const state = attachSession(req, res);
+  const includeInactive = req.query.includeInactive === "1" || req.query.includeInactive === "true";
+  res.json({ intents: database.listUserIntents(state.user.id, { includeInactive, limit: 20 }) });
+});
+
+app.post("/api/intents", (req, res) => {
+  const state = attachSession(req, res);
+  const intent = database.createUserIntent({
+    userId: state.user.id,
+    type: req.body.type,
+    text: req.body.text,
+    topicTags: req.body.topicTags,
+    preferredFormat: req.body.preferredFormat,
+    preferredDuration: req.body.preferredDuration,
+    language: req.body.language,
+    visibility: req.body.visibility
+  });
+  res.status(201).json({ intent });
+});
+
+app.patch("/api/intents/:id", (req, res) => {
+  const state = attachSession(req, res);
+  const intent = database.updateUserIntent(req.params.id, state.user.id, req.body || {});
+  if (!intent) {
+    res.status(404).json({ error: "Intent not found." });
+    return;
+  }
+  res.json({ intent });
+});
+
+app.delete("/api/intents/:id", (req, res) => {
+  const state = attachSession(req, res);
+  if (!database.deleteUserIntent(req.params.id, state.user.id)) {
+    res.status(404).json({ error: "Intent not found." });
+    return;
+  }
+  res.json({ ok: true });
+});
+
+app.post("/api/recommendation-feedback", (req, res) => {
+  const state = attachSession(req, res);
+  const feedback = database.recordRecommendationFeedback({
+    userId: state.user.id,
+    targetType: req.body.targetType,
+    targetId: req.body.targetId,
+    action: req.body.action,
+    reason: req.body.reason
+  });
+  res.status(201).json({ feedback });
 });
 
 app.post("/api/auth/anonymous", (req, res) => {
@@ -660,93 +711,194 @@ app.get("/api/communities/:slug/posts", (req, res) => {
   const state = attachSession(req, res);
   const viewerRole = database.getCommunityRole(community.id, state.user.id);
   if (!viewerRole) {
-    res.json({ posts: [], locked: true });
+    res.json({ posts: [], locked: true, nextCursor: null, hasMore: false });
     return;
   }
-  const posts = database.db.posts
-    .filter((post) => post.community_id === community.id && !post.removed_at)
-    .slice()
-    .reverse()
-    .map((post) => {
-      const profile = database.db.profiles.find((item) => item.user_id === post.user_id);
-      return {
-        id: post.id,
-        title: post.title,
-        preview: post.content,
-        author: profile ? profile.display_name : "Anonymous User",
-        time: post.created_at,
-        likes: database.db.reactions.filter((reaction) => reaction.post_id === post.id).length,
-        comments: database.db.comments.filter((comment) => comment.post_id === post.id).length
-      };
-    });
-  res.json({ posts, locked: false });
+  const page = database.listPublicPosts({
+    viewerId: state.user.id,
+    communitySlug: req.params.slug,
+    contentType: apiContentType(req.query.type || "all"),
+    cursor: req.query.cursor,
+    limit: req.query.limit,
+    restrictCommunityContent: false
+  });
+  res.json({ posts: page.items, locked: false, nextCursor: page.nextCursor, hasMore: page.hasMore });
 });
+
+function apiContentType(value) {
+  const raw = String(value || "all").trim().toLowerCase().replace(/[-\s]+/g, "_");
+  if (["all", "feed", "posts"].includes(raw)) return "all";
+  if (["discussion", "discussions", "community_discussion"].includes(raw)) return "discussion";
+  if (["short", "shorts", "short_post", "short_posts"].includes(raw)) return "short_post";
+  if (["standard", "standard_post", "standard_posts", "normal_post"].includes(raw)) return "standard_post";
+  if (["reel", "reels", "video"].includes(raw)) return "reel";
+  return database.normalizeContentType(raw);
+}
+
+function sendContentResult(res, result, successStatus = 200) {
+  if (!result) {
+    res.status(500).json({ error: "Content action failed." });
+    return;
+  }
+  if (result.error) {
+    res.status(result.status || 400).json({ error: result.error });
+    return;
+  }
+  res.status(successStatus).json(result);
+}
+
+app.get("/api/feed", (req, res) => {
+  const state = attachSession(req, res);
+  const page = database.listPublicPosts({
+    viewerId: state.user.id,
+    contentType: apiContentType(req.query.type || "all"),
+    cursor: req.query.cursor,
+    limit: req.query.limit,
+    restrictCommunityContent: true
+  });
+  const allPage = req.query.type ? database.listPublicPosts({ viewerId: state.user.id, contentType: "all", limit: 30, restrictCommunityContent: true }) : page;
+  const legacyPosts = allPage.items.map((item) => ({ ...item, preview: item.body, communityName: item.community, likes: item.likes, comments: item.comments, time: item.createdAt }));
+  const communities = database.db.communities
+    .map((community) => database.publicCommunity(community, communityOnlineCount(community.slug)))
+    .sort((a, b) => b.memberCount - a.memberCount);
+  const messages = database.db.community_messages.slice(-10).reverse().map((message) => {
+    const community = database.db.communities.find((item) => item.id === message.community_id);
+    const channel = database.db.community_channels.find((item) => item.id === message.channel_id);
+    const profile = database.db.profiles.find((item) => item.user_id === message.user_id);
+    return {
+      communityName: community ? community.name : "",
+      channelName: channel ? channel.name : "",
+      author: profile ? profile.display_name : "Anonymous User",
+      message: message.message,
+      createdAt: message.created_at
+    };
+  });
+  res.json({
+    feed: page.items,
+    posts: page.items,
+    nextCursor: page.nextCursor,
+    hasMore: page.hasMore,
+    recentDiscussions: legacyPosts.filter((item) => item.contentType === "discussion").slice(0, 10),
+    popularDiscussions: legacyPosts.filter((item) => item.contentType === "discussion").sort((a, b) => (b.likes + b.comments * 2 + b.votes) - (a.likes + a.comments * 2 + a.votes)).slice(0, 10),
+    trendingCommunities: communities.slice(0, 6),
+    communityActivity: messages
+  });
+});
+
+app.get("/api/reels", (req, res) => {
+  const state = attachSession(req, res);
+  const page = database.listPublicPosts({
+    viewerId: state.user.id,
+    contentType: "reel",
+    communitySlug: req.query.communitySlug,
+    cursor: req.query.cursor,
+    limit: req.query.limit,
+    restrictCommunityContent: Boolean(req.query.communitySlug)
+  });
+  res.json({ reels: page.items, nextCursor: page.nextCursor, hasMore: page.hasMore });
+});
+
 app.post("/api/posts", (req, res) => {
   const state = requireParticipant(req, res);
   if (!state) return;
-  const community = database.db.communities.find((item) => item.slug === req.body.communitySlug);
-  const title = String(req.body.title || "").trim();
-  const content = String(req.body.content || "").trim();
-  if (!community || !title || !content) {
-    res.status(400).json({ error: "Community, title, and content are required." });
+  const result = database.createPost({
+    userId: state.user.id,
+    communitySlug: req.body.communitySlug,
+    contentType: req.body.contentType,
+    title: req.body.title,
+    body: req.body.body,
+    content: req.body.content,
+    media: req.body.media,
+    thumbnailUrl: req.body.thumbnailUrl,
+    topicTags: req.body.topicTags,
+    language: req.body.language,
+    visibility: req.body.visibility,
+    altText: req.body.altText,
+    quotePostId: req.body.quotePostId,
+    poll: req.body.poll
+  });
+  sendContentResult(res, result, 201);
+});
+
+app.get("/api/posts/:id", (req, res) => {
+  const state = attachSession(req, res);
+  const post = database.db.posts.find((item) => item.id === req.params.id || `${normalizeSlug(item.title)}-${item.id}` === req.params.id);
+  if (!post || post.deleted_at || post.removed_at) {
+    res.status(404).json({ error: "Post not found." });
     return;
   }
-  if (database.communityRestriction(community.id, state.user.id, "ban_user")) {
-    res.status(403).json({ error: "You are banned from this community." });
+  const community = post.community_id ? database.db.communities.find((item) => item.id === post.community_id) : null;
+  const restrict = Boolean(community && !database.getCommunityRole(community.id, state.user.id));
+  res.json({ post: database.publicPost(post, { viewerId: state.user.id, restrictCommunityContent: restrict }) });
+});
+
+app.patch("/api/posts/:id", (req, res) => {
+  const state = requireParticipant(req, res);
+  if (!state) return;
+  sendContentResult(res, database.updatePost(req.params.id, state.user.id, req.body || {}));
+});
+
+app.delete("/api/posts/:id", (req, res) => {
+  const state = requireParticipant(req, res);
+  if (!state) return;
+  sendContentResult(res, database.deletePost(req.params.id, state.user.id));
+});
+
+app.get("/api/posts/:id/comments", (req, res) => {
+  const state = attachSession(req, res);
+  const post = database.db.posts.find((item) => item.id === req.params.id);
+  if (!post || post.deleted_at || post.removed_at) {
+    res.status(404).json({ error: "Post not found." });
     return;
   }
-  if (database.communityRestriction(community.id, state.user.id, "mute_user")) {
-    res.status(403).json({ error: "You are muted in this community." });
-    return;
-  }
-  database.joinCommunity(community.slug, state.user.id);
-  const post = {
-    id: database.nextId(database.db, "posts"),
-    community_id: community.id,
-    user_id: state.user.id,
-    title: title.slice(0, 160),
-    content: content.slice(0, 5000),
-    created_at: new Date().toISOString()
-  };
-  database.db.posts.push(post);
-  database.awardSparks(state.user.id, "post_created", 5);
-  database.saveDb();
-  res.status(201).json({ post });
+  res.json({ comments: database.listPostComments(post.id, { viewerId: state.user.id, sort: req.query.sort, limit: req.query.limit }) });
 });
 
 app.post("/api/posts/:id/comments", (req, res) => {
   const state = requireParticipant(req, res);
   if (!state) return;
-  const post = database.db.posts.find((item) => item.id === req.params.id);
-  const content = String(req.body.content || "").trim();
-  if (!post || !content) {
-    res.status(400).json({ error: "Post and content are required." });
-    return;
-  }
-  const comment = { id: database.nextId(database.db, "comments"), post_id: post.id, user_id: state.user.id, content: content.slice(0, 2000), created_at: new Date().toISOString() };
-  database.db.comments.push(comment);
-  database.awardSparks(state.user.id, "comment", 2);
-  database.saveDb();
-  res.status(201).json({ comment });
+  sendContentResult(res, database.createPostComment({ postId: req.params.id, userId: state.user.id, content: req.body.content, parentId: req.body.parentId }), 201);
+});
+
+app.post("/api/posts/:id/vote", (req, res) => {
+  const state = requireParticipant(req, res);
+  if (!state) return;
+  sendContentResult(res, database.setPostVote(req.params.id, state.user.id, req.body.value));
 });
 
 app.post("/api/posts/:id/reactions", (req, res) => {
   const state = requireParticipant(req, res);
   if (!state) return;
-  const post = database.db.posts.find((item) => item.id === req.params.id);
-  const type = String(req.body.type || "helpful").trim();
-  if (!post) {
-    res.status(404).json({ error: "Post not found." });
-    return;
-  }
-  if (!database.db.reactions.some((item) => item.post_id === post.id && item.user_id === state.user.id && item.type === type)) {
-    database.db.reactions.push({ id: database.nextId(database.db, "reactions"), post_id: post.id, user_id: state.user.id, type, created_at: new Date().toISOString() });
-    if (type === "helpful") database.awardSparks(post.user_id, "helpful_reaction", 10);
-    database.saveDb();
-  }
-  res.json({ ok: true });
+  sendContentResult(res, database.togglePostReaction(req.params.id, state.user.id, req.body.type || "like"));
 });
 
+app.post("/api/posts/:id/save", (req, res) => {
+  const state = requireParticipant(req, res);
+  if (!state) return;
+  sendContentResult(res, database.togglePostSave(req.params.id, state.user.id));
+});
+
+app.post("/api/posts/:id/share", (req, res) => {
+  const state = attachSession(req, res);
+  sendContentResult(res, database.recordPostShare(req.params.id, state.user.id, req.body?.target || "copy"));
+});
+
+app.post("/api/posts/:id/views", (req, res) => {
+  const state = attachSession(req, res);
+  sendContentResult(res, database.recordPostView(req.params.id, state.user.id));
+});
+
+app.get("/api/discussions", (req, res) => {
+  const state = attachSession(req, res);
+  const page = database.listPublicPosts({
+    viewerId: state.user.id,
+    contentType: "discussion",
+    cursor: req.query.cursor,
+    limit: req.query.limit || 30,
+    restrictCommunityContent: true
+  });
+  res.json({ discussions: page.items, nextCursor: page.nextCursor, hasMore: page.hasMore });
+});
 app.get("/api/search", (req, res) => {
   const query = String(req.query.q || "").trim().toLowerCase();
   if (!query) {
@@ -766,35 +918,6 @@ app.get("/api/notifications", (req, res) => {
   res.json({ notifications: database.db.notifications.filter((item) => item.user_id === state.user.id).slice(-50).reverse() });
 });
 
-app.get("/api/discussions", (req, res) => {
-  const state = attachSession(req, res);
-  const joinedCommunityIds = new Set(database.db.community_members.filter((member) => member.user_id === state.user.id).map((member) => member.community_id));
-  const discussions = database.db.posts
-    .filter((post) => !post.removed_at)
-    .slice()
-    .reverse()
-    .map((post) => {
-      const community = database.db.communities.find((item) => item.id === post.community_id);
-      const profile = database.db.profiles.find((item) => item.user_id === post.user_id);
-      const canView = community && joinedCommunityIds.has(community.id);
-      return {
-        id: post.id,
-        slug: `${normalizeSlug(post.title)}-${post.id}`,
-        title: canView ? post.title : `Join ${community ? community.name : "this community"} to view this discussion`,
-        body: canView ? post.content : "",
-        locked: !canView,
-        community: community ? community.name : "Strango",
-        communitySlug: community ? community.slug : null,
-        author: canView && profile ? profile.display_name : canView ? "Anonymous User" : "Members only",
-        votes: database.db.reactions.filter((reaction) => reaction.post_id === post.id).length,
-        comments: database.db.comments.filter((comment) => comment.post_id === post.id).length,
-        createdAt: post.created_at,
-        time: new Date(post.created_at).toLocaleDateString(),
-        tag: community ? community.category || community.short_name || "Community" : "Community"
-      };
-    });
-  res.json({ discussions });
-});
 app.get("/api/sparks", (req, res) => {
   const state = attachSession(req, res);
   const sparks = database.db.user_sparks.find((item) => item.user_id === state.user.id) || {
@@ -903,45 +1026,6 @@ app.get("/api/trending", (req, res) => {
   });
   const messages = database.db.community_messages.slice(-20).reverse();
   res.json({ communities, posts, recentActivity: posts.slice(0, 10), messages });
-});
-
-app.get("/api/feed", (req, res) => {
-  const communities = database.db.communities
-    .map((community) => database.publicCommunity(community, communityOnlineCount(community.slug)))
-    .sort((a, b) => b.memberCount - a.memberCount);
-  const posts = database.db.posts.slice().reverse().map((post) => {
-    const community = database.db.communities.find((item) => item.id === post.community_id);
-    const profile = database.db.profiles.find((item) => item.user_id === post.user_id);
-    return {
-      id: post.id,
-      title: post.title,
-      preview: post.content,
-      communitySlug: community ? community.slug : "",
-      communityName: community ? community.name : "",
-      author: profile ? profile.display_name : "Anonymous User",
-      time: post.created_at,
-      likes: database.db.reactions.filter((reaction) => reaction.post_id === post.id).length,
-      comments: database.db.comments.filter((comment) => comment.post_id === post.id).length
-    };
-  });
-  const messages = database.db.community_messages.slice(-10).reverse().map((message) => {
-    const community = database.db.communities.find((item) => item.id === message.community_id);
-    const channel = database.db.community_channels.find((item) => item.id === message.channel_id);
-    const profile = database.db.profiles.find((item) => item.user_id === message.user_id);
-    return {
-      communityName: community ? community.name : "",
-      channelName: channel ? channel.name : "",
-      author: profile ? profile.display_name : "Anonymous User",
-      message: message.message,
-      createdAt: message.created_at
-    };
-  });
-  res.json({
-    recentDiscussions: posts.slice(0, 10),
-    popularDiscussions: posts.slice().sort((a, b) => (b.likes + b.comments * 2) - (a.likes + a.comments * 2)).slice(0, 10),
-    trendingCommunities: communities.slice(0, 6),
-    communityActivity: messages
-  });
 });
 
 app.get("/api/profile", (req, res) => {
@@ -1142,6 +1226,7 @@ app.use(express.static(publicDir, {
 }));
 
 let waitingQueue = [];
+const strangerSessions = new Map();
 const communityHistory = new Map();
 const communityPresence = new Map();
 const socketCommunityState = new Map();
@@ -1297,36 +1382,124 @@ function translationMetadata(text) {
   return detectedLanguage ? { detectedLanguage, translatedText: null, status: "provider_required" } : null;
 }
 
+function strangerPublicState(socket, partner = null, sessionId = null) {
+  return {
+    self: socket?.strangerNumber || null,
+    partner: partner?.strangerNumber || null,
+    sessionId
+  };
+}
+
+function emitStrangerState(socket, status, extra = {}) {
+  if (!socket) return;
+  socket.emit("strangerSession", {
+    status,
+    sessionId: socket.data?.strangerSessionId || null,
+    queued: status === "queued",
+    connected: status === "connected",
+    ...extra
+  });
+}
+
+function enqueueStranger(socket, status = "Waiting for stranger...") {
+  if (!socket || !socket.connected) return;
+  waitingQueue = waitingQueue.filter((item) => item.connected && item.id !== socket.id);
+  socket.room = null;
+  socket.data.strangerSessionId = null;
+  socket.data.strangerQueueState = "queued";
+  socket.emit("chatIdentity", strangerPublicState(socket));
+  socket.emit("typing", false);
+  socket.emit("status", status);
+  emitStrangerState(socket, "queued");
+  waitingQueue.push(socket);
+  tryMatch();
+}
+
+function getActiveStrangerSession(socket) {
+  const sessionId = socket?.data?.strangerSessionId;
+  if (!sessionId) return null;
+  const session = strangerSessions.get(sessionId);
+  if (!session || session.status !== "connected") return null;
+  if (!session.participants.includes(socket.id) || socket.room !== session.room) return null;
+  const roomClients = io.sockets.adapter.rooms.get(session.room);
+  if (!roomClients || roomClients.size < 2) return null;
+  return session;
+}
+
+function closeStrangerSessionFor(socket, { notify = true, requeuePartner = false, reason = "Stranger disconnected" } = {}) {
+  const sessionId = socket?.data?.strangerSessionId;
+  const session = sessionId ? strangerSessions.get(sessionId) : null;
+  if (!session) return;
+  strangerSessions.delete(sessionId);
+  session.status = "ended";
+  session.endedAt = new Date().toISOString();
+  session.participants.forEach((socketId) => {
+    const peer = io.sockets.sockets.get(socketId);
+    if (!peer) return;
+    peer.leave(session.room);
+    peer.room = null;
+    peer.data.strangerSessionId = null;
+    peer.data.strangerQueueState = "idle";
+    peer.emit("typing", false);
+    peer.emit("chatIdentity", strangerPublicState(peer));
+    if (notify && peer.id !== socket.id) peer.emit("status", reason);
+    emitStrangerState(peer, "ended", { reason });
+    if (requeuePartner && peer.id !== socket.id) enqueueStranger(peer);
+  });
+}
+
 function tryMatch(){
+  waitingQueue = waitingQueue.filter((socket) => socket?.connected && !socket.data.strangerSessionId);
   while(waitingQueue.length >= 2){
 
     const user1 = waitingQueue.shift();
     const user2 = waitingQueue.shift();
 
-    if(!user1 || !user2) return;
+    if(!user1 || !user2 || !user1.connected || !user2.connected) continue;
 
-    const room = user1.id + "#" + user2.id;
+    const sessionId = "stranger-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+    const room = "stranger:" + sessionId;
+    const nowIso = new Date().toISOString();
 
     user1.join(room);
     user2.join(room);
 
     user1.room = room;
     user2.room = room;
+    user1.data.strangerSessionId = sessionId;
+    user2.data.strangerSessionId = sessionId;
+    user1.data.strangerQueueState = "connected";
+    user2.data.strangerQueueState = "connected";
 
-    user1.emit("chatIdentity", { self: user1.strangerNumber, partner: user2.strangerNumber });
-    user2.emit("chatIdentity", { self: user2.strangerNumber, partner: user1.strangerNumber });
+    strangerSessions.set(sessionId, {
+      id: sessionId,
+      room,
+      status: "connected",
+      participants: [user1.id, user2.id],
+      createdAt: nowIso,
+      lastActivityAt: nowIso
+    });
+
+    user1.emit("chatIdentity", strangerPublicState(user1, user2, sessionId));
+    user2.emit("chatIdentity", strangerPublicState(user2, user1, sessionId));
+    user1.emit("matchFound", { sessionId, partner: user2.strangerNumber, status: "connected" });
+    user2.emit("matchFound", { sessionId, partner: user1.strangerNumber, status: "connected" });
     io.to(room).emit("status","Stranger connected");
+    io.to(room).emit("strangerSession", { status: "connected", sessionId, connected: true });
   }
 }
 
 function resetStrangerPeer(socket, status = "Waiting for stranger...") {
   if (!socket) return;
+  closeStrangerSessionFor(socket, { notify: false });
   socket.room = null;
-  socket.emit("chatIdentity", { self: socket.strangerNumber || null, partner: null });
+  socket.data.strangerSessionId = null;
+  socket.data.strangerQueueState = "idle";
+  socket.emit("chatIdentity", strangerPublicState(socket));
   socket.emit("typing", false);
   socket.emit("status", status);
+  emitStrangerState(socket, status.toLowerCase().includes("waiting") ? "queued" : "idle");
 }
-
 io.on("connection",(socket)=>{
   socket.on("joinDiscussion", (payload = {}) => {
     const discussionId = normalizeSlug(payload.discussionId || "");
@@ -1419,7 +1592,7 @@ io.emit("onlineCount", count);
 
 
   // ✅ AUTO JOIN QUEUE ON CONNECT
-  const isCommunitySocket = socket.handshake.auth && socket.handshake.auth.mode === "community";
+  const socketMode = socket.handshake.auth && socket.handshake.auth.mode;
   const socketCookies = String(socket.handshake.headers.cookie || "").split(";").reduce((cookies, item) => {
     const index = item.indexOf("=");
     if (index === -1) return cookies;
@@ -1433,10 +1606,8 @@ io.emit("onlineCount", count);
     socket.strangerNumber = socketSession.user.visitor_number || Number(socketSession.user.id);
   }
 
-  if(!isCommunitySocket){
-    waitingQueue.push(socket);
-    socket.emit("status","Waiting for stranger...");
-    tryMatch();
+  if(socketMode === "stranger"){
+    enqueueStranger(socket);
   }
 
   socket.on("joinCommunity",(payload = {})=>{
@@ -1561,57 +1732,37 @@ io.emit("onlineCount", count);
     });
   });
 
-  socket.on("message",(msg)=>{
-    if(socket.room){
-      const text = String(typeof msg === "object" ? msg.text : msg || "").trim().slice(0, 2000);
-      if (!text) return;
-      socket.to(socket.room).emit("message", { text, translation: translationMetadata(text) });
+  socket.on("message",(msg = {})=>{
+    const session = getActiveStrangerSession(socket);
+    const text = String(typeof msg === "object" ? msg.text : msg || "").trim().slice(0, 2000);
+    const clientId = typeof msg === "object" ? String(msg.clientId || "").slice(0, 80) : "";
+    if (!text) return;
+    if (!session || (msg.sessionId && msg.sessionId !== session.id)) {
+      socket.emit("messageRejected", { clientId, reason: "Connect with a stranger before sending." });
+      return;
     }
+    const record = {
+      id: "stranger-message-" + Date.now() + "-" + Math.random().toString(16).slice(2),
+      sessionId: session.id,
+      text,
+      translation: translationMetadata(text),
+      createdAt: new Date().toISOString()
+    };
+    session.lastActivityAt = record.createdAt;
+    socket.to(session.room).emit("message", record);
+    socket.emit("messageDelivered", { clientId, messageId: record.id, sessionId: session.id, createdAt: record.createdAt });
   });
 
   socket.on("typing",(state)=>{
-    if(socket.room){
-      socket.to(socket.room).emit("typing",state);
-    }
+    const session = getActiveStrangerSession(socket);
+    if(!session) return;
+    socket.to(session.room).emit("typing", Boolean(state));
   });
 
   socket.on("next",()=>{
-
-    if(socket.room){
-
-      const room = socket.room;
-
-      socket.to(room).emit("status","Stranger disconnected");
-
-      const clients = io.sockets.adapter.rooms.get(room);
-
-      if(clients){
-        clients.forEach(id=>{
-          const s = io.sockets.sockets.get(id);
-          if(!s) return;
-
-          s.leave(room);
-
-          if(s.id !== socket.id){
-            waitingQueue.push(s);
-            resetStrangerPeer(s);
-          }
-        });
-      }
-
-      waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
-      waitingQueue.unshift(socket);
-      resetStrangerPeer(socket);
-
-    }else{
-      waitingQueue = waitingQueue.filter(s=>s.id !== socket.id);
-      waitingQueue.unshift(socket);
-      resetStrangerPeer(socket);
-    }
-
-    tryMatch();
+    closeStrangerSessionFor(socket, { notify: true, requeuePartner: true, reason: "Stranger moved to the next person" });
+    enqueueStranger(socket, "Finding someone new...");
   });
-
   socket.on("disconnect",()=>{
 
     console.log("User disconnected:", socket.id);
@@ -1626,28 +1777,7 @@ io.emit("onlineCount", count);
     leaveDiscussion(socket);
     leaveCommunityRoom(socket, socketCommunityState.get(socket.id));
 
-    if(socket.room){
-
-      socket.to(socket.room).emit("status","Stranger disconnected");
-
-      const room = socket.room;
-      const clients = io.sockets.adapter.rooms.get(room);
-
-      if(clients){
-        clients.forEach(id=>{
-          const s = io.sockets.sockets.get(id);
-          if(s){
-            s.leave(room);
-            if(s.id !== socket.id){
-              resetStrangerPeer(s);
-              waitingQueue.push(s);
-            }
-          }
-        });
-      }
-
-      tryMatch();
-    }
+    closeStrangerSessionFor(socket, { notify: true, requeuePartner: true, reason: "Stranger disconnected" });
   });
 
 });

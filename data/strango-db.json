@@ -5439,5 +5439,9 @@
       "status": "interested",
       "created_at": "2026-06-14T14:47:08.277Z"
     }
-  ]
+  ],
+  "user_intents": [],
+  "recommendation_feedback": [],
+  "user_privacy_settings": [],
+  "social_links": []
 }

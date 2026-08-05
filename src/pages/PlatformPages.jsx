@@ -1,9 +1,10 @@
-﻿import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api, mergeCommunities } from "../app/api";
 import { communities as fallbackCommunities, communityCategories, discussions, icebreakers, liveConversations, messages, notifications, rooms } from "../app/data";
 import { getDiscussionIdentity, typingSummary } from "../app/identity";
 import { AdSlot, Avatar, CommunityCard, CommunityMark, DiscussionCard, EmptyState, Icon, LiveCard, Logo, SectionHeading, ThemeToggle } from "../components/UI";
+import { ReelDeck, SocialFeed, SocialPostCard } from "../components/SocialContent";
 
 export function PageIntro({ eyebrow, title, copy, action }) {
   return (
@@ -94,37 +95,158 @@ function DiscussionComposer({ open, onClose, onCreated, onAuth }) {
   );
 }
 
+const intentOptions = ["Learn", "Discuss", "Meet", "Build", "Help", "Explore"];
+const feedModes = ["For You", "Following", "Communities", "Reels", "Live"];
+const contentFilters = [
+  ["all", "All"],
+  ["discussion", "Discussions"],
+  ["short_post", "Short posts"],
+  ["standard_post", "Standard posts"],
+  ["reel", "Reels"]
+];
+
+function intentFeedReason(item, activeIntent, mode) {
+  if (mode === "Following") return "Shown from joined communities and people you already follow.";
+  if (mode === "Communities") return "Shown from community spaces you can open on Strango.";
+  if (activeIntent?.text) return `Based on your current ${activeIntent.type} intent: ${activeIntent.text}`;
+  if (activeIntent?.type) return `Based on your current ${activeIntent.type} intent.`;
+  if (item.community) return `Recommended because people discuss this in ${item.community}.`;
+  return "Recommended from recent Strango community activity.";
+}
+
 export function DashboardPage({ onAuth }) {
   const navigate = useNavigate();
-  const [feed, setFeed] = useState("For you");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedType = searchParams.get("type");
+  const [feed, setFeed] = useState(requestedType === "reel" ? "Reels" : "For You");
+  const [contentFilter, setContentFilter] = useState(() => requestedType || sessionStorage.getItem("strango_feed_filter") || "all");
   const [interest, setInterest] = useState("All");
   const [feedItems, setFeedItems] = useState([]);
+  const [feedError, setFeedError] = useState(false);
+  const [feedLoading, setFeedLoading] = useState(true);
   const [liveItems, setLiveItems] = useState([]);
   const [identity, setIdentity] = useState("Member");
+  const [intents, setIntents] = useState([]);
+  const [intentType, setIntentType] = useState("Learn");
+  const [intentText, setIntentText] = useState("");
+  const [intentNotice, setIntentNotice] = useState("");
+  const [hiddenItems, setHiddenItems] = useState([]);
+
+  const feedType = feed === "Reels" ? "reel" : contentFilter;
+
   useEffect(() => {
-    api("/api/discussions").then((data) => setFeedItems(data?.discussions || []));
+    sessionStorage.setItem("strango_feed_filter", contentFilter);
+  }, [contentFilter]);
+
+  useEffect(() => {
+    setFeedLoading(true);
+    setFeedError(false);
+    api(`/api/feed?type=${encodeURIComponent(feedType)}`).then((data) => {
+      setFeedLoading(false);
+      if (!data?.feed) {
+        setFeedError(true);
+        setFeedItems([]);
+        return;
+      }
+      setFeedItems(data.feed || []);
+    });
+  }, [feedType]);
+
+  useEffect(() => {
     api("/api/live").then((data) => setLiveItems((data?.conversations || []).map((item) => ({ ...item, people: item.participantCount || 0, accent: "#14b8a6", speakers: [] }))));
     api("/api/session").then((data) => setIdentity(data?.user?.profile?.display_name || `Stranger #${data?.user?.strangerNumber || ""}`.trim()));
+    api("/api/intents?includeInactive=1").then((data) => setIntents(data?.intents || []));
   }, []);
-  const visible = feedItems.filter((item) => interest === "All" || item.tag === interest || item.community?.includes(interest));
-  const ordered = feed === "Newest" ? [...visible].reverse() : feed === "Following" ? visible.filter((_, index) => index % 2 === 0) : visible;
+
+  async function saveIntent(event) {
+    event.preventDefault();
+    setIntentNotice("");
+    const result = await api("/api/intents", {
+      method: "POST",
+      body: JSON.stringify({ type: intentType, text: intentText, preferredFormat: "text", preferredDuration: "10", language: "English", visibility: "private" })
+    });
+    if (result?.intent) {
+      setIntents((current) => [result.intent, ...current.filter((item) => item.id !== result.intent.id)].slice(0, 8));
+      setIntentText("");
+      setIntentNotice("Intent saved. Recommendations now use this context.");
+    } else {
+      setIntentNotice("Could not save that intent yet.");
+    }
+  }
+
+  async function completeIntent(intent) {
+    const result = await api(`/api/intents/${intent.id}`, { method: "PATCH", body: JSON.stringify({ status: "completed" }) });
+    if (result?.intent) setIntents((current) => current.map((item) => item.id === intent.id ? result.intent : item));
+  }
+
+  async function sendRecommendationFeedback(action, item) {
+    await api("/api/recommendation-feedback", {
+      method: "POST",
+      body: JSON.stringify({ targetType: "post", targetId: item.id, action, reason: feed })
+    });
+    if (["not_interested", "show_fewer", "hide_community"].includes(action)) setHiddenItems((current) => [...new Set([...current, item.id])]);
+  }
+
+  function chooseFeedMode(mode) {
+    setFeed(mode);
+    if (mode === "Reels") setSearchParams({ type: "reel" });
+    else if (requestedType) setSearchParams({});
+  }
+
+  function chooseContentFilter(type) {
+    setContentFilter(type);
+    if (type === "reel") setFeed("Reels");
+  }
+
+  const activeIntent = intents.find((intent) => intent.status === "active") || intents[0];
+  const visible = feedItems.filter((item) => {
+    if (hiddenItems.includes(item.id)) return false;
+    if (["Following", "Communities"].includes(feed) && item.locked) return false;
+    if (interest !== "All" && item.tag !== interest && !item.community?.includes(interest)) return false;
+    if (!activeIntent?.text) return true;
+    const intentWords = activeIntent.text.toLowerCase().split(/\s+/).filter((word) => word.length > 3);
+    if (!intentWords.length) return true;
+    const haystack = `${item.title} ${item.body} ${item.community} ${item.tag}`.toLowerCase();
+    return intentWords.some((word) => haystack.includes(word)) || feed !== "For You";
+  });
+  const ordered = feed === "Following" ? visible.filter((_, index) => index % 2 === 0) : visible;
 
   return (
-    <div className="app-page">
-      <PageIntro eyebrow="Your feed" title={`Welcome, ${identity}.`} copy="Your feed grows from communities you join and conversations you contribute to." action={<button className="button button-primary" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={17} /> Create discussion</button>} />
+    <div className="app-page dashboard-home-page">
+      <PageIntro eyebrow="Home" title={`Welcome, ${identity}.`} copy="Choose an intent, then use a finite feed built around useful conversations instead of endless scrolling." action={<button className="button button-primary" type="button" onClick={() => navigate("/discussions/new")}><Icon name="plus" size={17} /> Create</button>} />
+
+      <section className="intent-selector-panel">
+        <div><p className="eyebrow">What do you want to do?</p><h2>Set your current intent</h2><p>Intent is private by default and helps Strango tune feed, community, live-room and stranger-match suggestions.</p></div>
+        <form onSubmit={saveIntent}>
+          <div className="intent-option-row">{intentOptions.map((item) => <button className={intentType === item ? "active" : ""} type="button" key={item} onClick={() => setIntentType(item)}>{item}</button>)}</div>
+          <label><span>Specific intent</span><input value={intentText} onChange={(event) => setIntentText(event.target.value)} placeholder="Practise spoken English for ten minutes" maxLength={180} /></label>
+          <button className="button button-primary" type="submit">Save intent</button>
+        </form>
+        {intentNotice && <p className="intent-notice">{intentNotice}</p>}
+        {intents.length > 0 && <div className="recent-intents"><span>Recent intents</span>{intents.slice(0, 4).map((intent) => <button type="button" className={intent.status === "active" ? "active" : ""} key={intent.id} onClick={() => { setIntentType(intent.type ? intent.type[0].toUpperCase() + intent.type.slice(1) : "Explore"); setIntentText(intent.text || ""); }}>{intent.text || intent.type}</button>)}{activeIntent?.status === "active" && <button type="button" onClick={() => completeIntent(activeIntent)}>Complete current</button>}</div>}
+      </section>
+
       <section className="interest-strip"><span>Explore:</span>{["All", "Finance", "Technology", "Gaming", "Students"].map((item) => <button className={interest === item ? "active" : ""} type="button" key={item} onClick={() => setInterest(item)}>{item}</button>)}</section>
-      <div className="feed-tabs">{["For you", "Following", "Newest"].map((item) => <button className={feed === item ? "active" : ""} type="button" key={item} onClick={() => setFeed(item)}>{item}</button>)}</div>
-      <div className="discussion-list feed-list">{ordered.length ? ordered.map((item) => <DiscussionCard discussion={item} key={item.id} />) : <EmptyState title="Your feed is ready" copy="Join a community or start the first discussion to shape what appears here." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} />}</div>
-      <div className="feed-inline-block">
-        <div className="inline-block-head"><h3>Live conversations</h3><Link to="/live">See all</Link></div>
-        <div className="mini-live-grid">{liveItems.length ? liveItems.slice(0, 2).map((item) => <LiveCard conversation={item} key={item.id} />) : <p className="quiet-state">No live conversations yet.</p>}</div>
-      </div>
+      <div className="feed-tabs">{feedModes.map((item) => <button className={feed === item ? "active" : ""} type="button" key={item} onClick={() => chooseFeedMode(item)}>{item}</button>)}</div>
+      {feed !== "Live" && <div className="feed-filter-tabs">{contentFilters.map(([type, label]) => <button className={(feed === "Reels" ? "reel" : contentFilter) === type ? "active" : ""} type="button" key={type} onClick={() => chooseContentFilter(type)}>{label}</button>)}</div>}
+
+      {feed === "Live" ? (
+        <div className="mini-live-grid">{liveItems.length ? liveItems.map((item) => <LiveCard conversation={item} key={item.id} />) : <EmptyState title="No live conversations yet" copy="Live rooms appear only when real participants are active." action={<Link className="button button-secondary" to="/communities">Explore communities</Link>} />}</div>
+      ) : feedLoading ? (
+        <div className="feed-skeleton-stack"><span /><span /><span /></div>
+      ) : feedError ? (
+        <EmptyState title="Feed could not load" copy="Check your connection and retry." action={<button className="button button-secondary" type="button" onClick={() => setContentFilter((value) => value)}>Retry</button>} />
+      ) : feed === "Reels" ? (
+        <ReelDeck reels={ordered} onAuth={onAuth} />
+      ) : (
+        <div className="social-feed-shell">{ordered.length ? ordered.map((item) => <article className="feed-recommendation-card" key={item.id}><SocialPostCard post={item} onAuth={onAuth} /><div className="feed-reason-row"><span>{intentFeedReason(item, activeIntent, feed)}</span><div><button type="button" onClick={() => sendRecommendationFeedback("not_interested", item)}>Not interested</button><button type="button" onClick={() => sendRecommendationFeedback("show_fewer", item)}>Show fewer</button><button type="button" onClick={() => sendRecommendationFeedback("hide_community", item)}>Hide community</button><button type="button" onClick={() => sendRecommendationFeedback("why", item)}>Why?</button></div></div></article>) : <EmptyState title="Your feed is ready" copy="Save an intent, join a community, or create the first post to shape what appears here." action={<Link className="button button-secondary" to="/discussions/new">Create a post</Link>} />}</div>
+      )}
+
       <InstagramConnectCard />
       <AdSlot compact />
     </div>
   );
 }
-
 export function CommunitiesPage({ onAuth }) {
   const [items, setItems] = useState(fallbackCommunities);
   const [query, setQuery] = useState("");
@@ -133,10 +255,15 @@ export function CommunitiesPage({ onAuth }) {
   const [createOpen, setCreateOpen] = useState(false);
   const [form, setForm] = useState({ name: "", description: "", category: "Technology", rules: "", bannerUrl: "", logoUrl: "" });
   const [createMessage, setCreateMessage] = useState("");
+  const [feedItems, setFeedItems] = useState([]);
+  const [reelItems, setReelItems] = useState([]);
+  const [categoryScrollState, setCategoryScrollState] = useState({ canScroll: false, atStart: true, atEnd: true });
   const categoryRail = useRef(null);
 
   useEffect(() => {
     api("/api/communities").then((data) => setItems(mergeCommunities(data?.communities, fallbackCommunities)));
+    api("/api/feed?type=all&limit=18").then((data) => setFeedItems(data?.feed || []));
+    api("/api/reels?limit=8").then((data) => setReelItems(data?.reels || []));
   }, []);
 
   const categories = ["All", ...communityCategories];
@@ -153,6 +280,7 @@ export function CommunitiesPage({ onAuth }) {
       return false;
     }
     setJoined((current) => [...new Set([...current, community.slug])]);
+    api("/api/feed?type=all&limit=18").then((data) => setFeedItems(data?.feed || []));
     return true;
   }
 
@@ -175,10 +303,24 @@ export function CommunitiesPage({ onAuth }) {
     setForm({ name: "", description: "", category: "Technology", rules: "", bannerUrl: "", logoUrl: "" });
   }
 
+  function updateCategoryScrollState() {
+    const rail = categoryRail.current;
+    if (!rail) return;
+    const canScroll = rail.scrollWidth > rail.clientWidth + 4;
+    setCategoryScrollState({ canScroll, atStart: rail.scrollLeft <= 2, atEnd: rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2 });
+  }
+
+  useEffect(() => {
+    updateCategoryScrollState();
+    window.addEventListener("resize", updateCategoryScrollState);
+    return () => window.removeEventListener("resize", updateCategoryScrollState);
+  }, [categories.length]);
+
   function scrollCategoryRail(direction) {
     const rail = categoryRail.current;
     if (!rail) return;
     rail.scrollBy({ left: direction * Math.max(220, rail.clientWidth * 0.72), behavior: "smooth" });
+    window.setTimeout(updateCategoryScrollState, 260);
   }
 
   function handleCategoryWheel(event) {
@@ -188,9 +330,22 @@ export function CommunitiesPage({ onAuth }) {
     if (!delta) return;
     rail.scrollLeft += delta;
     if (Math.abs(event.deltaY) >= Math.abs(event.deltaX)) event.preventDefault();
+    updateCategoryScrollState();
   }
 
   const renderGrid = (list, variant) => <div className={`community-grid ${variant === "featured" ? "featured-community-grid" : ""}`}>{list.map((community) => <CommunityCard community={community} variant={variant} joined={joined.includes(community.slug)} key={`${variant}-${community.slug}`} onJoin={joinCommunity} />)}</div>;
+  const featuredCommunities = filtered.slice(0, 3);
+  const joinedCommunities = items.filter((community) => joined.includes(community.slug));
+  const trendingDiscussions = feedItems.filter((item) => item.contentType === "discussion").slice(0, 3);
+  const latestPosts = feedItems.filter((item) => ["standard_post", "short_post"].includes(item.contentType)).slice(0, 4);
+  const popularReels = reelItems.slice(0, 4);
+  const discoverCommunities = filtered.slice(3);
+  const featuredCommunities = filtered.slice(0, 3);
+  const joinedCommunities = items.filter((community) => joined.includes(community.slug));
+  const trendingDiscussions = feedItems.filter((item) => item.contentType === "discussion").slice(0, 3);
+  const latestPosts = feedItems.filter((item) => ["standard_post", "short_post"].includes(item.contentType)).slice(0, 4);
+  const popularReels = reelItems.slice(0, 4);
+  const discoverCommunities = filtered.slice(3);
 
   return (
     <div className="app-page wide-page">
@@ -198,11 +353,11 @@ export function CommunitiesPage({ onAuth }) {
       <div className="discovery-toolbar">
         <label className="page-search"><Icon name="search" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by topic or community" /></label>
         <div className="category-scroll-shell">
-          <button className="category-scroll-button" type="button" aria-label="Scroll categories left" onClick={() => scrollCategoryRail(-1)}><Icon name="chevron" size={16} /></button>
-          <div className="category-pills category-pills-scroll" ref={categoryRail} onWheel={handleCategoryWheel}>
+          <button className="category-scroll-button" type="button" aria-label="Scroll categories left" disabled={!categoryScrollState.canScroll || categoryScrollState.atStart} onClick={() => scrollCategoryRail(-1)}><Icon name="chevron" size={16} /></button>
+          <div className="category-pills category-pills-scroll" ref={categoryRail} onWheel={handleCategoryWheel} onScroll={updateCategoryScrollState}>
             {categories.map((item) => <button className={category === item ? "active" : ""} type="button" key={item} onClick={() => setCategory(item)}>{item}</button>)}
           </div>
-          <button className="category-scroll-button category-scroll-button-next" type="button" aria-label="Scroll categories right" onClick={() => scrollCategoryRail(1)}><Icon name="chevron" size={16} /></button>
+          <button className="category-scroll-button category-scroll-button-next" type="button" aria-label="Scroll categories right" disabled={!categoryScrollState.canScroll || categoryScrollState.atEnd} onClick={() => scrollCategoryRail(1)}><Icon name="chevron" size={16} /></button>
         </div>
       </div>
       {!filtered.length ? <EmptyState title="No communities found" copy="Try a broader topic or explore every category." action={<button className="button button-secondary" type="button" onClick={() => { setQuery(""); setCategory("All"); }}>Clear filters</button>} /> : query || category !== "All" ? (
@@ -211,8 +366,13 @@ export function CommunitiesPage({ onAuth }) {
           {renderGrid(filtered, "results")}
         </section>
       ) : (
-        <div className="community-sections">
-          <section><SectionHeading eyebrow="Community directory" title="Spaces built around shared interests" copy="Membership and presence values below come directly from Strango activity." />{renderGrid(filtered, "featured")}</section>
+        <div className="community-sections community-discovery-sections">
+          <section className="featured-community-section"><SectionHeading eyebrow="Featured" title="Start with active, useful spaces" copy="A cleaner mix of community discovery and real social content." />{renderGrid(featuredCommunities, "featured")}</section>
+          <section><SectionHeading eyebrow="Joined" title="Your communities" copy="Spaces you have joined in this session appear here." action={<Link className="text-link" to="/dashboard">Open feed</Link>} />{joinedCommunities.length ? renderGrid(joinedCommunities, "joined") : <EmptyState title="No joined communities yet" copy="Join a community to unlock member discussions and see it here." />}</section>
+          <section><SectionHeading eyebrow="Trending discussions" title="What people are unpacking" copy="Discussion text stays locked until the viewer joins the community." />{trendingDiscussions.length ? <div className="social-feed-list compact-social-list">{trendingDiscussions.map((item) => <SocialPostCard post={item} onAuth={onAuth} compact key={item.id} />)}</div> : <EmptyState title="No discussions yet" copy="Create the first discussion from the composer." action={<Link className="button button-secondary" to="/discussions/new">Create discussion</Link>} />}</section>
+          <section><SectionHeading eyebrow="Latest posts" title="Fresh posts across Strango" copy="Short posts and standard posts appear here as members publish them." />{latestPosts.length ? <SocialFeed items={latestPosts} onAuth={onAuth} /> : <EmptyState title="No posts yet" copy="Create a short or standard post to start the feed." action={<Link className="button button-secondary" to="/discussions/new">Create post</Link>} />}</section>
+          <section><SectionHeading eyebrow="Popular reels" title="Strango Reels" copy="Vertical reels appear here when members publish hosted video posts." />{popularReels.length ? <ReelDeck reels={popularReels} onAuth={onAuth} /> : <EmptyState title="No reels yet" copy="Publish a reel with a hosted video URL to start this section." action={<Link className="button button-secondary" to="/discussions/new?type=reel">Create reel</Link>} />}</section>
+          <section><SectionHeading eyebrow="Discover more" title="More communities" copy="Browse the remaining directory without awkward gaps or clipped cards." />{discoverCommunities.length ? renderGrid(discoverCommunities, "results") : <EmptyState title="You reached the end" copy="All available communities are shown above." />}</section>
         </div>
       )}
       {createOpen && <Modal title="Create a community" copy="Give the community a clear purpose. You can add channels after it is created." onClose={() => setCreateOpen(false)}>
@@ -387,22 +547,14 @@ export function CommunityPage({ onAuth }) {
         setSettings({ name: next.name || "", description: next.description || "", category: next.category || "", rules: (next.rules || []).join("\n"), bannerUrl: next.bannerUrl || "", logoUrl: next.logoUrl || "" });
       }
     });
-    api(`/api/communities/${slug}/posts`).then((data) => setLocalPosts((data?.posts || []).map((post) => ({
-      id: post.id, community: base.name, communitySlug: slug, author: post.author,
-      time: new Date(post.time).toLocaleDateString(), title: post.title, body: post.preview,
-      votes: post.likes || 0, comments: post.comments || 0, viewers: 0, tag: base.category
-    }))));
+    api(`/api/communities/${slug}/posts`).then((data) => setLocalPosts(data?.posts || []));
   }, [slug]);
 
   async function join() {
     const result = await api(`/api/communities/${community.slug}/join`, { method: "POST", body: "{}" });
     if (!result?.community) return onAuth?.();
     setJoined(true);
-    api(`/api/communities/${community.slug}/posts`).then((data) => setLocalPosts((data?.posts || []).map((post) => ({
-      id: post.id, community: community.name, communitySlug: community.slug, author: post.author,
-      time: new Date(post.time).toLocaleDateString(), title: post.title, body: post.preview,
-      votes: post.likes || 0, comments: post.comments || 0, viewers: 0, tag: community.category
-    }))));
+    api(`/api/communities/${community.slug}/posts`).then((data) => setLocalPosts(data?.posts || []));
   }
 
   async function saveSettings(event) {
@@ -447,6 +599,9 @@ export function CommunityPage({ onAuth }) {
   const topicCount = Number(community.topics || 0);
   const canManage = community.viewerRole === "Owner";
   const isFinanceCommunity = community.slug === "finance" || community.category === "Finance";
+  const communityPosts = localPosts.filter((item) => ["standard_post", "short_post"].includes(item.contentType));
+  const communityDiscussions = localPosts.filter((item) => item.contentType === "discussion");
+  const communityReels = localPosts.filter((item) => item.contentType === "reel");
 
   return (
     <div className="app-page">
@@ -476,12 +631,13 @@ export function CommunityPage({ onAuth }) {
         <article><p className="eyebrow">Hot topics</p><div className="community-hot-topic-row">{(community.trends || [community.category, "Live questions", "Helpful replies"]).slice(0, 4).map((topic) => <span key={topic}><Icon name="hash" size={13} /> {topic}</span>)}</div></article>
       </section>
       {isFinanceCommunity && <FinanceCalculators />}
-      <nav className="page-tabs">{["Posts", "Rules", "Moderators", ...(community.viewerPermissions?.includes("view_mod_log") || canManage ? ["Moderation"] : [])].map((item) => <button className={tab === item ? "active" : ""} type="button" key={item} onClick={() => setTab(item)}>{item}</button>)}</nav>
-      {(tab === "Posts" || tab === "Discussions") && (joined ? <>
-        <button className="composer-card" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}><Avatar label="GS" small /><span>Start a discussion in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Post</span></button>
-        <div className="discussion-list">{localPosts.length ? localPosts.map((item) => <DiscussionCard key={item.id} discussion={{ ...item, community: community.name, communitySlug: community.slug }} />) : <EmptyState title="No discussions yet" copy="This community is ready for its first useful question." action={<button className="button button-primary" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Start discussion</button>} />}</div>
-      </> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only discussions</p><h2>Join {community.name} to view and participate in discussions.</h2><p>Preview stats are visible before joining: {memberCount} members, {onlineCount} online, and {topicCount} discussion topics.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
-      {tab === "Events" && <div className="event-grid">{[["Community welcome room", "Today · 7:30 PM", "Meet regulars and learn where conversations happen."], ["Weekly topic roundtable", "Saturday · 5:00 PM", "A moderated conversation around the week's biggest question."]].map(([title, time, copy]) => <article key={title}><span><Icon name="live" /></span><div><small>{time}</small><h3>{title}</h3><p>{copy}</p></div><Link className="button button-secondary button-small" to="/live">View live</Link></article>)}</div>}
+      <nav className="page-tabs">{["Overview", "Posts", "Discussions", "Reels", "Live", "About", "Rules", "Moderators", ...(community.viewerPermissions?.includes("view_mod_log") || canManage ? ["Moderation"] : [])].map((item) => <button className={tab === item ? "active" : ""} type="button" key={item} onClick={() => setTab(item)}>{item}</button>)}</nav>
+      {tab === "Overview" && (joined ? <section className="community-overview-feed"><SectionHeading eyebrow="Latest" title="Latest from this community" copy="A mixed feed of posts, discussions, and reels from members." />{localPosts.length ? <SocialFeed items={localPosts.slice(0, 4)} onAuth={onAuth} /> : <EmptyState title="No posts yet" copy="This community is ready for its first useful post." action={<button className="button button-primary" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Create post</button>} />}</section> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only community</p><h2>Join {community.name} to view posts, discussions, and reels.</h2><p>Preview stats are visible before joining: {memberCount} members, {onlineCount} online, and {topicCount} topics.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
+      {tab === "Posts" && (joined ? <><button className="composer-card" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}><Avatar label="GS" small /><span>Create a post in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Create</span></button><SocialFeed items={communityPosts} onAuth={onAuth} emptyTitle="No posts yet" emptyCopy="Create a standard or short post for this community." /></> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only posts</p><h2>Join {community.name} to view posts.</h2><p>Community content unlocks after joining.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
+      {tab === "Discussions" && (joined ? <><button className="composer-card" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}><Avatar label="GS" small /><span>Start a discussion in {community.name}</span><span className="button button-primary"><Icon name="plus" size={16} /> Discuss</span></button><div className="social-feed-list compact-social-list">{communityDiscussions.length ? communityDiscussions.map((item) => <SocialPostCard post={item} onAuth={onAuth} key={item.id} />) : <EmptyState title="No discussions yet" copy="Ask the first focused question." action={<button className="button button-primary" type="button" onClick={() => navigate(`/discussions/new?community=${community.slug}`)}>Start discussion</button>} />}</div></> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only discussions</p><h2>Join {community.name} to view and participate in discussions.</h2><p>Discussion content is protected until you join.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
+      {tab === "Reels" && (joined ? <ReelDeck reels={communityReels} onAuth={onAuth} /> : <section className="community-discussion-gate" style={{ "--community-accent": community.accent, "--community-accent-2": community.accent2 }}><span><Icon name="users" /></span><div><p className="eyebrow">Members-only reels</p><h2>Join {community.name} to view reels.</h2><p>Vertical video posts are available after joining.</p></div><button className="button button-primary" type="button" onClick={join}>Join community</button></section>)}
+      {tab === "Live" && <div className="event-grid">{[["Community welcome room", "Today", "Open the live area when people are active."], ["Weekly topic roundtable", "Upcoming", "A moderated conversation around the biggest question."]].map(([title, time, copy]) => <article key={title}><span><Icon name="live" /></span><div><small>{time}</small><h3>{title}</h3><p>{copy}</p></div><Link className="button button-secondary button-small" to="/live">View live</Link></article>)}</div>}
+      {tab === "About" && <section className="community-rules-panel"><p className="eyebrow">About</p><h2>{community.name}</h2><p>{community.description}</p><div className="community-pulse-grid"><span><strong>{memberCount || 0}</strong><small>members</small></span><span><strong>{onlineCount || 0}</strong><small>online</small></span><span><strong>{localPosts.length}</strong><small>posts</small></span></div></section>}
       {tab === "Rules" && <section className="community-rules-panel"><p className="eyebrow">Community rules</p><h2>Clear expectations make better conversations.</h2><ol>{(community.rules || []).map((rule) => <li key={rule}>{rule}</li>)}</ol></section>}
       {tab === "Moderators" && <div className="member-grid">{community.moderators?.length ? community.moderators.map((person, index) => <article key={person.id}><Avatar label={person.displayName} tone={["green", "blue", "gold"][index % 3]} /><div><strong>{person.displayName}</strong><small>{person.role}</small></div></article>) : <EmptyState title="No moderators yet" copy="The owner can invite trusted members as the community grows." />}</div>}
       {tab === "Moderation" && <section className="moderation-console"><p className="eyebrow">Moderation center</p><h2>Clear reports and transparent actions</h2>{canManage && <form className="moderator-form" onSubmit={addModerator}><input value={moderatorId} onChange={(event) => setModeratorId(event.target.value)} placeholder="Member user ID" required /><button className="button button-secondary" type="submit">Add moderator</button></form>}<div className="moderation-reports"><h3>Open reports</h3>{community.openReports?.length ? community.openReports.map((report) => <article key={report.id}><strong>{report.reason}</strong><small>{report.postId ? `Post ${report.postId}` : "Member report"} · {new Date(report.createdAt).toLocaleString()}</small><div>{report.postId && <><button type="button" onClick={() => moderate("approve_post", report)}>Approve</button><button type="button" onClick={() => moderate("remove_post", report)}>Remove</button></>}{report.userId && <><button type="button" onClick={() => moderate("mute_user", report)}>Mute</button><button type="button" onClick={() => moderate("ban_user", report)}>Ban</button></>}</div></article>) : <p className="quiet-state">No open reports.</p>}</div><div className="moderation-log"><h3>Action log</h3>{community.moderationLog?.length ? community.moderationLog.map((entry) => <article key={entry.id}><strong>{entry.action.replace(/_/g, " ")}</strong><span>{entry.actor}{entry.target ? ` · ${entry.target}` : ""}</span><small>{entry.reason || new Date(entry.createdAt).toLocaleString()}</small></article>) : <p className="quiet-state">No moderation actions yet.</p>}</div></section>}
@@ -628,7 +784,7 @@ function FeedDiscussionRoom({ room, onClose }) {
   );
 }
 
-export function DiscussionsPage() {
+export function DiscussionsPage({ onAuth }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState("Trending");
   const [feedItems, setFeedItems] = useState([]);
@@ -670,7 +826,7 @@ export function DiscussionsPage() {
       {query && <div className="result-banner"><span>Results for <strong>"{query}"</strong></span><button type="button" onClick={() => setSearchParams({})}>Clear search</button></div>}
       <div className="category-pills">{["Trending", "Newest", "Unanswered", "Finance", "AI", "Students", "Startups"].map((item) => <button className={filter === item ? "active" : ""} type="button" key={item} onClick={() => setFilter(item)}>{item}</button>)}</div>
       {activeRoom && <FeedDiscussionRoom room={activeRoom} onClose={() => setActiveRoom(null)} />}
-      {visible.length ? <div className="discussion-list feed-list">{visible.map((item) => <DiscussionCard discussion={item} key={item.id} />)}</div> : <EmptyState title="No discussions found" copy="Try another topic or start the conversation yourself." action={<button className="button button-primary" type="button" onClick={openDiscussionRoom}>Start discussion</button>} />}
+      {visible.length ? <div className="social-feed-list feed-list">{visible.map((item) => <SocialPostCard post={item} onAuth={onAuth} key={item.id} />)}</div> : <EmptyState title="No discussions found" copy="Try another topic or start the conversation yourself." action={<button className="button button-primary" type="button" onClick={openDiscussionRoom}>Start discussion</button>} />}
     </div>
   );
 }
@@ -680,6 +836,10 @@ export function DiscussionPage({ onAuth }) {
   const [item, setItem] = useState({ id: slug, community: "Strango", communitySlug: "ai", author: "Member", time: "", title: "Discussion", body: "", votes: 0, comments: 0, viewers: 0, tag: "Community" });
   const community = fallbackCommunities.find((entry) => entry.slug === item.communitySlug) || fallbackCommunities[0];
   const [draft, setDraft] = useState("");
+  const [comments, setComments] = useState([]);
+  const [commentDraft, setCommentDraft] = useState("");
+  const [commentSort, setCommentSort] = useState("best");
+  const [replyParentId, setReplyParentId] = useState(null);
   const [messagesInThread, setMessagesInThread] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [typingNames, setTypingNames] = useState([]);
@@ -702,7 +862,7 @@ export function DiscussionPage({ onAuth }) {
 
   useEffect(() => {
     if (item.locked || !window.io) return undefined;
-    socket.current = window.io({ transports: ["websocket", "polling"] });
+    socket.current = window.io({ transports: ["websocket", "polling"], auth: { mode: "discussion" } });
     api("/api/session").then((data) => {
       const identity = getDiscussionIdentity(data?.user);
       setSelfName(identity.name);
@@ -736,8 +896,30 @@ export function DiscussionPage({ onAuth }) {
   }, [item.id, item.locked]);
 
   useEffect(() => {
-    stream.current?.scrollTo({ top: stream.current.scrollHeight, behavior: "smooth" });
-  }, [messagesInThread, typingNames]);
+    if (!item.id || item.locked) return;
+    api(`/api/posts/${item.id}/comments?sort=${commentSort}`).then((data) => setComments(data?.comments || []));
+  }, [item.id, item.locked, commentSort]);
+
+  async function submitComment(event) {
+    event.preventDefault();
+    const text = commentDraft.trim();
+    if (!text || item.locked) return;
+    const result = await api(`/api/posts/${item.id}/comments`, { method: "POST", body: JSON.stringify({ content: text, parentId: replyParentId }) });
+    if (!result?.comment) return onAuth?.();
+    setComments((current) => [...current, result.comment]);
+    setCommentDraft("");
+    setReplyParentId(null);
+  }
+
+  function beginReply(comment) {
+    setReplyParentId(comment.id);
+    setCommentDraft(`@${comment.author} `);
+  }
+
+  function cancelReply() {
+    setReplyParentId(null);
+    setCommentDraft("");
+  }
 
   function submitReply(event) {
     event.preventDefault();
@@ -836,6 +1018,11 @@ export function DiscussionPage({ onAuth }) {
             <div><span><Icon name="message" size={17} /> Messages today</span><strong>{messagesInThread.length + item.comments}</strong></div>
             <div><span><Icon name="bolt" size={17} /> Typing now</span><strong>{typingNames.length}</strong></div>
           </section>
+          <section className="discussion-comment-panel">
+            <div className="comment-panel-head"><div><p className="eyebrow">Comments</p><h2>Persisted replies</h2></div><select value={commentSort} onChange={(event) => setCommentSort(event.target.value)} aria-label="Sort comments"><option value="best">Best</option><option value="newest">Newest</option><option value="oldest">Oldest</option></select></div>
+            <form className="comment-composer" onSubmit={submitComment}>{replyParentId && <button type="button" onClick={cancelReply}>Cancel reply</button>}<textarea value={commentDraft} onChange={(event) => setCommentDraft(event.target.value)} placeholder="Add a thoughtful comment" rows="3" required /><button className="button button-primary button-small" type="submit" disabled={!commentDraft.trim()}>Comment</button></form>
+            <div className="comment-list">{comments.length ? comments.map((comment) => <article className="comment-item" style={{ "--comment-depth": comment.depth }} key={comment.id}><strong>{comment.author}</strong><p>{comment.body}</p><small>{new Date(comment.createdAt).toLocaleString()}</small><button type="button" onClick={() => beginReply(comment)}>Reply</button></article>) : <p className="quiet-state">No comments yet.</p>}</div>
+          </section>
         </aside>
       </div>
     </div>
@@ -910,36 +1097,66 @@ export function AnonymousChatPage() {
   const [draft, setDraft] = useState("");
   const [typing, setTyping] = useState(false);
   const [sendNotice, setSendNotice] = useState("");
+  const [pendingMessage, setPendingMessage] = useState(null);
   const [nextMenuOpen, setNextMenuOpen] = useState(false);
   const [promptIndex, setPromptIndex] = useState(0);
   const [icebreakerCollapsed, setIcebreakerCollapsed] = useState(false);
   const [conversationStarted, setConversationStarted] = useState(false);
-  const [identity, setIdentity] = useState({ self: null, partner: null });
+  const [identity, setIdentity] = useState({ self: null, partner: null, sessionId: null });
   const socket = useRef(null);
   const scroll = useRef(null);
   const input = useRef(null);
+  const pendingRef = useRef(null);
+  const sessionRef = useRef(null);
+
+  useEffect(() => { pendingRef.current = pendingMessage; }, [pendingMessage]);
+  useEffect(() => { sessionRef.current = identity.sessionId || null; }, [identity.sessionId]);
 
   useEffect(() => {
     if (!window.io) {
       setStatus("Realtime chat is unavailable.");
       return undefined;
     }
-    socket.current = window.io({ transports: ["websocket", "polling"] });
+    socket.current = window.io({ transports: ["websocket", "polling"], auth: { mode: "stranger" } });
     socket.current.on("status", (nextStatus) => {
       const next = String(nextStatus || "Connected");
       setStatus(next);
       if (!/^stranger connected$/i.test(next)) {
-        setIdentity((current) => ({ ...current, partner: null }));
+        sessionRef.current = null;
+        setIdentity((current) => ({ ...current, partner: null, sessionId: null }));
         setTyping(false);
       }
     });
-    socket.current.on("chatIdentity", (nextIdentity) => setIdentity(nextIdentity || { self: null, partner: null }));
+    socket.current.on("chatIdentity", (nextIdentity) => {
+      const next = nextIdentity || { self: null, partner: null, sessionId: null };
+      sessionRef.current = next.sessionId || null;
+      setIdentity(next);
+    });
+    socket.current.on("matchFound", (payload) => {
+      sessionRef.current = payload?.sessionId || sessionRef.current;
+      setIdentity((current) => ({ ...current, partner: payload?.partner || current.partner, sessionId: payload?.sessionId || current.sessionId }));
+      if (pendingRef.current) setSendNotice("Connected. Review and send your pending message when ready.");
+    });
+    socket.current.on("strangerSession", (payload) => {
+      if (payload?.sessionId) {
+        sessionRef.current = payload.sessionId;
+        setIdentity((current) => ({ ...current, sessionId: payload.sessionId }));
+      }
+    });
     socket.current.on("message", (message) => {
+      const payload = typeof message === "object" ? message : { text: String(message), translation: null };
+      if (payload.sessionId && sessionRef.current && payload.sessionId !== sessionRef.current) return;
       setSendNotice("");
       setConversationStarted(true);
       setIcebreakerCollapsed(true);
-      const payload = typeof message === "object" ? message : { text: String(message), translation: null };
-      setMessagesInChat((items) => [...items, { direction: "incoming", text: payload.text, translation: payload.translation, time: new Date() }]);
+      setMessagesInChat((items) => [...items, { direction: "incoming", text: payload.text, translation: payload.translation, time: new Date(payload.createdAt || Date.now()) }]);
+    });
+    socket.current.on("messageDelivered", (payload) => {
+      setMessagesInChat((items) => items.map((item) => item.clientId && item.clientId === payload.clientId ? { ...item, pending: false, delivered: true, time: new Date(payload.createdAt || Date.now()) } : item));
+    });
+    socket.current.on("messageRejected", (payload) => {
+      setSendNotice(payload?.reason || "Message was not delivered.");
+      setMessagesInChat((items) => items.map((item) => item.clientId && item.clientId === payload.clientId ? { ...item, pending: false, failed: true } : item));
     });
     socket.current.on("typing", (state) => setTyping(Boolean(state)));
     return () => socket.current?.disconnect();
@@ -947,24 +1164,52 @@ export function AnonymousChatPage() {
 
   useEffect(() => {
     scroll.current?.scrollTo({ top: scroll.current.scrollHeight, behavior: "smooth" });
-  }, [messagesInChat, typing]);
+  }, [messagesInChat, pendingMessage, typing]);
+
+  function sendOutgoing(text, clientId = `local-${Date.now()}-${Math.random().toString(16).slice(2)}`) {
+    socket.current.emit("message", { text, clientId, sessionId: identity.sessionId });
+    setMessagesInChat((items) => [...items, { direction: "outgoing", text, time: new Date(), clientId, pending: true }]);
+    setSendNotice("");
+    setConversationStarted(true);
+    setIcebreakerCollapsed(true);
+    socket.current.emit("typing", false);
+  }
 
   function sendMessage(event) {
     event.preventDefault();
     const message = draft.trim();
     if (!message || !socket.current) return;
     if (!isPeerConnected) {
-      setSendNotice("Connect with a stranger before sending.");
+      const pending = { clientId: `pending-${Date.now()}-${Math.random().toString(16).slice(2)}`, text: message, time: new Date() };
+      pendingRef.current = pending;
+      setPendingMessage(pending);
+      setDraft("");
+      setSendNotice("Message is pending locally. It will not deliver until a stranger connects.");
+      setConversationStarted(true);
+      setIcebreakerCollapsed(true);
       socket.current?.emit("typing", false);
       return;
     }
-    socket.current.emit("message", { text: message });
-    setMessagesInChat((items) => [...items, { direction: "outgoing", text: message, time: new Date() }]);
+    sendOutgoing(message);
     setDraft("");
+  }
+
+  function sendPendingMessage() {
+    const pending = pendingRef.current;
+    if (!pending) return;
+    if (!isPeerConnected) {
+      setSendNotice("Connect with a stranger before sending the pending message.");
+      return;
+    }
+    setPendingMessage(null);
+    pendingRef.current = null;
+    sendOutgoing(pending.text, pending.clientId);
+  }
+
+  function discardPendingMessage() {
+    pendingRef.current = null;
+    setPendingMessage(null);
     setSendNotice("");
-    setConversationStarted(true);
-    setIcebreakerCollapsed(true);
-    socket.current.emit("typing", false);
   }
 
   function connectNextPerson() {
@@ -973,7 +1218,9 @@ export function AnonymousChatPage() {
     setDraft("");
     setTyping(false);
     setSendNotice("");
-    setIdentity((current) => ({ ...current, partner: null }));
+    discardPendingMessage();
+    setIdentity((current) => ({ ...current, partner: null, sessionId: null }));
+    sessionRef.current = null;
     setConversationStarted(false);
     setIcebreakerCollapsed(false);
     setNextMenuOpen(false);
@@ -994,9 +1241,9 @@ export function AnonymousChatPage() {
     window.requestAnimationFrame(() => input.current?.focus());
   }
 
-  const isPeerConnected = Boolean(identity.partner && socket.current?.connected && /^stranger connected$/i.test(status));
+  const isPeerConnected = Boolean(identity.partner && identity.sessionId && socket.current?.connected && /^stranger connected$/i.test(status));
   const statusLabel = isPeerConnected ? `Connected with Stranger #${identity.partner}` : status;
-  const helperText = sendNotice || (typing ? "Stranger is typing..." : isPeerConnected ? "Messages are not saved after this chat ends." : "Waiting for a stranger to connect.");
+  const helperText = sendNotice || (typing ? "Stranger is typing..." : isPeerConnected ? "Messages are delivered only inside this active session." : "Waiting for a stranger to connect.");
 
   return (
     <div className="anonymous-chat-page">
@@ -1019,20 +1266,21 @@ export function AnonymousChatPage() {
               <button className="button button-secondary" type="button" onClick={usePrompt}>Use prompt</button>
             </>}
           </section>
-          {conversationStarted && messagesInChat.length === 0 && (
+          {conversationStarted && messagesInChat.length === 0 && !pendingMessage && (
             <section className="chat-started-state">
               <span><Icon name="check" /></span>
               <div><strong>Conversation starter ready</strong><small>Your question is ready below. Edit it or send when it feels right.</small></div>
             </section>
           )}
-          {messagesInChat.length === 0 && !conversationStarted && (
+          {messagesInChat.length === 0 && !conversationStarted && !pendingMessage && (
             <section className="chat-empty-guide">
                 <div><span><Icon name="discuss" /></span><div><strong>Your conversation starts here</strong><small>Choose a question or write your own when you feel ready.</small></div></div>
                 <div className="chat-quick-prompts">{icebreakers.slice(2, 5).map((prompt) => <button type="button" key={prompt} onClick={() => insertPrompt(prompt)}>{prompt}<Icon name="arrow" size={14} /></button>)}</div>
                 <p><Icon name="check" size={14} /> No profile details are shared with the other person.</p>
               </section>
             )}
-              {messagesInChat.map((message, index) => <div className={`chat-bubble ${message.direction}`} key={`${message.time.getTime()}-${index}`}><p>{message.text}</p>{message.translation && <span className="message-translation"><small>{message.translation.detectedLanguage}</small>{message.translation.translatedText ? <><b>Translated</b>{message.translation.translatedText}</> : <em>Translation provider ready</em>}</span>}<time>{message.time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time></div>)}
+              {pendingMessage && <div className="chat-bubble outgoing is-pending"><p>{pendingMessage.text}</p><time>pending</time><div className="pending-message-actions"><span>Not delivered</span>{isPeerConnected && <button type="button" onClick={sendPendingMessage}>Send now</button>}<button type="button" onClick={discardPendingMessage}>Discard</button></div></div>}
+              {messagesInChat.map((message, index) => <div className={`chat-bubble ${message.direction}${message.pending ? " is-pending" : ""}${message.failed ? " is-failed" : ""}`} key={`${message.time.getTime()}-${index}`}><p>{message.text}</p>{message.translation && <span className="message-translation"><small>{message.translation.detectedLanguage}</small>{message.translation.translatedText ? <><b>Translated</b>{message.translation.translatedText}</> : <em>Translation provider ready</em>}</span>}<time>{message.failed ? "failed" : message.pending ? "sending" : message.time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time></div>)}
             {typing && <p className="chat-bubble incoming typing-bubble"><i /><i /><i /></p>}
           </div>
           <div className={`typing-indicator${typing ? " is-visible" : ""}${sendNotice ? " is-warning" : ""}`}>{helperText}</div>
@@ -1063,7 +1311,6 @@ export function AnonymousChatPage() {
     </div>
   );
 }
-
 export function RoomsPage() {
   const [activeRoom, setActiveRoom] = useState(null);
   const [participantCount, setParticipantCount] = useState(0);
@@ -1075,7 +1322,7 @@ export function RoomsPage() {
 
   useEffect(() => {
     if (!activeRoom || !window.io) return undefined;
-    socket.current = window.io({ transports: ["websocket", "polling"] });
+    socket.current = window.io({ transports: ["websocket", "polling"], auth: { mode: "discussion" } });
     socket.current.emit("joinPlatformRoom", { roomId: activeRoom.id });
     socket.current.on("platformRoomPresence", (payload) => { if (payload.roomId === activeRoom.id) setParticipantCount(payload.participantCount); });
     socket.current.on("platformRoomMessage", (payload) => { if (payload.roomId === activeRoom.id) setRoomMessages((items) => [...items, payload]); });
